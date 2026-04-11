@@ -1,0 +1,102 @@
+%% three-layer.tex — three-layer coupled model: service generation, passenger response, dispatch
+
+\section*{Three-Layer Coupled Model}\label{sec:three-layer}
+
+The many-to-many DRT system with bidirectional meeting points operates through three
+sequentially coupled layers, executed online upon each request arrival and periodically
+re-optimized via a rolling horizon mechanism. Figure~\ref{fig:three-layer} (Phase~6)
+illustrates the architecture. The three layers are: (1) service offer generation,
+(2) passenger response, and (3) dynamic dispatch and re-optimization.
+
+% -------------------------------------------------------
+\subsection*{Layer 1: Service Offer Generation}\label{sec:layer1}
+
+Upon arrival of request $r$ at time $t_r^{\text{req}}$, the system generates a set of
+candidate service offer bundles $\hat{\mathcal{B}}_r \subseteq \mathcal{B}_r$ as follows:
+
+\begin{enumerate}
+  \item \textbf{Candidate pickup set:} Compute
+        $M_r^P = \{ m \in \mathcal{M} \mid d(o_r, m) \leq \rho^P \}$.
+        Retain the top-$k^{\text{top}}$ candidates ranked by proximity to $o_r$.
+  \item \textbf{Candidate dropoff set:} Compute
+        $M_r^D = \{ m \in \mathcal{M} \mid d(\delta_r, m) \leq \rho^D \}$.
+        Retain the top-$k^{\text{top}}$ candidates ranked by proximity to $\delta_r$.
+  \item \textbf{Bundle enumeration:} For each pair $(m^P, m^D) \in M_r^P \times M_r^D$,
+        evaluate feasibility against constraints~\ref{con:capacity}--\ref{con:time-consistency}
+        for each vehicle $v \in \mathcal{V}$ and each insertion position pair $(\pi^P, \pi^D)$.
+  \item \textbf{Bundle selection:} Select the bundle
+        $b^* = \arg\max_{b \in \hat{\mathcal{B}}_r} \mathbb{E}[\text{system benefit} \mid b,\, \mathbf{x}_r]$
+        that maximizes expected system objective contribution, subject to feasibility.
+\end{enumerate}
+
+The output of Layer~1 is the online decision vector
+$\mathbf{x}_r = (z_r, m_r^P, m_r^D, v_r, \pi_r^P, \pi_r^D)$
+(Equation~\ref{eq:decvec}) and the service offer bundle $b^*$ presented to the passenger.
+
+% -------------------------------------------------------
+\subsection*{Layer 2: Passenger Response}\label{sec:layer2}
+
+Given the offered bundle $b^*$, passenger $r$ of type $k$ accepts with probability
+$P_{rb^*}^k$ (Equation~\ref{eq:choice-prob}) and rejects (chooses the outside option) with
+probability $P_{r0}^k$ (Equation~\ref{eq:outside-prob}).
+
+The realized acceptance indicator is:
+\begin{equation}\label{eq:acceptance-indicator}
+  z_r \sim \text{Bernoulli}(P_{rb^*}^k)
+\end{equation}
+
+If $z_r = 1$, the vehicle route $\sigma_{v_r}$ is updated by inserting the pickup node
+$m_r^P$ at position $\pi_r^P$ and the dropoff node $m_r^D$ at position $\pi_r^D$.
+If $z_r = 0$, the decision vector is discarded and the vehicle routes remain unchanged.
+
+The coupling between Layer~1 and Layer~2 is \emph{anticipatory}: the system selects $b^*$
+to maximize expected system benefit, accounting for the probability that the passenger will
+accept. This distinguishes the model from a deterministic assignment approach.
+
+% -------------------------------------------------------
+\subsection*{Layer 3: Dynamic Dispatch and Rolling Horizon Re-optimization}\label{sec:layer3}
+
+Vehicle dispatch follows the committed route schedules
+$\{\sigma_v, \mathbf{s}_v\}_{v \in \mathcal{V}}$.
+Every $\Delta$ minutes, a rolling horizon re-optimization is triggered over the active
+request window $[t^{\text{now}},\; t^{\text{now}} + H]$:
+
+\begin{enumerate}
+  \item \textbf{Active set:} Identify $\mathcal{R}^{\text{act}}(t^{\text{now}})$ --- all
+        accepted requests not yet completed at time $t^{\text{now}}$.
+  \item \textbf{Re-optimization:} Apply ALNS (Adaptive Large Neighborhood Search) to
+        reassign and reorder requests in $\mathcal{R}^{\text{act}}(t^{\text{now}})$ across
+        vehicles, subject to constraints~\ref{con:capacity}--\ref{con:time-consistency}.
+  \item \textbf{Commitment:} Commit the updated routes for the next $\Delta$ minutes;
+        nodes already served are locked and cannot be reassigned.
+\end{enumerate}
+
+The rolling horizon creates a feedback loop from Layer~3 back to Layer~1: the updated
+vehicle schedules after re-optimization change the feasibility and cost of future bundle
+insertions, influencing the next Layer~1 evaluation.
+
+\begin{equation}\label{eq:rh-trigger}
+  \text{Re-optimize at times } t^{\text{now}} = 0,\; \Delta,\; 2\Delta,\; 3\Delta,\; \ldots
+\end{equation}
+
+Typical parameter values: $H = 30$ minutes (horizon window), $\Delta = 5$ minutes
+(re-optimization frequency). These are configurable and subject to sensitivity analysis
+in Phase~4.
+
+% -------------------------------------------------------
+\subsection*{Layer Coupling Summary}
+
+\begin{table}[h]
+\centering
+\caption{Three-layer model coupling structure}
+\label{tab:layer-coupling}
+\begin{tabular}{llll}
+\toprule
+Layer & Input & Output & Coupling \\
+\midrule
+1: Service Generation & Request $r$, routes $\{\sigma_v\}$ & Bundle $b^*$, decision $\mathbf{x}_r$ & Feeds Layer~2 \\
+2: Passenger Response & Bundle $b^*$, type $k$ & Acceptance $z_r$ & Updates routes if $z_r=1$ \\
+3: Rolling Horizon & Active set $\mathcal{R}^{\text{act}}$ & Updated routes $\{\sigma_v\}$ & Feeds back to Layer~1 \\
+\bottomrule
+\end{tabular}
+\end{table}

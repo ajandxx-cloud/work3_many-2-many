@@ -1,0 +1,84 @@
+%% model.tex — Work 3: Many-to-Many DRT with Bidirectional Meeting Points
+%% Self-contained model document for Phase 1 handoff to Phase 2 (Algorithm Development)
+%% Compile with: pdflatex model.tex
+
+\documentclass[12pt, a4paper]{article}
+
+% Packages
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{geometry}
+\usepackage{hyperref}
+\geometry{margin=2.5cm}
+
+% Title
+\title{Work 3: Many-to-Many DRT with Bidirectional Meeting Points\\
+       \large Mathematical Model --- Phase 1 Formulation}
+\author{[Author]}
+\date{2026}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+% -------------------------------------------------------
+\section{Notation}\label{sec:notation}
+\input{notation}
+
+% -------------------------------------------------------
+\section{Problem Definition}\label{sec:problem}
+\input{problem-definition}
+
+% -------------------------------------------------------
+\section{Operational Constraints}\label{sec:constraints}
+\input{constraints}
+
+% -------------------------------------------------------
+\section{Passenger Choice Model}\label{sec:choice}
+\input{choice-model}
+
+% -------------------------------------------------------
+\section{Three-Layer Coupled Model}\label{sec:model}
+\input{three-layer}
+
+% -------------------------------------------------------
+\section{Summary and Phase 2 Handoff}\label{sec:handoff}
+
+This document constitutes the complete mathematical foundation for Work 3.
+Table~\ref{tab:handoff} maps each model component to the corresponding Phase~2
+implementation requirement.
+
+\begin{table}[h]
+\centering
+\caption{Phase 1 to Phase 2 handoff map}
+\label{tab:handoff}
+\begin{tabular}{lll}
+\toprule
+Model Component & Section & Phase 2 Requirement \\
+\midrule
+Notation table & \S\ref{sec:notation} & All (symbol reference) \\
+Network + meeting point sets & \S\ref{sec:problem} & HEUR-01 (candidate generation) \\
+Service offer bundle & \S\ref{sec:problem} & EXACT-01, HEUR-02 \\
+System objective & \S\ref{sec:problem} & EXACT-01 (MILP objective) \\
+Online decision vector & \S\ref{sec:problem} & HEUR-02 (insertion evaluator) \\
+Capacity constraint & \S\ref{sec:constraints} & EXACT-01, HEUR-03 \\
+Time window constraints & \S\ref{sec:constraints} & EXACT-01, HEUR-03 \\
+Ride time constraint & \S\ref{sec:constraints} & EXACT-01, HEUR-03 \\
+Walking radius constraints & \S\ref{sec:constraints} & HEUR-01 (filter) \\
+Precedence constraints & \S\ref{sec:constraints} & EXACT-01, HEUR-03 \\
+Route time consistency & \S\ref{sec:constraints} & EXACT-01, HEUR-03 \\
+Maximum route duration & \S\ref{sec:constraints} & EXACT-01, HEUR-03 \\
+MNL utility function & \S\ref{sec:choice} & Phase 3 simulation \\
+Passenger type profiles & \S\ref{sec:choice} & Phase 3 simulation \\
+Choice probability & \S\ref{sec:choice} & HEUR-02 (expected benefit) \\
+Layer 1: Service generation & \S\ref{sec:model} & HEUR-01, HEUR-02 \\
+Layer 2: Passenger response & \S\ref{sec:model} & HEUR-02 \\
+Layer 3: Rolling horizon & \S\ref{sec:model} & HEUR-04, HEUR-05 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{document}
