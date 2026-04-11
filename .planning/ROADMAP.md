@@ -30,7 +30,13 @@
   3. All constraints (capacity, time windows, ride time, walking radius, precedence) are enumerated and each has a corresponding mathematical expression
   4. The MNL utility function with outside option and at least 2-3 passenger types is fully specified with parameter definitions
   5. The three-layer coupled model (service generation → passenger response → dynamic dispatch) is documented in a self-contained model writeup that can be handed directly to the algorithm phase
-**Plans**: TBD
+**Plans:** 4 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Notation table (notation.tex) and problem definition (problem-definition.tex): network, M_r^P/M_r^D sets, service offer bundle, objective, decision vector
+- [ ] 01-02-PLAN.md — Constraints formalization (constraints.tex): capacity, time windows, ride time, walking radius, precedence, route consistency
+- [ ] 01-03-PLAN.md — MNL passenger choice model (choice-model.tex): utility function, outside option, three passenger types with β profiles, choice probability
+- [ ] 01-04-PLAN.md — Three-layer model assembly (three-layer.tex + model.tex): integrate all fragments into compilable self-contained model document
 
 ### Phase 2: Algorithm Development & Python Implementation
 **Goal**: Both the exact MILP benchmark and the large-scale rolling horizon + ALNS heuristic are implemented in Python, tested on small instances, and the heuristic meets the response-time requirement
@@ -100,7 +106,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Problem Formulation & Model Structure | 0/? | Not started | - |
+| 1. Problem Formulation & Model Structure | 0/4 | Planned | - |
 | 2. Algorithm Development & Python Implementation | 0/? | Not started | - |
 | 3. Numerical Experiments | 0/? | Not started | - |
 | 4. Policy Analysis & Sensitivity Analysis | 0/? | Not started | - |
@@ -169,4 +175,4 @@
 ---
 
 *Roadmap created: 2026-04-11*
-*Last updated: 2026-04-11 after initialization*
+*Last updated: 2026-04-11 — Phase 1 plans created (4 plans, 2 waves)*
