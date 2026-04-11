@@ -1,0 +1,85 @@
+%% problem-definition.tex — network, problem setup, objective, decision vector
+%% Many-to-Many DRT Bidirectional Meeting Point Paper
+
+\section*{Problem Definition}
+
+\subsection*{Network and Input}
+
+We model the service area as a directed graph $G = (N, A)$, where $N$ is the set of nodes
+(passenger origins, destinations, and meeting points) and $A$ is the set of directed arcs.
+Travel time between any two locations $i, j \in N$ is given by $t(i,j) = d(i,j) / \bar{v}$,
+where $d(i,j)$ denotes Euclidean distance and $\bar{v}$ is the average vehicle speed.
+
+A finite set $\mathcal{M}$ of pre-defined fixed meeting points (e.g., bus stops, commercial
+landmarks) is given. For each request $r$, the candidate pickup set
+$M_r^P \subseteq \mathcal{M}$ is the subset of meeting points within walking radius $\rho^P$
+of the passenger's origin $o_r$, and the candidate dropoff set
+$M_r^D \subseteq \mathcal{M}$ is the subset within walking radius $\rho^D$ of the destination
+$\delta_r$. Formally:
+\begin{equation}
+  M_r^P = \bigl\{ m \in \mathcal{M} \mid d(o_r,\, m) \leq \rho^P \bigr\},
+  \qquad
+  M_r^D = \bigl\{ m \in \mathcal{M} \mid d(\delta_r,\, m) \leq \rho^D \bigr\}.
+\end{equation}
+
+Each request $r \in \mathcal{R}$ is characterized by a tuple $(o_r, \delta_r, e_r, l_r, k_r)$,
+where $[e_r, l_r]$ is the pickup time window and $k_r \in \mathcal{K}$ denotes the passenger
+type. Requests arrive online over a continuous planning horizon.
+
+\subsection*{Service Offer Bundle}
+
+For each request $r$, a \emph{service offer bundle} is a tuple
+\[
+  b = (m_r^P,\; m_r^D,\; \tau_r,\; p_r),
+\]
+where:
+\begin{itemize}
+  \item $m_r^P \in M_r^P$ is the assigned pickup meeting point,
+  \item $m_r^D \in M_r^D$ is the assigned dropoff meeting point,
+  \item $\tau_r \in [e_r, l_r]$ is the scheduled pickup time at $m_r^P$,
+  \item $p_r \geq 0$ is the fare charged to the passenger (fixed in this model).
+\end{itemize}
+The set of all feasible bundles for request $r$ is $\mathcal{B}_r = M_r^P \times M_r^D$
+(with $\tau_r$ and $p_r$ treated as service parameters determined by the system).
+The service offer bundle $b$ is the central decision object: the system selects one bundle
+from $\mathcal{B}_r$ or rejects the request.
+
+\subsection*{System Objective}
+
+The system minimizes a weighted sum of operational and passenger service costs over the
+planning horizon:
+\begin{equation}\label{eq:objective}
+  \min \quad \alpha_1 C^{op} + \alpha_2 C^{wait} + \alpha_3 C^{walk}
+             + \alpha_4 C^{IVT} + \alpha_5 C^{rej},
+\end{equation}
+where:
+\begin{align}
+  C^{op}   &= \sum_{v \in \mathcal{V}} c_v \cdot D_v, \label{eq:cop}\\
+  C^{wait} &= \sum_{r \in \mathcal{R}} z_r \cdot (\tau_r - t_r^{\text{req}}), \label{eq:cwait}\\
+  C^{walk} &= \sum_{r \in \mathcal{R}} z_r \cdot \bigl(d(o_r, m_r^P) + d(m_r^D, \delta_r)\bigr), \label{eq:cwalk}\\
+  C^{IVT}  &= \sum_{r \in \mathcal{R}} z_r \cdot \text{IVT}_{rb}, \label{eq:civt}\\
+  C^{rej}  &= \sum_{r \in \mathcal{R}} (1 - z_r) \cdot \Gamma. \label{eq:crej}
+\end{align}
+Here $D_v$ is the total distance driven by vehicle $v$, $c_v$ is cost per unit distance,
+$t_r^{\text{req}}$ is the time request $r$ was submitted, and $\Gamma > 0$ is the rejection
+penalty.
+
+\subsection*{Online Decision Vector}
+
+Upon arrival of request $r$, the system must immediately determine the \emph{online decision
+vector}:
+\begin{equation}\label{eq:decvec}
+  \mathbf{x}_r = (z_r,\; m_r^P,\; m_r^D,\; v_r,\; \pi_r^P,\; \pi_r^D),
+\end{equation}
+where:
+\begin{itemize}
+  \item $z_r \in \{0,1\}$ is the acceptance indicator (1 = accepted, 0 = rejected),
+  \item $m_r^P \in M_r^P$ is the pickup meeting point (defined when $z_r = 1$),
+  \item $m_r^D \in M_r^D$ is the dropoff meeting point (defined when $z_r = 1$),
+  \item $v_r \in \mathcal{V}$ is the vehicle assigned to serve request $r$ (defined when $z_r = 1$),
+  \item $\pi_r^P$ is the insertion position of the pickup node in vehicle $v_r$'s route,
+  \item $\pi_r^D$ is the insertion position of the dropoff node in vehicle $v_r$'s route,
+        with $\pi_r^D > \pi_r^P$ (pickup precedes dropoff in route).
+\end{itemize}
+The decision must be made online --- i.e., before future requests are known --- and subject to
+all feasibility constraints specified in Section~\ref{sec:constraints}.

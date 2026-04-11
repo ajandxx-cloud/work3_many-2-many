@@ -1,0 +1,114 @@
+%% notation.tex — authoritative notation table for Work 3
+%% Many-to-Many DRT Bidirectional Meeting Point Paper
+%% Symbols used across Phase 1 (plans 01–03) and Phase 2
+
+\begin{longtable}{@{}lll@{}}
+\caption{Summary of Notation}\label{tab:notation}\\
+\toprule
+\textbf{Symbol} & \textbf{Domain/Type} & \textbf{Description} \\
+\midrule
+\endfirsthead
+\multicolumn{3}{c}{\tablename\ \thetable{} -- continued}\\
+\toprule
+\textbf{Symbol} & \textbf{Domain/Type} & \textbf{Description} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{3}{r}{\textit{Continued on next page}}\\
+\endfoot
+\bottomrule
+\endlastfoot
+
+%% ---------------------------------------------------------------
+\multicolumn{3}{l}{\textbf{Sets and Indices}} \\
+\midrule
+$r$ & $\mathcal{R}$ & Index for passenger requests; $\mathcal{R} = \{1,\ldots,|\mathcal{R}|\}$ \\
+$v$ & $\mathcal{V}$ & Index for vehicles; $\mathcal{V} = \{1,\ldots,|\mathcal{V}|\}$ \\
+$\mathcal{R}$ & --- & Set of all requests arriving in the planning horizon \\
+$\mathcal{V}$ & --- & Set of all vehicles in the fleet \\
+$\mathcal{M}$ & --- & Universe of pre-defined fixed meeting points (bus stops, landmarks) \\
+$M_r^P$ & $\subseteq \mathcal{M}$ & Candidate pickup meeting point set for request $r$ (filtered by walking radius) \\
+$M_r^D$ & $\subseteq \mathcal{M}$ & Candidate dropoff meeting point set for request $r$ (filtered by walking radius) \\
+$\mathcal{B}_r$ & --- & Set of feasible service offer bundles for request $r$; $\mathcal{B}_r = M_r^P \times M_r^D$ \\
+\midrule
+
+%% ---------------------------------------------------------------
+\multicolumn{3}{l}{\textbf{Spatial and Temporal}} \\
+\midrule
+$d(i,j)$ & $\mathbb{R}_{\geq 0}$ & Euclidean distance between locations $i$ and $j$ \\
+$t(i,j)$ & $\mathbb{R}_{\geq 0}$ & Travel time from $i$ to $j$; $t(i,j) = d(i,j) / \bar{v}$ where $\bar{v}$ is average speed \\
+$o_r$ & --- & Origin location of request $r$ (passenger's pickup address) \\
+$\delta_r$ & --- & Destination location of request $r$ (passenger's dropoff address) \\
+$e_r$ & $\mathbb{R}_{\geq 0}$ & Earliest acceptable pickup time for request $r$ (time window lower bound) \\
+$l_r$ & $\mathbb{R}_{\geq 0}$ & Latest acceptable pickup time for request $r$ (time window upper bound) \\
+$\rho^P$ & $\mathbb{R}_{>0}$ & Maximum walking radius for pickup meeting point (meters) \\
+$\rho^D$ & $\mathbb{R}_{>0}$ & Maximum walking radius for dropoff meeting point (meters) \\
+\midrule
+
+%% ---------------------------------------------------------------
+\multicolumn{3}{l}{\textbf{Service Offer Bundle}} \\
+\midrule
+$b$ & $\mathcal{B}_r$ & A feasible service offer bundle for request $r$ \\
+$m_r^P$ & $M_r^P$ & Selected pickup meeting point for request $r$ \\
+$m_r^D$ & $M_r^D$ & Selected dropoff meeting point for request $r$ \\
+$\tau_r$ & $\mathbb{R}_{\geq 0}$ & Promised/scheduled pickup time at $m_r^P$ \\
+$p_r$ & $\mathbb{R}_{\geq 0}$ & Fare charged to request $r$ (fixed per trip in this model) \\
+\midrule
+
+%% ---------------------------------------------------------------
+\multicolumn{3}{l}{\textbf{Decision Variables}} \\
+\midrule
+$z_r$ & $\{0,1\}$ & Acceptance indicator: $z_r = 1$ if request $r$ is accepted, 0 otherwise \\
+$v_r$ & $\mathcal{V}$ & Vehicle assigned to serve request $r$ (defined when $z_r = 1$) \\
+$\pi_r^P$ & --- & Insertion position of pickup node for $r$ in vehicle $v_r$'s route \\
+$\pi_r^D$ & --- & Insertion position of dropoff node for $r$ in vehicle $v_r$'s route \\
+\midrule
+
+%% ---------------------------------------------------------------
+\multicolumn{3}{l}{\textbf{Route and Schedule}} \\
+\midrule
+$\sigma_v$ & --- & Ordered route (sequence of nodes) for vehicle $v$ \\
+$s_{v,i}$ & $\mathbb{R}_{\geq 0}$ & Scheduled service time at node $i$ in vehicle $v$'s route \\
+$Q_v$ & $\mathbb{Z}_{>0}$ & Passenger capacity of vehicle $v$ \\
+$q_v(i)$ & $\mathbb{Z}_{\geq 0}$ & Vehicle $v$'s passenger load when departing from node $i$ \\
+$L^{\max}$ & $\mathbb{R}_{>0}$ & Maximum allowable in-vehicle ride time per passenger \\
+$T_v^{\max}$ & $\mathbb{R}_{>0}$ & Maximum allowable route duration (shift length) for vehicle $v$ \\
+\midrule
+
+%% ---------------------------------------------------------------
+\multicolumn{3}{l}{\textbf{Cost Components}} \\
+\midrule
+$C^{op}$ & $\mathbb{R}_{\geq 0}$ & Total vehicle operational cost (proportional to total distance driven) \\
+$C^{wait}$ & $\mathbb{R}_{\geq 0}$ & Aggregate passenger waiting time cost \\
+$C^{walk}$ & $\mathbb{R}_{\geq 0}$ & Aggregate passenger walking distance cost \\
+$C^{IVT}$ & $\mathbb{R}_{\geq 0}$ & Aggregate in-vehicle travel time cost \\
+$C^{rej}$ & $\mathbb{R}_{\geq 0}$ & Cost/penalty for each rejected request \\
+$\alpha_1,\ldots,\alpha_5$ & $\mathbb{R}_{\geq 0}$ & Weights on cost components in objective function \\
+\midrule
+
+%% ---------------------------------------------------------------
+\multicolumn{3}{l}{\textbf{Passenger Choice}} \\
+\midrule
+$k$ & $\mathcal{K}$ & Passenger type index; $\mathcal{K} = \{\text{price},\, \text{time},\, \text{walk}\}$ \\
+$U_{rb}$ & $\mathbb{R}$ & Deterministic utility of bundle $b$ for request $r$ \\
+$U_{r0}$ & $\mathbb{R}$ & Utility of the outside option (reject all offers) for request $r$ \\
+$P_{rb}$ & $[0,1]$ & MNL choice probability that request $r$ selects bundle $b$ \\
+$\beta_1^k$ & $\mathbb{R}$ & Walk-time coefficient for passenger type $k$ \\
+$\beta_2^k$ & $\mathbb{R}$ & Waiting-time coefficient for passenger type $k$ \\
+$\beta_3^k$ & $\mathbb{R}$ & In-vehicle travel time (IVT) coefficient for passenger type $k$ \\
+$\beta_4^k$ & $\mathbb{R}$ & Price coefficient for passenger type $k$ (negative for disutility) \\
+$\text{Walk}_{rb}$ & $\mathbb{R}_{\geq 0}$ & Walking time to/from meeting points for request $r$ under bundle $b$ \\
+$\text{Wait}_{rb}$ & $\mathbb{R}_{\geq 0}$ & Waiting time at pickup meeting point for request $r$ under bundle $b$ \\
+$\text{IVT}_{rb}$ & $\mathbb{R}_{\geq 0}$ & In-vehicle travel time for request $r$ under bundle $b$ \\
+\midrule
+
+%% ---------------------------------------------------------------
+\multicolumn{3}{l}{\textbf{Three-Layer Model}} \\
+\midrule
+$H$ & $\mathbb{R}_{>0}$ & Rolling horizon window length (minutes) \\
+$\Delta$ & $\mathbb{R}_{>0}$ & Rolling horizon time step (re-optimization frequency, minutes) \\
+$t^{\text{now}}$ & $\mathbb{R}_{\geq 0}$ & Current system time in online operation \\
+$\mathcal{R}^{\text{act}}(t)$ & --- & Set of active (accepted, not yet completed) requests at time $t$ \\
+$k^{\text{top}}$ & $\mathbb{Z}_{>0}$ & Number of top candidates generated per request per side (pickup and dropoff) \\
+
+\end{longtable}
