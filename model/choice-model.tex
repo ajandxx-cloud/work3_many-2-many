@@ -1,0 +1,123 @@
+%% choice-model.tex — MNL passenger choice model with outside option and heterogeneity
+
+\section*{Passenger Choice Model}
+
+\subsection*{Utility Function}
+
+We model passenger choice using a Multinomial Logit (MNL) model. For request $r$ of passenger
+type $k \in \mathcal{K}$, the deterministic utility of service offer bundle
+$b = (m_r^P, m_r^D, \tau_r, p_r)$ is:
+
+\begin{equation}\label{eq:utility}
+  U_{rb}^k = \beta_1^k \cdot \text{Walk}_{rb} + \beta_2^k \cdot \text{Wait}_{rb}
+           + \beta_3^k \cdot \text{IVT}_{rb} + \beta_4^k \cdot p_r
+\end{equation}
+
+where:
+\begin{itemize}
+  \item $\text{Walk}_{rb} = d(o_r, m_r^P) + d(m_r^D, \delta_r)$ is the total walking distance
+        (pickup walk + dropoff walk) in meters,
+  \item $\text{Wait}_{rb} = \tau_r - t_r^{\text{req}}$ is the waiting time from request
+        submission to scheduled pickup (minutes),
+  \item $\text{IVT}_{rb} = s_{v_r,\, m_r^D} - s_{v_r,\, m_r^P}$ is the in-vehicle travel
+        time from pickup to dropoff meeting point (minutes),
+  \item $p_r \geq 0$ is the fare (CNY),
+  \item $\beta_1^k, \beta_2^k, \beta_3^k \leq 0$ are disutility coefficients for walking,
+        waiting, and in-vehicle time respectively (negative: more time/distance = lower utility),
+  \item $\beta_4^k \leq 0$ is the price disutility coefficient (negative: higher fare = lower
+        utility).
+\end{itemize}
+
+The random utility is $U_{rb}^k + \varepsilon_{rb}$ where $\varepsilon_{rb}$ is i.i.d.\
+Gumbel$(0,1)$, yielding the standard MNL form.
+
+\subsection*{Outside Option}
+
+The choice set for request $r$ includes an outside option representing the passenger's
+decision to reject all offered bundles (e.g., use a private car, walk, or cancel the trip).
+The utility of the outside option is:
+
+\begin{equation}\label{eq:utility-outside}
+  U_{r0}^k = \beta_0^k
+\end{equation}
+
+where $\beta_0^k$ is the alternative-specific constant (ASC) for the outside option of
+passenger type $k$. Setting $\beta_0^k = 0$ normalizes the outside option as the reference
+alternative; a positive $\beta_0^k$ indicates a preference for the outside option (e.g.,
+passengers with private car access).
+
+The full choice set for request $r$ is $\mathcal{B}_r \cup \{0\}$, where $0$ denotes the
+outside option.
+
+\subsection*{Passenger Heterogeneity}
+
+We distinguish three passenger types $\mathcal{K} = \{\text{price}, \text{time}, \text{walk}\}$
+with different sensitivity profiles. Table~\ref{tab:passenger-types} summarizes the
+qualitative ordering of coefficients; exact values are calibrated from literature or
+simulation in Phase~3.
+
+\begin{table}[h]
+\centering
+\caption{Passenger type coefficient profiles (qualitative ordering)}
+\label{tab:passenger-types}
+\begin{tabular}{lcccc}
+\toprule
+Type & $\beta_1^k$ (Walk) & $\beta_2^k$ (Wait) & $\beta_3^k$ (IVT) & $\beta_4^k$ (Price) \\
+\midrule
+Price-sensitive  & moderate & moderate & moderate & high (most negative) \\
+Time-sensitive   & moderate & high (most negative) & high (most negative) & low \\
+Walk-sensitive   & high (most negative) & moderate & moderate & moderate \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Formally, the ordering constraints are:
+\begin{align}
+  |\beta_4^{\text{price}}| &> |\beta_4^{\text{time}}|,\quad |\beta_4^{\text{price}}| > |\beta_4^{\text{walk}}| \label{eq:type-price}\\
+  |\beta_2^{\text{time}}| + |\beta_3^{\text{time}}| &> |\beta_2^{\text{price}}| + |\beta_3^{\text{price}}| \label{eq:type-time}\\
+  |\beta_1^{\text{walk}}| &> |\beta_1^{\text{price}}|,\quad |\beta_1^{\text{walk}}| > |\beta_1^{\text{time}}| \label{eq:type-walk}
+\end{align}
+
+Baseline parameter values for simulation (provisional --- to be confirmed against Work~1/2
+calibration before Phase~3):
+\begin{align}
+  (\beta_1^{\text{price}},\, \beta_2^{\text{price}},\, \beta_3^{\text{price}},\, \beta_4^{\text{price}})
+    &= (-0.005,\; -0.04,\; -0.02,\; -0.15) \label{eq:beta-price}\\
+  (\beta_1^{\text{time}},\, \beta_2^{\text{time}},\, \beta_3^{\text{time}},\, \beta_4^{\text{time}})
+    &= (-0.005,\; -0.10,\; -0.08,\; -0.03) \label{eq:beta-time}\\
+  (\beta_1^{\text{walk}},\, \beta_2^{\text{walk}},\, \beta_3^{\text{walk}},\, \beta_4^{\text{walk}})
+    &= (-0.020,\; -0.04,\; -0.02,\; -0.05) \label{eq:beta-walk}
+\end{align}
+
+Units: $\beta_1$ in utility/meter, $\beta_2$ and $\beta_3$ in utility/minute, $\beta_4$ in
+utility/CNY.
+
+\subsection*{Choice Probability and Acceptance Rate}
+
+Given the choice set $\mathcal{B}_r \cup \{0\}$ and utilities $\{U_{rb}^k\}_{b \in \mathcal{B}_r}$
+and $U_{r0}^k$, the MNL choice probability that passenger $r$ (of type $k$) selects bundle
+$b$ is:
+
+\begin{equation}\label{eq:choice-prob}
+  P_{rb}^k = \frac{\exp(U_{rb}^k)}{\exp(U_{r0}^k) + \displaystyle\sum_{b' \in \mathcal{B}_r} \exp(U_{rb'}^k)}
+  \quad \forall b \in \mathcal{B}_r
+\end{equation}
+
+The probability of choosing the outside option (rejecting all bundles) is:
+
+\begin{equation}\label{eq:outside-prob}
+  P_{r0}^k = \frac{\exp(U_{r0}^k)}{\exp(U_{r0}^k) + \displaystyle\sum_{b' \in \mathcal{B}_r} \exp(U_{rb'}^k)}
+\end{equation}
+
+The overall acceptance probability for request $r$ is:
+
+\begin{equation}\label{eq:acceptance-prob}
+  P_r^{\text{acc},k} = 1 - P_{r0}^k = \frac{\displaystyle\sum_{b \in \mathcal{B}_r} \exp(U_{rb}^k)}
+  {\exp(U_{r0}^k) + \displaystyle\sum_{b' \in \mathcal{B}_r} \exp(U_{rb'}^k)}
+\end{equation}
+
+In the online decision process, the system selects the bundle $b^* \in \mathcal{B}_r$ that
+maximizes expected utility (or expected system objective contribution), then presents it to
+the passenger. The passenger accepts with probability $P_{rb^*}^k$ and rejects with
+probability $P_{r0}^k$. The realized acceptance $z_r$ is therefore a Bernoulli random
+variable with parameter $P_{rb^*}^k$.
