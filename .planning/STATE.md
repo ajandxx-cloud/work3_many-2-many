@@ -25,7 +25,7 @@ progress:
 ## Current Position
 
 **Active phase:** Phase 1 — Problem Formulation & Model Structure
-**Active plan:** Plan 02 complete — Plan 03 next
+**Active plan:** Plan 03 complete — Plan 04 next
 **Status:** Executing
 **Phase goal:** Formalize the many-to-many DRT problem, notation, constraints, and three-layer coupled model with MNL passenger choice
 
@@ -98,9 +98,9 @@ None currently.
 
 ## Session Continuity
 
-**Last session:** 2026-04-11 — Completed plan 01-02 (operational constraints)
-**Stopped at:** Completed 01-02-PLAN.md
-**Next action:** Phase 1 Plan 03 — three-layer coupled model structure
+**Last session:** 2026-04-11 — Completed plan 01-03 (MNL choice model)
+**Stopped at:** Completed 01-03-PLAN.md
+**Next action:** Phase 1 Plan 04 — next plan
 
 ---
 
