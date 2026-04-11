@@ -9,7 +9,7 @@
 
 ## Phases
 
-- [ ] **Phase 1: Problem Formulation & Model Structure** - Define the many-to-many DRT problem, notation, constraints, and three-layer coupled model with MNL passenger choice
+- [x] **Phase 1: Problem Formulation & Model Structure** - Define the many-to-many DRT problem, notation, constraints, and three-layer coupled model with MNL passenger choice
 - [ ] **Phase 2: Algorithm Development & Python Implementation** - Build exact MILP benchmark and large-scale rolling horizon + ALNS heuristic; implement and validate in Python
 - [ ] **Phase 3: Numerical Experiments** - Run synthetic and semi-realistic Chinese city experiments; compare all baselines and ablations; collect performance metrics
 - [ ] **Phase 4: Policy Analysis & Sensitivity Analysis** - Conduct sensitivity sweeps and equity analysis; derive actionable policy recommendations for TR Part A
@@ -33,10 +33,10 @@
 **Plans:** 4 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Notation table (notation.tex) and problem definition (problem-definition.tex): network, M_r^P/M_r^D sets, service offer bundle, objective, decision vector
-- [ ] 01-02-PLAN.md — Constraints formalization (constraints.tex): capacity, time windows, ride time, walking radius, precedence, route consistency
-- [ ] 01-03-PLAN.md — MNL passenger choice model (choice-model.tex): utility function, outside option, three passenger types with β profiles, choice probability
-- [ ] 01-04-PLAN.md — Three-layer model assembly (three-layer.tex + model.tex): integrate all fragments into compilable self-contained model document
+- [x] 01-01-PLAN.md — Notation table (notation.tex) and problem definition (problem-definition.tex): network, M_r^P/M_r^D sets, service offer bundle, objective, decision vector
+- [x] 01-02-PLAN.md — Constraints formalization (constraints.tex): capacity, time windows, ride time, walking radius, precedence, route consistency
+- [x] 01-03-PLAN.md — MNL passenger choice model (choice-model.tex): utility function, outside option, three passenger types with β profiles, choice probability
+- [x] 01-04-PLAN.md — Three-layer model assembly (three-layer.tex + model.tex): integrate all fragments into compilable self-contained model document
 
 ### Phase 2: Algorithm Development & Python Implementation
 **Goal**: Both the exact MILP benchmark and the large-scale rolling horizon + ALNS heuristic are implemented in Python, tested on small instances, and the heuristic meets the response-time requirement
@@ -106,7 +106,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Problem Formulation & Model Structure | 0/4 | Planned | - |
+| 1. Problem Formulation & Model Structure | 4/4 | Complete | 2026-04-11 |
 | 2. Algorithm Development & Python Implementation | 0/? | Not started | - |
 | 3. Numerical Experiments | 0/? | Not started | - |
 | 4. Policy Analysis & Sensitivity Analysis | 0/? | Not started | - |
@@ -175,4 +175,4 @@ Plans:
 ---
 
 *Roadmap created: 2026-04-11*
-*Last updated: 2026-04-11 — Phase 1 plans created (4 plans, 2 waves)*
+*Last updated: 2026-04-11 — Phase 1 complete (4/4 plans, all requirements PROB-01..05, CHOICE-01..04 verified)*
