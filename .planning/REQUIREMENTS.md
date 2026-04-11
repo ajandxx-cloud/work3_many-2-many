@@ -102,14 +102,56 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PROB-01 to PROB-05 | Phase 1 | Pending |
-| CHOICE-01 to CHOICE-04 | Phase 1 | Pending |
-| EXACT-01 to EXACT-04 | Phase 2 | Pending |
-| HEUR-01 to HEUR-06 | Phase 2 | Pending |
-| EXP-01 to EXP-09 | Phase 3 | Pending |
-| POLICY-01 to POLICY-06 | Phase 4 | Pending |
-| PAPER-01 to PAPER-10 | Phase 5 | Pending |
-| FIG-01 to FIG-06 | Phase 5 | Pending |
+| PROB-01 | Phase 1 — Problem Formulation & Model Structure | Pending |
+| PROB-02 | Phase 1 — Problem Formulation & Model Structure | Pending |
+| PROB-03 | Phase 1 — Problem Formulation & Model Structure | Pending |
+| PROB-04 | Phase 1 — Problem Formulation & Model Structure | Pending |
+| PROB-05 | Phase 1 — Problem Formulation & Model Structure | Pending |
+| CHOICE-01 | Phase 1 — Problem Formulation & Model Structure | Pending |
+| CHOICE-02 | Phase 1 — Problem Formulation & Model Structure | Pending |
+| CHOICE-03 | Phase 1 — Problem Formulation & Model Structure | Pending |
+| CHOICE-04 | Phase 1 — Problem Formulation & Model Structure | Pending |
+| EXACT-01 | Phase 2 — Algorithm Development & Python Implementation | Pending |
+| EXACT-02 | Phase 2 — Algorithm Development & Python Implementation | Pending |
+| EXACT-03 | Phase 2 — Algorithm Development & Python Implementation | Pending |
+| EXACT-04 | Phase 2 — Algorithm Development & Python Implementation | Pending |
+| HEUR-01 | Phase 2 — Algorithm Development & Python Implementation | Pending |
+| HEUR-02 | Phase 2 — Algorithm Development & Python Implementation | Pending |
+| HEUR-03 | Phase 2 — Algorithm Development & Python Implementation | Pending |
+| HEUR-04 | Phase 2 — Algorithm Development & Python Implementation | Pending |
+| HEUR-05 | Phase 2 — Algorithm Development & Python Implementation | Pending |
+| HEUR-06 | Phase 2 — Algorithm Development & Python Implementation | Pending |
+| EXP-01 | Phase 3 — Numerical Experiments | Pending |
+| EXP-02 | Phase 3 — Numerical Experiments | Pending |
+| EXP-03 | Phase 3 — Numerical Experiments | Pending |
+| EXP-04 | Phase 3 — Numerical Experiments | Pending |
+| EXP-05 | Phase 3 — Numerical Experiments | Pending |
+| EXP-06 | Phase 3 — Numerical Experiments | Pending |
+| EXP-07 | Phase 3 — Numerical Experiments | Pending |
+| EXP-08 | Phase 3 — Numerical Experiments | Pending |
+| EXP-09 | Phase 3 — Numerical Experiments | Pending |
+| POLICY-01 | Phase 4 — Policy Analysis & Sensitivity Analysis | Pending |
+| POLICY-02 | Phase 4 — Policy Analysis & Sensitivity Analysis | Pending |
+| POLICY-03 | Phase 4 — Policy Analysis & Sensitivity Analysis | Pending |
+| POLICY-04 | Phase 4 — Policy Analysis & Sensitivity Analysis | Pending |
+| POLICY-05 | Phase 4 — Policy Analysis & Sensitivity Analysis | Pending |
+| POLICY-06 | Phase 4 — Policy Analysis & Sensitivity Analysis | Pending |
+| PAPER-01 | Phase 5 — Paper Writing | Pending |
+| PAPER-02 | Phase 5 — Paper Writing | Pending |
+| PAPER-03 | Phase 5 — Paper Writing | Pending |
+| PAPER-04 | Phase 5 — Paper Writing | Pending |
+| PAPER-05 | Phase 5 — Paper Writing | Pending |
+| PAPER-06 | Phase 5 — Paper Writing | Pending |
+| PAPER-07 | Phase 5 — Paper Writing | Pending |
+| PAPER-08 | Phase 5 — Paper Writing | Pending |
+| PAPER-09 | Phase 5 — Paper Writing | Pending |
+| PAPER-10 | Phase 5 — Paper Writing | Pending |
+| FIG-01 | Phase 6 — Academic Figures & Visualization | Pending |
+| FIG-02 | Phase 6 — Academic Figures & Visualization | Pending |
+| FIG-03 | Phase 6 — Academic Figures & Visualization | Pending |
+| FIG-04 | Phase 6 — Academic Figures & Visualization | Pending |
+| FIG-05 | Phase 6 — Academic Figures & Visualization | Pending |
+| FIG-06 | Phase 6 — Academic Figures & Visualization | Pending |
 
 **Coverage:**
 - v1 requirements: 47 total
@@ -118,4 +160,4 @@
 
 ---
 *Requirements defined: 2026-04-11*
-*Last updated: 2026-04-11 after initial definition*
+*Last updated: 2026-04-11 — traceability updated after roadmap creation (FIG-01..06 moved to Phase 6)*
