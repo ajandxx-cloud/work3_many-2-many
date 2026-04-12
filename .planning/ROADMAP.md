@@ -138,10 +138,10 @@ Plans:
   2. Social welfare W = sum_r[z_r*U_rb* - (1-z_r)*Gamma] is computed for each run and reported in the CSV
   3. fig07_pareto.pdf and fig07_pareto.png are produced at 300 dpi showing the Pareto frontier with one labeled point per Gamma value
   4. experiments.tex Section 5.1 defines W, Section 5.2 addresses the endogeneity concern, and Section 5.5 presents the frontier with Table 2 and fig07
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 
 Plans:
-- [ ] 08-01-PLAN.md — Gamma sweep experiment: extend metrics.py + variants.py, write pareto_sweep.py runner, write fig07_pareto.py figure script, execute sweep and generate outputs
+- [x] 08-01-PLAN.md — Gamma sweep experiment: extend metrics.py + variants.py, write pareto_sweep.py runner, write fig07_pareto.py figure script, execute sweep and generate outputs
 - [ ] 08-02-PLAN.md — experiments.tex update: add W definition to Section 5.1, reframe Section 5.2 efficiency discussion, add Section 5.5 with Table 2 and fig07 reference
 
 ---
@@ -156,7 +156,7 @@ Plans:
 | 4. Policy Analysis & Sensitivity Analysis | 3/3 | Complete   | 2026-04-12 |
 | 5. Paper Writing | 0/5 | In progress | - |
 | 6. Academic Figures & Visualization | 3/3 | Complete    | 2026-04-12 |
-| 8. Pareto Experiment & New Metrics | 0/2 | Planned | - |
+| 8. Pareto Experiment & New Metrics | 1/2 | In Progress|  |
 
 ---
 
