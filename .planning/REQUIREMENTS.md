@@ -38,15 +38,15 @@
 
 ### Numerical Experiments
 
-- [ ] **EXP-01**: Synthetic scenario: grid/random network, 100-500 requests, 10-30 vehicles
-- [ ] **EXP-02**: Semi-realistic case: Chinese city scenario (e.g., suburban area, low-density district)
+- [x] **EXP-01**: Synthetic scenario: grid/random network, 100-500 requests, 10-30 vehicles
+- [x] **EXP-02**: Semi-realistic case: Chinese city scenario (e.g., suburban area, low-density district)
 - [x] **EXP-03**: Baseline 1 — Door-to-door DARP (no meeting points)
 - [x] **EXP-04**: Baseline 2 — Single-sided meeting point (pickup flexible, dropoff fixed)
 - [x] **EXP-05**: Baseline 3 — Bidirectional meeting points, no passenger choice (system assigns directly)
 - [x] **EXP-06**: Full model — Bidirectional meeting points + passenger choice + rolling horizon
 - [x] **EXP-07**: Ablation 1 — Remove rolling horizon (myopic insertion only)
 - [x] **EXP-08**: Ablation 2 — Remove passenger choice (system assigns best option directly)
-- [ ] **EXP-09**: Performance metrics: acceptance rate, vehicle-km, avg/95th-pct waiting time, avg walking distance, avg IVT, detour ratio, fairness index, CPU time
+- [x] **EXP-09**: Performance metrics: acceptance rate, vehicle-km, avg/95th-pct waiting time, avg walking distance, avg IVT, detour ratio, fairness index, CPU time
 
 ### Policy Analysis (TR Part A Requirement)
 
@@ -121,15 +121,15 @@
 | HEUR-04 | Phase 2 — Algorithm Development & Python Implementation | Pending |
 | HEUR-05 | Phase 2 — Algorithm Development & Python Implementation | Pending |
 | HEUR-06 | Phase 2 — Algorithm Development & Python Implementation | Pending |
-| EXP-01 | Phase 3 — Numerical Experiments | Pending |
-| EXP-02 | Phase 3 — Numerical Experiments | Pending |
+| EXP-01 | Phase 3 — Numerical Experiments | Complete |
+| EXP-02 | Phase 3 — Numerical Experiments | Complete |
 | EXP-03 | Phase 3 — Numerical Experiments | Complete |
 | EXP-04 | Phase 3 — Numerical Experiments | Complete |
 | EXP-05 | Phase 3 — Numerical Experiments | Complete |
 | EXP-06 | Phase 3 — Numerical Experiments | Complete |
 | EXP-07 | Phase 3 — Numerical Experiments | Complete |
 | EXP-08 | Phase 3 — Numerical Experiments | Complete |
-| EXP-09 | Phase 3 — Numerical Experiments | Pending |
+| EXP-09 | Phase 3 — Numerical Experiments | Complete |
 | POLICY-01 | Phase 4 — Policy Analysis & Sensitivity Analysis | Pending |
 | POLICY-02 | Phase 4 — Policy Analysis & Sensitivity Analysis | Pending |
 | POLICY-03 | Phase 4 — Policy Analysis & Sensitivity Analysis | Pending |

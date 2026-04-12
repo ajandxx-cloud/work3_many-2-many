@@ -11,7 +11,7 @@
 
 - [x] **Phase 1: Problem Formulation & Model Structure** - Define the many-to-many DRT problem, notation, constraints, and three-layer coupled model with MNL passenger choice
 - [x] **Phase 2: Algorithm Development & Python Implementation** - Build exact MILP benchmark and large-scale rolling horizon + ALNS heuristic; implement and validate in Python
-- [ ] **Phase 3: Numerical Experiments** - Run synthetic and semi-realistic Chinese city experiments; compare all baselines and ablations; collect performance metrics
+- [x] **Phase 3: Numerical Experiments** - Run synthetic and semi-realistic Chinese city experiments; compare all baselines and ablations; collect performance metrics (completed 2026-04-12)
 - [ ] **Phase 4: Policy Analysis & Sensitivity Analysis** - Conduct sensitivity sweeps and equity analysis; derive actionable policy recommendations for TR Part A
 - [ ] **Phase 5: Paper Writing** - Write all paper sections (abstract through conclusion) in submission-ready form
 - [ ] **Phase 6: Academic Figures & Visualization** - Produce all publication-quality figures (system diagrams, flowcharts, result charts, policy maps)
@@ -67,12 +67,12 @@ Plans:
   3. All four model variants (door-to-door, single-sided, bidirectional no-choice, full model) and both ablations (no rolling horizon, no passenger choice) produce complete metric tables
   4. All nine performance metrics (acceptance rate, vehicle-km, waiting time avg/95th, walking distance, IVT, detour ratio, fairness index, CPU time) are computed and recorded for every variant
   5. The full model shows measurable improvement over all baselines on at least acceptance rate and vehicle-km, confirming the core thesis
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 
 Plans:
 - [x] 03-01-PLAN.md — Experiment infrastructure: config constants, synthetic + Beijing scenario generators, 9-metric computation module
 - [x] 03-02-PLAN.md — Model variants: 6 runnable classes (DoorToDoor, SingleSidedPickup, BidirectionalNoChoice, FullModel, AblationNoRollingHorizon, AblationNoChoice)
-- [ ] 03-03-PLAN.md — Run experiments and collect results: runner.py orchestration, synthetic_results.csv, beijing_results.csv, metrics_table.csv
+- [x] 03-03-PLAN.md — Run experiments and collect results: runner.py orchestration, synthetic_results.csv, beijing_results.csv, metrics_table.csv
 
 ### Phase 4: Policy Analysis & Sensitivity Analysis
 **Goal**: The TR Part A policy contribution is complete — sensitivity sweeps across demand density, walking tolerance, and fleet size are done, equity analysis across passenger types is documented, and concrete policy recommendations for Chinese city DRT deployment are written
@@ -120,7 +120,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Problem Formulation & Model Structure | 4/4 | Complete | 2026-04-11 |
 | 2. Algorithm Development & Python Implementation | 5/5 | Complete | 2026-04-12 |
-| 3. Numerical Experiments | 2/3 | In Progress|  |
+| 3. Numerical Experiments | 3/3 | Complete   | 2026-04-12 |
 | 4. Policy Analysis & Sensitivity Analysis | 0/? | Not started | - |
 | 5. Paper Writing | 0/? | Not started | - |
 | 6. Academic Figures & Visualization | 0/? | Not started | - |
