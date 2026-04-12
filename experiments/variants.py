@@ -18,6 +18,7 @@ Threat T-03-07 mitigation: unique names asserted at module load time.
 from __future__ import annotations
 
 import math
+import random
 import time
 from abc import ABC, abstractmethod
 from copy import deepcopy
@@ -34,7 +35,9 @@ from experiments.metrics import PassengerRecord, SimulationResult
 from experiments.scenarios import Scenario
 from src.drt.alns import ALNSState, RollingHorizon, greedy_insertion
 from src.drt.candidate import euclidean
+from src.drt.choice import choice_probability
 from src.drt.types import (
+    Bundle,
     MeetingPoint,
     PassengerType,
     PRICE_SENSITIVE,
@@ -63,6 +66,90 @@ _ZERO_BETA_TYPE = PassengerType(
     beta_ivt=0.0,
     beta_price=0.0,
 )
+
+
+# ---------------------------------------------------------------------------
+# MNL filtering helper
+# ---------------------------------------------------------------------------
+
+
+def _mnl_filter_requests(
+    requests: list,
+    arrival_times: list,
+    scenario,
+) -> list:
+    """
+    Apply MNL Bernoulli acceptance to each request before routing.
+
+    For each request, construct a representative Bundle using the nearest
+    meeting point as pickup and dropoff proxy, then compute choice_probability.
+    Simulate acceptance with a deterministic RNG seeded by request id hash.
+
+    Unit note: MNL betas (from Phase 1) are calibrated for km and minutes.
+    Scenario coordinates are in meters, times in seconds.
+    Bundle attributes are scaled before calling choice_probability:
+      walk_dist: meters → km  (divide by 1000)
+      wait_time: seconds → minutes  (divide by 60)
+      ivt:       seconds → minutes  (divide by 60)
+    This is achieved by wrapping the bundle in a scaled proxy via a custom
+    PassengerType that absorbs the unit conversion into the beta values.
+    """
+    if not scenario.meeting_points:
+        return list(requests)
+
+    # Scale betas to match raw meter/second units used in Bundle construction.
+    # Original betas assume km and minutes; multiply by conversion factors:
+    #   beta_walk_scaled = beta_walk_km * (1/1000)   [per meter]
+    #   beta_wait_scaled = beta_wait_min * (1/60)    [per second]
+    #   beta_ivt_scaled  = beta_ivt_min  * (1/60) * (1/TRAVEL_SPEED)
+    #                    [mnl_utility uses raw Euclidean distance as IVT proxy,
+    #                     so 1 meter = 1/TRAVEL_SPEED seconds]
+    def _scale_ptype(ptype: PassengerType) -> PassengerType:
+        return PassengerType(
+            name=ptype.name,
+            beta_walk=ptype.beta_walk / 1000.0,
+            beta_wait=ptype.beta_wait / 60.0,
+            beta_ivt=ptype.beta_ivt / (60.0 * TRAVEL_SPEED),
+            beta_price=ptype.beta_price,
+        )
+
+    accepted = []
+    for idx, request in enumerate(requests):
+        ptype = _scale_ptype(PASSENGER_TYPES[idx % len(PASSENGER_TYPES)])
+        arrival_t = arrival_times[idx]
+
+        # Find nearest meeting point as pickup and dropoff proxy
+        nearest_pu = min(
+            scenario.meeting_points,
+            key=lambda mp: math.sqrt(
+                (mp.coords[0] - request.origin[0]) ** 2
+                + (mp.coords[1] - request.origin[1]) ** 2
+            ),
+        )
+        nearest_do = min(
+            scenario.meeting_points,
+            key=lambda mp: math.sqrt(
+                (mp.coords[0] - request.destination[0]) ** 2
+                + (mp.coords[1] - request.destination[1]) ** 2
+            ),
+        )
+
+        bundle = Bundle(
+            request_id=request.id,
+            pickup_mp=nearest_pu,
+            dropoff_mp=nearest_do,
+            departure_time=request.earliest,
+            price=0.0,
+        )
+
+        probs = choice_probability([bundle], request, ptype, arrival_t)
+        accept_prob = probs.get(bundle, 0.0)
+
+        rng = random.Random(hash(request.id) & 0xFFFFFFFF)
+        if rng.random() <= accept_prob:
+            accepted.append(request)
+
+    return accepted
 
 
 # ---------------------------------------------------------------------------
@@ -139,10 +226,14 @@ class BaseVariant(ABC):
                 if pickup_mp is None:
                     accepted = False
             elif accepted and request.id in completed_ids:
-                # Completed request: stop info was pruned; use estimated values
+                # Completed request: stop info was pruned; use stored pickup_time if available
                 pickup_mp = dropoff_mp = None
-                pickup_time = request.earliest
-                dropoff_time = request.earliest + euclidean(request.origin, request.destination) / TRAVEL_SPEED
+                stored_pickup_times = getattr(state, 'pickup_times', {})
+                if request.id in stored_pickup_times:
+                    pickup_time = stored_pickup_times[request.id]
+                else:
+                    pickup_time = request.earliest
+                dropoff_time = pickup_time + euclidean(request.origin, request.destination) / TRAVEL_SPEED
             else:
                 pickup_mp = dropoff_mp = None
                 pickup_time = dropoff_time = 0.0
@@ -380,6 +471,8 @@ class FullModel(BaseVariant):
     """
     Main contribution: bidirectional MPs + MNL choice + rolling horizon.
     Uses RollingHorizon from alns.py with PASSENGER_TYPES for MNL filtering.
+    MNL acceptance: after finding best insertion, simulate Bernoulli acceptance
+    using choice_probability. Rejected requests are excluded from routing.
     """
 
     name = "FullModel"
@@ -397,18 +490,18 @@ class FullModel(BaseVariant):
             delta=DELTA,
             cost_weights=_COST_WEIGHTS,
             travel_speed=TRAVEL_SPEED,
-            alns_iterations=5,  # reduced for tractable runtime at scales 100-500
+            alns_iterations=5,
             seed=42,
         )
 
-        # Sort requests by earliest time (simulate chronological arrival)
+        # Apply MNL filtering: only pass requests that accept the offered bundle
         sorted_requests = sorted(scenario.requests, key=lambda r: r.earliest)
         arrival_times = [r.earliest for r in sorted_requests]
 
-        rh.run_simulation(sorted_requests, arrival_times)
+        mnl_accepted = _mnl_filter_requests(sorted_requests, arrival_times, scenario)
 
-        # Build ALNSState from RollingHorizon final routes
-        # Include both currently-in-route IDs and completed (pruned) IDs
+        rh.run_simulation(mnl_accepted, [r.earliest for r in mnl_accepted])
+
         assigned_ids = set(rh.completed_request_ids)
         for route in rh.routes.values():
             for stop in route.stops:
@@ -418,7 +511,8 @@ class FullModel(BaseVariant):
         unassigned = [r for r in scenario.requests if r.id not in assigned_ids]
         return ALNSState(routes=rh.routes, unassigned=unassigned, cost=0.0,
                          completed_ids=set(rh.completed_request_ids),
-                         extra_vehicle_km=rh.accumulated_vehicle_km)
+                         extra_vehicle_km=rh.accumulated_vehicle_km,
+                         pickup_times=dict(rh.pickup_times))
 
 
 # ---------------------------------------------------------------------------
@@ -430,13 +524,22 @@ class AblationNoRollingHorizon(BaseVariant):
     """
     Ablation: FullModel without periodic re-optimization.
     Uses greedy_insertion only (single pass, no ALNS reoptimize calls).
+    Applies MNL filtering same as FullModel.
     """
 
     name = "AblationNoRollingHorizon"
 
     def _solve(self, scenario: Scenario) -> ALNSState:
         vehicles_dict = self._vehicles_dict(scenario)
-        state = self._initial_state(scenario)
+
+        sorted_requests = sorted(scenario.requests, key=lambda r: r.earliest)
+        mnl_accepted = _mnl_filter_requests(sorted_requests, [r.earliest for r in sorted_requests], scenario)
+
+        state = ALNSState(
+            routes={v.id: Route(vehicle_id=v.id, stops=[]) for v in scenario.vehicles},
+            unassigned=list(mnl_accepted),
+            cost=0.0,
+        )
 
         result_state = greedy_insertion(
             state,
@@ -448,6 +551,11 @@ class AblationNoRollingHorizon(BaseVariant):
             cost_weights=_COST_WEIGHTS,
             travel_speed=TRAVEL_SPEED,
         )
+
+        # Mark MNL-rejected requests as unassigned
+        mnl_accepted_ids = {r.id for r in mnl_accepted}
+        mnl_rejected = [r for r in scenario.requests if r.id not in mnl_accepted_ids]
+        result_state.unassigned.extend(mnl_rejected)
         return result_state
 
 
@@ -496,7 +604,8 @@ class AblationNoChoice(BaseVariant):
         unassigned = [r for r in scenario.requests if r.id not in assigned_ids]
         return ALNSState(routes=rh.routes, unassigned=unassigned, cost=0.0,
                          completed_ids=set(rh.completed_request_ids),
-                         extra_vehicle_km=rh.accumulated_vehicle_km)
+                         extra_vehicle_km=rh.accumulated_vehicle_km,
+                         pickup_times=dict(rh.pickup_times))
 
 
 # ---------------------------------------------------------------------------

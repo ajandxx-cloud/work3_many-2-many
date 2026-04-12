@@ -34,6 +34,7 @@ class ALNSState:
     cost: float = 0.0
     completed_ids: set = field(default_factory=set)  # IDs of requests already served (pruned from routes)
     extra_vehicle_km: float = 0.0  # km driven in completed (pruned) trips, for RollingHorizon variants
+    pickup_times: dict = field(default_factory=dict)  # request_id -> actual scheduled pickup time
 
 
 # ---------------------------------------------------------------------------
@@ -98,8 +99,13 @@ def _find_request_stops(request: Request, routes: dict) -> tuple[str | None, int
     return None, -1, -1
 
 
-def _apply_insertion(state: ALNSState, result: InsertionResult, request: Request) -> None:
-    """Apply an InsertionResult to state.routes in-place, tagging stops with request id."""
+def _apply_insertion(state: ALNSState, result: InsertionResult, request: Request,
+                     vehicles: dict | None = None, travel_speed: float = 1.0) -> None:
+    """Apply an InsertionResult to state.routes in-place, tagging stops with request id.
+
+    If vehicles is provided, compute and store actual scheduled arrival times.
+    Otherwise stores 0.0 as placeholder times.
+    """
     route = state.routes.get(result.vehicle_id)
     if route is None:
         route = Route(vehicle_id=result.vehicle_id, stops=[])
@@ -108,6 +114,25 @@ def _apply_insertion(state: ALNSState, result: InsertionResult, request: Request
     # Insert pickup then dropoff (pos_d is relative to list after pickup inserted)
     route.stops.insert(result.pos_p, (result.pickup_mp, 0.0, request.id, 'pickup'))
     route.stops.insert(result.pos_d, (result.dropoff_mp, 0.0, request.id, 'dropoff'))
+
+    # Recompute scheduled times for all stops if vehicle info available
+    if vehicles is not None:
+        vehicle = vehicles.get(result.vehicle_id)
+        if vehicle is not None:
+            t = vehicle.current_time
+            prev = vehicle.current_position
+            new_stops = []
+            for stop in route.stops:
+                mp = stop[0]
+                t += euclidean(prev, mp.coords) / travel_speed
+                if len(stop) >= 4:
+                    new_stops.append((mp, t, stop[2], stop[3]))
+                elif len(stop) >= 3:
+                    new_stops.append((mp, t, stop[2]))
+                else:
+                    new_stops.append((mp, t))
+                prev = mp.coords
+            route.stops = new_stops
 
 
 def _remove_request(state: ALNSState, request: Request) -> bool:
@@ -259,7 +284,7 @@ def greedy_insertion(state: ALNSState, vehicles: dict, meeting_points: list,
             rho_p, rho_d, k_top, cost_weights, travel_speed
         )
         if result is not None:
-            _apply_insertion(new_state, result, req)
+            _apply_insertion(new_state, result, req, vehicles, travel_speed)
             # Keep plain_routes in sync
             plain_routes = _to_plain_routes(new_state.routes)
         else:
@@ -309,7 +334,7 @@ def regret_insertion(state: ALNSState, vehicles: dict, meeting_points: list,
             new_state.unassigned.extend(pending)
             break
 
-        _apply_insertion(new_state, best_result, best_req)
+        _apply_insertion(new_state, best_result, best_req, vehicles, travel_speed)
         pending.remove(best_req)
 
     return new_state
@@ -445,6 +470,7 @@ class RollingHorizon:
         self.request_registry: dict = {}  # request_id -> Request (all ever seen)
         self.completed_request_ids: set = set()  # IDs of requests already served
         self.accumulated_vehicle_km: float = 0.0  # total km driven including completed trips
+        self.pickup_times: dict = {}  # request_id -> actual scheduled pickup time
 
     def add_request(self, request: Request, current_time: float) -> None:
         """Add a new incoming request to the active set."""
@@ -478,6 +504,9 @@ class RollingHorizon:
                 for s in completed:
                     if len(s) >= 3:
                         self.completed_request_ids.add(s[2])
+                        # Record pickup time for wait-time tracking
+                        if len(s) >= 4 and s[3] == 'pickup':
+                            self.pickup_times[s[2]] = s[1]
                 # Accumulate vehicle_km for completed stops
                 prev = v.current_position
                 for s in completed:
