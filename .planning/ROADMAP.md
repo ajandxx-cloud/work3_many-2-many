@@ -48,7 +48,14 @@ Plans:
   3. The online insertion evaluator correctly checks feasibility and computes incremental cost for all (m^P, m^D, vehicle, position) combinations
   4. The rolling horizon ALNS loop runs with configurable window H and time step Δ, and all five destroy/repair operators execute without error
   5. Average decision time per request is below 1 second on large-scale instances (100+ requests, 10+ vehicles) in a timed benchmark run
-**Plans**: TBD
+**Plans:** 5 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Project scaffold + data types (pyproject.toml, types.py, choice.py)
+- [ ] 02-02-PLAN.md — Candidate generation + feasibility checker (candidate.py, feasibility.py)
+- [ ] 02-03-PLAN.md — Online insertion evaluator (insertion.py)
+- [ ] 02-04-PLAN.md — MILP formulation with Gurobi (milp.py)
+- [ ] 02-05-PLAN.md — ALNS rolling horizon (alns.py)
 
 ### Phase 3: Numerical Experiments
 **Goal**: All experiment results are produced — synthetic and semi-realistic scenarios are run, all four model variants and two ablations are compared, and the full performance metric table is populated
@@ -107,7 +114,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Problem Formulation & Model Structure | 4/4 | Complete | 2026-04-11 |
-| 2. Algorithm Development & Python Implementation | 0/? | Not started | - |
+| 2. Algorithm Development & Python Implementation | 0/5 | Planned | - |
 | 3. Numerical Experiments | 0/? | Not started | - |
 | 4. Policy Analysis & Sensitivity Analysis | 0/? | Not started | - |
 | 5. Paper Writing | 0/? | Not started | - |
