@@ -26,7 +26,10 @@
   2. model.tex Section 4 states the single-offer mechanism and binary logit formula with clear notation
   3. algorithm.tex pseudocode shows the binary logit acceptance step explicitly at the correct position in the dispatch loop
   4. Running the existing experiment suite with updated choice.py produces valid (non-NaN, non-error) results
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 07-01-PLAN.md — Replace choice_probability with binary logit accept_probability in choice.py
+- [ ] 07-02-PLAN.md — Rewrite model.tex Section 4 and fill in algorithm.tex Algorithm 1 pseudocode
 
 ### Phase 8: Pareto Experiment & New Metrics
 **Goal**: The paper presents a coverage–efficiency Pareto frontier that directly addresses the reviewer's concern that efficiency gains are partly driven by endogenous coverage reduction.
@@ -57,7 +60,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 7. Choice Model & Algorithm Fix | 0/? | Not started | - |
+| 7. Choice Model & Algorithm Fix | 0/2 | Not started | - |
 | 8. Pareto Experiment & New Metrics | 0/? | Not started | - |
 | 9. Paper Section Updates | 0/? | Not started | - |
 
@@ -86,3 +89,4 @@
 ---
 
 *Roadmap created: 2026-04-12 — v2.0 reviewer revision (phases 7–9)*
+*Updated: 2026-04-12 — Phase 7 planned (2 plans)*
