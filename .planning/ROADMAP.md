@@ -10,7 +10,7 @@
 ## Phases
 
 - [x] **Phase 1: Problem Formulation & Model Structure** - Define the many-to-many DRT problem, notation, constraints, and three-layer coupled model with MNL passenger choice
-- [ ] **Phase 2: Algorithm Development & Python Implementation** - Build exact MILP benchmark and large-scale rolling horizon + ALNS heuristic; implement and validate in Python
+- [x] **Phase 2: Algorithm Development & Python Implementation** - Build exact MILP benchmark and large-scale rolling horizon + ALNS heuristic; implement and validate in Python
 - [ ] **Phase 3: Numerical Experiments** - Run synthetic and semi-realistic Chinese city experiments; compare all baselines and ablations; collect performance metrics
 - [ ] **Phase 4: Policy Analysis & Sensitivity Analysis** - Conduct sensitivity sweeps and equity analysis; derive actionable policy recommendations for TR Part A
 - [ ] **Phase 5: Paper Writing** - Write all paper sections (abstract through conclusion) in submission-ready form
@@ -51,11 +51,11 @@ Plans:
 **Plans:** 5 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Project scaffold + data types (pyproject.toml, types.py, choice.py)
-- [ ] 02-02-PLAN.md — Candidate generation + feasibility checker (candidate.py, feasibility.py)
-- [ ] 02-03-PLAN.md — Online insertion evaluator (insertion.py)
-- [ ] 02-04-PLAN.md — MILP formulation with Gurobi (milp.py)
-- [ ] 02-05-PLAN.md — ALNS rolling horizon (alns.py)
+- [x] 02-01-PLAN.md — Project scaffold + data types (pyproject.toml, types.py, choice.py)
+- [x] 02-02-PLAN.md — Candidate generation + feasibility checker (candidate.py, feasibility.py)
+- [x] 02-03-PLAN.md — Online insertion evaluator (insertion.py)
+- [x] 02-04-PLAN.md — MILP formulation with Gurobi (milp.py)
+- [x] 02-05-PLAN.md — ALNS rolling horizon (alns.py)
 
 ### Phase 3: Numerical Experiments
 **Goal**: All experiment results are produced — synthetic and semi-realistic scenarios are run, all four model variants and two ablations are compared, and the full performance metric table is populated
@@ -114,7 +114,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Problem Formulation & Model Structure | 4/4 | Complete | 2026-04-11 |
-| 2. Algorithm Development & Python Implementation | 0/5 | Planned | - |
+| 2. Algorithm Development & Python Implementation | 5/5 | Complete | 2026-04-12 |
 | 3. Numerical Experiments | 0/? | Not started | - |
 | 4. Policy Analysis & Sensitivity Analysis | 0/? | Not started | - |
 | 5. Paper Writing | 0/? | Not started | - |
