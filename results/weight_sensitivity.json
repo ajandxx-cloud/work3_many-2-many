@@ -1,0 +1,101 @@
+[
+  {
+    "config_name": "efficiency-focused",
+    "seed": 42,
+    "fullmodel_vkm": 492.3204918306636,
+    "fullmodel_accept": 0.245,
+    "fullmodel_vkm_per_trip": 2009.4713952271986,
+    "doorToDoor_vkm": 1980.5013293869877,
+    "doorToDoor_accept": 0.63,
+    "doorToDoor_vkm_per_trip": 3143.6529037888695,
+    "reduction_pct": 36.07845850903912
+  },
+  {
+    "config_name": "efficiency-focused",
+    "seed": 43,
+    "fullmodel_vkm": 411.9968903717543,
+    "fullmodel_accept": 0.22,
+    "fullmodel_vkm_per_trip": 1872.7131380534288,
+    "doorToDoor_vkm": 2148.9395824720905,
+    "doorToDoor_accept": 0.725,
+    "doorToDoor_vkm_per_trip": 2964.0545965132283,
+    "reduction_pct": 36.81920905720162
+  },
+  {
+    "config_name": "efficiency-focused",
+    "seed": 44,
+    "fullmodel_vkm": 529.7305001865138,
+    "fullmodel_accept": 0.205,
+    "fullmodel_vkm_per_trip": 2584.051220422019,
+    "doorToDoor_vkm": 1766.6591231580908,
+    "doorToDoor_accept": 0.55,
+    "doorToDoor_vkm_per_trip": 3212.1074966510737,
+    "reduction_pct": 19.552778880652745
+  },
+  {
+    "config_name": "equity-focused",
+    "seed": 42,
+    "fullmodel_vkm": 502.9961674126189,
+    "fullmodel_accept": 0.24,
+    "fullmodel_vkm_per_trip": 2095.8173642192455,
+    "doorToDoor_vkm": 1994.9208358918613,
+    "doorToDoor_accept": 0.665,
+    "doorToDoor_vkm_per_trip": 2999.8809562283627,
+    "reduction_pct": 30.13664892708817
+  },
+  {
+    "config_name": "equity-focused",
+    "seed": 43,
+    "fullmodel_vkm": 375.17971538090643,
+    "fullmodel_accept": 0.23,
+    "fullmodel_vkm_per_trip": 1631.216153830028,
+    "doorToDoor_vkm": 2152.877177221288,
+    "doorToDoor_accept": 0.72,
+    "doorToDoor_vkm_per_trip": 2990.1071905851227,
+    "reduction_pct": 45.44623152754529
+  },
+  {
+    "config_name": "equity-focused",
+    "seed": 44,
+    "fullmodel_vkm": 548.755735734021,
+    "fullmodel_accept": 0.205,
+    "fullmodel_vkm_per_trip": 2676.8572474830294,
+    "doorToDoor_vkm": 1775.9976437497692,
+    "doorToDoor_accept": 0.54,
+    "doorToDoor_vkm_per_trip": 3288.8845254625353,
+    "reduction_pct": 18.608962194968914
+  },
+  {
+    "config_name": "balanced",
+    "seed": 42,
+    "fullmodel_vkm": 499.04635867079503,
+    "fullmodel_accept": 0.245,
+    "fullmodel_vkm_per_trip": 2036.9239129420205,
+    "doorToDoor_vkm": 1693.7530626557734,
+    "doorToDoor_accept": 0.58,
+    "doorToDoor_vkm_per_trip": 2920.263901130644,
+    "reduction_pct": 30.248635674557335
+  },
+  {
+    "config_name": "balanced",
+    "seed": 43,
+    "fullmodel_vkm": 401.0399715909101,
+    "fullmodel_accept": 0.23,
+    "fullmodel_vkm_per_trip": 1743.6520503952613,
+    "doorToDoor_vkm": 2152.4560446338796,
+    "doorToDoor_accept": 0.72,
+    "doorToDoor_vkm_per_trip": 2989.522284213722,
+    "reduction_pct": 41.67455918951741
+  },
+  {
+    "config_name": "balanced",
+    "seed": 44,
+    "fullmodel_vkm": 529.1030525620893,
+    "fullmodel_accept": 0.205,
+    "fullmodel_vkm_per_trip": 2580.990500302875,
+    "doorToDoor_vkm": 1765.4409448592785,
+    "doorToDoor_accept": 0.55,
+    "doorToDoor_vkm_per_trip": 3209.89262701687,
+    "reduction_pct": 19.592621928244014
+  }
+]

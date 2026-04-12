@@ -339,9 +339,15 @@ class DoorToDoor(BaseVariant):
 
     name = "DoorToDoor"
 
-    def __init__(self, rho_p: float = None, rho_d: float = None):
+    def __init__(
+        self,
+        rho_p: float = None,
+        rho_d: float = None,
+        cost_weights: tuple | None = None,
+    ):
         self._rho_p = rho_p if rho_p is not None else RHO_P
         self._rho_d = rho_d if rho_d is not None else RHO_D
+        self._cost_weights = cost_weights if cost_weights is not None else _COST_WEIGHTS
 
     def _solve(self, scenario: Scenario) -> ALNSState:
         vehicles_dict = self._vehicles_dict(scenario)
@@ -371,7 +377,7 @@ class DoorToDoor(BaseVariant):
                 rho_p=float('inf'),   # infinite radius — always finds the synthetic MP
                 rho_d=float('inf'),
                 k_top=1,
-                cost_weights=_COST_WEIGHTS,
+                cost_weights=self._cost_weights,
                 travel_speed=TRAVEL_SPEED,
             )
             # Merge back: update routes, track unassigned
@@ -480,10 +486,17 @@ class FullModel(BaseVariant):
 
     name = "FullModel"
 
-    def __init__(self, rho_p: float = None, rho_d: float = None, gamma: float = 0.0):
+    def __init__(
+        self,
+        rho_p: float = None,
+        rho_d: float = None,
+        gamma: float = 0.0,
+        cost_weights: tuple | None = None,
+    ):
         self._rho_p = rho_p if rho_p is not None else RHO_P
         self._rho_d = rho_d if rho_d is not None else RHO_D
         self._gamma = gamma
+        self._cost_weights = cost_weights if cost_weights is not None else _COST_WEIGHTS
 
     def _solve(self, scenario: Scenario) -> ALNSState:
         vehicles_dict = self._vehicles_dict(scenario)
@@ -496,7 +509,7 @@ class FullModel(BaseVariant):
             k_top=K_TOP,
             H=H_WINDOW,
             delta=DELTA,
-            cost_weights=_COST_WEIGHTS,
+            cost_weights=self._cost_weights,
             travel_speed=TRAVEL_SPEED,
             alns_iterations=5,
             seed=42,
