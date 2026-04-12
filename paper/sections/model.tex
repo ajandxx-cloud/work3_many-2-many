@@ -208,45 +208,34 @@ Gumbel$(0,1)$, yielding the standard MNL form. The utility function captures the
 bidirectional walking cost explicitly through $\text{Walk}_{rb}$, which depends on both
 $m_r^P$ and $m_r^D$ --- a key distinction from one-sided meeting-point models.
 
-\subsection{Outside Option and Choice Probability}
+\subsection{Single-Offer Mechanism and Binary Logit Acceptance}
 
-The choice set for request $r$ includes an outside option representing the passenger's
-decision to reject all offered bundles (e.g., use a private car, walk, or cancel the trip).
-The utility of the outside option is:
+The system operates a \emph{single-offer mechanism}: Layer~1 selects the best feasible
+bundle $b^* \in \mathcal{B}_r$ and presents \emph{only} $b^*$ to the passenger. The
+passenger never observes the full set $\mathcal{B}_r$; they choose between accepting $b^*$
+or taking the outside option (e.g., private car, walking, trip cancellation).
 
+The utility of the outside option is normalized to zero:
 \begin{equation}\label{eq:utility-outside}
-  U_{r0}^k = \beta_0^k
+  U_{r0}^k = 0
 \end{equation}
 
-where $\beta_0^k$ is the alternative-specific constant (ASC) for the outside option of
-passenger type $k$. Setting $\beta_0^k = 0$ normalizes the outside option as the reference
-alternative. The full choice set for request $r$ is $\mathcal{B}_r \cup \{0\}$.
-
-The MNL choice probability that passenger $r$ (of type $k$) selects bundle $b$ is:
-
-\begin{equation}\label{eq:choice-prob}
-  P_{rb}^k = \frac{\exp(U_{rb}^k)}{\exp(U_{r0}^k) + \displaystyle\sum_{b' \in \mathcal{B}_r} \exp(U_{rb'}^k)}
-  \quad \forall b \in \mathcal{B}_r
+Because the passenger's choice set contains exactly two alternatives --- $b^*$ and the
+outside option --- the acceptance probability follows a \emph{binary logit} model:
+\begin{equation}\label{eq:binary-logit}
+  P_{\text{accept}}(b^*) = \frac{\exp(U_{rb^*}^k)}{\exp(U_{r0}^k) + \exp(U_{rb^*}^k)}
+                         = \frac{\exp(U_{rb^*}^k)}{1 + \exp(U_{rb^*}^k)}
 \end{equation}
 
-The probability of choosing the outside option is:
-
-\begin{equation}\label{eq:outside-prob}
-  P_{r0}^k = \frac{\exp(U_{r0}^k)}{\exp(U_{r0}^k) + \displaystyle\sum_{b' \in \mathcal{B}_r} \exp(U_{rb'}^k)}
+The realized acceptance indicator is:
+\begin{equation}\label{eq:acceptance-indicator}
+  z_r \sim \text{Bernoulli}\!\left(P_{\text{accept}}(b^*)\right)
 \end{equation}
 
-The overall acceptance probability for request $r$ is:
-
-\begin{equation}\label{eq:acceptance-prob}
-  P_r^{\text{acc},k} = 1 - P_{r0}^k = \frac{\displaystyle\sum_{b \in \mathcal{B}_r} \exp(U_{rb}^k)}
-  {\exp(U_{r0}^k) + \displaystyle\sum_{b' \in \mathcal{B}_r} \exp(U_{rb'}^k)}
-\end{equation}
-
-In the online decision process, the system selects the bundle $b^* \in \mathcal{B}_r$ that
-maximizes expected system objective contribution, then presents it to the passenger. The
-passenger accepts with probability $P_{rb^*}^k$ and rejects with probability $P_{r0}^k$.
-The realized acceptance $z_r$ is therefore a Bernoulli random variable with parameter
-$P_{rb^*}^k$.
+This formulation is behaviorally consistent with the single-offer mechanism: the passenger
+responds to the one bundle they are shown, not to a hypothetical full menu. The binary
+logit is the special case of MNL with $|\text{choice set}| = 2$, so the standard
+random-utility interpretation (i.i.d.\ Gumbel$(0,1)$ errors) is preserved.
 
 \subsection{Passenger Heterogeneity}
 
@@ -343,10 +332,10 @@ and the service offer bundle $b^*$ presented to the passenger.
 \subsection{Layer 2: Passenger Response}
 
 Given the offered bundle $b^*$, passenger $r$ of type $k$ accepts with probability
-$P_{rb^*}^k$ (Equation~\ref{eq:choice-prob}) and rejects with probability $P_{r0}^k$
-(Equation~\ref{eq:outside-prob}). The realized acceptance indicator is:
-\begin{equation}\label{eq:acceptance-indicator}
-  z_r \sim \text{Bernoulli}(P_{rb^*}^k)
+$P_{\text{accept}}(b^*)$ (Equation~\ref{eq:binary-logit}) and rejects with probability
+$1 - P_{\text{accept}}(b^*)$. The realized acceptance indicator is:
+\begin{equation}
+  z_r \sim \text{Bernoulli}\!\left(P_{\text{accept}}(b^*)\right)
 \end{equation}
 
 If $z_r = 1$, the vehicle route $\sigma_{v_r}$ is updated by inserting the pickup node
