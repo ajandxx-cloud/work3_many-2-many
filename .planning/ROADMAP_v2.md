@@ -9,7 +9,7 @@
 
 ## Phases
 
-- [ ] **Phase 7: Choice Model & Algorithm Fix** — Replace multi-bundle MNL with binary logit in code and paper
+- [x] **Phase 7: Choice Model & Algorithm Fix** — Replace multi-bundle MNL with binary logit in code and paper
 - [ ] **Phase 8: Pareto Experiment & New Metrics** — Implement Gamma sweep, add social welfare metric, generate fig07_pareto
 - [ ] **Phase 9: Paper Section Updates** — Clarify MILP benchmark, add VOT table, weight sensitivity, parameter plausibility
 
@@ -28,8 +28,8 @@
   4. Running the existing experiment suite with updated choice.py produces valid (non-NaN, non-error) results
 **Plans**: 2 plans
 Plans:
-- [ ] 07-01-PLAN.md — Replace choice_probability with binary logit accept_probability in choice.py
-- [ ] 07-02-PLAN.md — Rewrite model.tex Section 4 and fill in algorithm.tex Algorithm 1 pseudocode
+- [x] 07-01-PLAN.md — Replace choice_probability with binary logit accept_probability in choice.py
+- [x] 07-02-PLAN.md — Rewrite model.tex Section 4 and fill in algorithm.tex Algorithm 1 pseudocode
 
 ### Phase 8: Pareto Experiment & New Metrics
 **Goal**: The paper presents a coverage–efficiency Pareto frontier that directly addresses the reviewer's concern that efficiency gains are partly driven by endogenous coverage reduction.
@@ -60,7 +60,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 7. Choice Model & Algorithm Fix | 0/2 | Not started | - |
+| 7. Choice Model & Algorithm Fix | 2/2 | Complete | 2026-04-12 |
 | 8. Pareto Experiment & New Metrics | 0/? | Not started | - |
 | 9. Paper Section Updates | 0/? | Not started | - |
 

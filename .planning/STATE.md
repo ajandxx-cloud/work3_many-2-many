@@ -2,15 +2,16 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: reviewer-revision
-status: in_progress
-stopped_at: Roadmap written — phases 7–9 defined, ready to plan Phase 7
-last_updated: "2026-04-12T17:00:00.000Z"
+status: executing
+stopped_at: Phase 7 complete — binary logit in choice.py + model.tex + algorithm.tex (REV-01..04 verified PASS)
+last_updated: "2026-04-12T16:30:00.000Z"
+last_activity: 2026-04-12
 progress:
   total_phases: 3
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+  completed_phases: 1
+  total_plans: 2
+  completed_plans: 2
+  percent: 33
 ---
 
 # STATE: Work 3 — Many-to-Many DRT Bidirectional Meeting Point Paper
@@ -19,20 +20,20 @@ progress:
 
 **Core value:** Demonstrate that bidirectional meeting point assignment with passenger choice significantly improves DRT efficiency and equity, with actionable policy implications for TR Part A.
 **Target journal:** Transportation Research Part A: Policy and Practice
-**Current focus:** v2.0 — Reviewer Revision (phases 7–9)
+**Current focus:** Phase 8 — pareto-experiment-new-metrics
 
 ---
 
 ## Current Position
 
-Phase: Phase 7 — Choice Model & Algorithm Fix (not started)
-Plan: —
-**Active phase:** Phase 7
-**Status:** Roadmap complete — ready to plan Phase 7
-**Last activity:** 2026-04-12 — ROADMAP_v2.md written (phases 7–9, 13 requirements mapped)
+Phase: 8 (pareto-experiment-new-metrics) — NEXT
+**Active phase:** Phase 8
+**Status:** Phase 7 complete; advancing to Phase 8
+**Last activity:** 2026-04-12
 
 **v2.0 revision scope (from GPT-5.2 review, Round 2):**
-- CRITICAL: Replace multi-bundle MNL with binary logit (single-offer behavioral consistency)
+
+- ~~CRITICAL: Replace multi-bundle MNL with binary logit~~ ✓ DONE (Phase 7)
 - MAJOR: Add coverage–efficiency Pareto frontier experiment
 - MAJOR: Clarify MILP benchmark scope under stochastic acceptance
 - MAJOR: Add objective weight VOT mapping + sensitivity table
@@ -40,11 +41,11 @@ Plan: —
 
 **Progress:**
 
-[          ] 0%
-Phase 7 [          ] 0% (Choice Model & Algorithm Fix)
+[███       ] 33%
+Phase 7 [██████████] 100% (Choice Model & Algorithm Fix) ✓
 Phase 8 [          ] 0% (Pareto Experiment & New Metrics)
 Phase 9 [          ] 0% (Paper Section Updates)
-Overall v2.0 [          ] 0%
+Overall v2.0 [███       ] 33%
 
 ---
 
@@ -64,6 +65,7 @@ Overall v2.0 [          ] 0%
 | Phase 4 key result | Equity Gini=0.1216; walk_sensitive=20.2%, time_sensitive=14.4%; 5 policy recommendations |
 | Phase 5 key result | 8 section files + 59 BibTeX entries; full paper draft complete |
 | Phase 6 key result | 6 publication-quality figures (PDF + PNG, matplotlib) |
+| Phase 7 key result | Binary logit accept_probability in choice.py; model.tex §4.2 + algorithm.tex Algorithm 1 updated; REV-01..04 PASS |
 
 ## Accumulated Context
 
@@ -81,7 +83,7 @@ Overall v2.0 [          ] 0%
 | Local PRNG random.Random(seed) in generators | Prevents cross-contamination between generator calls; essential for multi-seed experiments | Phase 3 |
 | O(n log n) sorted-array Gini formula | Equivalent to pairwise O(n^2) formula but faster at n=500 scale | Phase 3 |
 | Beijing MPs follow 9x9 grid formula (1875m spacing) | Plan formula gives 1875m not 500m; formula is authoritative over prose description | Phase 3 |
-| Binary logit for single-offer acceptance | Reviewer CRITICAL: multi-bundle MNL behaviorally inconsistent with single-offer mechanism | v2.0 |
+| Binary logit for single-offer acceptance | Reviewer CRITICAL: multi-bundle MNL behaviorally inconsistent with single-offer mechanism | Phase 7 |
 | Pareto frontier over rejection cost Gamma | Reviewer MAJOR: efficiency gains partly driven by endogenous coverage reduction | v2.0 |
 
 ### Prior Work Context
@@ -94,10 +96,14 @@ Overall v2.0 [          ] 0%
 
 ### Todos
 
-- [ ] Confirm MNL/binary-logit parameter values (β1..β4) from Work 1/2 calibration or literature
-- [ ] Run Pareto sweep experiment (Gamma sweep) and generate fig07_pareto
-- [ ] Update choice.py to binary logit
-- [ ] Update model.tex, algorithm.tex, experiments.tex, policy.tex per reviewer fixes
+- [x] Update choice.py to binary logit (done Phase 7)
+- [x] Update model.tex §4.2 binary logit + algorithm.tex Algorithm 1 (done Phase 7)
+- [ ] Run Pareto sweep experiment (Gamma ∈ {0,5,10,20,50,100}) and generate fig07_pareto
+- [ ] Add social welfare metric W = sum_r [z_r * U_rb* - (1-z_r) * Gamma]
+- [ ] Update experiments.tex with Pareto frontier + W narrative
+- [ ] Clarify MILP benchmark scope (algorithm.tex) + optimality gap table
+- [ ] Add VOT mapping table (policy.tex) + weight sensitivity table (experiments.tex)
+- [ ] Add parameter plausibility footnote (model.tex)
 
 ### Blockers
 
@@ -115,10 +121,10 @@ None currently.
 ## Session Continuity
 
 **Last session:** 2026-04-12
-**Stopped at:** Roadmap written — ROADMAP_v2.md created with phases 7–9, 13/13 REV requirements mapped
-**Next action:** `/gsd-plan-phase 7` — plan Phase 7 (Choice Model & Algorithm Fix)
+**Stopped at:** Phase 7 complete — binary logit in choice.py + model.tex + algorithm.tex (REV-01..04 verified PASS)
+**Next action:** `/gsd-plan-phase 8` — plan Phase 8 (Pareto Experiment & New Metrics)
 
 ---
 
 *State initialized: 2026-04-11*
-*Updated: 2026-04-12 — v2.0 roadmap written (phases 7–9, 13 requirements, 3 phases)*
+*Updated: 2026-04-12 — Phase 7 complete (REV-01..04 PASS); advancing to Phase 8*
