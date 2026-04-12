@@ -1,0 +1,30 @@
+\begin{abstract}
+Demand-responsive transit (DRT) offers flexible mobility in low-density urban areas,
+but door-to-door service is operationally costly and difficult to scale.
+Meeting-point-based DRT reduces vehicle detours by consolidating pickups and dropoffs
+at pre-defined locations, yet existing work assigns meeting points only on the pickup
+side and ignores passenger heterogeneity in mode choice.
+We address this gap by proposing a many-to-many DRT model with bidirectional meeting
+point sets ($M_r^P$ for pickup, $M_r^D$ for dropoff) and explicit Multinomial Logit
+(MNL) passenger choice with three passenger types and an outside option.
+The model is formulated as a coupled three-layer system — service offer generation,
+passenger response, and dynamic dispatch — and solved with a Mixed-Integer Linear
+Program (MILP) exact benchmark for small instances and a rolling horizon Adaptive
+Large Neighbourhood Search (ALNS) heuristic for large-scale deployment.
+Numerical experiments on synthetic scenarios calibrated to Chinese suburban conditions
+show that the full bidirectional model achieves a vehicle efficiency of
+2383.85 vehicle-km per accepted trip, compared to 3662.33 for the door-to-door
+baseline, a reduction of 34.9\%.
+Equity analysis across passenger types reveals a Gini coefficient of 0.1216 in
+acceptance rates: time-sensitive passengers are systematically disadvantaged
+(14.4\% acceptance) relative to price-sensitive (25.4\%) and walk-sensitive (20.2\%)
+passengers.
+Based on these findings, we derive five actionable policy recommendations for Chinese
+city DRT operators, including a walking radius threshold of 1000~m for viable
+bidirectional deployment and a minimum fleet ratio of 15 vehicles per 100 daily
+requests.
+\end{abstract}
+
+\begin{keyword}
+demand-responsive transit \sep meeting points \sep passenger choice \sep ALNS \sep rolling horizon \sep equity
+\end{keyword}
