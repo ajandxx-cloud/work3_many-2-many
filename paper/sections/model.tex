@@ -297,6 +297,13 @@ policy consideration for DRT design in low-density urban areas.
 \section{Three-Layer Coupled Model}\label{sec:three-layer}
 % ============================================================
 
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{../figures/fig01_system_overview}
+\caption{System overview: many-to-many DRT with bidirectional meeting points. Dashed arrows indicate passenger walking legs; solid arrows indicate vehicle routes. $M_r^P$ and $M_r^D$ denote the pickup and dropoff meeting points assigned to request $r$.}
+\label{fig:system-overview}
+\end{figure}
+
 The many-to-many DRT system with bidirectional meeting points operates through three
 sequentially coupled layers, executed online upon each request arrival and periodically
 re-optimized via a rolling horizon mechanism. Figure~\ref{fig:three-layer} illustrates
@@ -305,7 +312,7 @@ response, and (3) dynamic dispatch and re-optimization.
 
 \begin{figure}[h]
 \centering
-[FIGURE 2 PLACEHOLDER: Three-layer model architecture diagram]
+\includegraphics[width=\columnwidth]{../figures/fig02_three_layer}
 \caption{Three-layer coupled model architecture for many-to-many DRT with bidirectional meeting points.}
 \label{fig:three-layer}
 \end{figure}
