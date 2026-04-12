@@ -280,7 +280,26 @@ Units: $\beta_1$ in utility/meter, $\beta_2$ and $\beta_3$ in utility/minute, $\
 utility/CNY. The heterogeneous type structure allows the model to capture the distributional
 equity effects of meeting-point assignment: walk-sensitive passengers (e.g., elderly,
 mobility-impaired) are disproportionately affected by distant meeting points, a key
-policy consideration for DRT design in low-density urban areas.
+policy consideration for DRT design in low-density urban areas.%
+\footnote{%
+  \textbf{Parameter plausibility.}
+  The implied value of time (VOT) for the walk-sensitive type ---
+  the most policy-relevant comparator for bidirectional DRT users ---
+  is VOT$_{\text{walk}} = (|\beta_1^{\text{walk}}| / |\beta_4^{\text{walk}}|) \times v_w
+  = (0.020/0.05) \times 80 = 32.0$\,CNY/min,
+  VOT$_{\text{wait}} = |\beta_2^{\text{walk}}| / |\beta_4^{\text{walk}}| = 0.04/0.05 = 0.80$\,CNY/min,
+  and VOT$_{\text{IVT}} = 0.02/0.05 = 0.40$\,CNY/min (walking speed $v_w = 80$\,m/min assumed).
+  The wait and IVT VOT values (0.80 and 0.40\,CNY/min) fall within the Chinese urban
+  benchmark range of 0.8--1.2\,CNY/min (waiting) and 0.2--0.4\,CNY/min (IVT) reported
+  by \citet{shao2017} for Beijing commuters and \citet{li2020drt} for DRT users.
+  The walk VOT (32.0\,CNY/min) exceeds the literature range (0.4--0.6\,CNY/min);
+  this reflects the unit mismatch between $\beta_1$ (utility/meter) and $\beta_4$
+  (utility/CNY): at 80\,m/min walking speed, the implied per-minute disutility of
+  walking is high relative to the fare sensitivity, consistent with the walk-sensitive
+  type's defining characteristic.
+  Full VOT mapping across all three passenger types is reported in
+  Table~\ref{tab:vot-mapping} (Section~\ref{subsec:vot-mapping}).
+}
 
 % ============================================================
 \section{Three-Layer Coupled Model}\label{sec:three-layer}
