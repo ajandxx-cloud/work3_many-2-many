@@ -1,0 +1,15 @@
+rho,variant,acceptance_rate,vehicle_km,avg_walk,avg_wait,density_tier
+200,FullModel,0.0,0.0,0.0,0.0,standard
+200,DoorToDoor,0.58,1693.7531,0.0,5822.0707,standard
+300,FullModel,0.0,0.0,0.0,0.0,standard
+300,DoorToDoor,0.58,1693.7531,0.0,5822.0707,standard
+400,FullModel,0.0,0.0,0.0,0.0,standard
+400,DoorToDoor,0.58,1693.7531,0.0,5822.0707,standard
+500,FullModel,0.0,0.0,0.0,0.0,standard
+500,DoorToDoor,0.58,1693.7531,0.0,5822.0707,standard
+700,FullModel,0.015,38.4773,0.0,430.4507,standard
+700,DoorToDoor,0.58,1693.7531,0.0,5822.0707,standard
+1000,FullModel,0.09,219.6641,93.509,549.5784,standard
+1000,DoorToDoor,0.58,1693.7531,0.0,5822.0707,standard
+500,FullModel,0.0,0.0,0.0,0.0,low
+500,FullModel,0.0025,25.4312,0.0,55.0837,high

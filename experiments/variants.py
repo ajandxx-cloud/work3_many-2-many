@@ -340,6 +340,10 @@ class DoorToDoor(BaseVariant):
 
     name = "DoorToDoor"
 
+    def __init__(self, rho_p: float = None, rho_d: float = None):
+        self._rho_p = rho_p if rho_p is not None else RHO_P
+        self._rho_d = rho_d if rho_d is not None else RHO_D
+
     def _solve(self, scenario: Scenario) -> ALNSState:
         vehicles_dict = self._vehicles_dict(scenario)
         state = self._initial_state(scenario)
@@ -477,14 +481,18 @@ class FullModel(BaseVariant):
 
     name = "FullModel"
 
+    def __init__(self, rho_p: float = None, rho_d: float = None):
+        self._rho_p = rho_p if rho_p is not None else RHO_P
+        self._rho_d = rho_d if rho_d is not None else RHO_D
+
     def _solve(self, scenario: Scenario) -> ALNSState:
         vehicles_dict = self._vehicles_dict(scenario)
 
         rh = RollingHorizon(
             vehicles=vehicles_dict,
             meeting_points=scenario.meeting_points,
-            rho_p=RHO_P,
-            rho_d=RHO_D,
+            rho_p=self._rho_p,
+            rho_d=self._rho_d,
             k_top=K_TOP,
             H=H_WINDOW,
             delta=DELTA,
