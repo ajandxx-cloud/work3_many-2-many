@@ -1,0 +1,12 @@
+{
+  "instance_id": "small_10r_3v",
+  "n_requests": 10,
+  "n_vehicles": 3,
+  "objective_value": 98.8679622641132,
+  "mip_gap": 0.0,
+  "solve_time": 0.0019998550415039062,
+  "accepted_requests": [
+    "r2",
+    "r7"
+  ]
+}
