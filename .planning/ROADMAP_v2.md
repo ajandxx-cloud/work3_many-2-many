@@ -10,8 +10,8 @@
 ## Phases
 
 - [x] **Phase 7: Choice Model & Algorithm Fix** — Replace multi-bundle MNL with binary logit in code and paper
-- [ ] **Phase 8: Pareto Experiment & New Metrics** — Implement Gamma sweep, add social welfare metric, generate fig07_pareto
-- [ ] **Phase 9: Paper Section Updates** — Clarify MILP benchmark, add VOT table, weight sensitivity, parameter plausibility
+- [x] **Phase 8: Pareto Experiment & New Metrics** — Implement Gamma sweep, add social welfare metric, generate fig07_pareto
+- [x] **Phase 9: Paper Section Updates** — Clarify MILP benchmark, add VOT table, weight sensitivity, parameter plausibility
 
 ---
 
@@ -61,8 +61,8 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 7. Choice Model & Algorithm Fix | 2/2 | Complete | 2026-04-12 |
-| 8. Pareto Experiment & New Metrics | 0/? | Not started | - |
-| 9. Paper Section Updates | 0/? | Not started | - |
+| 8. Pareto Experiment & New Metrics | 2/2 | Complete | 2026-04-12 |
+| 9. Paper Section Updates | 3/3 | Complete | 2026-04-12 |
 
 ---
 

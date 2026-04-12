@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
-status: completed
-stopped_at: Completed 09-03-PLAN.md
-last_updated: "2026-04-12T16:28:02.301Z"
+milestone: v2.0
+milestone_name: reviewer-revision
+status: complete
+stopped_at: v2.0 milestone complete — all 13 REV requirements verified PASS across phases 7-9
+last_updated: "2026-04-12T17:30:00.000Z"
 last_activity: 2026-04-12
 progress:
-  total_phases: 7
-  completed_phases: 7
-  total_plans: 25
-  completed_plans: 25
+  total_phases: 3
+  completed_phases: 3
+  total_plans: 7
+  completed_plans: 7
   percent: 100
 ---
 
@@ -20,55 +20,52 @@ progress:
 
 **Core value:** Demonstrate that bidirectional meeting point assignment with passenger choice significantly improves DRT efficiency and equity, with actionable policy implications for TR Part A.
 **Target journal:** Transportation Research Part A: Policy and Practice
-**Current focus:** Phase 8 — pareto-experiment-new-metrics
+**Current focus:** v2.0 COMPLETE — ready for TR Part A submission
 
 ---
 
 ## Current Position
 
-Phase: 8 (pareto-experiment-new-metrics) — NEXT
-**Active phase:** Phase 8
-**Status:** Phase 7 complete; advancing to Phase 8
+**Status:** v2.0 milestone COMPLETE
+**All phases:** 7 ✓, 8 ✓, 9 ✓
+**All requirements:** 13/13 REV requirements verified PASS
 **Last activity:** 2026-04-12
 
 **v2.0 revision scope (from GPT-5.2 review, Round 2):**
 
 - ~~CRITICAL: Replace multi-bundle MNL with binary logit~~ ✓ DONE (Phase 7)
-- MAJOR: Add coverage–efficiency Pareto frontier experiment
-- ~~MAJOR: Clarify MILP benchmark scope under stochastic acceptance~~ ✓ DONE (Phase 9 Plan 01)
-- MAJOR: Add objective weight VOT mapping + sensitivity table
-- MINOR: Benchmark implied VOT against Chinese transit literature
+- ~~MAJOR: Add coverage–efficiency Pareto frontier experiment~~ ✓ DONE (Phase 8)
+- ~~MAJOR: Clarify MILP benchmark scope under stochastic acceptance~~ ✓ DONE (Phase 9)
+- ~~MAJOR: Add objective weight VOT mapping + sensitivity table~~ ✓ DONE (Phase 9)
+- ~~MINOR: Benchmark implied VOT against Chinese transit literature~~ ✓ DONE (Phase 9)
 
 **Progress:**
 
 [██████████] 100%
 Phase 7 [██████████] 100% (Choice Model & Algorithm Fix) ✓
-Phase 8 [          ] 0% (Pareto Experiment & New Metrics)
-Phase 9 [          ] 0% (Paper Section Updates)
-Overall v2.0 [███       ] 33%
+Phase 8 [██████████] 100% (Pareto Experiment & New Metrics) ✓
+Phase 9 [██████████] 100% (Paper Section Updates) ✓
+Overall v2.0 [██████████] 100% ✓
 
 ---
 
-## Performance Metrics (v1.0 final)
+## Performance Metrics
 
 | Metric | Value |
 |--------|-------|
 | v1.0 phases total | 6 |
 | v1.0 phases complete | 6 |
-| v1.0 requirements total | 47 |
-| v1.0 requirements complete | 47 |
-| v1.0 plans written | 23 |
-| v1.0 plans complete | 23 |
+| v2.0 phases total | 3 |
+| v2.0 phases complete | 3 |
+| v2.0 requirements total | 13 |
+| v2.0 requirements complete | 13 |
+| v2.0 plans written | 7 |
+| v2.0 plans complete | 7 |
 | Codex review Round 1 | 5/10 (weak reject) |
 | Codex review Round 2 | 6/10 (weak accept) |
-| Phase 3 key result | FullModel vkm/acceptance = 2383.85 vs DoorToDoor 3662.33 (-34.9% efficiency gain) |
-| Phase 4 key result | Equity Gini=0.1216; walk_sensitive=20.2%, time_sensitive=14.4%; 5 policy recommendations |
-| Phase 5 key result | 8 section files + 59 BibTeX entries; full paper draft complete |
-| Phase 6 key result | 6 publication-quality figures (PDF + PNG, matplotlib) |
-| Phase 7 key result | Binary logit accept_probability in choice.py; model.tex §4.2 + algorithm.tex Algorithm 1 updated; REV-01..04 PASS |
-| Phase 08-pareto-experiment-new-metrics P01 | 3 | 3 tasks | 7 files |
-| Phase 08-pareto-experiment-new-metrics P02 | 526575m | 2 tasks | 1 files |
-| Phase 09-paper-section-updates P02 | 31595125 | 2 tasks | 3 files |
+| Phase 7 key result | Binary logit accept_probability; REV-01..04 PASS |
+| Phase 8 key result | Gamma sweep: served_share=0.183 constant (gamma post-hoc); W sensitivity shown; fig07_pareto generated; REV-05..08 PASS |
+| Phase 9 key result | MILP gap table (n=20: 170%, n=30: 99%); VOT table (policy.tex); weight sensitivity (FullModel -30-31% across 3 configs); beta footnote; REV-09..13 PASS |
 
 ## Accumulated Context
 
@@ -81,53 +78,40 @@ Overall v2.0 [███       ] 33%
 | Rolling horizon + ALNS as main heuristic | Standard in dynamic DRT literature 2024-2025; matches dissertation framework | Pre-phase |
 | Simulation-based validation | Standard for DARP; real data hard to obtain; consistent with Work 1 approach | Pre-phase |
 | Gurobi solver for MILP | Industry standard, best performance for DARP-scale MILPs | Phase 2 |
-| src/drt/ single package | Clean module separation; feasibility.py reused by MILP and ALNS | Phase 2 |
-| pytest for unit tests | Catches bugs early; required for HEUR-06 response-time benchmark | Phase 2 |
-| Local PRNG random.Random(seed) in generators | Prevents cross-contamination between generator calls; essential for multi-seed experiments | Phase 3 |
-| O(n log n) sorted-array Gini formula | Equivalent to pairwise O(n^2) formula but faster at n=500 scale | Phase 3 |
-| Beijing MPs follow 9x9 grid formula (1875m spacing) | Plan formula gives 1875m not 500m; formula is authoritative over prose description | Phase 3 |
 | Binary logit for single-offer acceptance | Reviewer CRITICAL: multi-bundle MNL behaviorally inconsistent with single-offer mechanism | Phase 7 |
-| Pareto frontier over rejection cost Gamma | Reviewer MAJOR: efficiency gains partly driven by endogenous coverage reduction | v2.0 |
+| Pareto frontier reframed as welfare sensitivity | gamma is post-hoc; served_share constant; narrative shows structural efficiency gain | Phase 8 |
+| MILP gap large (99-170%) explained honestly | Small accepted sets (4-7 pax) at n=20/30; gap expected to narrow at scale | Phase 9 |
 
 ### Prior Work Context
 
 - Work 1 (many-to-one dynamic pricing, DRPO framework): complete, submitted to TR Part C
 - Work 2 (service menu design, assortment optimization): working paper
 - Work 3 natural extension: bidirectional spatial service menu (pickup + dropoff) in many-to-many scenario
-- Key reference: Cortenbach et al. (2024, TR Part C) — DARPmp, single-sided, Tabu Search (direct predecessor)
-- Key reference: Wu et al. (2025, TR Part E) — dynamic DRT with rolling horizon (algorithm precedent)
 
 ### Todos
 
-- [x] Update choice.py to binary logit (done Phase 7)
-- [x] Update model.tex §4.2 binary logit + algorithm.tex Algorithm 1 (done Phase 7)
-- [ ] Run Pareto sweep experiment (Gamma ∈ {0,5,10,20,50,100}) and generate fig07_pareto
-- [ ] Add social welfare metric W = sum_r [z_r * U_rb* - (1-z_r) * Gamma]
-- [ ] Update experiments.tex with Pareto frontier + W narrative
-- [x] Clarify MILP benchmark scope (algorithm.tex) + optimality gap table (done Phase 9 Plan 01)
-- [ ] Add VOT mapping table (policy.tex) + weight sensitivity table (experiments.tex)
-- [ ] Add parameter plausibility footnote (model.tex)
+- [x] All v2.0 revision tasks complete
 
 ### Blockers
 
-None currently.
+None.
 
 ### Notes
 
 - Dissertation timeline: Work 3 planned 2026.09–2027.04 per BUAA schedule
 - Supervisor: Prof. Liu Tianliang
 - Language: English (academic paper)
-- v2.0 phases 7–9 depend on v1.0 artifacts (paper sections, Python code, figures)
+- Next step: TR Part A submission
 
 ---
 
 ## Session Continuity
 
-**Last session:** 2026-04-12T16:28:02.298Z
-**Stopped at:** Completed 09-03-PLAN.md
-**Next action:** `/gsd-plan-phase 8` — plan Phase 8 (Pareto Experiment & New Metrics)
+**Last session:** 2026-04-12
+**Stopped at:** v2.0 milestone complete — all 13 REV requirements verified PASS
+**Next action:** TR Part A submission preparation (cover letter, response to reviewers letter)
 
 ---
 
 *State initialized: 2026-04-11*
-*Updated: 2026-04-12 — Phase 7 complete (REV-01..04 PASS); advancing to Phase 8*
+*Updated: 2026-04-12 — v2.0 milestone complete (phases 7-9, 13/13 requirements, 7 plans)*
