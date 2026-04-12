@@ -26,7 +26,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 
 from experiments.config import SEEDS, VEHICLE_COUNTS
 from experiments.metrics import compute_social_welfare
-from experiments.scenarios import generate_synthetic_scenario
+from experiments.scenarios import generate_synthetic as generate_synthetic_scenario
 from experiments.variants import FullModel
 
 GAMMA_VALUES = [0, 5, 10, 20, 50, 100]
