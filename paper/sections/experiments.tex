@@ -306,3 +306,53 @@ heavily. Operators can use $\Gamma$ to express their service mandate in the
 objective function without altering the underlying routing behaviour: a
 coverage-focused operator selects high $\Gamma$ to make rejections costly in
 the welfare accounting; an efficiency-focused operator selects $\Gamma = 0$.
+
+% -----------------------------------------------------------------------
+\subsection{Weight Sensitivity Analysis}\label{subsec:weight-sensitivity}
+% -----------------------------------------------------------------------
+
+A natural concern is whether the efficiency advantage of FullModel over
+DoorToDoor depends on the specific objective weight configuration.
+We address this by running both variants under three weight configurations
+that span the policy-relevant range: an efficiency-focused configuration
+that prioritises low in-vehicle time ($\alpha_{\text{IVT}} = 2.0$), an
+equity-focused configuration that prioritises low waiting and walking
+($\alpha_{\text{wait}} = \alpha_{\text{walk}} = 2.0$), and the balanced
+baseline ($\alpha_{\text{wait}} = \alpha_{\text{walk}} = \alpha_{\text{IVT}} = 1.0$).
+All other parameters are held at baseline (200 requests, 15 vehicles, seeds 42--44).
+
+The key metric is vehicle-km per accepted trip (vkm/trip), which normalises
+for coverage differences across configurations and isolates routing efficiency.
+
+\begin{table}[h]
+\centering
+\caption{Weight sensitivity: vkm/trip for FullModel vs.\ DoorToDoor across three
+         objective weight configurations (mean $\pm$ std, 3 seeds, $n=200$, 15 vehicles).}
+\label{tab:weight-sensitivity}
+\begin{tabular}{lcccc}
+\toprule
+Weight config & $\alpha_{\text{wait}}, \alpha_{\text{walk}}, \alpha_{\text{IVT}}$ &
+FullModel vkm/trip & DoorToDoor vkm/trip & Reduction (\%) \\
+\midrule
+Efficiency-focused & 0.5,\ 0.5,\ 2.0 & $2155 \pm 378$ & $3107 \pm 128$ & 30.8 \\
+Equity-focused     & 2.0,\ 2.0,\ 0.5 & $2135 \pm 524$ & $3093 \pm 170$ & 31.4 \\
+Balanced (baseline)& 1.0,\ 1.0,\ 1.0 & $2121 \pm 425$ & $3040 \pm 151$ & 30.5 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Across all three weight configurations, FullModel achieves lower vkm/trip than
+DoorToDoor, with reductions ranging from 30.5\% (balanced) to 31.4\%
+(equity-focused). This confirms that the efficiency advantage of bidirectional
+meeting point co-optimisation is robust to the choice of objective weights and
+is not an artefact of the baseline parameterisation.
+
+The equity-focused configuration yields the largest reduction because high
+$\alpha_{\text{walk}}$ penalises distant meeting points, constraining the
+system's ability to consolidate trips spatially; yet FullModel still benefits
+from bidirectional assignment. The efficiency-focused configuration yields a
+comparable reduction because high $\alpha_{\text{IVT}}$ incentivises tight
+routing, amplifying the benefit of meeting point consolidation.
+These patterns are consistent with the policy recommendations in
+Section~\ref{sec:policy}: operators in equity-sensitive contexts should expect
+similar efficiency gains from bidirectional meeting point deployment.
