@@ -83,7 +83,7 @@ class Bundle:
     a scheduled departure time, and a fare.
 
     frozen=True makes Bundle hashable so it can be used as a dict key
-    in choice_probability return values.
+    in accept_probability call sites.
     """
 
     request_id: str                      # r

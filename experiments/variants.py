@@ -35,7 +35,7 @@ from experiments.metrics import PassengerRecord, SimulationResult
 from experiments.scenarios import Scenario
 from src.drt.alns import ALNSState, RollingHorizon, greedy_insertion
 from src.drt.candidate import euclidean
-from src.drt.choice import choice_probability
+from src.drt.choice import accept_probability
 from src.drt.types import (
     Bundle,
     MeetingPoint,
@@ -82,12 +82,12 @@ def _mnl_filter_requests(
     Apply MNL Bernoulli acceptance to each request before routing.
 
     For each request, construct a representative Bundle using the nearest
-    meeting point as pickup and dropoff proxy, then compute choice_probability.
+    meeting point as pickup and dropoff proxy, then compute accept_probability.
     Simulate acceptance with a deterministic RNG seeded by request id hash.
 
     Unit note: MNL betas (from Phase 1) are calibrated for km and minutes.
     Scenario coordinates are in meters, times in seconds.
-    Bundle attributes are scaled before calling choice_probability:
+    Bundle attributes are scaled before calling accept_probability:
       walk_dist: meters → km  (divide by 1000)
       wait_time: seconds → minutes  (divide by 60)
       ivt:       seconds → minutes  (divide by 60)
@@ -142,8 +142,7 @@ def _mnl_filter_requests(
             price=0.0,
         )
 
-        probs = choice_probability([bundle], request, ptype, arrival_t)
-        accept_prob = probs.get(bundle, 0.0)
+        accept_prob = accept_probability(bundle, request, ptype, arrival_t)
 
         rng = random.Random(hash(request.id) & 0xFFFFFFFF)
         if rng.random() <= accept_prob:
@@ -476,7 +475,7 @@ class FullModel(BaseVariant):
     Main contribution: bidirectional MPs + MNL choice + rolling horizon.
     Uses RollingHorizon from alns.py with PASSENGER_TYPES for MNL filtering.
     MNL acceptance: after finding best insertion, simulate Bernoulli acceptance
-    using choice_probability. Rejected requests are excluded from routing.
+    using accept_probability. Rejected requests are excluded from routing.
     """
 
     name = "FullModel"
