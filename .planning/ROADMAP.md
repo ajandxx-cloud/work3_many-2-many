@@ -84,7 +84,12 @@ Plans:
   3. Fleet size sensitivity analysis produces a service quality vs. fleet size tradeoff curve
   4. Equity analysis compares service quality distribution across at least two passenger types (price-sensitive vs. time-sensitive) and identifies any systematic disadvantage
   5. At least three concrete, actionable policy recommendations for Chinese city DRT operators are written in plain language, covering when and where to deploy bidirectional DRT
-**Plans**: TBD
+**Plans:** 3 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — Walking tolerance sweep (ρ ∈ [200,1000]m) + fleet size sweep + city tier comparison
+- [ ] 04-02-PLAN.md — Equity analysis: per-type acceptance rates, Gini coefficient
+- [ ] 04-03-PLAN.md — Policy recommendations document (5 structured recommendations)
 
 ### Phase 5: Paper Writing
 **Goal**: A complete, submission-ready draft of the full paper exists — all sections from abstract to conclusion are written in academic English at TR Part A standard, with references formatted
@@ -121,7 +126,7 @@ Plans:
 | 1. Problem Formulation & Model Structure | 4/4 | Complete | 2026-04-11 |
 | 2. Algorithm Development & Python Implementation | 5/5 | Complete | 2026-04-12 |
 | 3. Numerical Experiments | 3/3 | Complete   | 2026-04-12 |
-| 4. Policy Analysis & Sensitivity Analysis | 0/? | Not started | - |
+| 4. Policy Analysis & Sensitivity Analysis | 0/3 | Planned | - |
 | 5. Paper Writing | 0/? | Not started | - |
 | 6. Academic Figures & Visualization | 0/? | Not started | - |
 
