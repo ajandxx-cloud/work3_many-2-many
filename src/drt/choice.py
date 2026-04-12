@@ -1,19 +1,19 @@
 """
-choice.py — MNL utility and choice probability functions.
+choice.py — MNL utility and binary logit acceptance probability.
 
-Implements the Multinomial Logit (MNL) passenger choice model from Phase 1:
+Implements the binary logit passenger acceptance model for the single-offer
+mechanism (Layer 1), where exactly one bundle b* is presented to the passenger:
 
   U_rb^k = β1^k · Walk_rb + β2^k · Wait_rb + β3^k · IVT_rb + β4^k · p_r
 
-  P_rb^k = exp(U_rb^k) / (exp(U_r0^k) + Σ_{b'} exp(U_rb'^k))
+  P_accept(b*) = exp(U_{b*}) / (exp(U_0) + exp(U_{b*}))
 
-Outside option utility U_r0 = 0.0 (normalized baseline).
+Outside option utility U_0 = 0.0 (normalized baseline).
 """
 
 from __future__ import annotations
 
 import math
-from typing import Optional
 
 from .types import Bundle, MeetingPoint, PassengerType, Request
 
@@ -64,45 +64,35 @@ def mnl_utility(
     )
 
 
-def choice_probability(
-    bundles: list[Bundle],
+def accept_probability(
+    bundle: Bundle,
     request: Request,
     ptype: PassengerType,
     current_time: float,
-) -> dict[Optional[Bundle], float]:
+) -> float:
     """
-    Compute MNL choice probabilities for all bundles plus the outside option.
+    Binary logit acceptance probability for a single offered bundle b*.
+
+    The system presents exactly one bundle b* to the passenger (single-offer
+    mechanism, Layer 1). The passenger accepts with probability:
+
+        P_accept(b*) = exp(U_{b*}) / (exp(U_0) + exp(U_{b*}))
+
+    where U_0 = 0.0 is the normalized outside-option utility.
 
     Parameters
     ----------
-    bundles      : list of service bundles offered to the request
+    bundle       : the single offered service bundle b*
     request      : the passenger's trip request
-    ptype        : passenger type with β coefficients
-    current_time : clock time at which the request is evaluated
+    ptype        : passenger type with beta coefficients
+    current_time : clock time at which the request is evaluated (t_r^req)
 
     Returns
     -------
-    dict mapping Bundle → probability, with None → outside-option probability.
-    All values are in [0, 1] and sum to 1.0 (within floating-point precision).
-
-    Outside option
-    --------------
-    U_r0 = 0.0 (normalized baseline; represents not taking the DRT service).
+    float : acceptance probability in (0, 1)
     """
-    # Outside option: U_r0 = 0.0 → exp(0) = 1.0
+    u_bundle = mnl_utility(bundle, request, ptype, current_time)
+    exp_bundle = math.exp(u_bundle)
+    # U_0 = 0.0 (normalized outside option) → exp(U_0) = 1.0
     exp_outside = 1.0
-
-    # Compute exp(U_rb) for each bundle
-    exp_utilities: list[tuple[Bundle, float]] = []
-    for b in bundles:
-        u = mnl_utility(b, request, ptype, current_time)
-        exp_utilities.append((b, math.exp(u)))
-
-    exp_sum = exp_outside + sum(e for _, e in exp_utilities)
-
-    probs: dict[Optional[Bundle], float] = {}
-    for b, exp_u in exp_utilities:
-        probs[b] = exp_u / exp_sum
-    probs[None] = exp_outside / exp_sum  # outside option
-
-    return probs
+    return exp_bundle / (exp_outside + exp_bundle)
