@@ -80,9 +80,10 @@ constraints~(\ref{con:capacity}), (\ref{con:tw-early})--(\ref{con:tw-late}),
 (\ref{con:ridetime}), and (\ref{con:time-consistency}) is checked in $O(1)$ per position
 pair using forward and backward schedule arrays maintained for each vehicle route. The
 best feasible insertion is selected by minimum incremental cost $\Delta C$ to the
-objective~(\ref{eq:objective}). After selecting $b^*$, the MNL acceptance probability
-$P_{rb^*}^k$ (Equation~\ref{eq:choice-prob}) is computed and the passenger's response is
-sampled as $z_r \sim \text{Bernoulli}(P_{rb^*}^k)$.
+objective~(\ref{eq:objective}). After selecting $b^*$, the binary logit acceptance probability
+$P_{\text{accept}}(b^*) = \exp(U_{rb^*}^k) / (1 + \exp(U_{rb^*}^k))$
+(Equation~\ref{eq:binary-logit}) is computed and the passenger's response is sampled
+as $z_r \sim \text{Bernoulli}(P_{\text{accept}}(b^*))$.
 
 \subsubsection{ALNS Destroy and Repair Operators}
 
@@ -129,7 +130,44 @@ request evaluations.
 \caption{Rolling Horizon ALNS for Bidirectional DARPmp}
 \label{alg:rh-alns}
 \begin{algorithmic}[1]
-\State [ALGORITHM PSEUDOCODE PLACEHOLDER --- Phase 2 artifact]
+\Require Request stream $\mathcal{R}$, fleet $\mathcal{V}$, meeting points $\mathcal{M}$,
+         horizon $H$, re-opt interval $\Delta$, rejection penalty $\Gamma$
+\Ensure  Accepted set $\mathcal{R}^{\text{acc}}$, routes $\{\sigma_v\}_{v \in \mathcal{V}}$
+
+\State Initialize routes $\sigma_v \leftarrow \emptyset$ for all $v \in \mathcal{V}$
+\State $t^{\text{now}} \leftarrow 0$
+
+\While{request stream not exhausted}
+  \State \textbf{// --- Online dispatch: process next arriving request ---}
+  \State Receive request $r$ at time $t_r^{\text{req}}$
+  \State $M_r^P \leftarrow \{m \in \mathcal{M} \mid d(o_r, m) \leq \rho^P\}$,
+         $M_r^D \leftarrow \{m \in \mathcal{M} \mid d(\delta_r, m) \leq \rho^D\}$
+         \Comment{Candidate meeting points}
+  \State $b^* \leftarrow \textsc{BestInsertion}(r, M_r^P, M_r^D, \{\sigma_v\})$
+         \Comment{Layer 1: select best feasible bundle}
+  \If{$b^* = \emptyset$}
+    \State $z_r \leftarrow 0$; record rejection
+    \Comment{No feasible insertion found}
+  \Else
+    \State $p_{\text{acc}} \leftarrow \dfrac{\exp(U_{rb^*}^{k_r})}{1 + \exp(U_{rb^*}^{k_r})}$
+           \Comment{Binary logit acceptance (Eq.~\ref{eq:binary-logit})}
+    \State $z_r \sim \text{Bernoulli}(p_{\text{acc}})$
+           \Comment{Layer 2: passenger response}
+    \If{$z_r = 1$}
+      \State Insert $b^*$ into $\sigma_{v_{b^*}}$ at positions $(\pi^P, \pi^D)$
+      \State $\mathcal{R}^{\text{acc}} \leftarrow \mathcal{R}^{\text{acc}} \cup \{r\}$
+    \EndIf
+  \EndIf
+
+  \State \textbf{// --- Periodic re-optimization ---}
+  \If{$t^{\text{now}} \bmod \Delta = 0$}
+    \State $\mathcal{R}^{\text{act}} \leftarrow \{r' \in \mathcal{R}^{\text{acc}} \mid r' \text{ not yet completed}\}$
+    \State $\{\sigma_v\} \leftarrow \textsc{ALNS}(\mathcal{R}^{\text{act}}, \{\sigma_v\}, H)$
+           \Comment{Layer 3: rolling horizon re-opt}
+  \EndIf
+  \State $t^{\text{now}} \leftarrow t^{\text{now}} + \delta t$
+\EndWhile
+\State \Return $\mathcal{R}^{\text{acc}},\; \{\sigma_v\}$
 \end{algorithmic}
 \end{algorithm}
 
