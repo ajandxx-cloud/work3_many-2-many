@@ -63,7 +63,7 @@ class SimulationResult:
 
 @dataclass
 class MetricsResult:
-    """Nine performance metrics computed from a SimulationResult."""
+    """Ten performance metrics computed from a SimulationResult."""
 
     acceptance_rate: float     # ∈ [0, 1]
     vehicle_km: float          # km
@@ -74,6 +74,7 @@ class MetricsResult:
     detour_ratio: float        # dimensionless (≥ 1 when service adds detour)
     fairness_index: float      # Gini coefficient ∈ [0, 1]
     cpu_time: float            # seconds
+    social_welfare: float = 0.0  # W = sum_r[z_r*U_rb* - (1-z_r)*gamma]; default 0.0
 
 
 # ---------------------------------------------------------------------------
@@ -181,3 +182,27 @@ def compute_metrics(result: SimulationResult) -> MetricsResult:
         fairness_index=fairness_index,
         cpu_time=cpu_time,
     )
+
+
+def compute_social_welfare(records: list[PassengerRecord], gamma: float) -> float:
+    """Compute social welfare W = sum_r[z_r * U_rb* - (1-z_r) * gamma].
+
+    Accepted passengers (z_r=1) contribute total_disutility (U_rb*, typically
+    negative -- utility relative to outside option).
+    Rejected passengers (z_r=0) contribute -gamma (rejection penalty).
+    At gamma=0 rejected passengers contribute 0.
+
+    Args:
+        records: Per-passenger records from one SimulationResult.
+        gamma: Non-negative rejection penalty (the sweep parameter Gamma).
+
+    Returns:
+        float: Social welfare sum. Higher is better; typically negative.
+    """
+    total = 0.0
+    for r in records:
+        if r.accepted:
+            total += r.total_disutility   # z_r * U_rb*
+        else:
+            total -= gamma                # -(1 - z_r) * gamma
+    return total

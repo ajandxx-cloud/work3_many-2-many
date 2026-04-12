@@ -480,9 +480,10 @@ class FullModel(BaseVariant):
 
     name = "FullModel"
 
-    def __init__(self, rho_p: float = None, rho_d: float = None):
+    def __init__(self, rho_p: float = None, rho_d: float = None, gamma: float = 0.0):
         self._rho_p = rho_p if rho_p is not None else RHO_P
         self._rho_d = rho_d if rho_d is not None else RHO_D
+        self._gamma = gamma
 
     def _solve(self, scenario: Scenario) -> ALNSState:
         vehicles_dict = self._vehicles_dict(scenario)
