@@ -13,7 +13,7 @@
 - [x] **Phase 2: Algorithm Development & Python Implementation** - Build exact MILP benchmark and large-scale rolling horizon + ALNS heuristic; implement and validate in Python
 - [x] **Phase 3: Numerical Experiments** - Run synthetic and semi-realistic Chinese city experiments; compare all baselines and ablations; collect performance metrics (completed 2026-04-12)
 - [x] **Phase 4: Policy Analysis & Sensitivity Analysis** - Conduct sensitivity sweeps and equity analysis; derive actionable policy recommendations for TR Part A (completed 2026-04-12)
-- [ ] **Phase 5: Paper Writing** - Write all paper sections (abstract through conclusion) in submission-ready form
+- [x] **Phase 5: Paper Writing** - Write all paper sections (abstract through conclusion) in submission-ready form (completed 2026-04-12)
 - [ ] **Phase 6: Academic Figures & Visualization** - Produce all publication-quality figures (system diagrams, flowcharts, result charts, policy maps)
 
 ---
