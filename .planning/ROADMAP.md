@@ -67,7 +67,12 @@ Plans:
   3. All four model variants (door-to-door, single-sided, bidirectional no-choice, full model) and both ablations (no rolling horizon, no passenger choice) produce complete metric tables
   4. All nine performance metrics (acceptance rate, vehicle-km, waiting time avg/95th, walking distance, IVT, detour ratio, fairness index, CPU time) are computed and recorded for every variant
   5. The full model shows measurable improvement over all baselines on at least acceptance rate and vehicle-km, confirming the core thesis
-**Plans**: TBD
+**Plans:** 3 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — Experiment infrastructure: config constants, synthetic + Beijing scenario generators, 9-metric computation module
+- [ ] 03-02-PLAN.md — Model variants: 6 runnable classes (DoorToDoor, SingleSidedPickup, BidirectionalNoChoice, FullModel, AblationNoRollingHorizon, AblationNoChoice)
+- [ ] 03-03-PLAN.md — Run experiments and collect results: runner.py orchestration, synthetic_results.csv, beijing_results.csv, metrics_table.csv
 
 ### Phase 4: Policy Analysis & Sensitivity Analysis
 **Goal**: The TR Part A policy contribution is complete — sensitivity sweeps across demand density, walking tolerance, and fleet size are done, equity analysis across passenger types is documented, and concrete policy recommendations for Chinese city DRT deployment are written
@@ -115,7 +120,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Problem Formulation & Model Structure | 4/4 | Complete | 2026-04-11 |
 | 2. Algorithm Development & Python Implementation | 5/5 | Complete | 2026-04-12 |
-| 3. Numerical Experiments | 0/? | Not started | - |
+| 3. Numerical Experiments | 0/3 | In progress | - |
 | 4. Policy Analysis & Sensitivity Analysis | 0/? | Not started | - |
 | 5. Paper Writing | 0/? | Not started | - |
 | 6. Academic Figures & Visualization | 0/? | Not started | - |
@@ -183,3 +188,4 @@ Plans:
 
 *Roadmap created: 2026-04-11*
 *Last updated: 2026-04-11 — Phase 1 complete (4/4 plans, all requirements PROB-01..05, CHOICE-01..04 verified)*
+*Updated: 2026-04-11 — Phase 3 planned (3 plans: 03-01, 03-02, 03-03)*
