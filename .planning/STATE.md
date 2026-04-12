@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 09-paper-section-updates-02-PLAN.md
-last_updated: "2026-04-12T16:25:25.897Z"
+stopped_at: Completed 09-01-PLAN.md
+last_updated: "2026-04-12T16:25:50.521Z"
 last_activity: 2026-04-12
 progress:
   total_phases: 7
@@ -35,7 +35,7 @@ Phase: 8 (pareto-experiment-new-metrics) — NEXT
 
 - ~~CRITICAL: Replace multi-bundle MNL with binary logit~~ ✓ DONE (Phase 7)
 - MAJOR: Add coverage–efficiency Pareto frontier experiment
-- MAJOR: Clarify MILP benchmark scope under stochastic acceptance
+- ~~MAJOR: Clarify MILP benchmark scope under stochastic acceptance~~ ✓ DONE (Phase 9 Plan 01)
 - MAJOR: Add objective weight VOT mapping + sensitivity table
 - MINOR: Benchmark implied VOT against Chinese transit literature
 
@@ -104,7 +104,7 @@ Overall v2.0 [███       ] 33%
 - [ ] Run Pareto sweep experiment (Gamma ∈ {0,5,10,20,50,100}) and generate fig07_pareto
 - [ ] Add social welfare metric W = sum_r [z_r * U_rb* - (1-z_r) * Gamma]
 - [ ] Update experiments.tex with Pareto frontier + W narrative
-- [ ] Clarify MILP benchmark scope (algorithm.tex) + optimality gap table
+- [x] Clarify MILP benchmark scope (algorithm.tex) + optimality gap table (done Phase 9 Plan 01)
 - [ ] Add VOT mapping table (policy.tex) + weight sensitivity table (experiments.tex)
 - [ ] Add parameter plausibility footnote (model.tex)
 
@@ -123,8 +123,8 @@ None currently.
 
 ## Session Continuity
 
-**Last session:** 2026-04-12T16:25:25.895Z
-**Stopped at:** Completed 09-paper-section-updates-02-PLAN.md
+**Last session:** 2026-04-12T16:25:50.519Z
+**Stopped at:** Completed 09-01-PLAN.md
 **Next action:** `/gsd-plan-phase 8` — plan Phase 8 (Pareto Experiment & New Metrics)
 
 ---
