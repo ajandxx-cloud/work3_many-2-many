@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-04-12T12:00:00.000Z"
+last_updated: "2026-04-11T00:00:00.000Z"
 progress:
   total_phases: 6
   completed_phases: 2
-  total_plans: 9
-  completed_plans: 9
-  percent: 33
+  total_plans: 12
+  completed_plans: 10
+  percent: 36
 ---
 
 # STATE: Work 3 — Many-to-Many DRT Bidirectional Meeting Point Paper
@@ -25,7 +25,7 @@ progress:
 ## Current Position
 
 **Active phase:** Phase 3 — Numerical Experiments
-**Active plan:** None (Phase 3 not yet planned)
+**Active plan:** 03-01 complete → next: 03-02
 **Status:** Executing
 **Phase goal:** Run synthetic and semi-realistic experiments; compare all baselines and ablations; collect performance metrics
 
@@ -34,11 +34,11 @@ progress:
 ```
 Phase 1 [██████████] 100% ✓
 Phase 2 [██████████] 100% ✓
-Phase 3 [          ] 0%
+Phase 3 [███       ] 33% (1/3 plans)
 Phase 4 [          ] 0%
 Phase 5 [          ] 0%
 Phase 6 [          ] 0%
-Overall [██        ] 33%
+Overall [███       ] 36%
 ```
 
 ---
@@ -50,9 +50,11 @@ Overall [██        ] 33%
 | Phases total | 6 |
 | Phases complete | 2 |
 | Requirements total (v1) | 47 |
-| Requirements complete | 19 |
-| Plans written | 9 |
-| Plans complete | 9 |
+| Requirements complete | 22 |
+| Plans written | 12 |
+| Plans complete | 10 |
+| Phase 3 plan 01 duration | 252s (~4 min) |
+| Phase 3 plan 01 tests added | 64 |
 
 ---
 
@@ -69,6 +71,9 @@ Overall [██        ] 33%
 | Gurobi solver for MILP | Industry standard, best performance for DARP-scale MILPs | Phase 2 |
 | src/drt/ single package | Clean module separation; feasibility.py reused by MILP and ALNS | Phase 2 |
 | pytest for unit tests | Catches bugs early; required for HEUR-06 response-time benchmark | Phase 2 |
+| Local PRNG random.Random(seed) in generators | Prevents cross-contamination between generator calls; essential for multi-seed experiments | Phase 3 |
+| O(n log n) sorted-array Gini formula | Equivalent to pairwise O(n^2) formula but faster at n=500 scale | Phase 3 |
+| Beijing MPs follow 9x9 grid formula (1875m spacing) | Plan formula gives 1875m not 500m; formula is authoritative over prose description | Phase 3 |
 
 ### Prior Work Context
 
@@ -81,7 +86,7 @@ Overall [██        ] 33%
 ### Todos
 
 - [x] Gurobi license: not available on dev machine — scale test (EXACT-02) uses skipif guard; will need license for actual benchmark runs
-- [ ] Select Chinese city scenario parameters for EXP-02 (Phase 3) — candidate: suburban Beijing or Shenzhen low-density district
+- [x] Select Chinese city scenario parameters for EXP-02 (Phase 3) — Beijing suburban 15km×15km, 80 MPs, morning peak 7-9am (implemented in generate_beijing)
 - [ ] Confirm MNL parameter values (β1..β4) from Work 1/2 calibration or literature
 
 ### Blockers
@@ -100,11 +105,11 @@ None currently.
 
 ## Session Continuity
 
-**Last session:** 2026-04-12 — Phase 2 complete (5/5 plans, 25 tests passing, avg decision time 0.0002s)
-**Stopped at:** Phase 2 verified and complete
-**Next action:** Phase 3 — Numerical Experiments (discuss → plan → execute)
+**Last session:** 2026-04-11 — Phase 3 plan 01 complete (2/2 tasks, 64 tests passing, ~4 min)
+**Stopped at:** Phase 3 plan 01 complete
+**Next action:** Phase 3 plan 02 — algorithm variants
 
 ---
 
 *State initialized: 2026-04-11*
-*Last updated: 2026-04-12 after Phase 2 completion*
+*Last updated: 2026-04-11 after Phase 3 plan 01 completion*
