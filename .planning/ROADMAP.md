@@ -12,7 +12,8 @@
 - [x] **Phase 1: Problem Formulation & Model Structure** - Define the many-to-many DRT problem, notation, constraints, and three-layer coupled model with MNL passenger choice
 - [x] **Phase 2: Algorithm Development & Python Implementation** - Build exact MILP benchmark and large-scale rolling horizon + ALNS heuristic; implement and validate in Python
 - [x] **Phase 3: Numerical Experiments** - Run synthetic and semi-realistic Chinese city experiments; compare all baselines and ablations; collect performance metrics (completed 2026-04-12)
-- [x] **Phase 4: Policy Analysis & Sensitivity Analysis** - Conduct sensitivity sweeps and equity analysis; derive actionable policy recommendations for TR Part A (completed 2026-04-12)
+- [x] **Phase 4: Policy Analysis & Sensitivity Analysis** - Conduct sensitivity sweeps and equity analysis; derive actionable policy recommendations for TR Part A
+ (completed 2026-04-12)
 - [x] **Phase 5: Paper Writing** - Write all paper sections (abstract through conclusion) in submission-ready form (completed 2026-04-12)
 - [ ] **Phase 6: Academic Figures & Visualization** - Produce all publication-quality figures (system diagrams, flowcharts, result charts, policy maps)
 
@@ -120,8 +121,12 @@ Plans:
   3. Algorithm flowchart covers the full online insertion + rolling horizon + ALNS loop with decision branches labeled
   4. Experiment result charts (bar/line) show all baseline comparisons with error bars or confidence intervals where applicable
   5. Sensitivity heatmaps and policy benefit map are generated at 300 dpi and saved as PDF/EPS for journal submission
-**Plans**: TBD
-**UI hint**: yes
+**Plans:** 3 plans
+
+Plans:
+- [ ] 06-01-PLAN.md — Conceptual diagrams (Wave 1): FIG-01 system overview, FIG-02 three-layer architecture, FIG-03 algorithm flowchart
+- [ ] 06-02-PLAN.md — Data-driven charts (Wave 1): FIG-04 baseline comparison bar charts, FIG-05 sensitivity line plots
+- [ ] 06-03-PLAN.md — Policy map + LaTeX integration (Wave 2): FIG-06 policy deployment map, replace all 6 figure placeholders in paper sections
 
 ---
 
@@ -134,7 +139,7 @@ Plans:
 | 3. Numerical Experiments | 3/3 | Complete   | 2026-04-12 |
 | 4. Policy Analysis & Sensitivity Analysis | 3/3 | Complete   | 2026-04-12 |
 | 5. Paper Writing | 0/5 | In progress | - |
-| 6. Academic Figures & Visualization | 0/? | Not started | - |
+| 6. Academic Figures & Visualization | 0/3 | In progress | - |
 
 ---
 
@@ -200,3 +205,4 @@ Plans:
 *Roadmap created: 2026-04-11*
 *Last updated: 2026-04-11 — Phase 1 complete (4/4 plans, all requirements PROB-01..05, CHOICE-01..04 verified)*
 *Updated: 2026-04-11 — Phase 3 planned (3 plans: 03-01, 03-02, 03-03)*
+*Updated: 2026-04-12 — Phase 6 planned (3 plans: 06-01, 06-02, 06-03)*
