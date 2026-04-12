@@ -41,10 +41,27 @@ constraints~(\ref{con:walk-pickup})--(\ref{con:walk-dropoff}) are enforced impli
 restricting the domain of $x_{r,m^P,m^D,v}$ to feasible meeting point pairs.
 
 \paragraph{Solver and Scope.}
-The MILP is solved using Gurobi~10. Instances with up to 30--50 passengers and 5--8
-vehicles are tractable within a 300-second time limit; Gurobi reports the optimality gap
-for instances where the time limit binds. The MILP is not intended for real-time use; its
-role is to provide exact benchmarks on small instances for validating the heuristic.
+The MILP is solved using Gurobi~10 with a 300-second time limit; Gurobi reports
+the optimality gap for instances where the time limit binds.
+
+\textbf{Ex-post benchmark role.}
+The MILP serves as an \emph{ex-post} benchmark, not a real-time solver.
+Given the realized accepted set $\mathcal{R}^{\text{acc}}$ produced by a
+completed ALNS run --- i.e., the set of requests for which the sampled
+acceptance indicator $z_r = 1$ --- the MILP solves the optimal vehicle routing
+for that \emph{fixed} accepted set.
+Formally, the MILP treats $z_r$ as a known constant (equal to 1 for
+$r \in \mathcal{R}^{\text{acc}}$ and 0 otherwise) and optimizes only over the
+assignment variables $x_{r,m^P,m^D,v}$ and schedule variables $s_{v,i}$.
+It does \emph{not} re-optimize the acceptance decisions: the stochastic
+passenger responses are realized outcomes of the ALNS run, not MILP decision
+variables.
+The resulting MILP objective value is therefore a lower bound on the routing
+cost achievable for the same accepted set, and the optimality gap
+$\delta = (C^{\text{ALNS}} - C^{\text{MILP}}) / C^{\text{MILP}} \times 100\%$
+measures how close the ALNS heuristic comes to the ex-post routing optimum.
+Instances with up to 30--50 passengers and 5--8 vehicles are tractable within
+the time limit.
 
 \begin{figure}[h]
 \centering
