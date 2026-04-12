@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
-status: executing
-stopped_at: Completed Phase 5 — all 5 plans complete, verified 11/11
-last_updated: "2026-04-12T15:00:00.000Z"
+milestone: v2.0
+milestone_name: reviewer-revision
+status: in_progress
+stopped_at: Milestone v2.0 started — defining requirements and roadmap
+last_updated: "2026-04-12T16:00:00.000Z"
 progress:
-  total_phases: 6
-  completed_phases: 5
-  total_plans: 25
-  completed_plans: 20
-  percent: 83
+  total_phases: 3
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # STATE: Work 3 — Many-to-Many DRT Bidirectional Meeting Point Paper
@@ -19,45 +19,51 @@ progress:
 
 **Core value:** Demonstrate that bidirectional meeting point assignment with passenger choice significantly improves DRT efficiency and equity, with actionable policy implications for TR Part A.
 **Target journal:** Transportation Research Part A: Policy and Practice
-**Current focus:** Phase 6 — Academic Figures & Visualization
+**Current focus:** v2.0 — Reviewer Revision (phases 7–9)
 
 ---
 
 ## Current Position
 
-Phase: 6 (Academic Figures & Visualization) — STARTING
-Plan: 0 of N
-**Active phase:** Phase 6 — Academic Figures & Visualization
-**Active plan:** (planning in progress)
-**Status:** Starting Phase 6
-**Phase goal:** Produce all publication-quality figures (system diagrams, flowcharts, result charts, policy maps)
+Phase: Not started (defining roadmap)
+Plan: —
+**Active phase:** v2.0 milestone initialization
+**Status:** Defining requirements and roadmap
+**Last activity:** 2026-04-12 — Milestone v2.0 started
+
+**v2.0 revision scope (from GPT-5.2 review, Round 2):**
+- CRITICAL: Replace multi-bundle MNL with binary logit (single-offer behavioral consistency)
+- MAJOR: Add coverage–efficiency Pareto frontier experiment
+- MAJOR: Clarify MILP benchmark scope under stochastic acceptance
+- MAJOR: Add objective weight VOT mapping + sensitivity table
+- MINOR: Benchmark implied VOT against Chinese transit literature
 
 **Progress:**
 
-[██████████] 100%
-Phase 1 [██████████] 100% ✓
-Phase 2 [██████████] 100% ✓
-Phase 3 [██████████] 100% ✓
-Phase 4 [██████████] 100% ✓
-Phase 5 [██████████] 100% ✓
-Phase 6 [          ] 0%
-Overall [████████  ] 83%
+[          ] 0%
+Phase 7 [          ] 0% (Choice Model & Algorithm Fix)
+Phase 8 [          ] 0% (Pareto Experiment & New Metrics)
+Phase 9 [          ] 0% (Paper Section Updates)
+Overall v2.0 [          ] 0%
 
 ---
 
-## Performance Metrics
+## Performance Metrics (v1.0 final)
 
 | Metric | Value |
 |--------|-------|
-| Phases total | 6 |
-| Phases complete | 5 |
-| Requirements total (v1) | 47 |
-| Requirements complete | 44 |
-| Plans written | 20 |
-| Plans complete | 20 |
+| v1.0 phases total | 6 |
+| v1.0 phases complete | 6 |
+| v1.0 requirements total | 47 |
+| v1.0 requirements complete | 47 |
+| v1.0 plans written | 23 |
+| v1.0 plans complete | 23 |
+| Codex review Round 1 | 5/10 (weak reject) |
+| Codex review Round 2 | 6/10 (weak accept) |
 | Phase 3 key result | FullModel vkm/acceptance = 2383.85 vs DoorToDoor 3662.33 (-34.9% efficiency gain) |
-| Phase 4 key result | Equity Gini=0.1216; walk_sensitive acceptance=20.2%, time_sensitive=14.4%; 5 policy recommendations |
-| Phase 5 key result | 8 section files + 59 BibTeX entries; full paper draft complete (abstract through conclusion) |
+| Phase 4 key result | Equity Gini=0.1216; walk_sensitive=20.2%, time_sensitive=14.4%; 5 policy recommendations |
+| Phase 5 key result | 8 section files + 59 BibTeX entries; full paper draft complete |
+| Phase 6 key result | 6 publication-quality figures (PDF + PNG, matplotlib) |
 
 ## Accumulated Context
 
@@ -75,6 +81,8 @@ Overall [████████  ] 83%
 | Local PRNG random.Random(seed) in generators | Prevents cross-contamination between generator calls; essential for multi-seed experiments | Phase 3 |
 | O(n log n) sorted-array Gini formula | Equivalent to pairwise O(n^2) formula but faster at n=500 scale | Phase 3 |
 | Beijing MPs follow 9x9 grid formula (1875m spacing) | Plan formula gives 1875m not 500m; formula is authoritative over prose description | Phase 3 |
+| Binary logit for single-offer acceptance | Reviewer CRITICAL: multi-bundle MNL behaviorally inconsistent with single-offer mechanism | v2.0 |
+| Pareto frontier over rejection cost Gamma | Reviewer MAJOR: efficiency gains partly driven by endogenous coverage reduction | v2.0 |
 
 ### Prior Work Context
 
@@ -86,9 +94,10 @@ Overall [████████  ] 83%
 
 ### Todos
 
-- [x] Gurobi license: not available on dev machine — scale test (EXACT-02) uses skipif guard; will need license for actual benchmark runs
-- [x] Select Chinese city scenario parameters for EXP-02 (Phase 3) — Beijing suburban 15km×15km, 80 MPs, morning peak 7-9am (implemented in generate_beijing)
-- [ ] Confirm MNL parameter values (β1..β4) from Work 1/2 calibration or literature
+- [ ] Confirm MNL/binary-logit parameter values (β1..β4) from Work 1/2 calibration or literature
+- [ ] Run Pareto sweep experiment (Gamma sweep) and generate fig07_pareto
+- [ ] Update choice.py to binary logit
+- [ ] Update model.tex, algorithm.tex, experiments.tex, policy.tex per reviewer fixes
 
 ### Blockers
 
@@ -99,18 +108,17 @@ None currently.
 - Dissertation timeline: Work 3 planned 2026.09–2027.04 per BUAA schedule
 - Supervisor: Prof. Liu Tianliang
 - Language: English (academic paper)
-- Phase 5 (Paper Writing) depends on Phases 1-4 all being complete
-- Phase 6 (Figures) depends on Phases 3, 4, and 5 being complete
+- v2.0 phases 7–9 depend on v1.0 artifacts (paper sections, Python code, figures)
 
 ---
 
 ## Session Continuity
 
-**Last session:** 2026-04-12T15:00:00.000Z
-**Stopped at:** Completed Phase 5 — all 5 plans complete, verified 11/11
-**Next action:** Phase 6 — Academic Figures & Visualization (discuss → plan → execute)
+**Last session:** 2026-04-12
+**Stopped at:** v2.0 milestone initialized — requirements written, roadmap pending
+**Next action:** Spawn gsd-roadmapper for phases 7–9
 
 ---
 
 *State initialized: 2026-04-11*
-*Last updated: 2026-04-12 after Phase 5 complete (5/5 plans, verified 11/11)*
+*Updated: 2026-04-12 — v2.0 milestone started (reviewer revision, 3 phases planned)*

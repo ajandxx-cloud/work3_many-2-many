@@ -18,23 +18,38 @@ Transportation Research Part A: Policy and Practice (TR Part A)
 - Under what urban conditions (demand density, fleet size, walking tolerance) does bidirectional meeting point assignment deliver the most benefit?
 - Policy recommendations for Chinese city DRT deployment
 
+## Current Milestone: v2.0 Reviewer Revision
+
+**Goal:** Address all CRITICAL and MAJOR reviewer findings to bring the paper from 6/10 (weak accept) to 7–8/10 (accept) and achieve submission-ready status.
+
+**Target features:**
+- Binary logit replacement for multi-bundle MNL (behavioral consistency fix)
+- Coverage–efficiency Pareto frontier experiment
+- MILP benchmark scope clarification under stochastic acceptance
+- Objective weight VOT mapping + sensitivity table
+- Parameter plausibility benchmarking against literature
+
 ## Requirements
 
-### Validated
+### Validated (v1.0 complete)
 
-(None yet — paper not started)
+- [x] Problem formulation: many-to-many DRT with bidirectional meeting points + passenger choice
+- [x] Mathematical model: three-layer coupled model (service generation → passenger response → dynamic dispatch)
+- [x] Small-scale exact algorithm (MILP/branch-and-cut) for benchmark validation
+- [x] Large-scale heuristic: online insertion + rolling horizon + ALNS
+- [x] Numerical experiments: synthetic scenario + semi-realistic case (Chinese city)
+- [x] Comparison baselines: door-to-door, single-sided meeting point, no passenger choice, full model
+- [x] Policy analysis: sensitivity to demand density, walking tolerance, fleet size, city type
+- [x] Paper writing: all sections (intro, literature, model, algorithm, experiments, conclusion)
+- [x] Academic figures: system diagram, algorithm flowchart, result charts (Python/matplotlib)
 
-### Active
+### Active (v2.0 revision)
 
-- [ ] Problem formulation: many-to-many DRT with bidirectional meeting points + passenger choice
-- [ ] Mathematical model: three-layer coupled model (service generation → passenger response → dynamic dispatch)
-- [ ] Small-scale exact algorithm (MILP/branch-and-cut) for benchmark validation
-- [ ] Large-scale heuristic: online insertion + rolling horizon + ALNS
-- [ ] Numerical experiments: synthetic scenario + semi-realistic case (Chinese city)
-- [ ] Comparison baselines: door-to-door, single-sided meeting point, no passenger choice, full model
-- [ ] Policy analysis: sensitivity to demand density, walking tolerance, fleet size, city type
-- [ ] Paper writing: all sections (intro, literature, model, algorithm, experiments, conclusion)
-- [ ] Academic figures: system diagram, algorithm flowchart, result charts (Python/matplotlib)
+- [ ] Binary logit acceptance model replacing multi-bundle MNL in single-offer mechanism
+- [ ] Coverage–efficiency Pareto frontier (served share vs vkm tradeoff curve)
+- [ ] MILP benchmark scope defined: deterministic routing of fixed accepted set + optimality gap
+- [ ] Objective weight policy interpretation: VOT mapping + weight sensitivity table
+- [ ] Parameter plausibility: implied VOT benchmarked against Chinese DRT/transit literature
 
 ### Out of Scope
 
@@ -60,7 +75,7 @@ Transportation Research Part A: Policy and Practice (TR Part A)
 
 - **Timeline**: Work 3 planned 2026.09–2027.04 per dissertation schedule
 - **Method**: Must include both exact (small-scale) and heuristic (large-scale) algorithms
-- **Passenger choice**: Must retain MNL passenger choice model — core dissertation thread
+- **Passenger choice**: Must retain MNL/binary-logit passenger choice model — core dissertation thread
 - **Policy framing**: TR Part A requires policy implications beyond pure optimization
 - **Language**: English (academic paper)
 
@@ -68,10 +83,12 @@ Transportation Research Part A: Policy and Practice (TR Part A)
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Target TR Part A not TR Part C | Policy framing differentiates from Work 1 (TR Part C); TR Part A accepts optimization papers with strong policy angle | — Pending |
-| Fix price, don't optimize it | Avoid overlap with Work 1/2; keep Work 3 focused on bidirectional spatial assignment | — Pending |
-| Rolling horizon + ALNS as main heuristic | Standard in dynamic DRT literature 2024-2025; matches dissertation framework | — Pending |
-| Simulation-based validation | Standard for DARP; real data hard to obtain; consistent with Work 1 approach | — Pending |
+| Target TR Part A not TR Part C | Policy framing differentiates from Work 1 (TR Part C); TR Part A accepts optimization papers with strong policy angle | Confirmed |
+| Fix price, don't optimize it | Avoid overlap with Work 1/2; keep Work 3 focused on bidirectional spatial assignment | Confirmed |
+| Rolling horizon + ALNS as main heuristic | Standard in dynamic DRT literature 2024-2025; matches dissertation framework | Confirmed |
+| Simulation-based validation | Standard for DARP; real data hard to obtain; consistent with Work 1 approach | Confirmed |
+| Binary logit for single-offer acceptance | Reviewer CRITICAL: multi-bundle MNL behaviorally inconsistent with single-offer mechanism | v2.0 |
+| Pareto frontier over rejection cost | Reviewer MAJOR: efficiency gains partly driven by endogenous coverage reduction | v2.0 |
 
 ## Evolution
 
@@ -83,5 +100,11 @@ This document evolves at phase transitions and milestone boundaries.
 3. New requirements emerged? → Add to Active
 4. Decisions to log? → Add to Key Decisions
 
+**After each milestone** (via `/gsd-complete-milestone`):
+1. Full review of all sections
+2. Core Value check — still the right priority?
+3. Audit Out of Scope — reasons still valid?
+4. Update Context with current state
+
 ---
-*Last updated: 2026-04-11 after initialization*
+*Last updated: 2026-04-12 — v2.0 milestone started (reviewer revision)*
