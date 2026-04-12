@@ -12,7 +12,7 @@
 - [x] **Phase 1: Problem Formulation & Model Structure** - Define the many-to-many DRT problem, notation, constraints, and three-layer coupled model with MNL passenger choice
 - [x] **Phase 2: Algorithm Development & Python Implementation** - Build exact MILP benchmark and large-scale rolling horizon + ALNS heuristic; implement and validate in Python
 - [x] **Phase 3: Numerical Experiments** - Run synthetic and semi-realistic Chinese city experiments; compare all baselines and ablations; collect performance metrics (completed 2026-04-12)
-- [ ] **Phase 4: Policy Analysis & Sensitivity Analysis** - Conduct sensitivity sweeps and equity analysis; derive actionable policy recommendations for TR Part A
+- [x] **Phase 4: Policy Analysis & Sensitivity Analysis** - Conduct sensitivity sweeps and equity analysis; derive actionable policy recommendations for TR Part A (completed 2026-04-12)
 - [ ] **Phase 5: Paper Writing** - Write all paper sections (abstract through conclusion) in submission-ready form
 - [ ] **Phase 6: Academic Figures & Visualization** - Produce all publication-quality figures (system diagrams, flowcharts, result charts, policy maps)
 
@@ -84,12 +84,12 @@ Plans:
   3. Fleet size sensitivity analysis produces a service quality vs. fleet size tradeoff curve
   4. Equity analysis compares service quality distribution across at least two passenger types (price-sensitive vs. time-sensitive) and identifies any systematic disadvantage
   5. At least three concrete, actionable policy recommendations for Chinese city DRT operators are written in plain language, covering when and where to deploy bidirectional DRT
-**Plans:** 3 plans
+**Plans:** 3/3 plans complete
 
 Plans:
-- [ ] 04-01-PLAN.md — Walking tolerance sweep (ρ ∈ [200,1000]m) + fleet size sweep + city tier comparison
-- [ ] 04-02-PLAN.md — Equity analysis: per-type acceptance rates, Gini coefficient
-- [ ] 04-03-PLAN.md — Policy recommendations document (5 structured recommendations)
+- [x] 04-01-PLAN.md — Walking tolerance sweep (ρ ∈ [200,1000]m) + fleet size sweep + city tier comparison
+- [x] 04-02-PLAN.md — Equity analysis: per-type acceptance rates, Gini coefficient
+- [x] 04-03-PLAN.md — Policy recommendations document (5 structured recommendations)
 
 ### Phase 5: Paper Writing
 **Goal**: A complete, submission-ready draft of the full paper exists — all sections from abstract to conclusion are written in academic English at TR Part A standard, with references formatted
@@ -126,7 +126,7 @@ Plans:
 | 1. Problem Formulation & Model Structure | 4/4 | Complete | 2026-04-11 |
 | 2. Algorithm Development & Python Implementation | 5/5 | Complete | 2026-04-12 |
 | 3. Numerical Experiments | 3/3 | Complete   | 2026-04-12 |
-| 4. Policy Analysis & Sensitivity Analysis | 0/3 | Planned | - |
+| 4. Policy Analysis & Sensitivity Analysis | 3/3 | Complete   | 2026-04-12 |
 | 5. Paper Writing | 0/? | Not started | - |
 | 6. Academic Figures & Visualization | 0/? | Not started | - |
 

@@ -54,7 +54,7 @@
 - [ ] **POLICY-02**: Sensitivity analysis: walking tolerance threshold × system performance
 - [ ] **POLICY-03**: Sensitivity analysis: fleet size × service quality tradeoff
 - [ ] **POLICY-04**: Equity analysis: service quality distribution across passenger types (price-sensitive vs. time-sensitive)
-- [ ] **POLICY-05**: Policy recommendations: when/where to deploy bidirectional DRT in Chinese cities
+- [x] **POLICY-05**: Policy recommendations: when/where to deploy bidirectional DRT in Chinese cities
 - [ ] **POLICY-06**: Comparison of Chinese city tiers (high-density vs. low-density scenarios)
 
 ### Paper Writing
@@ -134,7 +134,7 @@
 | POLICY-02 | Phase 4 — Policy Analysis & Sensitivity Analysis | Pending |
 | POLICY-03 | Phase 4 — Policy Analysis & Sensitivity Analysis | Pending |
 | POLICY-04 | Phase 4 — Policy Analysis & Sensitivity Analysis | Pending |
-| POLICY-05 | Phase 4 — Policy Analysis & Sensitivity Analysis | Pending |
+| POLICY-05 | Phase 4 — Policy Analysis & Sensitivity Analysis | Complete |
 | POLICY-06 | Phase 4 — Policy Analysis & Sensitivity Analysis | Pending |
 | PAPER-01 | Phase 5 — Paper Writing | Pending |
 | PAPER-02 | Phase 5 — Paper Writing | Pending |
