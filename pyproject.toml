@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "drt"
+version = "0.1.0"
+description = "Many-to-many DRT co-optimization: bidirectional meeting points with MNL passenger choice"
+requires-python = ">=3.10"
+dependencies = [
+    "gurobipy",
+    "numpy",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-benchmark"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
