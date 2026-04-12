@@ -32,6 +32,8 @@ class ALNSState:
     routes: dict        # vehicle_id -> Route
     unassigned: list    # list[Request] removed by destroy operators
     cost: float = 0.0
+    completed_ids: set = field(default_factory=set)  # IDs of requests already served (pruned from routes)
+    extra_vehicle_km: float = 0.0  # km driven in completed (pruned) trips, for RollingHorizon variants
 
 
 # ---------------------------------------------------------------------------
@@ -44,7 +46,8 @@ def _route_cost(routes: dict, vehicles: dict, travel_speed: float = 1.0) -> floa
     for vid, route in routes.items():
         v = vehicles[vid]
         prev = v.current_position
-        for mp, _ in route.stops:
+        for stop in route.stops:
+            mp = stop[0]  # first element is always MeetingPoint
             total += euclidean(prev, mp.coords) / travel_speed
             prev = mp.coords
     return total
@@ -440,6 +443,8 @@ class RollingHorizon:
         self.routes: dict = {vid: Route(vehicle_id=vid, stops=[]) for vid in vehicles}
         self.active_requests: dict = {}   # request_id -> Request
         self.request_registry: dict = {}  # request_id -> Request (all ever seen)
+        self.completed_request_ids: set = set()  # IDs of requests already served
+        self.accumulated_vehicle_km: float = 0.0  # total km driven including completed trips
 
     def add_request(self, request: Request, current_time: float) -> None:
         """Add a new incoming request to the active set."""
@@ -452,6 +457,46 @@ class RollingHorizon:
         Returns dict with keys: routes, unassigned, cost, time_ms, objective, n_accepted.
         """
         t0 = time.perf_counter()
+
+        # Advance vehicle state to current_time:
+        # - Update current_time to simulation time
+        # - Update current_position to last completed stop (stops with scheduled time <= current_time)
+        # - Remove completed stops from routes so feasibility checks work correctly
+        vehicles_at_t = {}
+        pruned_routes = {}
+        for vid, v in self.vehicles.items():
+            route = self.routes.get(vid, Route(vehicle_id=vid, stops=[]))
+            # Separate completed stops (scheduled time <= current_time) from future stops
+            # Stop time is stored at index 1 in tagged stops (mp, time, req_id, role)
+            # or index 1 in plain stops (mp, time). Use index 1 for both.
+            completed = [s for s in route.stops if len(s) >= 2 and s[1] <= current_time]
+            future = [s for s in route.stops if len(s) >= 2 and s[1] > current_time]
+            # Vehicle position is last completed stop, or initial position if none
+            if completed:
+                last_pos = completed[-1][0].coords
+                # Track completed request IDs so they aren't re-inserted
+                for s in completed:
+                    if len(s) >= 3:
+                        self.completed_request_ids.add(s[2])
+                # Accumulate vehicle_km for completed stops
+                prev = v.current_position
+                for s in completed:
+                    mp = s[0]
+                    self.accumulated_vehicle_km += euclidean(prev, mp.coords) / 1000.0
+                    prev = mp.coords
+            else:
+                last_pos = v.current_position
+            vehicles_at_t[vid] = Vehicle(
+                id=v.id,
+                capacity=v.capacity,
+                max_route_duration=v.max_route_duration,
+                current_position=last_pos,
+                current_time=max(v.current_time, current_time),
+            )
+            pruned_routes[vid] = Route(vehicle_id=vid, stops=future)
+
+        # Use pruned routes (future stops only) for ALNS
+        self.routes = pruned_routes
 
         # Filter active requests within horizon
         horizon_requests = {
@@ -471,10 +516,19 @@ class RollingHorizon:
             }
 
         # Build initial state from current routes
+        # Add unassigned horizon requests so repair operators can insert them
+        # Use completed_request_ids + currently-in-route IDs to avoid re-inserting
+        already_assigned = self.completed_request_ids | set(_get_assigned_ids(ALNSState(
+            routes=deepcopy(self.routes), unassigned=[], cost=0.0
+        )))
+        unassigned_horizon = [
+            req for rid, req in horizon_requests.items()
+            if rid not in already_assigned
+        ]
         current_state = ALNSState(
             routes=deepcopy(self.routes),
-            unassigned=[],
-            cost=_route_cost(self.routes, self.vehicles, self.travel_speed),
+            unassigned=unassigned_horizon,
+            cost=_route_cost(self.routes, vehicles_at_t, self.travel_speed),
         )
 
         # Determine k for destroy operators
@@ -486,7 +540,7 @@ class RollingHorizon:
         destroy_ops = [
             lambda s: random_removal(s, k_destroy, self.rng, self.request_registry),
             lambda s: worst_removal(s, k_destroy, self.request_registry,
-                                    self.vehicles, self.travel_speed),
+                                    vehicles_at_t, self.travel_speed),
             lambda s: related_removal(s, k_destroy, self.rng,
                                       self.request_registry, self.travel_speed),
         ]
@@ -499,30 +553,35 @@ class RollingHorizon:
             # Select repair operator (alternate greedy / regret)
             if iteration % 2 == 0:
                 repaired = greedy_insertion(
-                    destroyed, self.vehicles, self.meeting_points,
+                    destroyed, vehicles_at_t, self.meeting_points,
                     self.rho_p, self.rho_d, self.k_top,
                     self.cost_weights, self.travel_speed, self.rng
                 )
             else:
                 repaired = regret_insertion(
-                    destroyed, self.vehicles, self.meeting_points,
+                    destroyed, vehicles_at_t, self.meeting_points,
                     self.rho_p, self.rho_d, self.k_top,
                     self.cost_weights, self.travel_speed
                 )
 
-            repaired.cost = _route_cost(repaired.routes, self.vehicles, self.travel_speed)
+            repaired.cost = _route_cost(repaired.routes, vehicles_at_t, self.travel_speed)
 
-            # Hill-climbing acceptance
-            if repaired.cost <= best_state.cost:
+            # Acceptance: prefer fewer unassigned (more accepted), break ties by cost
+            repaired_unassigned = len(repaired.unassigned)
+            best_unassigned = len(best_state.unassigned)
+            if (repaired_unassigned < best_unassigned or
+                    (repaired_unassigned == best_unassigned and
+                     repaired.cost <= best_state.cost)):
                 best_state = repaired
 
         # Update controller state
         self.routes = best_state.routes
-        # Remove accepted requests from active set
+        # Remove accepted requests from active set and track them
         accepted_ids = set(_get_assigned_ids(best_state))
         n_accepted = len(accepted_ids)
         for rid in accepted_ids:
             self.active_requests.pop(rid, None)
+            self.completed_request_ids.add(rid)
 
         elapsed_ms = (time.perf_counter() - t0) * 1000
 

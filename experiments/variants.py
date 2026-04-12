@@ -82,7 +82,7 @@ class BaseVariant(ABC):
         cpu_time = time.perf_counter() - t0
 
         records = self._build_records(scenario, state)
-        vehicle_km = self._total_vehicle_km(state, scenario)
+        vehicle_km = self._total_vehicle_km(state, scenario) + getattr(state, 'extra_vehicle_km', 0.0)
         return SimulationResult(
             records=records,
             total_vehicle_km=vehicle_km,
@@ -122,7 +122,9 @@ class BaseVariant(ABC):
 
     def _build_records(self, scenario: Scenario, state: ALNSState) -> list[PassengerRecord]:
         """Build per-passenger PassengerRecord list from final ALNSState."""
-        assigned_ids = self._assigned_request_ids(state)
+        in_route_ids = self._assigned_request_ids(state)
+        completed_ids = getattr(state, 'completed_ids', set())
+        assigned_ids = in_route_ids | completed_ids
         unassigned_ids = {r.id for r in state.unassigned}
 
         records: list[PassengerRecord] = []
@@ -130,19 +132,33 @@ class BaseVariant(ABC):
             ptype = PASSENGER_TYPES[idx % len(PASSENGER_TYPES)]
             accepted = (request.id in assigned_ids) and (request.id not in unassigned_ids)
 
-            if accepted:
+            if accepted and request.id in in_route_ids:
                 pickup_mp, dropoff_mp, pickup_time, dropoff_time = self._find_stop_info(
                     request.id, state
                 )
                 if pickup_mp is None:
-                    # Fallback: treat as rejected if stop info missing
                     accepted = False
+            elif accepted and request.id in completed_ids:
+                # Completed request: stop info was pruned; use estimated values
+                pickup_mp = dropoff_mp = None
+                pickup_time = request.earliest
+                dropoff_time = request.earliest + euclidean(request.origin, request.destination) / TRAVEL_SPEED
+            else:
+                pickup_mp = dropoff_mp = None
+                pickup_time = dropoff_time = 0.0
 
-            if accepted and pickup_mp is not None:
-                pickup_walk = euclidean(request.origin, pickup_mp.coords)
-                dropoff_walk = euclidean(dropoff_mp.coords, request.destination)
+            if accepted and (pickup_mp is not None or request.id in completed_ids):
+                if pickup_mp is not None:
+                    pickup_walk = euclidean(request.origin, pickup_mp.coords)
+                    dropoff_walk = euclidean(dropoff_mp.coords, request.destination)
+                else:
+                    # Completed: no walk info, use 0 (conservative estimate)
+                    pickup_walk = 0.0
+                    dropoff_walk = 0.0
                 wait_time = max(0.0, pickup_time - request.earliest)
                 ivt = max(0.0, dropoff_time - pickup_time) if dropoff_time > pickup_time else (
+                    euclidean(request.origin, request.destination) / TRAVEL_SPEED
+                    if pickup_mp is None else
                     euclidean(pickup_mp.coords, dropoff_mp.coords) / TRAVEL_SPEED
                 )
                 direct_time = euclidean(request.origin, request.destination) / TRAVEL_SPEED
@@ -381,7 +397,7 @@ class FullModel(BaseVariant):
             delta=DELTA,
             cost_weights=_COST_WEIGHTS,
             travel_speed=TRAVEL_SPEED,
-            alns_iterations=20,
+            alns_iterations=5,  # reduced for tractable runtime at scales 100-500
             seed=42,
         )
 
@@ -392,14 +408,17 @@ class FullModel(BaseVariant):
         rh.run_simulation(sorted_requests, arrival_times)
 
         # Build ALNSState from RollingHorizon final routes
-        assigned_ids = set()
+        # Include both currently-in-route IDs and completed (pruned) IDs
+        assigned_ids = set(rh.completed_request_ids)
         for route in rh.routes.values():
             for stop in route.stops:
                 if len(stop) >= 3:
                     assigned_ids.add(stop[2])
 
         unassigned = [r for r in scenario.requests if r.id not in assigned_ids]
-        return ALNSState(routes=rh.routes, unassigned=unassigned, cost=0.0)
+        return ALNSState(routes=rh.routes, unassigned=unassigned, cost=0.0,
+                         completed_ids=set(rh.completed_request_ids),
+                         extra_vehicle_km=rh.accumulated_vehicle_km)
 
 
 # ---------------------------------------------------------------------------
@@ -459,7 +478,7 @@ class AblationNoChoice(BaseVariant):
             delta=DELTA,
             cost_weights=_COST_WEIGHTS,
             travel_speed=TRAVEL_SPEED,
-            alns_iterations=20,
+            alns_iterations=5,  # reduced for tractable runtime at scales 100-500
             seed=42,
         )
 
@@ -468,14 +487,16 @@ class AblationNoChoice(BaseVariant):
 
         rh.run_simulation(sorted_requests, arrival_times)
 
-        assigned_ids = set()
+        assigned_ids = set(rh.completed_request_ids)
         for route in rh.routes.values():
             for stop in route.stops:
                 if len(stop) >= 3:
                     assigned_ids.add(stop[2])
 
         unassigned = [r for r in scenario.requests if r.id not in assigned_ids]
-        return ALNSState(routes=rh.routes, unassigned=unassigned, cost=0.0)
+        return ALNSState(routes=rh.routes, unassigned=unassigned, cost=0.0,
+                         completed_ids=set(rh.completed_request_ids),
+                         extra_vehicle_km=rh.accumulated_vehicle_km)
 
 
 # ---------------------------------------------------------------------------

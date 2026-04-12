@@ -17,8 +17,11 @@ VEHICLE_COUNTS = {100: 10, 200: 15, 300: 20, 500: 30}  # maps n_requests → n_v
 K_TOP = 3                          # top-K meeting points per origin/destination
 
 # Walking radii (meters)
-RHO_P = 500.0                      # pickup walking radius
-RHO_D = 500.0                      # dropoff walking radius
+# Synthetic grid: 10x10 at 2km spacing → max dist to nearest MP = 1414m
+# Beijing grid:   9x9 at 1875m spacing → max dist to nearest MP = 1326m
+# RHO = 1500m ensures every request can reach at least one meeting point.
+RHO_P = 1500.0                     # pickup walking radius
+RHO_D = 1500.0                     # dropoff walking radius
 
 # Rolling-horizon parameters (seconds)
 H_WINDOW = 30 * 60.0               # rolling horizon window

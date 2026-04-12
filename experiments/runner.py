@@ -22,8 +22,12 @@ import os
 import sys
 import time
 import traceback
+import concurrent.futures
 
 import pandas as pd
+
+# Per-variant timeout in seconds. Variants exceeding this get an error row.
+_VARIANT_TIMEOUT_S = 120
 
 from experiments.config import BEIJING_SCALE, SCALES, SEEDS, VEHICLE_COUNTS
 from experiments.metrics import compute_metrics
@@ -99,26 +103,11 @@ def run_all_experiments(
             scenario = generate_synthetic(scale, n_vehicles, seed)
             for variant in ALL_VARIANTS:
                 done += 1
-                try:
-                    result = variant.run(scenario)
-                    m = compute_metrics(result)
-                    row = _make_row(variant.name, scale, seed, m)
-                    synthetic_rows.append(row)
-                    print(
-                        f"[{done:3d}/{total_synthetic}] synthetic "
-                        f"variant={variant.name:<28} scale={scale:3d} seed={seed} "
-                        f"accept={m.acceptance_rate:.3f} vkm={m.vehicle_km:.1f}"
-                    )
-                except Exception as exc:
-                    print(
-                        f"[{done:3d}/{total_synthetic}] ERROR synthetic "
-                        f"variant={variant.name} scale={scale} seed={seed}: {exc}",
-                        file=sys.stderr,
-                    )
-                    traceback.print_exc(file=sys.stderr)
-                    # Insert a NaN-free fallback row so CSV row counts stay consistent
-                    row = _make_error_row(variant.name, scale, seed)
-                    synthetic_rows.append(row)
+                row = _run_variant_with_timeout(
+                    variant, scenario, scale, seed,
+                    label=f"[{done:3d}/{total_synthetic}] synthetic",
+                )
+                synthetic_rows.append(row)
 
     if beijing:
         n_vehicles = VEHICLE_COUNTS.get(BEIJING_SCALE, 15)
@@ -131,25 +120,11 @@ def run_all_experiments(
             scenario = generate_beijing(BEIJING_SCALE, n_vehicles, seed)
             for variant in ALL_VARIANTS:
                 done_bj += 1
-                try:
-                    result = variant.run(scenario)
-                    m = compute_metrics(result)
-                    row = _make_row(variant.name, BEIJING_SCALE, seed, m)
-                    beijing_rows.append(row)
-                    print(
-                        f"[{done_bj:3d}/{total_beijing}] beijing  "
-                        f"variant={variant.name:<28} seed={seed} "
-                        f"accept={m.acceptance_rate:.3f} vkm={m.vehicle_km:.1f}"
-                    )
-                except Exception as exc:
-                    print(
-                        f"[{done_bj:3d}/{total_beijing}] ERROR beijing "
-                        f"variant={variant.name} seed={seed}: {exc}",
-                        file=sys.stderr,
-                    )
-                    traceback.print_exc(file=sys.stderr)
-                    row = _make_error_row(variant.name, BEIJING_SCALE, seed)
-                    beijing_rows.append(row)
+                row = _run_variant_with_timeout(
+                    variant, scenario, BEIJING_SCALE, seed,
+                    label=f"[{done_bj:3d}/{total_beijing}] beijing ",
+                )
+                beijing_rows.append(row)
 
     # Write CSVs
     syn_path = os.path.join(results_dir, "synthetic_results.csv")
@@ -206,6 +181,38 @@ def _make_error_row(variant_name: str, scale: int, seed: int) -> dict:
         "fairness_index": 0.0,
         "cpu_time": 0.0,
     }
+
+
+def _run_variant_with_timeout(variant, scenario, scale, seed, label="") -> dict:
+    """Run a single variant with a timeout. Returns error row on timeout/exception."""
+    def _task():
+        result = variant.run(scenario)
+        m = compute_metrics(result)
+        return _make_row(variant.name, scale, seed, m)
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+        future = executor.submit(_task)
+        try:
+            row = future.result(timeout=_VARIANT_TIMEOUT_S)
+            print(
+                f"{label} variant={variant.name:<28} scale={scale:3d} seed={seed} "
+                f"accept={row['acceptance_rate']:.3f} vkm={row['vehicle_km']:.1f}"
+            )
+            return row
+        except concurrent.futures.TimeoutError:
+            print(
+                f"{label} TIMEOUT variant={variant.name} scale={scale} seed={seed} "
+                f"(>{_VARIANT_TIMEOUT_S}s)",
+                file=sys.stderr,
+            )
+            return _make_error_row(variant.name, scale, seed)
+        except Exception as exc:
+            print(
+                f"{label} ERROR variant={variant.name} scale={scale} seed={seed}: {exc}",
+                file=sys.stderr,
+            )
+            traceback.print_exc(file=sys.stderr)
+            return _make_error_row(variant.name, scale, seed)
 
 
 def _write_csv(rows: list[dict], path: str) -> None:
