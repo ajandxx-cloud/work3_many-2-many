@@ -15,7 +15,8 @@
 - [x] **Phase 4: Policy Analysis & Sensitivity Analysis** - Conduct sensitivity sweeps and equity analysis; derive actionable policy recommendations for TR Part A
  (completed 2026-04-12)
 - [x] **Phase 5: Paper Writing** - Write all paper sections (abstract through conclusion) in submission-ready form (completed 2026-04-12)
-- [ ] **Phase 6: Academic Figures & Visualization** - Produce all publication-quality figures (system diagrams, flowcharts, result charts, policy maps)
+- [x] **Phase 6: Academic Figures & Visualization** - Produce all publication-quality figures (system diagrams, flowcharts, result charts, policy maps)
+ (completed 2026-04-12)
 
 ---
 
@@ -121,12 +122,27 @@ Plans:
   3. Algorithm flowchart covers the full online insertion + rolling horizon + ALNS loop with decision branches labeled
   4. Experiment result charts (bar/line) show all baseline comparisons with error bars or confidence intervals where applicable
   5. Sensitivity heatmaps and policy benefit map are generated at 300 dpi and saved as PDF/EPS for journal submission
-**Plans:** 3 plans
+**Plans:** 3/3 plans complete
 
 Plans:
-- [ ] 06-01-PLAN.md — Conceptual diagrams (Wave 1): FIG-01 system overview, FIG-02 three-layer architecture, FIG-03 algorithm flowchart
-- [ ] 06-02-PLAN.md — Data-driven charts (Wave 1): FIG-04 baseline comparison bar charts, FIG-05 sensitivity line plots
-- [ ] 06-03-PLAN.md — Policy map + LaTeX integration (Wave 2): FIG-06 policy deployment map, replace all 6 figure placeholders in paper sections
+- [x] 06-01-PLAN.md — Conceptual diagrams (Wave 1): FIG-01 system overview, FIG-02 three-layer architecture, FIG-03 algorithm flowchart
+- [x] 06-02-PLAN.md — Data-driven charts (Wave 1): FIG-04 baseline comparison bar charts, FIG-05 sensitivity line plots
+- [x] 06-03-PLAN.md — Policy map + LaTeX integration (Wave 2): FIG-06 policy deployment map, replace all 6 figure placeholders in paper sections
+
+### Phase 8: Pareto Experiment & New Metrics (Reviewer Revision)
+**Goal**: The paper presents a coverage--efficiency Pareto frontier that directly addresses the reviewer's concern that efficiency gains are partly driven by endogenous coverage reduction
+**Depends on**: Phase 3, Phase 6 (uses FullModel infrastructure and figure style)
+**Requirements**: REV-05, REV-06, REV-07, REV-08
+**Success Criteria** (what must be TRUE):
+  1. Gamma sweep [0, 5, 10, 20, 50, 100] runs FullModel at scale=200 with 3 seeds and produces pareto_gamma_sweep.csv
+  2. Social welfare W = sum_r[z_r*U_rb* - (1-z_r)*Gamma] is computed for each run and reported in the CSV
+  3. fig07_pareto.pdf and fig07_pareto.png are produced at 300 dpi showing the Pareto frontier with one labeled point per Gamma value
+  4. experiments.tex Section 5.1 defines W, Section 5.2 addresses the endogeneity concern, and Section 5.5 presents the frontier with Table 2 and fig07
+**Plans:** 2 plans
+
+Plans:
+- [ ] 08-01-PLAN.md — Gamma sweep experiment: extend metrics.py + variants.py, write pareto_sweep.py runner, write fig07_pareto.py figure script, execute sweep and generate outputs
+- [ ] 08-02-PLAN.md — experiments.tex update: add W definition to Section 5.1, reframe Section 5.2 efficiency discussion, add Section 5.5 with Table 2 and fig07 reference
 
 ---
 
@@ -139,7 +155,8 @@ Plans:
 | 3. Numerical Experiments | 3/3 | Complete   | 2026-04-12 |
 | 4. Policy Analysis & Sensitivity Analysis | 3/3 | Complete   | 2026-04-12 |
 | 5. Paper Writing | 0/5 | In progress | - |
-| 6. Academic Figures & Visualization | 0/3 | In progress | - |
+| 6. Academic Figures & Visualization | 3/3 | Complete    | 2026-04-12 |
+| 8. Pareto Experiment & New Metrics | 0/2 | Planned | - |
 
 ---
 
@@ -197,8 +214,12 @@ Plans:
 | FIG-04 | Phase 6 | Figures |
 | FIG-05 | Phase 6 | Figures |
 | FIG-06 | Phase 6 | Figures |
+| REV-05 | Phase 8 | Reviewer Revision |
+| REV-06 | Phase 8 | Reviewer Revision |
+| REV-07 | Phase 8 | Reviewer Revision |
+| REV-08 | Phase 8 | Reviewer Revision |
 
-**Total mapped: 47/47 ✓**
+**Total mapped: 51/51 (47 original + 4 reviewer revision requirements)**
 
 ---
 
@@ -206,3 +227,4 @@ Plans:
 *Last updated: 2026-04-11 — Phase 1 complete (4/4 plans, all requirements PROB-01..05, CHOICE-01..04 verified)*
 *Updated: 2026-04-11 — Phase 3 planned (3 plans: 03-01, 03-02, 03-03)*
 *Updated: 2026-04-12 — Phase 6 planned (3 plans: 06-01, 06-02, 06-03)*
+*Updated: 2026-04-12 — Phase 8 planned (2 plans: 08-01, 08-02) for reviewer revision REV-05..REV-08*
