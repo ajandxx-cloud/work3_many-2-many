@@ -1,0 +1,46 @@
+%% Work 3: Many-to-Many DRT Bidirectional Meeting Point Paper
+%% Target: Transportation Research Part A: Policy and Practice
+%% Compiled: pdflatex main.tex (requires elsarticle.cls)
+
+\documentclass[review,12pt]{elsarticle}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\journal{Transportation Research Part A: Policy and Practice}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Co-optimization of Bidirectional Meeting Point Assignment and Dynamic Routing for Many-to-Many Demand-Responsive Transit with Passenger Choice}
+
+\author[buaa]{An Jin}
+\author[buaa]{Tianliang Liu\corref{cor1}}
+\cortext[cor1]{Corresponding author}
+\address[buaa]{School of Transportation Science and Engineering, Beihang University, Beijing 100191, China}
+
+\input{sections/abstract}
+
+\end{frontmatter}
+
+\input{sections/intro}
+\input{sections/literature}
+\input{sections/model}
+\input{sections/algorithm}
+\input{sections/experiments}
+\input{sections/policy}
+\input{sections/conclusion}
+
+\bibliographystyle{elsarticle-num}
+\bibliography{references}
+
+\end{document}
