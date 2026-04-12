@@ -101,8 +101,14 @@ Plans:
   3. Model and algorithm sections are self-contained and match the Phase 1 formulation and Phase 2 implementation exactly (no notation drift)
   4. Experiments and policy sections present results in narrative form with all tables and figure placeholders in place
   5. Reference list contains 50-80 citations formatted consistently, covering DARP/DRT, meeting points, passenger choice, and dynamic scheduling literature
-**Plans**: TBD
-**UI hint**: yes
+**Plans:** 5 plans
+
+Plans:
+- [ ] 05-01-PLAN.md — Front matter: abstract.tex + intro.tex (PAPER-01, PAPER-02)
+- [ ] 05-02-PLAN.md — Literature review: literature.tex (PAPER-03)
+- [ ] 05-03-PLAN.md — Model + algorithm: model.tex + algorithm.tex (PAPER-04, PAPER-05, PAPER-06)
+- [ ] 05-04-PLAN.md — Experiments + policy: experiments.tex + policy.tex (PAPER-07, PAPER-08)
+- [ ] 05-05-PLAN.md — Back matter + assembly: conclusion.tex + references.bib + main.tex (PAPER-09, PAPER-10)
 
 ### Phase 6: Academic Figures & Visualization
 **Goal**: All six publication-quality figures are produced in Python/matplotlib at journal resolution, match the paper narrative, and are export-ready for TR Part A submission
@@ -127,7 +133,7 @@ Plans:
 | 2. Algorithm Development & Python Implementation | 5/5 | Complete | 2026-04-12 |
 | 3. Numerical Experiments | 3/3 | Complete   | 2026-04-12 |
 | 4. Policy Analysis & Sensitivity Analysis | 3/3 | Complete   | 2026-04-12 |
-| 5. Paper Writing | 0/? | Not started | - |
+| 5. Paper Writing | 0/5 | In progress | - |
 | 6. Academic Figures & Visualization | 0/? | Not started | - |
 
 ---
