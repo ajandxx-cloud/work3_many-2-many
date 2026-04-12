@@ -67,11 +67,11 @@ Plans:
   3. All four model variants (door-to-door, single-sided, bidirectional no-choice, full model) and both ablations (no rolling horizon, no passenger choice) produce complete metric tables
   4. All nine performance metrics (acceptance rate, vehicle-km, waiting time avg/95th, walking distance, IVT, detour ratio, fairness index, CPU time) are computed and recorded for every variant
   5. The full model shows measurable improvement over all baselines on at least acceptance rate and vehicle-km, confirming the core thesis
-**Plans:** 3 plans
+**Plans:** 2/3 plans executed
 
 Plans:
-- [ ] 03-01-PLAN.md — Experiment infrastructure: config constants, synthetic + Beijing scenario generators, 9-metric computation module
-- [ ] 03-02-PLAN.md — Model variants: 6 runnable classes (DoorToDoor, SingleSidedPickup, BidirectionalNoChoice, FullModel, AblationNoRollingHorizon, AblationNoChoice)
+- [x] 03-01-PLAN.md — Experiment infrastructure: config constants, synthetic + Beijing scenario generators, 9-metric computation module
+- [x] 03-02-PLAN.md — Model variants: 6 runnable classes (DoorToDoor, SingleSidedPickup, BidirectionalNoChoice, FullModel, AblationNoRollingHorizon, AblationNoChoice)
 - [ ] 03-03-PLAN.md — Run experiments and collect results: runner.py orchestration, synthetic_results.csv, beijing_results.csv, metrics_table.csv
 
 ### Phase 4: Policy Analysis & Sensitivity Analysis
@@ -120,7 +120,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Problem Formulation & Model Structure | 4/4 | Complete | 2026-04-11 |
 | 2. Algorithm Development & Python Implementation | 5/5 | Complete | 2026-04-12 |
-| 3. Numerical Experiments | 0/3 | In progress | - |
+| 3. Numerical Experiments | 2/3 | In Progress|  |
 | 4. Policy Analysis & Sensitivity Analysis | 0/? | Not started | - |
 | 5. Paper Writing | 0/? | Not started | - |
 | 6. Academic Figures & Visualization | 0/? | Not started | - |
