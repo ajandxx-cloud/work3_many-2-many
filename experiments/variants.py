@@ -17,9 +17,11 @@ Threat T-03-07 mitigation: unique names asserted at module load time.
 """
 from __future__ import annotations
 
+import hashlib
 import math
 import random
 import time
+import warnings
 from abc import ABC, abstractmethod
 from copy import deepcopy
 
@@ -144,7 +146,7 @@ def _mnl_filter_requests(
 
         accept_prob = accept_probability(bundle, request, ptype, arrival_t)
 
-        rng = random.Random(hash(request.id) & 0xFFFFFFFF)
+        rng = random.Random(int.from_bytes(hashlib.sha256(request.id.encode()).digest()[:4], "big"))
         if rng.random() <= accept_prob:
             accepted.append(request)
 
@@ -246,6 +248,13 @@ class BaseVariant(ABC):
                     pickup_walk = 0.0
                     dropoff_walk = 0.0
                 wait_time = max(0.0, pickup_time - request.earliest)
+                if pickup_mp is not None and pickup_time >= dropoff_time:
+                    warnings.warn(
+                        f"Request {request.id}: pickup_time ({pickup_time:.1f}) >= "
+                        f"dropoff_time ({dropoff_time:.1f}); using Euclidean fallback for IVT.",
+                        RuntimeWarning,
+                        stacklevel=2,
+                    )
                 ivt = max(0.0, dropoff_time - pickup_time) if dropoff_time > pickup_time else (
                     euclidean(request.origin, request.destination) / TRAVEL_SPEED
                     if pickup_mp is None else
@@ -383,7 +392,11 @@ class DoorToDoor(BaseVariant):
             # Merge back: update routes, track unassigned
             state.routes = result_state.routes
             if result_state.unassigned:
-                state.unassigned.extend(result_state.unassigned)
+                _existing_ids = {r.id for r in state.unassigned}
+                for _req in result_state.unassigned:
+                    if _req.id not in _existing_ids:
+                        state.unassigned.append(_req)
+                        _existing_ids.add(_req.id)
 
         return state
 
@@ -461,7 +474,11 @@ class DoorToDoorCapped(BaseVariant):
             )
             state.routes = result_state.routes
             if result_state.unassigned:
-                state.unassigned.extend(result_state.unassigned)
+                _existing_ids = {r.id for r in state.unassigned}
+                for _req in result_state.unassigned:
+                    if _req.id not in _existing_ids:
+                        state.unassigned.append(_req)
+                        _existing_ids.add(_req.id)
             else:
                 accepted_count += 1
 

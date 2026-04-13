@@ -24,6 +24,7 @@ from __future__ import annotations
 import csv
 import os
 import sys
+import warnings
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -93,6 +94,10 @@ def endogenous_matched_coverage_experiment(seeds: list[int] = None) -> list[dict
     """
     if seeds is None:
         seeds = SEEDS
+    if not seeds:
+        raise ValueError(
+            "endogenous_matched_coverage_experiment: seeds list must not be empty"
+        )
     n_vehicles = VEHICLE_COUNTS[SWEEP_SCALE]
 
     print(f"Step 1: Running FullModel baseline (scale={SWEEP_SCALE}, seeds={seeds})")
@@ -112,11 +117,12 @@ def endogenous_matched_coverage_experiment(seeds: list[int] = None) -> list[dict
     mean_dtdc_share = sum(r["served_share"] for r in dtdc_rows) / len(dtdc_rows)
     tolerance_ok = abs(mean_dtdc_share - target_share) <= 0.03
     if not tolerance_ok:
-        print(
-            f"WARNING: DoorToDoorCapped mean served_share={mean_dtdc_share:.4f} "
+        warnings.warn(
+            f"DoorToDoorCapped mean served_share={mean_dtdc_share:.4f} "
             f"is outside ±3pp of target={target_share:.4f} "
-            f"(diff={abs(mean_dtdc_share - target_share):.4f}). "
-            f"Still writing CSV."
+            f"(diff={abs(mean_dtdc_share - target_share):.4f}).",
+            UserWarning,
+            stacklevel=2,
         )
     else:
         print(f"  Tolerance check PASSED: |{mean_dtdc_share:.4f} - {target_share:.4f}| <= 0.03")
