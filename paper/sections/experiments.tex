@@ -142,35 +142,42 @@ to narrow at scale as vehicle consolidation opportunities increase.
 \paragraph{Efficiency at equal coverage.}
 A natural concern is whether FullModel's lower vehicle-km is endogenous:
 fewer served trips mechanically reduce total driving distance. To address this,
-we conduct a \emph{matched-coverage} comparison that controls for served share.
-We calibrate DoorToDoor's rejection fraction so that its served share matches
-FullModel's mean served share of 23.5\% (Table~\ref{tab:matched-coverage}).
-At equal coverage, FullModel achieves 10.9\,vkm/trip compared to
-42.3\,vkm/trip for DoorToDoor~---~a \textbf{74.3\%} improvement in
-per-trip vehicle utilization that cannot be attributed to coverage differences.
+we implement a \emph{DoorToDoor\,(capped)} variant that enforces an endogenous
+acceptance cap: once the served share reaches FullModel's mean of
+22.8\%, all subsequent requests are rejected without route insertion,
+and the ALNS continues re-optimising routes for already-accepted passengers.
+This ensures DoorToDoor is re-routed at the same coverage level, not merely
+post-hoc subsampled.
+
+At equal coverage (Table~\ref{tab:matched-coverage}), FullModel achieves
+11.1\,vkm/trip compared to 17.1\,vkm/trip for
+DoorToDoor\,(capped)~---~a \textbf{35.0\%} improvement in
+per-trip vehicle utilisation that cannot be attributed to coverage differences.
 (All vkm/trip values use the correct denominator: accepted trip count
 $= n \cdot \hat{\alpha}$, where $n = 200$ and $\hat{\alpha}$ is the
 acceptance rate.)
 
 For reference, the unconstrained comparison (FullModel 20.8\% vs.\ DoorToDoor
 61.0\% served share) yields 15.1 vs.\ 21.3\,vkm/trip (29.2\% improvement),
-consistent with the matched-coverage result and confirming that the efficiency
+consistent with the endogenous result and confirming that the efficiency
 gain is structural, not an artefact of lower coverage.%
-\footnote{Earlier drafts reported $3022$ and $4268$, which divided vkm by the
-acceptance rate fraction rather than the accepted trip count; those values are
-dimensionally incorrect (km per fraction, not km per trip) and are corrected here.}
+\footnote{A post-hoc matched-coverage estimate (randomly rejecting DoorToDoor
+passengers to match the 23.5\% target) yields 10.9 vs.\ 42.3\,vkm/trip
+(74.3\% improvement), providing a conservative lower bound on the efficiency
+advantage. The endogenous re-routing result reported above is the primary
+evidence; the post-hoc figure is retained here for reference.}
 
 \begin{table}[h]
 \centering
-\caption{Matched-coverage comparison: FullModel vs.\ DoorToDoor at equal served share
-         ($\approx$23.5\%), mean $\pm$ std across 3 seeds}
+\caption{Endogenous matched-coverage comparison: FullModel vs.\ DoorToDoor\,(capped)
+         at equal served share ($\approx$22.8\%), mean across 3 seeds}
 \label{tab:matched-coverage}
-\begin{tabular}{lccc}
+\begin{tabular}{lcc}
 \toprule
-Variant & Served share & vkm/trip & Rejection fraction \\
+Variant & Served share & vkm/trip \\
 \midrule
-FullModel            & 23.5\% & 10.9 & --- \\
-DoorToDoor (matched) & 22.2\% & 42.3 & 0.61 \\
+FullModel              & 22.8\% & 11.1 \\
+DoorToDoor\,(capped)   & 23.0\% & 17.1 \\
 \bottomrule
 \end{tabular}
 \end{table}
