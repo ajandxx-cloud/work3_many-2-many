@@ -83,8 +83,8 @@
 
 ### Metrics & Computation
 
-- [ ] **METRIC-01**: Recompute vkm/trip as vkm ÷ (n_requests × acceptance_rate) throughout all tables, abstract, and policy section
-- [ ] **METRIC-02**: Reconcile all reported efficiency numbers — abstract (2383.85 vs 3662.33), main table (3022 vs 4268), and Gamma-sweep (9.893) must use consistent denominator
+- [x] **METRIC-01**: Recompute vkm/trip as vkm ÷ (n_requests × acceptance_rate) throughout all tables, abstract, and policy section
+- [x] **METRIC-02**: Reconcile all reported efficiency numbers — abstract (2383.85 vs 3662.33), main table (3022 vs 4268), and Gamma-sweep (9.893) must use consistent denominator
 
 ### Coverage Comparison
 
@@ -175,8 +175,8 @@
 | FIG-04 | Phase 6 — Academic Figures & Visualization | Pending |
 | FIG-05 | Phase 6 — Academic Figures & Visualization | Pending |
 | FIG-06 | Phase 6 — Academic Figures & Visualization | Pending |
-| METRIC-01 | Phase 10 — Metric Audit & Coverage Comparison | Pending |
-| METRIC-02 | Phase 10 — Metric Audit & Coverage Comparison | Pending |
+| METRIC-01 | Phase 10 — Metric Audit & Coverage Comparison | Complete |
+| METRIC-02 | Phase 10 — Metric Audit & Coverage Comparison | Complete |
 | COVER-01 | Phase 10 — Metric Audit & Coverage Comparison | Pending |
 | COVER-02 | Phase 10 — Metric Audit & Coverage Comparison | Pending |
 | FORM-01 | Phase 11 — Formalization & Policy Reframing | Pending |

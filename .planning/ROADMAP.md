@@ -191,7 +191,7 @@ Plans:
 | 5. Paper Writing | 0/5 | In progress | - |
 | 6. Academic Figures & Visualization | 3/3 | Complete | 2026-04-12 |
 | 8. Pareto Experiment & New Metrics | 2/2 | Complete | 2026-04-12 |
-| 10. Metric Audit & Coverage Comparison | 0/? | Not started | - |
+| 10. Metric Audit & Coverage Comparison | 1/2 | In Progress|  |
 | 11. Formalization & Policy Reframing | 0/? | Not started | - |
 
 ---
