@@ -187,7 +187,11 @@ Plans:
   2. Experiment runs for seeds 42/43/44 at n=200, 15 vehicles and produces CSV with served_share, vkm, vkm/trip for DoorToDoorCapped
   3. Mean served_share of DoorToDoorCapped is within ±3pp of FullModel's mean served_share (~23.5%)
   4. Section 5.2 is updated to present the endogenous result as the primary claim; post-hoc 74.3% is retained as a supplementary lower-bound footnote
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 12-01-PLAN.md — DoorToDoorCapped variant + endogenous experiment runner (COMP-01, COMP-02)
+- [ ] 12-02-PLAN.md — Section 5.2 paper update with endogenous result as primary claim (COMP-03)
 
 ### Phase 13: Paper Fixes & Literature Update
 **Goal**: All old numbers are corrected throughout the paper, behavioral consistency materials are added, the missing reference is integrated, and Table 1 has confidence intervals
