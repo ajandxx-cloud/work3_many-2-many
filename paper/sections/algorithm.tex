@@ -78,6 +78,40 @@ For real-time operation, we develop a rolling horizon ALNS heuristic that proces
 arriving requests online and periodically re-optimizes committed routes. The algorithm
 follows the three-layer architecture of Section~\ref{sec:three-layer}.
 
+\paragraph{Online Objective.}
+The ALNS heuristic operates online under uncertainty about future passenger responses.
+At each request arrival, the system selects bundle $b^*$ to minimize the
+\emph{surrogate expected routing cost}:
+\begin{equation}\label{eq:alns-objective}
+  \mathbb{E}[\Delta C \mid b,\, \mathbf{x}_r]
+    = P_{\text{accept}}(b^*) \times \Delta C_{\text{routing}}(b^*, \{\sigma_v\}),
+\end{equation}
+where $\Delta C_{\text{routing}}(b^*, \{\sigma_v\})$ is the incremental routing cost
+of inserting bundle $b^*$ into the current vehicle schedules
+(evaluated via constraint checks described below), and
+$P_{\text{accept}}(b^*) = \exp(U_{rb^*}^k) / (1 + \exp(U_{rb^*}^k))$
+is the binary logit acceptance probability (Equation~\ref{eq:binary-logit}).
+
+Three design choices follow from this formulation:
+\begin{enumerate}
+  \item \textbf{Bernoulli sampling occurs after bundle selection.}
+        The system selects $b^* = \arg\min_b \mathbb{E}[\Delta C \mid b, \mathbf{x}_r]$
+        and \emph{then} samples $z_r \sim \mathrm{Bernoulli}(P_{\text{accept}}(b^*))$.
+        ALNS uses the expected cost, not the realized cost, to rank bundles.
+  \item \textbf{The rejection penalty $\Gamma$ does not enter bundle selection.}
+        $\Gamma$ enters only the social welfare metric
+        $W = \sum_r [z_r U_{rb^*} - (1-z_r)\Gamma]$ (Section~\ref{sec:pareto}),
+        which is a post-hoc evaluation tool, not an input to the routing or
+        binary logit model. The acceptance probability $P_{\text{accept}}(b^*)$
+        is invariant to $\Gamma$.
+  \item \textbf{Rolling horizon re-optimization minimizes the same routing cost.}
+        At each trigger $t = 0, \Delta, 2\Delta, \ldots$, ALNS applies
+        destroy--repair operators to minimise
+        $\alpha_1 C^{op} + \alpha_2 C^{wait} + \alpha_3 C^{walk} + \alpha_4 C^{IVT}$
+        over the active accepted set $\mathcal{R}^{\text{act}}$
+        (Equation~\ref{eq:objective} with $z_r = 1$ for all active requests).
+\end{enumerate}
+
 \subsubsection{Candidate Generation}
 
 Upon arrival of request $r$, the system generates candidate meeting point sets $M_r^P$

@@ -413,6 +413,52 @@ Layer & Input & Output & Coupling \\
 \end{tabular}
 \end{table}
 
+\begin{table}[h]
+\centering
+\caption{Timing and decision sequence in the rolling horizon three-layer model.
+         Each row represents one event within a single planning cycle.
+         Re-optimization triggers fire at $t^{\text{now}} = 0, \Delta, 2\Delta, \ldots$
+         (Equation~\ref{eq:rh-trigger}).}
+\label{tab:timing-diagram}
+\footnotesize
+\begin{tabular}{p{3.0cm}lp{3.5cm}p{3.5cm}l}
+\toprule
+\textbf{Event} & \textbf{Layer} & \textbf{Decision Variables} & \textbf{Information Flow} & \textbf{Bernoulli?} \\
+\midrule
+Request $r$ arrives at $t_r^{\text{req}}$ &
+  1 &
+  $m_r^P,\; m_r^D,\; v_r,\; \pi_r^P,\; \pi_r^D$ &
+  Routes $\{\sigma_v\}$ in; bundle $b^*$ out &
+  No \\[4pt]
+Bundle $b^*$ presented to passenger &
+  2 &
+  $z_r$ &
+  $b^*$ in; acceptance $z_r$ out &
+  Yes: $z_r \!\sim\! \mathrm{Bern}(P_{\text{acc}})$ \\[4pt]
+If $z_r=1$: route $\sigma_{v_r}$ updated &
+  3 &
+  (route update) &
+  $z_r, b^*$ in; updated $\sigma_{v_r}$ out &
+  No \\[4pt]
+Re-opt trigger at $t = k\Delta$ &
+  3 &
+  $\{\sigma_v\}$ (all vehicles) &
+  $\mathcal{R}^{\text{act}}$ in; optimised $\{\sigma_v\}$ out &
+  No \\[4pt]
+Updated routes fed back for next request &
+  1 &
+  --- &
+  Updated $\{\sigma_v\}$ available to Layer~1 &
+  No \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:timing-diagram} details the event sequence and information
+flows within a single planning cycle; in particular, it shows that Bernoulli
+sampling ($z_r \sim \mathrm{Bernoulli}(P_{\text{accept}}(b^*))$) occurs
+exclusively in Layer~2, after bundle $b^*$ has been selected by Layer~1.
+
 The three-layer architecture captures the essential feedback structure of online DRT
 operations: routing decisions shape the offers available to passengers, passenger choices
 determine realized demand, and periodic re-optimization adapts routes to the evolving
