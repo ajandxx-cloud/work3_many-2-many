@@ -10,9 +10,11 @@ with a Mixed-Integer Linear Program (MILP) exact benchmark for small instances a
 rolling horizon Adaptive Large Neighbourhood Search (ALNS) heuristic for large-scale
 deployment.
 Numerical experiments on synthetic scenarios calibrated to Chinese suburban conditions
-demonstrated that the full bidirectional model achieves a vehicle efficiency of
-2383.85 vehicle-km per accepted trip, compared to 3662.33 for the door-to-door baseline,
-a reduction of 34.9\%.
+demonstrated that the full bidirectional model achieves \textbf{35.0\%} lower
+per-trip vehicle utilisation at equal served share (FullModel 11.1 vs.\
+DoorToDoor\,(capped) 17.1\,vkm/trip, endogenous matched-coverage comparison at
+$\approx$22.8\% served share). Under the unconstrained comparison, FullModel achieves
+15.1\,vkm/trip versus 21.3\,vkm/trip for DoorToDoor (29.2\% improvement).
 This result confirms that jointly optimizing both pickup meeting points ($M_r^P$) and
 dropoff meeting points ($M_r^D$) — while explicitly accounting for passenger heterogeneity
 in mode choice — yields substantial operational efficiency gains over conventional
@@ -25,7 +27,8 @@ that considered only single-sided meeting points \citep{cortenbach2024} or omitt
 passenger choice \citep{wu2025}.
 Second, we developed a MILP exact benchmark and a rolling horizon ALNS heuristic
 specifically designed for the bidirectional dial-a-ride problem with endogenous demand.
-Third, we empirically demonstrated the 34.9\% vehicle efficiency gain and conducted
+Third, we empirically demonstrated the 35.0\% vehicle efficiency gain (endogenous
+matched-coverage comparison) and 29.2\% gain (unconstrained comparison) and conducted
 ablation experiments that isolated the contributions of bidirectional meeting points,
 rolling horizon scheduling, and passenger choice modeling.
 Fourth, we performed an equity analysis across three passenger types, revealing a Gini
