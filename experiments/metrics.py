@@ -184,6 +184,26 @@ def compute_metrics(result: SimulationResult) -> MetricsResult:
     )
 
 
+def vkm_per_trip(vehicle_km: float, n_requests: int, acceptance_rate: float) -> float:
+    """Compute vehicle-km per accepted trip.
+
+    Correct denominator: n_requests * acceptance_rate = accepted trip count.
+    This is dimensionally consistent: km / trip.
+
+    Args:
+        vehicle_km: Total vehicle distance driven (km).
+        n_requests: Total number of requests in the scenario (before MNL filtering).
+        acceptance_rate: Fraction of requests accepted in [0, 1].
+
+    Returns:
+        float: vkm per accepted trip, or 0.0 if no trips were accepted.
+    """
+    accepted_trips = n_requests * acceptance_rate
+    if accepted_trips <= 0.0:
+        return 0.0
+    return vehicle_km / accepted_trips
+
+
 def compute_social_welfare(records: list[PassengerRecord], gamma: float) -> float:
     """Compute social welfare W = sum_r[z_r * U_rb* - (1-z_r) * gamma].
 
