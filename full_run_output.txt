@@ -1,0 +1,112 @@
+[ 38/72] synthetic TIMEOUT variant=SingleSidedPickup scale=300 seed=42 (>120s)
+[ 56/72] synthetic TIMEOUT variant=SingleSidedPickup scale=500 seed=42 (>120s)
+[ 57/72] synthetic TIMEOUT variant=BidirectionalNoChoice scale=500 seed=42 (>120s)
+[ 59/72] synthetic TIMEOUT variant=AblationNoRollingHorizon scale=500 seed=42 (>120s)
+[ 62/72] synthetic TIMEOUT variant=SingleSidedPickup scale=500 seed=43 (>120s)
+[ 63/72] synthetic TIMEOUT variant=BidirectionalNoChoice scale=500 seed=43 (>120s)
+[ 65/72] synthetic TIMEOUT variant=AblationNoRollingHorizon scale=500 seed=43 (>120s)
+[ 68/72] synthetic TIMEOUT variant=SingleSidedPickup scale=500 seed=44 (>120s)
+[ 69/72] synthetic TIMEOUT variant=BidirectionalNoChoice scale=500 seed=44 (>120s)
+[ 71/72] synthetic TIMEOUT variant=AblationNoRollingHorizon scale=500 seed=44 (>120s)
+[  8/18] beijing  TIMEOUT variant=SingleSidedPickup scale=200 seed=43 (>120s)
+[runner] Starting synthetic experiments: 4 scales × 3 seeds × 6 variants = 72 runs
+[  1/72] synthetic variant=DoorToDoor                   scale=100 seed=42 accept=0.530 vkm=775.2
+[  2/72] synthetic variant=SingleSidedPickup            scale=100 seed=42 accept=0.590 vkm=866.6
+[  3/72] synthetic variant=BidirectionalNoChoice        scale=100 seed=42 accept=0.610 vkm=798.3
+[  4/72] synthetic variant=FullModel                    scale=100 seed=42 accept=0.680 vkm=786.6
+[  5/72] synthetic variant=AblationNoRollingHorizon     scale=100 seed=42 accept=0.610 vkm=798.3
+[  6/72] synthetic variant=AblationNoChoice             scale=100 seed=42 accept=0.680 vkm=786.6
+[  7/72] synthetic variant=DoorToDoor                   scale=100 seed=43 accept=0.590 vkm=871.7
+[  8/72] synthetic variant=SingleSidedPickup            scale=100 seed=43 accept=0.590 vkm=819.5
+[  9/72] synthetic variant=BidirectionalNoChoice        scale=100 seed=43 accept=0.650 vkm=954.4
+[ 10/72] synthetic variant=FullModel                    scale=100 seed=43 accept=0.720 vkm=852.5
+[ 11/72] synthetic variant=AblationNoRollingHorizon     scale=100 seed=43 accept=0.650 vkm=954.4
+[ 12/72] synthetic variant=AblationNoChoice             scale=100 seed=43 accept=0.720 vkm=852.5
+[ 13/72] synthetic variant=DoorToDoor                   scale=100 seed=44 accept=0.310 vkm=499.8
+[ 14/72] synthetic variant=SingleSidedPickup            scale=100 seed=44 accept=0.410 vkm=590.8
+[ 15/72] synthetic variant=BidirectionalNoChoice        scale=100 seed=44 accept=0.320 vkm=415.6
+[ 16/72] synthetic variant=FullModel                    scale=100 seed=44 accept=0.760 vkm=988.5
+[ 17/72] synthetic variant=AblationNoRollingHorizon     scale=100 seed=44 accept=0.320 vkm=415.6
+[ 18/72] synthetic variant=AblationNoChoice             scale=100 seed=44 accept=0.760 vkm=988.5
+[ 19/72] synthetic variant=DoorToDoor                   scale=200 seed=42 accept=0.580 vkm=1693.8
+[ 20/72] synthetic variant=SingleSidedPickup            scale=200 seed=42 accept=0.530 vkm=1465.4
+[ 21/72] synthetic variant=BidirectionalNoChoice        scale=200 seed=42 accept=0.565 vkm=1491.7
+[ 22/72] synthetic variant=FullModel                    scale=200 seed=42 accept=0.720 vkm=1652.7
+[ 23/72] synthetic variant=AblationNoRollingHorizon     scale=200 seed=42 accept=0.565 vkm=1491.7
+[ 24/72] synthetic variant=AblationNoChoice             scale=200 seed=42 accept=0.720 vkm=1652.7
+[ 25/72] synthetic variant=DoorToDoor                   scale=200 seed=43 accept=0.720 vkm=2152.5
+[ 26/72] synthetic variant=SingleSidedPickup            scale=200 seed=43 accept=0.675 vkm=1789.3
+[ 27/72] synthetic variant=BidirectionalNoChoice        scale=200 seed=43 accept=0.700 vkm=1717.6
+[ 28/72] synthetic variant=FullModel                    scale=200 seed=43 accept=0.730 vkm=1593.8
+[ 29/72] synthetic variant=AblationNoRollingHorizon     scale=200 seed=43 accept=0.700 vkm=1717.6
+[ 30/72] synthetic variant=AblationNoChoice             scale=200 seed=43 accept=0.730 vkm=1593.8
+[ 31/72] synthetic variant=DoorToDoor                   scale=200 seed=44 accept=0.550 vkm=1765.4
+[ 32/72] synthetic variant=SingleSidedPickup            scale=200 seed=44 accept=0.565 vkm=1446.1
+[ 33/72] synthetic variant=BidirectionalNoChoice        scale=200 seed=44 accept=0.545 vkm=1396.5
+[ 34/72] synthetic variant=FullModel                    scale=200 seed=44 accept=0.735 vkm=1766.7
+[ 35/72] synthetic variant=AblationNoRollingHorizon     scale=200 seed=44 accept=0.545 vkm=1396.5
+[ 36/72] synthetic variant=AblationNoChoice             scale=200 seed=44 accept=0.735 vkm=1766.7
+[ 37/72] synthetic variant=DoorToDoor                   scale=300 seed=42 accept=0.703 vkm=2957.1
+[ 39/72] synthetic variant=BidirectionalNoChoice        scale=300 seed=42 accept=0.577 vkm=2192.2
+[ 40/72] synthetic variant=FullModel                    scale=300 seed=42 accept=0.733 vkm=2517.7
+[ 41/72] synthetic variant=AblationNoRollingHorizon     scale=300 seed=42 accept=0.577 vkm=2192.2
+[ 42/72] synthetic variant=AblationNoChoice             scale=300 seed=42 accept=0.733 vkm=2517.7
+[ 43/72] synthetic variant=DoorToDoor                   scale=300 seed=43 accept=0.627 vkm=2785.8
+[ 44/72] synthetic variant=SingleSidedPickup            scale=300 seed=43 accept=0.673 vkm=2658.4
+[ 45/72] synthetic variant=BidirectionalNoChoice        scale=300 seed=43 accept=0.650 vkm=2205.4
+[ 46/72] synthetic variant=FullModel                    scale=300 seed=43 accept=0.777 vkm=2565.4
+[ 47/72] synthetic variant=AblationNoRollingHorizon     scale=300 seed=43 accept=0.650 vkm=2205.4
+[ 48/72] synthetic variant=AblationNoChoice             scale=300 seed=43 accept=0.777 vkm=2565.4
+[ 49/72] synthetic variant=DoorToDoor                   scale=300 seed=44 accept=0.593 vkm=2650.3
+[ 50/72] synthetic variant=SingleSidedPickup            scale=300 seed=44 accept=0.610 vkm=2246.2
+[ 51/72] synthetic variant=BidirectionalNoChoice        scale=300 seed=44 accept=0.533 vkm=2140.1
+[ 52/72] synthetic variant=FullModel                    scale=300 seed=44 accept=0.743 vkm=2518.1
+[ 53/72] synthetic variant=AblationNoRollingHorizon     scale=300 seed=44 accept=0.533 vkm=2140.1
+[ 54/72] synthetic variant=AblationNoChoice             scale=300 seed=44 accept=0.743 vkm=2518.1
+[ 55/72] synthetic variant=DoorToDoor                   scale=500 seed=42 accept=0.730 vkm=5360.5
+[ 58/72] synthetic variant=FullModel                    scale=500 seed=42 accept=0.794 vkm=4284.9
+[ 60/72] synthetic variant=AblationNoChoice             scale=500 seed=42 accept=0.794 vkm=4284.9
+[ 61/72] synthetic variant=DoorToDoor                   scale=500 seed=43 accept=0.730 vkm=5012.9
+[ 64/72] synthetic variant=FullModel                    scale=500 seed=43 accept=0.830 vkm=4248.5
+[ 66/72] synthetic variant=AblationNoChoice             scale=500 seed=43 accept=0.830 vkm=4248.5
+[ 67/72] synthetic variant=DoorToDoor                   scale=500 seed=44 accept=0.652 vkm=4719.6
+[ 70/72] synthetic variant=FullModel                    scale=500 seed=44 accept=0.818 vkm=4333.6
+[ 72/72] synthetic variant=AblationNoChoice             scale=500 seed=44 accept=0.818 vkm=4333.6
+
+[runner] Starting Beijing experiments: 3 seeds × 6 variants = 18 runs
+[  1/18] beijing  variant=DoorToDoor                   scale=200 seed=42 accept=0.690 vkm=1287.4
+[  2/18] beijing  variant=SingleSidedPickup            scale=200 seed=42 accept=0.815 vkm=1286.9
+[  3/18] beijing  variant=BidirectionalNoChoice        scale=200 seed=42 accept=0.850 vkm=1265.9
+[  4/18] beijing  variant=FullModel                    scale=200 seed=42 accept=0.875 vkm=814.7
+[  5/18] beijing  variant=AblationNoRollingHorizon     scale=200 seed=42 accept=0.850 vkm=1265.9
+[  6/18] beijing  variant=AblationNoChoice             scale=200 seed=42 accept=0.875 vkm=814.7
+[  7/18] beijing  variant=DoorToDoor                   scale=200 seed=43 accept=0.860 vkm=1359.5
+[  9/18] beijing  variant=BidirectionalNoChoice        scale=200 seed=43 accept=0.865 vkm=1209.1
+[ 10/18] beijing  variant=FullModel                    scale=200 seed=43 accept=0.850 vkm=736.1
+[ 11/18] beijing  variant=AblationNoRollingHorizon     scale=200 seed=43 accept=0.865 vkm=1209.1
+[ 12/18] beijing  variant=AblationNoChoice             scale=200 seed=43 accept=0.850 vkm=736.1
+[ 13/18] beijing  variant=DoorToDoor                   scale=200 seed=44 accept=0.775 vkm=1414.8
+[ 14/18] beijing  variant=SingleSidedPickup            scale=200 seed=44 accept=0.695 vkm=1180.6
+[ 15/18] beijing  variant=BidirectionalNoChoice        scale=200 seed=44 accept=0.725 vkm=1188.3
+[ 16/18] beijing  variant=FullModel                    scale=200 seed=44 accept=0.850 vkm=832.9
+[ 17/18] beijing  variant=AblationNoRollingHorizon     scale=200 seed=44 accept=0.725 vkm=1188.3
+[ 18/18] beijing  variant=AblationNoChoice             scale=200 seed=44 accept=0.850 vkm=832.9
+
+[runner] Wrote 72 rows → C:\Users\39583\Desktop\4_Publication\工作3\experiments\..\results\synthetic_results.csv
+[runner] Wrote 18 rows → C:\Users\39583\Desktop\4_Publication\工作3\experiments\..\results\beijing_results.csv
+[runner] Wrote metrics table → C:\Users\39583\Desktop\4_Publication\工作3\experiments\..\results\metrics_table.csv
+
+[runner] Total runtime: 4093.6s (68.2 min)
+
+--- metrics_table.csv ---
+                 variant  acceptance_rate_mean  acceptance_rate_std  vehicle_km_mean  vehicle_km_std  avg_wait_mean  avg_wait_std  p95_wait_mean  p95_wait_std  avg_walk_mean  avg_walk_std  avg_ivt_mean  avg_ivt_std  detour_ratio_mean  detour_ratio_std  fairness_index_mean  fairness_index_std  cpu_time_mean  cpu_time_std
+        AblationNoChoice              0.753361             0.043986      2342.413403     1325.411050            0.0           0.0            0.0           0.0      26.145432     12.732667   1187.489548    41.237199           0.998892          0.000952             0.452316            0.012227       3.492284      1.890584
+AblationNoRollingHorizon              0.429167             0.275108      1109.321400      870.168047            0.0           0.0            0.0           0.0    1357.429351    820.512541    827.006919   502.734927           0.694806          0.419741             0.239735            0.144763      21.736150     26.149086
+   BidirectionalNoChoice              0.429167             0.275108      1109.321400      870.168047            0.0           0.0            0.0           0.0    1357.429351    820.512541    827.006919   502.734927           0.694806          0.419741             0.239735            0.144763      21.387866     26.140257
+              DoorToDoor              0.609611             0.118025      2603.709357     1666.392499            0.0           0.0            0.0           0.0       0.000000      0.000000   1194.002099    45.542449           1.000000          0.000000             0.452980            0.014303      22.645846     25.678559
+               FullModel              0.753361             0.043986      2342.413403     1325.411050            0.0           0.0            0.0           0.0      26.145432     12.732667   1187.489548    41.237199           0.998892          0.000952             0.452316            0.012227       3.672345      2.243060
+       SingleSidedPickup              0.386944             0.293694       990.193838      932.176800            0.0           0.0            0.0           0.0     905.062921    674.655525    742.412518   550.622404           0.613293          0.453111             0.242726            0.179848      29.640010     41.127891
+
+[PASS] acceptance_rate: FullModel=0.753 >= DoorToDoor=0.610
+[PASS] vehicle_km: FullModel=2342.4 <= DoorToDoor=2603.7
+DONE

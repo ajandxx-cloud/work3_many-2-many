@@ -1,0 +1,7 @@
+DoorToDoor                     73.48s accept=0.730 vkm=5360.5
+SingleSidedPickup              385.68s accept=0.698 vkm=4399.9
+BidirectionalNoChoice          209.47s accept=0.640 vkm=3664.2
+FullModel                      7.90s accept=0.794 vkm=4284.9
+AblationNoRollingHorizon       209.33s accept=0.640 vkm=3664.2
+AblationNoChoice               7.72s accept=0.794 vkm=4284.9
+Total: 893.6s

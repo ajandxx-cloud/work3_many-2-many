@@ -1,0 +1,17 @@
+Requests: 20, Vehicles: 2, MPs: 100
+Request earliest range: 165 - 13169
+Request window sizes: [15.150492311343653, 12.580329321550433, 13.838985258138631, 7.33219249717672, 14.055890470503376] min
+Vehicle current_times: [0.0, 0.0]
+
+req req_0: earliest=10605 latest=11514 pu_cands=2 do_cands=1
+req req_1: earliest=3148 latest=3903 pu_cands=1 do_cands=2
+req req_2: earliest=3174 latest=4005 pu_cands=2 do_cands=3
+
+FullModel: accept=0.300 (6/20)
+Accepted requests:
+  req_4: wait=0s walk=0m
+  req_6: wait=0s walk=0m
+  req_8: wait=0s walk=0m
+  req_9: wait=0s walk=0m
+  req_12: wait=0s walk=556m
+  req_17: wait=0s walk=0m

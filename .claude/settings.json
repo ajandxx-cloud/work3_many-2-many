@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(gsd-execute-phase)",
+      "Skill(gsd-execute-phase:*)",
+      "mcp__codex__codex",
+      "mcp__codex__codex-reply"
+    ]
+  }
+}

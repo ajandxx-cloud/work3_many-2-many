@@ -25,18 +25,18 @@ progress:
 
 ## Current Position
 
-Phase: Phase 10 — Metric Audit & Coverage Comparison (not started)
+Phase: Phase 11 — Formalization & Policy Reframing (not started)
 Plan: —
-Status: Roadmap created, ready to plan Phase 10
-Last activity: 2026-04-13 — v3.0 roadmap written (Phases 10-11)
+Status: Phase 10 complete, ready to plan Phase 11
+Last activity: 2026-04-13 — Phase 10 executed (metric audit + matched-coverage experiment)
 
 **v3.0 revision scope (from Codex review, 2026-04-13):**
 
-- [ ] Phase 10: Metric Audit & Coverage Comparison
-  - [ ] METRIC-01: Recompute vkm/trip throughout all tables, abstract, policy section
-  - [ ] METRIC-02: Reconcile inconsistent efficiency numbers to single denominator
-  - [ ] COVER-01: Add matched-coverage experiment (DoorToDoor at equal served share)
-  - [ ] COVER-02: Update Section 5.2 narrative and abstract efficiency claim
+- [x] Phase 10: Metric Audit & Coverage Comparison
+  - [x] METRIC-01: Recompute vkm/trip throughout all tables, abstract, policy section
+  - [x] METRIC-02: Reconcile inconsistent efficiency numbers to single denominator
+  - [x] COVER-01: Add matched-coverage experiment (DoorToDoor at equal served share)
+  - [x] COVER-02: Update Section 5.2 narrative and abstract efficiency claim
 - [ ] Phase 11: Formalization & Policy Reframing
   - [ ] FORM-01: Add timing/decision diagram (Layer 1-3 sequence + Bernoulli sampling point)
   - [ ] FORM-02: Add mathematical statement of ALNS online objective

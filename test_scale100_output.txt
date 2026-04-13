@@ -1,0 +1,7 @@
+DoorToDoor                     2.25s accept=0.990 vkm=677.0
+SingleSidedPickup              17.19s accept=0.960 vkm=586.4
+BidirectionalNoChoice          4.18s accept=0.880 vkm=508.4
+FullModel                      5345.01s accept=0.880 vkm=499.4
+AblationNoRollingHorizon       6.90s accept=0.880 vkm=508.4
+AblationNoChoice               4274.05s accept=0.880 vkm=499.4
+Done. Written to test_scale100_output.txt
