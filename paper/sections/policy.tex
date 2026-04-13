@@ -39,6 +39,23 @@ system-wide rollout. The 1000\,m threshold should be treated as a
 \emph{minimum} viable radius; higher thresholds will yield higher acceptance
 rates and greater efficiency gains.
 
+\paragraph{Generalizability caveat.}
+The 1000\,m threshold is specific to our synthetic scenario: a $20 \times 20$\,km
+service area with uniform spatial demand, and MNL utility parameters calibrated
+to reflect Chinese suburban conditions (see Table~\ref{tab:passenger-types} and
+Section~\ref{subsec:vot-mapping}).
+Real-world walking tolerance depends critically on pedestrian infrastructure
+(lighting, footpath continuity, crossing safety), user demographics (age, mobility),
+and local land use (weather exposure, shade, gradient).
+In contexts with superior pedestrian infrastructure or a younger, more active user
+base, a lower threshold may suffice; in contexts with adverse infrastructure or
+elderly-dominant populations, even 500\,m may be excessive.
+Operators should conduct local walking tolerance surveys --- or re-calibrate the
+MNL $\beta_1$ parameter against observed acceptance data --- before applying this
+threshold to a specific deployment.
+This finding should be treated as a scenario-specific managerial insight,
+not a universal prescription.
+
 % -----------------------------------------------------------------------
 \subsection{R2: Minimum Fleet Ratio of 15 Vehicles per 100 Daily Requests}
 % -----------------------------------------------------------------------
@@ -64,6 +81,21 @@ to project service quality at each fleet size. Bidirectional meeting points
 deliver their greatest advantage when fleet supply is sufficient to serve
 the majority of requests; the 15-per-100 ratio is the minimum threshold for
 this condition to hold.
+
+\paragraph{Generalizability caveat.}
+The 15-vehicles-per-100-requests ratio is derived from a synthetic scenario with
+uniform spatial demand on a $20 \times 20$\,km grid and should be treated as an
+order-of-magnitude guideline, not a universal planning norm.
+Actual fleet requirements depend on demand clustering (concentrated demand can be
+served with fewer vehicles than dispersed demand at the same total request count),
+temporal patterns (peak-hour concentration vs.\ uniform arrivals), vehicle
+capacity, and local walking tolerance.
+In high-density corridors with spatially concentrated demand, the effective ratio
+may be lower; in dispersed suburban scenarios with low demand density, it may be
+substantially higher.
+Operators should use the fleet size sensitivity curve (Figure~\ref{fig:sensitivity})
+as a calibration tool with locally observed demand patterns rather than applying
+the 15-per-100 figure directly.
 
 % -----------------------------------------------------------------------
 \subsection{R3: Monitor Time-Sensitive Passengers for Service Equity}
