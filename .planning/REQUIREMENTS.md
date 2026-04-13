@@ -175,12 +175,6 @@
 | FIG-04 | Phase 6 — Academic Figures & Visualization | Pending |
 | FIG-05 | Phase 6 — Academic Figures & Visualization | Pending |
 | FIG-06 | Phase 6 — Academic Figures & Visualization | Pending |
-
-**Coverage:**
-- v1 requirements: 47 total
-- Mapped to phases: 47
-- Unmapped: 0 ✓
-
 | METRIC-01 | Phase 10 — Metric Audit & Coverage Comparison | Pending |
 | METRIC-02 | Phase 10 — Metric Audit & Coverage Comparison | Pending |
 | COVER-01 | Phase 10 — Metric Audit & Coverage Comparison | Pending |
@@ -191,6 +185,10 @@
 | PFRAM-02 | Phase 11 — Formalization & Policy Reframing | Pending |
 | PFRAM-03 | Phase 11 — Formalization & Policy Reframing | Pending |
 
+**Coverage:**
+- v1 requirements: 47 total, mapped to phases: 47, unmapped: 0 ✓
+- v3.0 requirements: 9 total, mapped to phases: 9, unmapped: 0 ✓
+
 ---
 *Requirements defined: 2026-04-11*
-*Last updated: 2026-04-13 — v3.0 requirements added (9 requirements, 2 phases)*
+*Last updated: 2026-04-13 — v3.0 requirements added (9 requirements, 2 phases); traceability updated*

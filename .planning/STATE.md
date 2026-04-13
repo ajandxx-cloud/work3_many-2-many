@@ -3,11 +3,11 @@ gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: codex-review-fixes
 status: in_progress
-stopped_at: Milestone v3.0 started — defining requirements
+stopped_at: Roadmap created — Phase 10 ready to plan
 last_updated: "2026-04-13T00:00:00.000Z"
 last_activity: 2026-04-13
 progress:
-  total_phases: 0
+  total_phases: 2
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -26,17 +26,24 @@ progress:
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: Phase 10 — Metric Audit & Coverage Comparison (not started)
 Plan: —
-Status: Defining requirements
-Last activity: 2026-04-13 — Milestone v3.0 started
+Status: Roadmap created, ready to plan Phase 10
+Last activity: 2026-04-13 — v3.0 roadmap written (Phases 10-11)
 
 **v3.0 revision scope (from Codex review, 2026-04-13):**
 
-- [ ] FIX-01 [CRITICAL]: Correct vkm/trip metric — recompute as vkm ÷ accepted_trip_count
-- [ ] FIX-02 [CRITICAL]: Add matched-coverage comparison
-- [ ] FIX-03 [MAJOR]: Formalize coupled decision problem
-- [ ] FIX-04 [MAJOR]: Soften policy thresholds
+- [ ] Phase 10: Metric Audit & Coverage Comparison
+  - [ ] METRIC-01: Recompute vkm/trip throughout all tables, abstract, policy section
+  - [ ] METRIC-02: Reconcile inconsistent efficiency numbers to single denominator
+  - [ ] COVER-01: Add matched-coverage experiment (DoorToDoor at equal served share)
+  - [ ] COVER-02: Update Section 5.2 narrative and abstract efficiency claim
+- [ ] Phase 11: Formalization & Policy Reframing
+  - [ ] FORM-01: Add timing/decision diagram (Layer 1-3 sequence + Bernoulli sampling point)
+  - [ ] FORM-02: Add mathematical statement of ALNS online objective
+  - [ ] PFRAM-01: Reframe 1000m walking threshold as scenario-specific finding
+  - [ ] PFRAM-02: Reframe 15-vehicle fleet ratio as scenario-specific finding
+  - [ ] PFRAM-03: Update response_to_reviewers.tex for all v3.0 changes
 
 ---
 
@@ -54,6 +61,10 @@ Last activity: 2026-04-13 — Milestone v3.0 started
 | Binary logit for single-offer acceptance | Reviewer CRITICAL: multi-bundle MNL behaviorally inconsistent with single-offer mechanism | Phase 7 |
 | Pareto frontier reframed as welfare sensitivity | gamma is post-hoc; served_share constant; narrative shows structural efficiency gain | Phase 8 |
 | MILP gap large (99-170%) explained honestly | Small accepted sets (4-7 pax) at n=20/30; gap expected to narrow at scale | Phase 9 |
+| Correct vkm/trip denominator | Codex CRITICAL: dividing by acceptance rate (not trip count) gives dimensionally wrong metric | Phase 10 |
+| Matched-coverage comparison | Codex CRITICAL: 20.8% vs 61% served share confounds efficiency comparison | Phase 10 |
+| Formalize ALNS decision problem | Codex MAJOR: unclear what ALNS optimizes (expected cost vs Bernoulli realizations) | Phase 11 |
+| Soften policy thresholds | Codex MAJOR: 1000m/15-vehicle thresholds too strong for synthetic-only evidence | Phase 11 |
 
 ### Prior Work Context
 
@@ -86,3 +97,4 @@ None.
 
 *State initialized: 2026-04-11*
 *Updated: 2026-04-13 — v3.0 milestone started (Codex review fixes)*
+*Updated: 2026-04-13 — v3.0 roadmap created (Phases 10-11, 9 requirements)*

@@ -146,17 +146,53 @@ Plans:
 
 ---
 
+## v3.0 — Codex Review Fixes
+
+### v3.0 Phases
+
+- [ ] **Phase 10: Metric Audit & Coverage Comparison** - Recompute vkm/trip with correct denominator throughout all paper artifacts; add matched-coverage experiment and update efficiency narrative
+- [ ] **Phase 11: Formalization & Policy Reframing** - Add timing/decision diagram and ALNS objective statement; soften policy thresholds to scenario-specific findings; update reviewer response document
+
+### Phase Details (v3.0)
+
+### Phase 10: Metric Audit & Coverage Comparison
+**Goal**: Every efficiency number in the paper uses a consistent, dimensionally correct vkm/trip denominator, and the primary efficiency claim is supported by a matched-coverage comparison that controls for served share
+**Depends on**: Phase 8 (uses existing experiment infrastructure and paper sections)
+**Requirements**: METRIC-01, METRIC-02, COVER-01, COVER-02
+**Success Criteria** (what must be TRUE):
+  1. vkm/trip is recomputed as vkm / (n_requests * acceptance_rate) in all tables, the abstract, and the policy section — no table cell uses the old denominator
+  2. The three previously inconsistent numbers (abstract: 2383.85 vs 3662.33; main table: 3022 vs 4268; Gamma-sweep: 9.893) are reconciled to a single denominator and the discrepancy is resolved or explicitly explained
+  3. A matched-coverage experiment runs DoorToDoor with a rejection penalty calibrated to match FullModel's ~20% served share, and produces a vkm/trip comparison at equal coverage
+  4. Section 5.2 narrative uses the matched-coverage result as the primary efficiency claim, and the abstract efficiency sentence is rewritten to reflect this
+**Plans**: TBD
+
+### Phase 11: Formalization & Policy Reframing
+**Goal**: The coupled decision problem is formally stated with a timing diagram and ALNS objective, and all policy thresholds are reframed as scenario-specific managerial insights rather than general prescriptions; the reviewer response document reflects all v3.0 changes
+**Depends on**: Phase 10
+**Requirements**: FORM-01, FORM-02, PFRAM-01, PFRAM-02, PFRAM-03
+**Success Criteria** (what must be TRUE):
+  1. A timing/decision diagram (figure or table) shows the Layer 1-3 sequence with explicit decision variables, information flows, and the point at which Bernoulli sampling occurs
+  2. A mathematical statement in the paper specifies what ALNS minimizes online — the surrogate objective, the role of Bernoulli sampling, and how the rejection penalty enters decisions
+  3. The 1000m walking threshold finding is presented with explicit caveats on generalizability (population, city type, network density) and is not stated as a universal prescription
+  4. The 15-vehicle fleet ratio finding is presented with explicit caveats and framed as a scenario-specific managerial insight
+  5. response_to_reviewers.tex is updated to reflect all v3.0 changes (metric correction, matched-coverage result, formalization additions, softened thresholds)
+**Plans**: TBD
+
+---
+
 ## Progress Table
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Problem Formulation & Model Structure | 4/4 | Complete | 2026-04-11 |
 | 2. Algorithm Development & Python Implementation | 5/5 | Complete | 2026-04-12 |
-| 3. Numerical Experiments | 3/3 | Complete   | 2026-04-12 |
-| 4. Policy Analysis & Sensitivity Analysis | 3/3 | Complete   | 2026-04-12 |
+| 3. Numerical Experiments | 3/3 | Complete | 2026-04-12 |
+| 4. Policy Analysis & Sensitivity Analysis | 3/3 | Complete | 2026-04-12 |
 | 5. Paper Writing | 0/5 | In progress | - |
-| 6. Academic Figures & Visualization | 3/3 | Complete    | 2026-04-12 |
-| 8. Pareto Experiment & New Metrics | 2/2 | Complete   | 2026-04-12 |
+| 6. Academic Figures & Visualization | 3/3 | Complete | 2026-04-12 |
+| 8. Pareto Experiment & New Metrics | 2/2 | Complete | 2026-04-12 |
+| 10. Metric Audit & Coverage Comparison | 0/? | Not started | - |
+| 11. Formalization & Policy Reframing | 0/? | Not started | - |
 
 ---
 
@@ -218,8 +254,17 @@ Plans:
 | REV-06 | Phase 8 | Reviewer Revision |
 | REV-07 | Phase 8 | Reviewer Revision |
 | REV-08 | Phase 8 | Reviewer Revision |
+| METRIC-01 | Phase 10 | Codex Review Fixes |
+| METRIC-02 | Phase 10 | Codex Review Fixes |
+| COVER-01 | Phase 10 | Codex Review Fixes |
+| COVER-02 | Phase 10 | Codex Review Fixes |
+| FORM-01 | Phase 11 | Codex Review Fixes |
+| FORM-02 | Phase 11 | Codex Review Fixes |
+| PFRAM-01 | Phase 11 | Codex Review Fixes |
+| PFRAM-02 | Phase 11 | Codex Review Fixes |
+| PFRAM-03 | Phase 11 | Codex Review Fixes |
 
-**Total mapped: 51/51 (47 original + 4 reviewer revision requirements)**
+**Total mapped: 60/60 (47 v1 + 4 reviewer revision + 9 v3.0 requirements)**
 
 ---
 
@@ -228,3 +273,4 @@ Plans:
 *Updated: 2026-04-11 — Phase 3 planned (3 plans: 03-01, 03-02, 03-03)*
 *Updated: 2026-04-12 — Phase 6 planned (3 plans: 06-01, 06-02, 06-03)*
 *Updated: 2026-04-12 — Phase 8 planned (2 plans: 08-01, 08-02) for reviewer revision REV-05..REV-08*
+*Updated: 2026-04-13 — v3.0 phases 10-11 added (9 requirements: METRIC-01/02, COVER-01/02, FORM-01/02, PFRAM-01/02/03)*
