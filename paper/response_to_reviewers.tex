@@ -60,7 +60,7 @@ The FullModel achieves lower vehicle-km partly because it serves fewer passenger
 
 \textbf{Response.} We thank the reviewer for this important methodological concern. We address it in two ways in the revised manuscript.
 
-\textbf{First}, we clarify in Section~5.2 that the appropriate efficiency metric is vehicle-km \emph{per accepted trip}, not total vehicle-km. FullModel achieves 3{,}022\,vkm per unit acceptance rate, compared to 4{,}268 for DoorToDoor --- a \textbf{29.2\% improvement} that is independent of coverage differences.
+\textbf{First}, we clarify in Section~5.2 that the appropriate efficiency metric is vehicle-km \emph{per accepted trip}, not total vehicle-km. FullModel achieves 15.1\,vkm/trip, compared to 21.3\,vkm/trip for DoorToDoor --- a \textbf{29.2\% improvement} that is independent of coverage differences.
 
 \textbf{Second}, we add a new \textbf{Section~5.5} (``Coverage--Efficiency Analysis and Social Welfare'') that introduces a social welfare metric:
 \[
@@ -154,17 +154,19 @@ been corrected to use the dimensionally consistent denominator.
 
 To address the concern that FullModel's lower vkm/trip is partly explained by
 lower served share (20.8\% vs.\ 61.0\% for DoorToDoor), we add a matched-coverage
-comparison that controls for served share. We calibrate DoorToDoor's rejection
-fraction so its served share matches FullModel's mean served share of
+comparison that controls for served share. We run DoorToDoor with an endogenous
+acceptance cap so its served share matches FullModel's mean served share of
 $\approx$22.8\%. At equal coverage:
 \begin{itemize}
-  \item FullModel: \textbf{10.9}\,vkm/trip
-  \item DoorToDoor (matched): \textbf{42.3}\,vkm/trip
-  \item Improvement at equal coverage: \textbf{74.3\%}
+  \item FullModel: \textbf{11.1}\,vkm/trip
+  \item DoorToDoor (matched, endogenous): \textbf{17.1}\,vkm/trip
+  \item Improvement at equal coverage: \textbf{35.0\%}
 \end{itemize}
-This is now the primary efficiency claim in Section~5.2 and the abstract.
-The unconstrained comparison (15.1 vs.\ 21.3, 29.2\%) is retained as a
-secondary reference.
+This endogenous matched-coverage result is the primary efficiency claim in
+Section~5.2 and the abstract. The unconstrained comparison (15.1 vs.\ 21.3,
+29.2\%) is retained as a secondary reference.\footnote{An earlier post-hoc
+lower bound (random rejection to match coverage) gave 10.9 vs.\ 42.3\,vkm/trip
+(74.3\%); this figure is superseded by the endogenous result above.}
 
 \subsection*{FIX-03: Timing/Decision Diagram}
 
