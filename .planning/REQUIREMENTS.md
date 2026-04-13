@@ -79,6 +79,29 @@
 - [ ] **FIG-05**: Sensitivity analysis heatmaps or line plots
 - [ ] **FIG-06**: Policy insight visualization (e.g., benefit map by demand density × walking tolerance)
 
+## v3 Requirements (Milestone v3.0 — Codex Review Fixes)
+
+### Metrics & Computation
+
+- [ ] **METRIC-01**: Recompute vkm/trip as vkm ÷ (n_requests × acceptance_rate) throughout all tables, abstract, and policy section
+- [ ] **METRIC-02**: Reconcile all reported efficiency numbers — abstract (2383.85 vs 3662.33), main table (3022 vs 4268), and Gamma-sweep (9.893) must use consistent denominator
+
+### Coverage Comparison
+
+- [ ] **COVER-01**: Add matched-coverage experiment — run DoorToDoor with rejection penalty to match FullModel's ~20% served share; compare vkm/trip at equal coverage
+- [ ] **COVER-02**: Update Section 5.2 narrative to use matched-coverage result as primary efficiency claim; rewrite abstract efficiency claim accordingly
+
+### Formalization
+
+- [ ] **FORM-01**: Add timing/decision diagram (figure or table) showing Layer 1–3 sequence with explicit decision variables, information flows, and when Bernoulli sampling occurs
+- [ ] **FORM-02**: Add mathematical statement of what ALNS minimizes online — surrogate objective, role of Bernoulli sampling, how rejection penalty enters decisions
+
+### Policy Framing
+
+- [ ] **PFRAM-01**: Reframe 1000m walking threshold as scenario-specific finding with explicit caveats on generalizability to other cities/populations
+- [ ] **PFRAM-02**: Reframe 15-vehicle fleet ratio as scenario-specific finding with explicit caveats
+- [ ] **PFRAM-03**: Update response_to_reviewers.tex to reflect all v3.0 changes
+
 ## v2 Requirements
 
 ### Extensions (Post-submission)
@@ -158,6 +181,16 @@
 - Mapped to phases: 47
 - Unmapped: 0 ✓
 
+| METRIC-01 | Phase 10 — Metric Audit & Coverage Comparison | Pending |
+| METRIC-02 | Phase 10 — Metric Audit & Coverage Comparison | Pending |
+| COVER-01 | Phase 10 — Metric Audit & Coverage Comparison | Pending |
+| COVER-02 | Phase 10 — Metric Audit & Coverage Comparison | Pending |
+| FORM-01 | Phase 11 — Formalization & Policy Reframing | Pending |
+| FORM-02 | Phase 11 — Formalization & Policy Reframing | Pending |
+| PFRAM-01 | Phase 11 — Formalization & Policy Reframing | Pending |
+| PFRAM-02 | Phase 11 — Formalization & Policy Reframing | Pending |
+| PFRAM-03 | Phase 11 — Formalization & Policy Reframing | Pending |
+
 ---
 *Requirements defined: 2026-04-11*
-*Last updated: 2026-04-11 — traceability updated after roadmap creation (FIG-01..06 moved to Phase 6)*
+*Last updated: 2026-04-13 — v3.0 requirements added (9 requirements, 2 phases)*
