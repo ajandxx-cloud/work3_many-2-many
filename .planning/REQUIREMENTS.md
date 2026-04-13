@@ -1,44 +1,44 @@
 # Requirements: Work 3 — Many-to-Many DRT Bidirectional Meeting Point Paper
 
 **Defined:** 2026-04-11
-**Updated:** 2026-04-13 (v4.0 milestone)
+**Updated:** 2026-04-13 (v5.0 milestone)
 **Core Value:** Demonstrate that bidirectional meeting point assignment with passenger choice significantly improves DRT efficiency and equity, with actionable policy implications for TR Part A.
 
 ---
 
-## v4.0 Requirements (Active)
+## v5.0 Requirements (Active)
 
-### Comparison Design
+### Paper Numeric Fixes
 
-- [ ] **COMP-01**: Implement `DoorToDoorCapped` variant — DoorToDoor with an acceptance cap that limits served share to ≈ FullModel's mean (~23.5%); re-route remaining accepted trips using the same ALNS heuristic
-- [ ] **COMP-02**: Run `DoorToDoorCapped` experiment (seeds 42/43/44, n=200, 15 vehicles) and record vkm/trip at matched served share
-- [ ] **COMP-03**: Update Section 5.2 to present endogenous matched-coverage result as the primary efficiency claim; demote post-hoc 74.3% to supplementary footnote
+- [ ] **NUM-01**: Fix Gini coefficient inconsistency — change `policy.tex` value from 0.122 to 0.1216 to match `experiments.tex` and `abstract.tex`
+- [ ] **NUM-02**: Reconcile cap target — verify actual FullModel mean served share from experiment output, then align code default (`cap_share=0.235`), paper paragraph text, table caption, and post-hoc footnote to the same figure
+- [ ] **NUM-03**: Fix weight-sensitivity table — verify denominator used for `tab:weight-sensitivity`; if raw vkm, rename column headers from "vkm/trip" to "vkm"; if intended as vkm/trip, recompute and update numbers
 
-### Behavioral Consistency
+### Response Letter Updates
 
-- [ ] **BEHAV-01**: Add a units/variables reference table to the paper (or appendix) listing all time variables with units (seconds vs minutes), walking variables (meters), and fare (CNY)
-- [ ] **BEHAV-02**: Add one worked numerical utility example showing how U_{rb}^k is computed for a representative request, with explicit unit conversions
-- [ ] **BEHAV-03**: Add a paragraph reconciling offer-stage predicted attributes (wait, IVT, walk) with realized attributes after rolling-horizon re-optimization; state the commitment assumption explicitly
+- [ ] **RESP-01**: Update `response_to_reviewers.tex` FIX-02 section — reflect endogenous result (11.1 vs 17.1 vkm/trip, 35.0%) as primary claim; correct "23.5%" to actual cap target; demote post-hoc 74.3% to footnote reference
+- [ ] **RESP-02**: Update `response_to_reviewers.tex` R1 response body — replace "3{,}022\,vkm per unit acceptance rate" and "4{,}268" with "15.1\,vkm/trip" and "21.3\,vkm/trip"
 
-### Text Fixes
+### Code Reproducibility
 
-- [ ] **TEXT-01**: Replace "2383.85 vs 3662.33" and "-34.9%" in `paper/sections/intro.tex` (contribution list item 3) with v3.0 numbers
-- [ ] **TEXT-02**: Replace "2383.85 vs 3662.33" and "34.9%" in the conclusion section with v3.0 numbers
-- [ ] **TEXT-03**: Verify no other occurrences of old numbers remain in any paper section
+- [ ] **CODE-01**: Replace `hash(request.id)` with SHA-256 deterministic seed in `experiments/variants.py` — add `_stable_seed(request_id: str) -> int` helper using `hashlib.sha256`; update all call sites
 
-### Literature
+### Code Robustness
 
-- [ ] **LIT-01**: Add Fielbaum, Bai & Alonso-Mora (2021) "On-demand ridesharing with optimized pick-up and drop-off walking locations" (TR Part C, DOI: 10.1016/j.trc.2021.103061) to `paper/references.bib`
-- [ ] **LIT-02**: Add 1-2 sentences in Section 2.2 (Meeting Points and Virtual Stops) positioning this paper relative to Fielbaum et al. (2021): they study ridepooling with flexible walking, not DRT with MNL choice + rolling horizon
+- [ ] **ROB-01**: Add stop ordering warning in `_find_stop_info` — warn when `pickup_time >= dropoff_time` for a completed trip instead of silently masking via `max(0.0, ...)`
+- [ ] **ROB-02**: Make tolerance failure non-silent in `endogenous_matched_coverage.py` — replace print-only warning with `warnings.warn(..., stacklevel=2)` when DoorToDoorCapped mean served share is outside ±3pp of target
+- [ ] **ROB-03**: Add empty seeds guard in `endogenous_matched_coverage_experiment` — raise `ValueError("seeds list must be non-empty")` at function entry to prevent ZeroDivisionError
+- [ ] **ROB-04**: Deduplicate `state.unassigned` in `DoorToDoor._solve` and `DoorToDoorCapped._solve` before returning state
 
-### Robustness
+### Pre-submission Cleanup
 
-- [ ] **ROB-01**: Add mean +/- std notation to Table 1 (main results) for acceptance rate, vkm, and vkm/trip
-- [ ] **ROB-02**: Add a brief note in Section 5.1 (Experimental Setup) clarifying that 3 seeds is standard in DRT simulation literature and citing Wu et al. (2025) as precedent
+- [ ] **CLEAN-01**: Remove audit comment block from `paper/sections/experiments.tex` lines 1-13 (METRIC AUDIT development notes)
+- [ ] **CLEAN-02**: Remove "(provisional --- to be confirmed against Work~1/2 calibration before Phase~3)" annotation from `paper/sections/model.tex` lines 268-269
+- [ ] **CLEAN-03**: Fix cross-reference in `paper/sections/model.tex` footnote — replace `Section~\ref{subsec:vot-mapping}` with `Section~\ref{sec:policy}` for robustness against future restructuring
 
 ---
 
-## Validated Requirements (v1.0-v3.0)
+## Validated Requirements (v1.0-v4.0)
 
 ### v1.0 (Problem Formulation & Algorithm)
 - [x] PROB-01..05: Many-to-many DRT problem with bidirectional meeting point sets formally defined
@@ -60,6 +60,13 @@
 - [x] FORM-01/02: Timing/decision diagram (tab:timing-diagram); ALNS online objective (eq:alns-objective)
 - [x] PFRAM-01..03: Generalizability caveats for R1 and R2; reviewer response v3.0 section
 
+### v4.0 (GPT-5 Review Fixes)
+- [x] COMP-01..03: DoorToDoorCapped endogenous comparison; Section 5.2 updated with 11.1 vs 17.1 vkm/trip (35.0%)
+- [x] BEHAV-01..03: Notation table, worked utility example, commitment assumption paragraph
+- [x] TEXT-01..03: Old numbers (2383.85/3662.33/-34.9%) replaced throughout; grep-verified clean
+- [x] LIT-01..02: Fielbaum et al. (2021) added to references.bib and cited in Section 2.2
+- [x] ROB-01..02: ± std in Table 1; 3-seed justification note with wu2025 citation
+
 ---
 
 ## Out of Scope
@@ -75,29 +82,29 @@
 
 ---
 
-## Traceability (v4.0)
+## Traceability (v5.0)
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| COMP-01 | Phase 12 | Pending |
-| COMP-02 | Phase 12 | Pending |
-| COMP-03 | Phase 12 | Pending |
-| BEHAV-01 | Phase 13 | Pending |
-| BEHAV-02 | Phase 13 | Pending |
-| BEHAV-03 | Phase 13 | Pending |
-| TEXT-01 | Phase 13 | Pending |
-| TEXT-02 | Phase 13 | Pending |
-| TEXT-03 | Phase 13 | Pending |
-| LIT-01 | Phase 13 | Pending |
-| LIT-02 | Phase 13 | Pending |
-| ROB-01 | Phase 13 | Pending |
-| ROB-02 | Phase 13 | Pending |
+| NUM-01 | Phase 14 | Pending |
+| NUM-02 | Phase 14 | Pending |
+| NUM-03 | Phase 14 | Pending |
+| RESP-01 | Phase 14 | Pending |
+| RESP-02 | Phase 14 | Pending |
+| CLEAN-01 | Phase 14 | Pending |
+| CLEAN-02 | Phase 14 | Pending |
+| CLEAN-03 | Phase 14 | Pending |
+| CODE-01 | Phase 15 | Pending |
+| ROB-01 | Phase 15 | Pending |
+| ROB-02 | Phase 15 | Pending |
+| ROB-03 | Phase 15 | Pending |
+| ROB-04 | Phase 15 | Pending |
 
 **Coverage:**
-- v4.0 requirements: 13 total
+- v5.0 requirements: 13 total
 - Mapped to phases: 13
-- Unmapped: 0 (check mark)
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-04-11*
-*Last updated: 2026-04-13 — v4.0 milestone (GPT-5 review fixes)*
+*Last updated: 2026-04-13 — v5.0 milestone (code review fixes & submission prep)*
