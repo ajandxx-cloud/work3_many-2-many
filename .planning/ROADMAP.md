@@ -233,7 +233,11 @@ Plans:
   4. response_to_reviewers.tex FIX-02 section cites 11.1 vs 17.1 vkm/trip (35.0%) as the primary endogenous result, with the post-hoc 74.3% demoted to a footnote reference
   5. response_to_reviewers.tex R1 body contains 15.1 vkm/trip and 21.3 vkm/trip, not the old 3022/4268 values
   6. The METRIC AUDIT comment block (experiments.tex lines 1-13), the "(provisional)" annotation (model.tex), and the internal cross-reference to subsec:vot-mapping are all removed or corrected
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 14-01-PLAN.md -- Numeric fixes: Gini in policy.tex, cap target in response letter FIX-02, verify weight-sensitivity table (NUM-01, NUM-02, NUM-03)
+- [ ] 14-02-PLAN.md -- Response letter + cleanup: rewrite FIX-02, fix R1 body, remove METRIC AUDIT block, remove provisional annotation, fix cross-reference (RESP-01, RESP-02, CLEAN-01, CLEAN-02, CLEAN-03)
 
 ### Phase 15: Code Reproducibility & Robustness
 **Goal**: The experiment codebase produces bit-identical results across processes and platforms, and all silent failure modes are replaced with explicit warnings or errors that surface problems immediately
@@ -264,7 +268,7 @@ Plans:
 | 11. Formalization & Policy Reframing | 2/2 | Complete | 2026-04-13 |
 | 12. Endogenous Matched-Coverage Experiment | 2/2 | Complete | 2026-04-13 |
 | 13. Paper Fixes & Literature Update | 3/3 | Complete | 2026-04-13 |
-| 14. Paper & Response Letter Fixes | 0/TBD | Not started | - |
+| 14. Paper & Response Letter Fixes | 0/2 | Not started | - |
 | 15. Code Reproducibility & Robustness | 0/TBD | Not started | - |
 
 ---
