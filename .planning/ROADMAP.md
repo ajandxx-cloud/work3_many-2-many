@@ -160,7 +160,7 @@ Plans:
 ### v4.0 Phases
 
 - [x] **Phase 12: Endogenous Matched-Coverage Experiment** - Implement DoorToDoorCapped variant with acceptance cap + re-routing; run experiment at matched served share; update Section 5.2 with endogenous comparison as primary claim (completed 2026-04-13)
-- [ ] **Phase 13: Paper Fixes & Literature Update** - Fix old numbers in intro/conclusion; add behavioral consistency materials (units table, worked example, commitment assumption); add Fielbaum et al. (2021) to literature; add confidence intervals to Table 1
+- [x] **Phase 13: Paper Fixes & Literature Update** - Fix old numbers in intro/conclusion; add behavioral consistency materials (units table, worked example, commitment assumption); add Fielbaum et al. (2021) to literature; add confidence intervals to Table 1 (completed 2026-04-13)
 
 ### Phase Details (v3.0 — Complete)
 
@@ -207,9 +207,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 13-01-PLAN.md — Fix old numbers in intro.tex, conclusion.tex, abstract.tex (TEXT-01, TEXT-02, TEXT-03)
-- [ ] 13-02-PLAN.md — Add notation table, worked utility example, commitment assumption (BEHAV-01, BEHAV-02, BEHAV-03)
-- [ ] 13-03-PLAN.md — Fielbaum citation in Section 2.2, Table 1 ± notation, 3-seed note (LIT-01, LIT-02, ROB-01, ROB-02)
+- [x] 13-01-PLAN.md — Fix old numbers in intro.tex, conclusion.tex, abstract.tex (TEXT-01, TEXT-02, TEXT-03)
+- [x] 13-02-PLAN.md — Add notation table, worked utility example, commitment assumption (BEHAV-01, BEHAV-02, BEHAV-03)
+- [x] 13-03-PLAN.md — Fielbaum citation in Section 2.2, Table 1 ± notation, 3-seed note (LIT-01, LIT-02, ROB-01, ROB-02)
 
 ---
 
@@ -227,7 +227,7 @@ Plans:
 | 10. Metric Audit & Coverage Comparison | 2/2 | Complete | 2026-04-13 |
 | 11. Formalization & Policy Reframing | 2/2 | Complete | 2026-04-13 |
 | 12. Endogenous Matched-Coverage Experiment | 2/2 | Complete   | 2026-04-13 |
-| 13. Paper Fixes & Literature Update | 0/? | Not started | - |
+| 13. Paper Fixes & Literature Update | 3/3 | Complete    | 2026-04-13 |
 
 ---
 
