@@ -223,7 +223,7 @@ Plans:
 | 4. Policy Analysis & Sensitivity Analysis | 3/3 | Complete | 2026-04-12 |
 | 5. Paper Writing | 5/5 | Complete | 2026-04-12 |
 | 6. Academic Figures & Visualization | 3/3 | Complete | 2026-04-12 |
-| 8. Pareto Experiment & New Metrics | 2/2 | Complete | 2026-04-12 |
+| 8. Pareto Experiment & New Metrics | 2/2 | Complete    | 2026-04-13 |
 | 10. Metric Audit & Coverage Comparison | 2/2 | Complete | 2026-04-13 |
 | 11. Formalization & Policy Reframing | 2/2 | Complete | 2026-04-13 |
 | 12. Endogenous Matched-Coverage Experiment | 2/2 | Complete   | 2026-04-13 |
