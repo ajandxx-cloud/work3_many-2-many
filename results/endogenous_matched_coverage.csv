@@ -1,0 +1,7 @@
+variant,seed,served_share,vkm_per_trip
+FullModel,42,0.24,9.9522
+FullModel,43,0.235,11.1586
+FullModel,44,0.21,12.2172
+DoorToDoorCapped,42,0.23,15.8522
+DoorToDoorCapped,43,0.23,18.5394
+DoorToDoorCapped,44,0.23,16.8881
