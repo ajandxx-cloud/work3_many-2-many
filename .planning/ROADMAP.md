@@ -146,36 +146,60 @@ Plans:
 
 ---
 
-## v3.0 — Codex Review Fixes
+## v3.0 — Codex Review Fixes (Complete)
 
 ### v3.0 Phases
 
-- [ ] **Phase 10: Metric Audit & Coverage Comparison** - Recompute vkm/trip with correct denominator throughout all paper artifacts; add matched-coverage experiment and update efficiency narrative
-- [ ] **Phase 11: Formalization & Policy Reframing** - Add timing/decision diagram and ALNS objective statement; soften policy thresholds to scenario-specific findings; update reviewer response document
+- [x] **Phase 10: Metric Audit & Coverage Comparison** - Recompute vkm/trip with correct denominator throughout all paper artifacts; add matched-coverage experiment and update efficiency narrative
+- [x] **Phase 11: Formalization & Policy Reframing** - Add timing/decision diagram and ALNS objective statement; soften policy thresholds to scenario-specific findings; update reviewer response document
 
-### Phase Details (v3.0)
+---
 
-### Phase 10: Metric Audit & Coverage Comparison
+## v4.0 — GPT-5 Review Fixes
+
+### v4.0 Phases
+
+- [ ] **Phase 12: Endogenous Matched-Coverage Experiment** - Implement DoorToDoorCapped variant with acceptance cap + re-routing; run experiment at matched served share; update Section 5.2 with endogenous comparison as primary claim
+- [ ] **Phase 13: Paper Fixes & Literature Update** - Fix old numbers in intro/conclusion; add behavioral consistency materials (units table, worked example, commitment assumption); add Fielbaum et al. (2021) to literature; add confidence intervals to Table 1
+
+### Phase Details (v3.0 — Complete)
+
+### Phase 10: Metric Audit & Coverage Comparison (Complete)
 **Goal**: Every efficiency number in the paper uses a consistent, dimensionally correct vkm/trip denominator, and the primary efficiency claim is supported by a matched-coverage comparison that controls for served share
-**Depends on**: Phase 8 (uses existing experiment infrastructure and paper sections)
 **Requirements**: METRIC-01, METRIC-02, COVER-01, COVER-02
+**Plans**: 2/2 complete
+
+### Phase 11: Formalization & Policy Reframing (Complete)
+**Goal**: The coupled decision problem is formally stated with a timing diagram and ALNS objective, and all policy thresholds are reframed as scenario-specific managerial insights rather than general prescriptions
+**Requirements**: FORM-01, FORM-02, PFRAM-01, PFRAM-02, PFRAM-03
+**Plans**: 2/2 complete
+
+---
+
+### Phase Details (v4.0)
+
+### Phase 12: Endogenous Matched-Coverage Experiment
+**Goal**: The primary efficiency claim is supported by an endogenous matched-coverage comparison — DoorToDoor re-routed with an acceptance cap so served share ≈ FullModel's ~23.5%, giving a fair vehicle-routing comparison at equal coverage
+**Depends on**: Phase 10-11 (uses existing experiment infrastructure)
+**Requirements**: COMP-01, COMP-02, COMP-03
 **Success Criteria** (what must be TRUE):
-  1. vkm/trip is recomputed as vkm / (n_requests * acceptance_rate) in all tables, the abstract, and the policy section — no table cell uses the old denominator
-  2. The three previously inconsistent numbers (abstract: 2383.85 vs 3662.33; main table: 3022 vs 4268; Gamma-sweep: 9.893) are reconciled to a single denominator and the discrepancy is resolved or explicitly explained
-  3. A matched-coverage experiment runs DoorToDoor with a rejection penalty calibrated to match FullModel's ~20% served share, and produces a vkm/trip comparison at equal coverage
-  4. Section 5.2 narrative uses the matched-coverage result as the primary efficiency claim, and the abstract efficiency sentence is rewritten to reflect this
+  1. `DoorToDoorCapped` variant is implemented: DoorToDoor ALNS with a served-share cap; once cap is reached, all subsequent requests are rejected without route insertion
+  2. Experiment runs for seeds 42/43/44 at n=200, 15 vehicles and produces CSV with served_share, vkm, vkm/trip for DoorToDoorCapped
+  3. Mean served_share of DoorToDoorCapped is within ±3pp of FullModel's mean served_share (~23.5%)
+  4. Section 5.2 is updated to present the endogenous result as the primary claim; post-hoc 74.3% is retained as a supplementary lower-bound footnote
 **Plans**: TBD
 
-### Phase 11: Formalization & Policy Reframing
-**Goal**: The coupled decision problem is formally stated with a timing diagram and ALNS objective, and all policy thresholds are reframed as scenario-specific managerial insights rather than general prescriptions; the reviewer response document reflects all v3.0 changes
-**Depends on**: Phase 10
-**Requirements**: FORM-01, FORM-02, PFRAM-01, PFRAM-02, PFRAM-03
+### Phase 13: Paper Fixes & Literature Update
+**Goal**: All old numbers are corrected throughout the paper, behavioral consistency materials are added, the missing reference is integrated, and Table 1 has confidence intervals
+**Depends on**: Phase 12 (uses endogenous comparison numbers for Section 5.2 update)
+**Requirements**: BEHAV-01, BEHAV-02, BEHAV-03, TEXT-01, TEXT-02, TEXT-03, LIT-01, LIT-02, ROB-01, ROB-02
 **Success Criteria** (what must be TRUE):
-  1. A timing/decision diagram (figure or table) shows the Layer 1-3 sequence with explicit decision variables, information flows, and the point at which Bernoulli sampling occurs
-  2. A mathematical statement in the paper specifies what ALNS minimizes online — the surrogate objective, the role of Bernoulli sampling, and how the rejection penalty enters decisions
-  3. The 1000m walking threshold finding is presented with explicit caveats on generalizability (population, city type, network density) and is not stated as a universal prescription
-  4. The 15-vehicle fleet ratio finding is presented with explicit caveats and framed as a scenario-specific managerial insight
-  5. response_to_reviewers.tex is updated to reflect all v3.0 changes (metric correction, matched-coverage result, formalization additions, softened thresholds)
+  1. "2383.85 vs 3662.33" and "-34.9%" do not appear anywhere in the paper (grep confirms)
+  2. A units/variables table exists in the paper (or appendix) with time in seconds/minutes, walk in meters, fare in CNY
+  3. A worked utility example appears in the choice model section with explicit numbers
+  4. A commitment assumption paragraph appears in the algorithm section
+  5. Fielbaum et al. (2021) appears in references.bib and is cited in Section 2.2
+  6. Table 1 has ± notation for at least acceptance rate, vkm, and vkm/trip
 **Plans**: TBD
 
 ---
@@ -188,11 +212,13 @@ Plans:
 | 2. Algorithm Development & Python Implementation | 5/5 | Complete | 2026-04-12 |
 | 3. Numerical Experiments | 3/3 | Complete | 2026-04-12 |
 | 4. Policy Analysis & Sensitivity Analysis | 3/3 | Complete | 2026-04-12 |
-| 5. Paper Writing | 0/5 | In progress | - |
+| 5. Paper Writing | 5/5 | Complete | 2026-04-12 |
 | 6. Academic Figures & Visualization | 3/3 | Complete | 2026-04-12 |
 | 8. Pareto Experiment & New Metrics | 2/2 | Complete | 2026-04-12 |
-| 10. Metric Audit & Coverage Comparison | 1/2 | In Progress|  |
-| 11. Formalization & Policy Reframing | 0/? | Not started | - |
+| 10. Metric Audit & Coverage Comparison | 2/2 | Complete | 2026-04-13 |
+| 11. Formalization & Policy Reframing | 2/2 | Complete | 2026-04-13 |
+| 12. Endogenous Matched-Coverage Experiment | 0/? | Not started | - |
+| 13. Paper Fixes & Literature Update | 0/? | Not started | - |
 
 ---
 

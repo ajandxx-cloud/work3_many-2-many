@@ -18,15 +18,16 @@ Transportation Research Part A: Policy and Practice (TR Part A)
 - Under what urban conditions (demand density, fleet size, walking tolerance) does bidirectional meeting point assignment deliver the most benefit?
 - Policy recommendations for Chinese city DRT deployment
 
-## Current Milestone: v3.0 Second-Round Revision (Codex Review Fixes)
+## Current Milestone: v4.0 — GPT-5 Review Fixes (Third Round)
 
-**Goal:** Fix the 4 remaining CRITICAL/MAJOR issues from the Codex review to bring the paper from 5/10 to ≥7/10 and achieve genuine submission readiness.
+**Goal:** Address the two blocking issues identified by GPT-5 (high reasoning) review to move from 5/10 to ≥7/10 and achieve genuine submission readiness for TR Part A.
 
 **Target features:**
-- FIX-01 [CRITICAL]: Correct vkm/trip metric — recompute as vkm ÷ accepted_trip_count; audit all tables, abstract, policy claims
-- FIX-02 [CRITICAL]: Add matched-coverage comparison — FullModel vs DoorToDoor at equal served share, or coverage-efficiency frontier where rejection penalty affects decisions
-- FIX-03 [MAJOR]: Formalize coupled decision problem — timing/decision diagram + mathematical statement of what ALNS optimizes online
-- FIX-04 [MAJOR]: Soften policy thresholds — reframe as scenario-specific managerial insights, not general prescriptions
+- FIX-A [BLOCKING]: Endogenous matched-coverage comparison — implement DoorToDoor variant with acceptance cap + re-routing so served share ≈ FullModel's ~23.5%; replace post-hoc random rejection with endogenous comparison
+- FIX-B [BLOCKING]: Behavioral consistency check — add units/variables table, one worked utility example, reconcile offer-stage attributes vs realized attributes vs aggregate acceptance rates
+- FIX-C [MAJOR]: Fix old numbers in intro.tex and conclusion — replace "2383.85 vs 3662.33" and "-34.9%" with v3.0 numbers throughout
+- FIX-D [MAJOR]: Add missing reference — Fielbaum, Bai & Alonso-Mora (2021) on bidirectional walking flexibility in ridepooling; position relative to this paper
+- FIX-E [MINOR]: Add confidence intervals to main results table; clarify commitment assumption for accepted offers after rolling-horizon re-optimization
 
 ## Requirements
 
@@ -50,12 +51,20 @@ Transportation Research Part A: Policy and Practice (TR Part A)
 - [x] Objective weight policy interpretation: VOT mapping + weight sensitivity table
 - [x] Parameter plausibility: implied VOT benchmarked against Chinese DRT/transit literature
 
-### Active (v3.0 revision)
+### Validated (v3.0 complete)
 
-- [ ] FIX-01: Correct vkm/trip metric — recompute as vkm ÷ accepted_trip_count; audit all tables, abstract, policy claims
-- [ ] FIX-02: Add matched-coverage comparison — FullModel vs DoorToDoor at equal served share or coverage-efficiency frontier where rejection penalty affects decisions
-- [ ] FIX-03: Formalize coupled decision problem — timing/decision diagram + mathematical statement of what ALNS optimizes online
-- [ ] FIX-04: Soften policy thresholds — reframe as scenario-specific managerial insights, not general prescriptions
+- [x] FIX-01: Correct vkm/trip metric — recomputed as vkm ÷ accepted_trip_count; all tables, abstract, policy section updated
+- [x] FIX-02: Matched-coverage comparison (post-hoc) — FullModel 10.9 vs DoorToDoor 42.3 vkm/trip at ~23.5% served share (74.3%); acknowledged as conservative lower bound
+- [x] FIX-03: Formalize coupled decision problem — timing/decision diagram (tab:timing-diagram) + ALNS online objective (eq:alns-objective) added
+- [x] FIX-04: Soften policy thresholds — generalizability caveats added to R1 (1000m) and R2 (15-vehicle ratio)
+
+### Active (v4.0 revision)
+
+- [ ] FIX-A: Endogenous matched-coverage comparison — DoorToDoor with acceptance cap + re-routing; served share ≈ FullModel ~23.5%; replaces post-hoc random rejection
+- [ ] FIX-B: Behavioral consistency check — units/variables table, worked utility example, reconcile offer-stage vs realized attributes vs acceptance rates
+- [ ] FIX-C: Fix old numbers in intro.tex and conclusion — replace "2383.85 vs 3662.33" and "-34.9%" with v3.0 numbers
+- [ ] FIX-D: Add Fielbaum et al. (2021) to literature review — position bidirectional walking flexibility relative to this paper
+- [ ] FIX-E: Add confidence intervals to main results table; clarify commitment assumption for accepted offers after rolling-horizon re-optimization
 
 ### Out of Scope
 
@@ -98,7 +107,8 @@ Transportation Research Part A: Policy and Practice (TR Part A)
 | Correct vkm/trip denominator | Codex CRITICAL: dividing by acceptance rate (not trip count) gives dimensionally wrong metric | v3.0 |
 | Matched-coverage comparison | Codex CRITICAL: 20.8% vs 61% served share confounds efficiency comparison | v3.0 |
 | Formalize ALNS decision problem | Codex MAJOR: unclear what ALNS optimizes (expected cost vs Bernoulli realizations) | v3.0 |
-| Soften policy thresholds | Codex MAJOR: 1000m/15-vehicle thresholds too strong for synthetic-only evidence | v3.0 |
+| Endogenous matched-coverage comparison | GPT-5 BLOCKING: post-hoc random rejection not credible; DoorToDoor with acceptance cap + re-routing required | v4.0 |
+| Add Fielbaum et al. (2021) to literature | GPT-5 MAJOR: bidirectional walking flexibility in ridepooling is prior art; must position relative to it | v4.0 |
 
 ## Evolution
 

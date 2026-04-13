@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v3.0
-milestone_name: — Codex Review Fixes
-status: completed
-last_updated: "2026-04-13T02:14:26.509Z"
-last_activity: 2026-04-13 — Plan 11-01 executed (timing diagram + ALNS objective)
+milestone: v4.0
+milestone_name: — GPT-5 Review Fixes
+status: in_progress
+last_updated: "2026-04-13T00:00:00.000Z"
+last_activity: 2026-04-13 — v4.0 milestone started (GPT-5 review fixes)
 progress:
-  total_phases: 9
-  completed_phases: 9
-  total_plans: 29
-  completed_plans: 29
-  percent: 100
+  total_phases: 2
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # STATE: Work 3 — Many-to-Many DRT Bidirectional Meeting Point Paper
@@ -19,30 +19,34 @@ progress:
 
 **Core value:** Demonstrate that bidirectional meeting point assignment with passenger choice significantly improves DRT efficiency and equity, with actionable policy implications for TR Part A.
 **Target journal:** Transportation Research Part A: Policy and Practice
-**Current focus:** v3.0 — Codex review fixes (4 CRITICAL/MAJOR issues)
+**Current focus:** v4.0 — GPT-5 Review Fixes (2 blocking issues)
 
 ---
 
 ## Current Position
 
-Phase: Phase 11 — Formalization & Policy Reframing (complete)
-Plan: 02 complete
-Status: All Phase 11 plans complete; v3.0 revision scope fully addressed
-Last activity: 2026-04-13 — Plan 11-02 executed (policy reframing caveats + reviewer response v3.0)
+Phase: Phase 12 — Endogenous Matched-Coverage Experiment (not started)
+Plan: none
+Status: v4.0 milestone started; phases 12-13 planned; no plans executed yet
+Last activity: 2026-04-13 — milestone initialized from GPT-5 (high reasoning) review results
 
-**v3.0 revision scope (from Codex review, 2026-04-13):**
+**v4.0 revision scope (from GPT-5 MCP review, 2026-04-13, score 5/10):**
 
-- [x] Phase 10: Metric Audit & Coverage Comparison
-  - [x] METRIC-01: Recompute vkm/trip throughout all tables, abstract, policy section
-  - [x] METRIC-02: Reconcile inconsistent efficiency numbers to single denominator
-  - [x] COVER-01: Add matched-coverage experiment (DoorToDoor at equal served share)
-  - [x] COVER-02: Update Section 5.2 narrative and abstract efficiency claim
-- [x] Phase 11: Formalization & Policy Reframing
-  - [x] FORM-01: Add timing/decision diagram (Layer 1-3 sequence + Bernoulli sampling point)
-  - [x] FORM-02: Add mathematical statement of ALNS online objective
-  - [x] PFRAM-01: Reframe 1000m walking threshold as scenario-specific finding
-  - [x] PFRAM-02: Reframe 15-vehicle fleet ratio as scenario-specific finding
-  - [x] PFRAM-03: Update response_to_reviewers.tex for all v3.0 changes
+- [ ] Phase 12: Endogenous Matched-Coverage Experiment
+  - [ ] COMP-01: Implement DoorToDoorCapped variant with acceptance cap + re-routing
+  - [ ] COMP-02: Run experiment (seeds 42/43/44, n=200, 15 vehicles)
+  - [ ] COMP-03: Update Section 5.2 with endogenous result as primary claim
+- [ ] Phase 13: Paper Fixes & Literature Update
+  - [ ] BEHAV-01: Add units/variables reference table
+  - [ ] BEHAV-02: Add worked utility example with explicit unit conversions
+  - [ ] BEHAV-03: Add commitment assumption paragraph
+  - [ ] TEXT-01: Fix intro.tex old numbers (2383.85 vs 3662.33, -34.9%)
+  - [ ] TEXT-02: Fix conclusion old numbers
+  - [ ] TEXT-03: Grep-verify no old numbers remain
+  - [ ] LIT-01: Add Fielbaum et al. (2021) to references.bib
+  - [ ] LIT-02: Add positioning sentences in Section 2.2
+  - [ ] ROB-01: Add ± notation to Table 1
+  - [ ] ROB-02: Add 3-seed justification note in Section 5.1
 
 ---
 
@@ -61,9 +65,11 @@ Last activity: 2026-04-13 — Plan 11-02 executed (policy reframing caveats + re
 | Pareto frontier reframed as welfare sensitivity | gamma is post-hoc; served_share constant; narrative shows structural efficiency gain | Phase 8 |
 | MILP gap large (99-170%) explained honestly | Small accepted sets (4-7 pax) at n=20/30; gap expected to narrow at scale | Phase 9 |
 | Correct vkm/trip denominator | Codex CRITICAL: dividing by acceptance rate (not trip count) gives dimensionally wrong metric | Phase 10 |
-| Matched-coverage comparison | Codex CRITICAL: 20.8% vs 61% served share confounds efficiency comparison | Phase 10 |
+| Matched-coverage comparison (post-hoc) | Codex CRITICAL: 20.8% vs 61% served share confounds efficiency comparison | Phase 10 |
 | Formalize ALNS decision problem | Codex MAJOR: unclear what ALNS optimizes (expected cost vs Bernoulli realizations) | Phase 11 |
 | Soften policy thresholds | Codex MAJOR: 1000m/15-vehicle thresholds too strong for synthetic-only evidence | Phase 11 |
+| Endogenous matched-coverage required | GPT-5 BLOCKING: post-hoc random rejection not credible as primary evidence; DoorToDoor with acceptance cap + re-routing needed | Phase 12 |
+| Add Fielbaum et al. (2021) | GPT-5 MAJOR: bidirectional walking flexibility in ridepooling is prior art that must be acknowledged | Phase 13 |
 
 ### Prior Work Context
 
@@ -71,30 +77,30 @@ Last activity: 2026-04-13 — Plan 11-02 executed (policy reframing caveats + re
 - Work 2 (service menu design, assortment optimization): working paper
 - Work 3 natural extension: bidirectional spatial service menu (pickup + dropoff) in many-to-many scenario
 
-### v2.0 Results (for reference)
+### v3.0 Results (for reference)
 
 | Metric | Value |
 |--------|-------|
-| v2.0 phases complete | 3/3 |
-| v2.0 requirements complete | 13/13 |
-| Codex review (post-v2.0) Round 1 | 4/10 → 5/10 after revisions |
-| Phase 7 key result | Binary logit accept_probability; REV-01..04 PASS |
-| Phase 8 key result | Gamma sweep: served_share=0.183 constant; fig07_pareto generated |
-| Phase 9 key result | MILP gap table; VOT table; weight sensitivity -30-31% |
+| v3.0 phases complete | 2/2 (Phases 10-11) |
+| v3.0 requirements complete | 9/9 |
+| GPT-5 review score (post-v3.0) | 5/10 (borderline Major Revisions) |
+| Corrected vkm/trip | FullModel 15.1, DoorToDoor 21.3 (29.2% improvement, unconstrained) |
+| Post-hoc matched-coverage | FullModel 10.9, DoorToDoor 42.3 vkm/trip (74.3% at equal ~23.5% share) |
+| GPT-5 verdict | "Not fully sufficient as main proof" — needs endogenous re-routing |
 
 ### Blockers
 
-None.
+None. Phase 12 (DoorToDoorCapped implementation) is ready to start.
 
 ### Notes
 
 - Dissertation timeline: Work 3 planned 2026.09–2027.04 per BUAA schedule
 - Supervisor: Prof. Liu Tianliang
 - Language: English (academic paper)
+- GPT-5 review thread ID: 019d84ab-c6a4-7fd1-b91f-01109b57c1f2 (for Round 3 if needed)
 
 ---
 
 *State initialized: 2026-04-11*
-*Updated: 2026-04-13 — v3.0 milestone started (Codex review fixes)*
-*Updated: 2026-04-13 — v3.0 roadmap created (Phases 10-11, 9 requirements)*
-*Updated: 2026-04-13 — Plan 11-02 complete (policy reframing caveats + reviewer response v3.0 section)*
+*Updated: 2026-04-13 — v3.0 milestone complete (Phases 10-11, 9 requirements)*
+*Updated: 2026-04-13 — v4.0 milestone started (GPT-5 review fixes, Phases 12-13, 13 requirements)*
