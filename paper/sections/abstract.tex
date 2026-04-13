@@ -12,13 +12,15 @@ passenger response, and dynamic dispatch — and solved with a Mixed-Integer Lin
 Program (MILP) exact benchmark for small instances and a rolling horizon Adaptive
 Large Neighbourhood Search (ALNS) heuristic for large-scale deployment.
 Numerical experiments on synthetic scenarios calibrated to Chinese suburban conditions
-show that, at equal served share ($\approx$23.5\%), the full bidirectional model
-achieves \textbf{10.9\,vehicle-km per accepted trip} compared to
-\textbf{42.3\,vkm/trip} for the door-to-door baseline at the same coverage
-level, a reduction of \textbf{74.3\%}. Under the unconstrained
-baseline comparison (FullModel 20.8\% vs.\ DoorToDoor 61.0\% served share),
-FullModel achieves 15.1\,vkm/trip versus 21.3\,vkm/trip for DoorToDoor
-(29.2\% improvement).
+show that, at equal served share ($\approx$22.8\%), the full bidirectional model
+achieves \textbf{11.1\,vkm/trip} compared to \textbf{17.1\,vkm/trip} for the
+DoorToDoor\,(capped) baseline --- a \textbf{35.0\%} improvement in per-trip vehicle
+utilisation that cannot be attributed to coverage differences (endogenous
+matched-coverage comparison). Under the unconstrained comparison (FullModel 20.8\%
+vs.\ DoorToDoor 61.0\% served share), FullModel achieves 15.1\,vkm/trip versus
+21.3\,vkm/trip (29.2\% improvement). For reference, a post-hoc matched-coverage
+estimate yields 10.9 vs.\ 42.3\,vkm/trip (74.3\% improvement), providing a
+conservative lower bound.
 Equity analysis across passenger types reveals a Gini coefficient of 0.1216 in
 acceptance rates: time-sensitive passengers are systematically disadvantaged
 (14.4\% acceptance) relative to price-sensitive (25.4\%) and walk-sensitive (20.2\%)
