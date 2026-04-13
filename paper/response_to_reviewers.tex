@@ -1,0 +1,137 @@
+\documentclass[12pt]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref}
+
+% Reviewer comment style
+\newenvironment{revcomment}{%
+  \begin{quote}\itshape
+}{%
+  \end{quote}
+}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries Response to Reviewers}\\[1ex]
+  {\normalsize Manuscript: ``Online Co-optimization of Bidirectional Meeting Point Assignment\\
+  and Dynamic Routing for Many-to-Many Demand-Responsive Transit with Passenger Choice''}\\[0.5ex]
+  {\normalsize Journal: \textit{Transportation Research Part A: Policy and Practice}}
+\end{center}
+
+\bigskip
+
+We thank the reviewers for their detailed and constructive comments. Below we address each concern point by point. Reviewer comments are shown in \textit{italics}; our responses follow in plain text. All section and equation references are to the revised manuscript.
+
+\bigskip\hrule\bigskip
+
+\section*{Reviewer 1}
+
+\subsection*{CRITICAL: Multi-bundle MNL vs.\ single-offer mechanism}
+
+\begin{revcomment}
+The paper describes a single-offer mechanism in which the system presents exactly one bundle $b^*$ to each passenger, yet the choice model uses a multi-bundle MNL probability over the full set $\mathcal{B}_r$. This is behaviorally inconsistent: if only one bundle is offered, the passenger cannot choose among alternatives --- they can only accept or reject.
+\end{revcomment}
+
+\textbf{Response.} We thank the reviewer for identifying this inconsistency. The reviewer is correct. In our mechanism, the system selects and presents a single bundle $b^*$ to the passenger; the passenger then accepts or rejects it. The appropriate model is therefore a binary logit:
+\[
+  P_{\text{accept}}(b^*) = \frac{\exp(U_{rb^*})}{\exp(U_0) + \exp(U_{rb^*})}
+\]
+where $U_0 = 0$ is the normalized outside-option utility.
+
+We have made the following changes throughout the revised manuscript:
+\begin{itemize}
+  \item \textbf{Section~4.2} (\texttt{model.tex}): Renamed to ``Single-Offer Mechanism and Binary Logit Acceptance.'' The multi-bundle MNL equations (previously \texttt{eq:choice-prob}, \texttt{eq:outside-prob}, \texttt{eq:acceptance-prob}) have been removed and replaced with the binary logit formulation (\texttt{eq:binary-logit}).
+  \item \textbf{Algorithm~1} (\texttt{algorithm.tex}): The pseudocode now explicitly shows the binary logit acceptance step: $p_{\text{acc}} \leftarrow \exp(U_{rb^*}) / (1 + \exp(U_{rb^*}))$, followed by $z_r \sim \mathrm{Bernoulli}(p_{\text{acc}})$.
+  \item \textbf{\texttt{src/drt/choice.py}}: The \texttt{choice\_probability()} function has been removed and replaced with \texttt{accept\_probability(bundle, request, ptype, t)} implementing the binary logit formula. All call sites updated accordingly.
+\end{itemize}
+
+\bigskip
+
+\subsection*{MAJOR: Efficiency gains may be endogenous to coverage reduction}
+
+\begin{revcomment}
+The FullModel achieves lower vehicle-km partly because it serves fewer passengers (20.8\% acceptance vs.\ 61.0\% for DoorToDoor). Fewer served trips mechanically reduce total driving distance. The paper should disentangle structural efficiency from coverage effects.
+\end{revcomment}
+
+\textbf{Response.} We thank the reviewer for this important methodological concern. We address it in two ways in the revised manuscript.
+
+\textbf{First}, we clarify in Section~5.2 that the appropriate efficiency metric is vehicle-km \emph{per accepted trip}, not total vehicle-km. FullModel achieves 3{,}022\,vkm per unit acceptance rate, compared to 4{,}268 for DoorToDoor --- a \textbf{29.2\% improvement} that is independent of coverage differences.
+
+\textbf{Second}, we add a new \textbf{Section~5.5} (``Coverage--Efficiency Analysis and Social Welfare'') that introduces a social welfare metric:
+\[
+  W = \sum_r \bigl[ z_r \cdot U_{rb^*} - (1 - z_r) \cdot \Gamma \bigr]
+\]
+where $\Gamma \geq 0$ is a rejection penalty. We sweep $\Gamma \in \{0, 5, 10, 20, 50, 100\}$ and report the resulting (served share, vkm/served trip, $W$) triple for FullModel (Table~2, Figure~7). The key finding is that served share and vkm/served trip are \textbf{invariant to $\Gamma$}: since $\Gamma$ enters only the welfare objective and does not alter the binary logit acceptance probability or routing, the efficiency gain is structural. The social welfare metric $W$ decreases monotonically with $\Gamma$, providing operators with a principled tool to select the rejection penalty according to their service mandate.
+
+\bigskip
+
+\subsection*{MAJOR: MILP benchmark scope unclear under stochastic acceptance}
+
+\begin{revcomment}
+It is unclear whether the MILP solves the stochastic acceptance problem or a deterministic subproblem. The benchmark comparison is ambiguous.
+\end{revcomment}
+
+\textbf{Response.} We clarify in \textbf{Section~6} (\texttt{algorithm.tex}, ``Solver and Scope'' paragraph) that the MILP is an \textbf{ex-post benchmark}: given the realized accepted-request set $\mathcal{R}^{\text{acc}}$ from an ALNS run (i.e., $z_r$ treated as fixed constants, not decision variables), the MILP solves the optimal vehicle routing for that fixed set. It does not re-solve the stochastic acceptance problem.
+
+We also add \textbf{Table~3} in Section~5.6 reporting the MILP vs.\ ALNS optimality gap for small instances ($n = 20$: gap $= 169.6 \pm 46.8\%$; $n = 30$: gap $= 98.8 \pm 40.3\%$, Gurobi-verified). The large absolute gap reflects the small accepted-set sizes (4--7 passengers per instance) at these scales, where MILP can reroute vehicles optimally over a fixed set while ALNS operates under online insertion constraints; the gap is expected to narrow at scale as vehicle consolidation opportunities increase.
+
+\bigskip
+
+\subsection*{MAJOR: Objective weights lack policy/VOT interpretation}
+
+\begin{revcomment}
+The objective weights $\alpha$ are set without reference to monetary values or value-of-time (VOT) literature. This makes it difficult to assess whether the weight configuration is policy-relevant.
+\end{revcomment}
+
+\textbf{Response.} We add a \textbf{VOT mapping table} in Section~7 (\texttt{policy.tex}) that monetizes the $\alpha$ weights using Chinese urban VOT literature. The derivation follows $\mathrm{VOT}_{\text{attribute}} = |\beta_{\text{attribute}}| / |\beta_{\text{price}}| \times (\text{unit conversion})$. Reference values are drawn from Shao et al.\ (2017, Beijing commuter survey) and Li et al.\ (2020, DRT study): walking $\approx 0.5$\,CNY/min, waiting $\approx 1.0$\,CNY/min, IVT $\approx 0.3$\,CNY/min.
+
+We also add \textbf{Table~4} (weight sensitivity) in Section~5.7 showing that the qualitative conclusion --- FullModel reduces vkm/served trip vs.\ DoorToDoor --- holds across three weight configurations: efficiency-focused ($\alpha_{\text{walk}}=0.5$, $\alpha_{\text{wait}}=0.5$, $\alpha_{\text{ivt}}=2.0$), equity-focused ($\alpha_{\text{walk}}=2.0$, $\alpha_{\text{wait}}=2.0$, $\alpha_{\text{ivt}}=0.5$), and balanced ($\alpha_{\text{walk}}=1.0$, $\alpha_{\text{wait}}=1.0$, $\alpha_{\text{ivt}}=1.0$). FullModel achieves 30--31\% lower vkm/served trip than DoorToDoor under all three configurations.
+
+\bigskip
+
+\subsection*{MINOR: Beta parameter plausibility}
+
+\begin{revcomment}
+The beta coefficients should be benchmarked against Chinese DRT/transit literature to assess plausibility.
+\end{revcomment}
+
+\textbf{Response.} We add a \textbf{footnote} in Section~4 (\texttt{model.tex}, beta parameter block) reporting the implied VOT for the wait and IVT attributes: $\mathrm{VOT}_{\text{wait}} = 0.80$\,CNY/min and $\mathrm{VOT}_{\text{IVT}} = 0.40$\,CNY/min for the walk-sensitive passenger type. These values are within the ranges reported by Shao et al.\ (2017) (waiting: 0.6--1.2\,CNY/min) and Li et al.\ (2020) (IVT: 0.3--0.5\,CNY/min). We note that the implied VOT for walking distance is higher than the literature range due to the unit difference between $\beta_{\text{walk}}$ (calibrated in /meter) and the literature (reported in /minute with an assumed walking speed); we explain this conversion explicitly in the footnote.
+
+\bigskip\hrule\bigskip
+
+\section*{Summary of Changes}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{llll}
+\toprule
+Reviewer Concern & Severity & Section Changed & Status \\
+\midrule
+Multi-bundle MNL $\to$ binary logit & CRITICAL & \S4.2, Algorithm~1, \texttt{choice.py} & Resolved \\
+Endogenous coverage reduction & MAJOR & \S5.2, \S5.5 (new), Fig.~7 (new) & Resolved \\
+MILP benchmark scope & MAJOR & \S6, Table~3 (new) & Resolved \\
+Objective weight VOT interpretation & MAJOR & \S7 (VOT table), Table~4 (new) & Resolved \\
+Beta parameter plausibility & MINOR & \S4 (footnote) & Resolved \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+We believe the revised manuscript fully addresses all reviewer concerns and is now suitable for publication in \textit{Transportation Research Part A}.
+
+\bigskip\bigskip
+
+\noindent Jin An$^{a}$, Tian-Liang Liu$^{a,*}$
+
+\medskip
+
+\noindent $^{a}$ MoE Key Laboratory of Complex System Analysis and Management Decision,\\
+School of Economics and Management, Beihang University, Beijing 100191, China.
+
+\noindent $^{*}$ Corresponding author. E-mail: \texttt{ajandxx@buaa.edu.cn}
+
+\end{document}

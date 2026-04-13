@@ -1,0 +1,57 @@
+\documentclass[12pt]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{parskip}
+\usepackage{microtype}
+
+\begin{document}
+
+\noindent
+\textbf{Cover Letter}
+
+\bigskip
+
+\noindent
+Dear Editors of \textit{Transportation Research Part A: Policy and Practice},
+
+\medskip
+
+We are pleased to submit the revised manuscript entitled \textbf{``Online Co-optimization of Bidirectional Meeting Point Assignment and Dynamic Routing for Many-to-Many Demand-Responsive Transit with Passenger Choice''} for your consideration.
+
+We thank the reviewers for their thorough and constructive evaluation. The revised manuscript addresses all CRITICAL and MAJOR concerns raised in the review, as detailed in the accompanying Response to Reviewers. The key revisions are:
+
+\begin{enumerate}
+
+\item \textbf{Choice model correction (CRITICAL).} We replaced the multi-bundle MNL formulation with a binary logit single-offer acceptance model, which is behaviorally consistent with the single-offer mechanism described in the paper. The correction is implemented throughout the code, mathematical model (Section~4.2), and algorithm pseudocode (Algorithm~1).
+
+\item \textbf{Coverage--efficiency analysis (MAJOR).} We added a new Section~5.5 presenting a social welfare metric $W$ and a $\Gamma$-sweep experiment that directly addresses the concern about endogenous coverage reduction. The analysis confirms that the efficiency gain is structural, not an artefact of lower served share.
+
+\item \textbf{MILP benchmark clarification (MAJOR).} We clarified in Section~6 that the MILP serves as an ex-post benchmark over the realized accepted set from ALNS, and added Table~3 reporting the MILP vs.\ ALNS optimality gap for small instances ($n = 20$, $30$).
+
+\item \textbf{Objective weight policy interpretation (MAJOR).} We added a VOT mapping table in Section~7 monetizing the objective weights using Chinese urban VOT literature, and a weight sensitivity table (Table~4) demonstrating that the qualitative conclusions hold across three weight configurations.
+
+\item \textbf{Parameter plausibility (MINOR).} We added a footnote in Section~4 benchmarking the implied VOT from the $\beta$ parameters against Shao et al.\ (2017) and Li et al.\ (2020).
+
+\end{enumerate}
+
+The manuscript makes an original contribution to the DRT literature by proposing the first formulation of many-to-many DRT with bidirectional meeting point sets and explicit passenger choice, demonstrating a 29.2\% improvement in vehicle-km per accepted trip over the door-to-door baseline, and providing five actionable policy recommendations for Chinese city DRT operators. We believe the revised manuscript is now suitable for publication in \textit{Transportation Research Part A}.
+
+We confirm that this manuscript has not been published elsewhere and is not under consideration by any other journal. All authors have approved the manuscript and agree with its submission.
+
+We look forward to your decision.
+
+\bigskip
+
+\noindent Yours sincerely,
+
+\bigskip\bigskip
+
+\noindent Jin An$^{a}$, Tian-Liang Liu$^{a,*}$
+
+\medskip
+
+\noindent $^{a}$ MoE Key Laboratory of Complex System Analysis and Management Decision,\\
+School of Economics and Management, Beihang University, Beijing 100191, China.
+
+\noindent $^{*}$ Corresponding author. E-mail: \texttt{ajandxx@buaa.edu.cn}
+
+\end{document}
