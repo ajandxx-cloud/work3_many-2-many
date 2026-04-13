@@ -1,5 +1,16 @@
 % Section 5: Numerical Experiments
 % Word target: ~1500 words
+%
+% METRIC AUDIT (Phase 10, 2026-04-13):
+% - Abstract 2383.85 vs 3662.33: these were from an earlier scenario run with
+%   different parameters; replaced with matched-coverage result (Plan 02) and
+%   unconstrained 15.1 vs 21.3 from main table.
+% - Section 5.2 "3022 vs 4268": divided vkm by acceptance_rate fraction (wrong
+%   denominator); corrected to 15.1 vs 21.3 (vkm / accepted_trip_count).
+% - Gamma-sweep 9.893: this IS a correct per-trip value (vkm/accepted_count at
+%   seed=44, gamma=0, scale=200); it is a different scenario from the main table
+%   and is not directly comparable. The sweep CSV column vkm_per_served_trip
+%   already uses the correct denominator (accepted_count).
 
 \section{Numerical Experiments}\label{sec:experiments}
 
@@ -74,16 +85,16 @@ for the synthetic scenario with 200 requests and 15 vehicles.
 \centering
 \caption{Performance comparison across model variants (synthetic scenario, 200 requests, 15 vehicles, mean $\pm$ std)}
 \label{tab:main-results}
-\begin{tabular}{lcccccc}
+\begin{tabular}{lccccccc}
 \toprule
-Variant & Accept. & vkm & Avg Wait (s) & Avg Walk (m) & Detour & CPU (s) \\
+Variant & Accept. & vkm & vkm/trip & Avg Wait (s) & Avg Walk (m) & Detour & CPU (s) \\
 \midrule
-DoorToDoor               & 0.610 & 2603.7 & 5003.5 & 0.0    & 3.63 & 12.3 \\
-SingleSidedPickup        & 0.440 & 1199.4 & 3847.1 & 1025.3 & 2.42 & 19.1 \\
-BidirectionalNoChoice    & 0.533 & 1721.6 & 4626.7 & 1652.6 & 3.60 & 25.7 \\
-FullModel                & 0.208 & 628.5  & 450.3  & 95.9   & 1.00 & 1.4  \\
-AblationNoChoice         & 0.398 & 923.9  & 309.9  & 78.5   & 0.76 & 15.7 \\
-AblationNoRollingHorizon & 0.252 & 753.4  & 3948.8 & 1814.5 & 6.82 & 5.4  \\
+DoorToDoor               & 0.610 & 2603.7 & 21.3 & 5003.5 & 0.0    & 3.63 & 12.3 \\
+SingleSidedPickup        & 0.440 & 1199.4 & 13.6 & 3847.1 & 1025.3 & 2.42 & 19.1 \\
+BidirectionalNoChoice    & 0.533 & 1721.6 & 16.1 & 4626.7 & 1652.6 & 3.60 & 25.7 \\
+FullModel                & 0.208 & 628.5  & 15.1 & 450.3  & 95.9   & 1.00 & 1.4  \\
+AblationNoChoice         & 0.398 & 923.9  & 11.6 & 309.9  & 78.5   & 0.76 & 15.7 \\
+AblationNoRollingHorizon & 0.252 & 753.4  & 14.9 & 3948.8 & 1814.5 & 6.82 & 5.4  \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -137,10 +148,17 @@ passengers to opt out of offers requiring excessive walking or waiting.
 A natural concern is whether this vkm reduction is endogenous: fewer served
 trips mechanically reduce total driving distance. We address this concern in two
 ways. First, the appropriate efficiency metric is vehicle-km \emph{per accepted
-trip}: FullModel achieves $628.5 / 0.208 = 3022$\,vkm per unit acceptance rate,
-compared to $2603.7 / 0.610 = 4268$ for DoorToDoor~---~a \textbf{29.2\%}
-improvement in per-trip vehicle utilization that is independent of coverage
-differences. Second, the coverage--efficiency analysis in
+trip}: FullModel achieves $628.5 / (200 \times 0.208) = 15.1$\,vkm per accepted trip,
+compared to $2603.7 / (200 \times 0.610) = 21.3$ for DoorToDoor~---~a
+\textbf{29.2\%} improvement in per-trip vehicle utilization that is independent
+of coverage differences. (Note: the correct denominator is the accepted trip
+count $n \cdot \hat{\alpha}$, not the acceptance rate fraction $\hat{\alpha}$
+alone; the percentage improvement is unchanged because the $n=200$ factor
+cancels.)%
+\footnote{Earlier drafts reported $3022$ and $4268$, which divided vkm by the
+acceptance rate fraction rather than the accepted trip count; those values are
+dimensionally incorrect (km per fraction, not km per trip) and are corrected here.}
+Second, the coverage--efficiency analysis in
 Section~\ref{sec:pareto} shows that $\gamma$ is a post-hoc welfare parameter
 that does not alter routing or acceptance decisions; the served share and
 vkm per served trip are invariant to $\gamma$, confirming that the efficiency
