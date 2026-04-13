@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: — Codex Review Fixes
-status: planning
-last_updated: "2026-04-13T01:45:40.145Z"
-last_activity: 2026-04-13 — v3.0 roadmap written (Phases 10-11)
+status: in-progress
+last_updated: "2026-04-13T02:30:00.000Z"
+last_activity: 2026-04-13 — Phase 11 Plan 01 executed (timing diagram + ALNS objective)
 progress:
   total_phases: 9
   completed_phases: 7
   total_plans: 27
-  completed_plans: 26
-  percent: 96
+  completed_plans: 27
+  percent: 100
 ---
 
 # STATE: Work 3 — Many-to-Many DRT Bidirectional Meeting Point Paper
@@ -25,10 +25,10 @@ progress:
 
 ## Current Position
 
-Phase: Phase 11 — Formalization & Policy Reframing (not started)
-Plan: —
-Status: Phase 10 complete, ready to plan Phase 11
-Last activity: 2026-04-13 — Phase 10 executed (metric audit + matched-coverage experiment)
+Phase: Phase 11 — Formalization & Policy Reframing (in progress)
+Plan: 01 complete
+Status: Plan 11-01 complete; Plans 11-02 through 11-05 (PFRAM-01–03) remaining
+Last activity: 2026-04-13 — Plan 11-01 executed (timing diagram + ALNS objective)
 
 **v3.0 revision scope (from Codex review, 2026-04-13):**
 
@@ -38,8 +38,8 @@ Last activity: 2026-04-13 — Phase 10 executed (metric audit + matched-coverage
   - [x] COVER-01: Add matched-coverage experiment (DoorToDoor at equal served share)
   - [x] COVER-02: Update Section 5.2 narrative and abstract efficiency claim
 - [ ] Phase 11: Formalization & Policy Reframing
-  - [ ] FORM-01: Add timing/decision diagram (Layer 1-3 sequence + Bernoulli sampling point)
-  - [ ] FORM-02: Add mathematical statement of ALNS online objective
+  - [x] FORM-01: Add timing/decision diagram (Layer 1-3 sequence + Bernoulli sampling point)
+  - [x] FORM-02: Add mathematical statement of ALNS online objective
   - [ ] PFRAM-01: Reframe 1000m walking threshold as scenario-specific finding
   - [ ] PFRAM-02: Reframe 15-vehicle fleet ratio as scenario-specific finding
   - [ ] PFRAM-03: Update response_to_reviewers.tex for all v3.0 changes
