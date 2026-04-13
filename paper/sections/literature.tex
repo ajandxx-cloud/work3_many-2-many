@@ -17,6 +17,17 @@ Building on this foundation, \citet{cortenbach2024} introduced the Dial-a-Ride P
 
 However, the DARPmp of \citet{cortenbach2024} has two important limitations that the present paper addresses. First, the single-sided design leaves dropoff flexibility unexploited: passengers must still be delivered to their exact destination, which constrains route consolidation on the egress leg. Second, the model treats passenger acceptance as deterministic — once the system assigns a meeting point, the passenger is assumed to comply regardless of walking distance or service quality. In practice, passengers exercise choice, and a model that ignores this risks over-optimistic efficiency estimates. The present paper extends DARPmp to a \emph{bidirectional} design in which both the pickup meeting point $m_r^P \in M_r^P$ and the dropoff meeting point $m_r^D \in M_r^D$ are decision variables, and couples this with an explicit multinomial logit (MNL) passenger choice model.
 
+\citet{fielbaum2021} studied bidirectional walking flexibility in ridepooling, showing
+that allowing passengers to walk to both pickup and dropoff points reduces vehicle detours
+and improves system efficiency. Their analysis demonstrates that the efficiency gains from
+dropoff-side flexibility are comparable in magnitude to those from pickup-side flexibility,
+providing empirical motivation for the bidirectional design adopted in the present paper.
+Our work extends this insight to the many-to-many DRT setting with explicit MNL passenger
+choice and online re-optimisation: unlike \citet{fielbaum2021}, who study a static
+ridepooling context, we address the online assignment problem where meeting points must be
+selected in real time as requests arrive, and passenger acceptance is modelled
+probabilistically rather than assumed.
+
 \subsection{Passenger Choice in Demand-Responsive Transit}
 
 Discrete choice modelling provides the theoretical foundation for representing heterogeneous passenger preferences in transportation systems. The multinomial logit (MNL) model, derived from random utility maximisation \citep{benakiva1985}, is the workhorse of mode choice analysis and has been applied extensively to transit demand, ridesharing adoption, and on-demand mobility \citep{lavieri2019}. In the MNL framework, each passenger selects the alternative that maximises their perceived utility, with choice probabilities determined by the softmax function over deterministic utility components.
