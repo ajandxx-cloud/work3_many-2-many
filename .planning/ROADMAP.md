@@ -217,7 +217,7 @@ Plans:
 
 ### v5.0 Phases
 
-- [ ] **Phase 14: Paper & Response Letter Fixes** - Fix numeric inconsistencies in paper (Gini, cap target, weight-sensitivity table); update response_to_reviewers.tex with current numbers; remove pre-submission development artifacts
+- [x] **Phase 14: Paper & Response Letter Fixes** - Fix numeric inconsistencies in paper (Gini, cap target, weight-sensitivity table); update response_to_reviewers.tex with current numbers; remove pre-submission development artifacts (completed 2026-04-13)
 - [ ] **Phase 15: Code Reproducibility & Robustness** - Replace non-deterministic hash seed with SHA-256; add stop ordering warning, tolerance failure warning, empty-seeds guard, and unassigned deduplication
 
 ### Phase Details (v5.0)
@@ -236,8 +236,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 14-01-PLAN.md -- Numeric fixes: Gini in policy.tex, cap target in response letter FIX-02, verify weight-sensitivity table (NUM-01, NUM-02, NUM-03)
-- [ ] 14-02-PLAN.md -- Response letter + cleanup: rewrite FIX-02, fix R1 body, remove METRIC AUDIT block, remove provisional annotation, fix cross-reference (RESP-01, RESP-02, CLEAN-01, CLEAN-02, CLEAN-03)
+- [x] 14-01-PLAN.md -- Numeric fixes: Gini in policy.tex, cap target in response letter FIX-02, verify weight-sensitivity table (NUM-01, NUM-02, NUM-03)
+- [x] 14-02-PLAN.md -- Response letter + cleanup: rewrite FIX-02, fix R1 body, remove METRIC AUDIT block, remove provisional annotation, fix cross-reference (RESP-01, RESP-02, CLEAN-01, CLEAN-02, CLEAN-03)
 
 ### Phase 15: Code Reproducibility & Robustness
 **Goal**: The experiment codebase produces bit-identical results across processes and platforms, and all silent failure modes are replaced with explicit warnings or errors that surface problems immediately
@@ -268,8 +268,8 @@ Plans:
 | 11. Formalization & Policy Reframing | 2/2 | Complete | 2026-04-13 |
 | 12. Endogenous Matched-Coverage Experiment | 2/2 | Complete | 2026-04-13 |
 | 13. Paper Fixes & Literature Update | 3/3 | Complete | 2026-04-13 |
-| 14. Paper & Response Letter Fixes | 0/2 | Not started | - |
-| 15. Code Reproducibility & Robustness | 0/TBD | Not started | - |
+| 14. Paper & Response Letter Fixes | 2/2 | Complete   | 2026-04-13 |
+| 15. Code Reproducibility & Robustness | 1/1 | Complete | 2026-04-13 |
 
 ---
 

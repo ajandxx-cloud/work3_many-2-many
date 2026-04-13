@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v5.0
 milestone_name: — Code Review Fixes & Submission Prep
-status: Roadmap defined
+status: Complete
 last_updated: "2026-04-13T00:00:00.000Z"
 last_activity: 2026-04-13
 progress:
   total_phases: 2
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+  completed_phases: 2
+  total_plans: 3
+  completed_plans: 3
+  percent: 100
 ---
 
 # STATE: Work 3 — Many-to-Many DRT Bidirectional Meeting Point Paper
@@ -19,21 +19,21 @@ progress:
 
 **Core value:** Demonstrate that bidirectional meeting point assignment with passenger choice significantly improves DRT efficiency and equity, with actionable policy implications for TR Part A.
 **Target journal:** Transportation Research Part A: Policy and Practice
-**Current focus:** v5.0 — Code Review Fixes & Submission Prep
+**Current focus:** v5.0 — Code Review Fixes & Submission Prep (COMPLETE)
 
 ---
 
 ## Current Position
 
-Phase: Phase 14 (not started)
-Plan: —
-Status: Roadmap defined, ready to plan Phase 14
-Last activity: 2026-04-13 — v5.0 roadmap created (Phases 14-15)
+Phase: Phase 15 (complete)
+Plan: 15-01 (complete)
+Status: v5.0 milestone complete — all 13 requirements satisfied
+Last activity: 2026-04-13 — Phase 15 verified (5/5 criteria pass)
 
 **v5.0 scope (13 requirements across 2 phases):**
 
-- [ ] Phase 14: Paper & Response Letter Fixes (NUM-01..03, RESP-01..02, CLEAN-01..03)
-- [ ] Phase 15: Code Reproducibility & Robustness (CODE-01, ROB-01..04)
+- [x] Phase 14: Paper & Response Letter Fixes (NUM-01..03, RESP-01..02, CLEAN-01..03) — completed 2026-04-13
+- [x] Phase 15: Code Reproducibility & Robustness (CODE-01, ROB-01..04) — completed 2026-04-13
 
 ---
 
