@@ -389,6 +389,86 @@ class DoorToDoor(BaseVariant):
 
 
 # ---------------------------------------------------------------------------
+# Variant 1b: DoorToDoorCapped
+# ---------------------------------------------------------------------------
+
+
+class DoorToDoorCapped(BaseVariant):
+    """
+    DoorToDoor variant with an endogenous acceptance cap.
+
+    Once accepted_count / total_requests >= cap_share, all subsequent
+    requests are rejected without route insertion. ALNS continues
+    optimizing routes for already-accepted passengers.
+
+    cap_share: float — target served share (e.g. 0.235 for 23.5%)
+
+    Threat T-12-01 mitigation: cap check uses >= (not >) to prevent
+    off-by-one; total_requests guard prevents ZeroDivisionError.
+    """
+
+    name = "DoorToDoorCapped"
+
+    def __init__(
+        self,
+        cap_share: float = 0.235,
+        rho_p: float = None,
+        rho_d: float = None,
+        cost_weights: tuple | None = None,
+    ):
+        self._cap_share = cap_share
+        self._rho_p = rho_p if rho_p is not None else RHO_P
+        self._rho_d = rho_d if rho_d is not None else RHO_D
+        self._cost_weights = cost_weights if cost_weights is not None else _COST_WEIGHTS
+
+    def _solve(self, scenario: Scenario) -> ALNSState:
+        vehicles_dict = self._vehicles_dict(scenario)
+        state = self._initial_state(scenario)
+        state.unassigned = []
+
+        total_requests = len(scenario.requests)
+        accepted_count = 0
+
+        for request in scenario.requests:
+            # Cap check: if cap reached, reject without insertion
+            # T-12-01: >= prevents off-by-one; total_requests > 0 prevents ZeroDivisionError
+            if total_requests > 0 and accepted_count / total_requests >= self._cap_share:
+                state.unassigned.append(request)
+                continue
+
+            pickup_mp = MeetingPoint(
+                id=f"dtdc_pu_{request.id}",
+                coords=request.origin,
+            )
+            dropoff_mp = MeetingPoint(
+                id=f"dtdc_do_{request.id}",
+                coords=request.destination,
+            )
+            req_state = ALNSState(
+                routes=deepcopy(state.routes),
+                unassigned=[request],
+                cost=0.0,
+            )
+            result_state = greedy_insertion(
+                req_state,
+                vehicles_dict,
+                [pickup_mp, dropoff_mp],
+                rho_p=float('inf'),
+                rho_d=float('inf'),
+                k_top=1,
+                cost_weights=self._cost_weights,
+                travel_speed=TRAVEL_SPEED,
+            )
+            state.routes = result_state.routes
+            if result_state.unassigned:
+                state.unassigned.extend(result_state.unassigned)
+            else:
+                accepted_count += 1
+
+        return state
+
+
+# ---------------------------------------------------------------------------
 # Variant 2: SingleSidedPickup
 # ---------------------------------------------------------------------------
 
@@ -635,6 +715,7 @@ class AblationNoChoice(BaseVariant):
 
 ALL_VARIANTS = [
     DoorToDoor(),
+    DoorToDoorCapped(),
     SingleSidedPickup(),
     BidirectionalNoChoice(),
     FullModel(),
