@@ -1,17 +1,17 @@
 ---
 gsd_state_version: 1.0
-milestone: v2.0
-milestone_name: reviewer-revision
-status: complete
-stopped_at: v2.0 milestone complete — all 13 REV requirements verified PASS across phases 7-9
-last_updated: "2026-04-12T17:30:00.000Z"
-last_activity: 2026-04-12
+milestone: v3.0
+milestone_name: codex-review-fixes
+status: in_progress
+stopped_at: Milestone v3.0 started — defining requirements
+last_updated: "2026-04-13T00:00:00.000Z"
+last_activity: 2026-04-13
 progress:
-  total_phases: 3
-  completed_phases: 3
-  total_plans: 7
-  completed_plans: 7
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # STATE: Work 3 — Many-to-Many DRT Bidirectional Meeting Point Paper
@@ -20,52 +20,25 @@ progress:
 
 **Core value:** Demonstrate that bidirectional meeting point assignment with passenger choice significantly improves DRT efficiency and equity, with actionable policy implications for TR Part A.
 **Target journal:** Transportation Research Part A: Policy and Practice
-**Current focus:** v2.0 COMPLETE — ready for TR Part A submission
+**Current focus:** v3.0 — Codex review fixes (4 CRITICAL/MAJOR issues)
 
 ---
 
 ## Current Position
 
-**Status:** v2.0 milestone COMPLETE
-**All phases:** 7 ✓, 8 ✓, 9 ✓
-**All requirements:** 13/13 REV requirements verified PASS
-**Last activity:** 2026-04-12
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-04-13 — Milestone v3.0 started
 
-**v2.0 revision scope (from GPT-5.2 review, Round 2):**
+**v3.0 revision scope (from Codex review, 2026-04-13):**
 
-- ~~CRITICAL: Replace multi-bundle MNL with binary logit~~ ✓ DONE (Phase 7)
-- ~~MAJOR: Add coverage–efficiency Pareto frontier experiment~~ ✓ DONE (Phase 8)
-- ~~MAJOR: Clarify MILP benchmark scope under stochastic acceptance~~ ✓ DONE (Phase 9)
-- ~~MAJOR: Add objective weight VOT mapping + sensitivity table~~ ✓ DONE (Phase 9)
-- ~~MINOR: Benchmark implied VOT against Chinese transit literature~~ ✓ DONE (Phase 9)
-
-**Progress:**
-
-[██████████] 100%
-Phase 7 [██████████] 100% (Choice Model & Algorithm Fix) ✓
-Phase 8 [██████████] 100% (Pareto Experiment & New Metrics) ✓
-Phase 9 [██████████] 100% (Paper Section Updates) ✓
-Overall v2.0 [██████████] 100% ✓
+- [ ] FIX-01 [CRITICAL]: Correct vkm/trip metric — recompute as vkm ÷ accepted_trip_count
+- [ ] FIX-02 [CRITICAL]: Add matched-coverage comparison
+- [ ] FIX-03 [MAJOR]: Formalize coupled decision problem
+- [ ] FIX-04 [MAJOR]: Soften policy thresholds
 
 ---
-
-## Performance Metrics
-
-| Metric | Value |
-|--------|-------|
-| v1.0 phases total | 6 |
-| v1.0 phases complete | 6 |
-| v2.0 phases total | 3 |
-| v2.0 phases complete | 3 |
-| v2.0 requirements total | 13 |
-| v2.0 requirements complete | 13 |
-| v2.0 plans written | 7 |
-| v2.0 plans complete | 7 |
-| Codex review Round 1 | 5/10 (weak reject) |
-| Codex review Round 2 | 6/10 (weak accept) |
-| Phase 7 key result | Binary logit accept_probability; REV-01..04 PASS |
-| Phase 8 key result | Gamma sweep: served_share=0.183 constant (gamma post-hoc); W sensitivity shown; fig07_pareto generated; REV-05..08 PASS |
-| Phase 9 key result | MILP gap table (n=20: 170%, n=30: 99%); VOT table (policy.tex); weight sensitivity (FullModel -30-31% across 3 configs); beta footnote; REV-09..13 PASS |
 
 ## Accumulated Context
 
@@ -88,9 +61,16 @@ Overall v2.0 [██████████] 100% ✓
 - Work 2 (service menu design, assortment optimization): working paper
 - Work 3 natural extension: bidirectional spatial service menu (pickup + dropoff) in many-to-many scenario
 
-### Todos
+### v2.0 Results (for reference)
 
-- [x] All v2.0 revision tasks complete
+| Metric | Value |
+|--------|-------|
+| v2.0 phases complete | 3/3 |
+| v2.0 requirements complete | 13/13 |
+| Codex review (post-v2.0) Round 1 | 4/10 → 5/10 after revisions |
+| Phase 7 key result | Binary logit accept_probability; REV-01..04 PASS |
+| Phase 8 key result | Gamma sweep: served_share=0.183 constant; fig07_pareto generated |
+| Phase 9 key result | MILP gap table; VOT table; weight sensitivity -30-31% |
 
 ### Blockers
 
@@ -101,17 +81,8 @@ None.
 - Dissertation timeline: Work 3 planned 2026.09–2027.04 per BUAA schedule
 - Supervisor: Prof. Liu Tianliang
 - Language: English (academic paper)
-- Next step: TR Part A submission
-
----
-
-## Session Continuity
-
-**Last session:** 2026-04-12
-**Stopped at:** v2.0 milestone complete — all 13 REV requirements verified PASS
-**Next action:** TR Part A submission preparation (cover letter, response to reviewers letter)
 
 ---
 
 *State initialized: 2026-04-11*
-*Updated: 2026-04-12 — v2.0 milestone complete (phases 7-9, 13/13 requirements, 7 plans)*
+*Updated: 2026-04-13 — v3.0 milestone started (Codex review fixes)*

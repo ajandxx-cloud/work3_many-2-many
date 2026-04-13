@@ -18,16 +18,15 @@ Transportation Research Part A: Policy and Practice (TR Part A)
 - Under what urban conditions (demand density, fleet size, walking tolerance) does bidirectional meeting point assignment deliver the most benefit?
 - Policy recommendations for Chinese city DRT deployment
 
-## Current Milestone: v2.0 Reviewer Revision
+## Current Milestone: v3.0 Second-Round Revision (Codex Review Fixes)
 
-**Goal:** Address all CRITICAL and MAJOR reviewer findings to bring the paper from 6/10 (weak accept) to 7–8/10 (accept) and achieve submission-ready status.
+**Goal:** Fix the 4 remaining CRITICAL/MAJOR issues from the Codex review to bring the paper from 5/10 to ≥7/10 and achieve genuine submission readiness.
 
 **Target features:**
-- Binary logit replacement for multi-bundle MNL (behavioral consistency fix)
-- Coverage–efficiency Pareto frontier experiment
-- MILP benchmark scope clarification under stochastic acceptance
-- Objective weight VOT mapping + sensitivity table
-- Parameter plausibility benchmarking against literature
+- FIX-01 [CRITICAL]: Correct vkm/trip metric — recompute as vkm ÷ accepted_trip_count; audit all tables, abstract, policy claims
+- FIX-02 [CRITICAL]: Add matched-coverage comparison — FullModel vs DoorToDoor at equal served share, or coverage-efficiency frontier where rejection penalty affects decisions
+- FIX-03 [MAJOR]: Formalize coupled decision problem — timing/decision diagram + mathematical statement of what ALNS optimizes online
+- FIX-04 [MAJOR]: Soften policy thresholds — reframe as scenario-specific managerial insights, not general prescriptions
 
 ## Requirements
 
@@ -43,13 +42,20 @@ Transportation Research Part A: Policy and Practice (TR Part A)
 - [x] Paper writing: all sections (intro, literature, model, algorithm, experiments, conclusion)
 - [x] Academic figures: system diagram, algorithm flowchart, result charts (Python/matplotlib)
 
-### Active (v2.0 revision)
+### Validated (v2.0 complete)
 
-- [ ] Binary logit acceptance model replacing multi-bundle MNL in single-offer mechanism
-- [ ] Coverage–efficiency Pareto frontier (served share vs vkm tradeoff curve)
-- [ ] MILP benchmark scope defined: deterministic routing of fixed accepted set + optimality gap
-- [ ] Objective weight policy interpretation: VOT mapping + weight sensitivity table
-- [ ] Parameter plausibility: implied VOT benchmarked against Chinese DRT/transit literature
+- [x] Binary logit acceptance model replacing multi-bundle MNL in single-offer mechanism
+- [x] Coverage–efficiency Gamma sweep (served share vs welfare sensitivity)
+- [x] MILP benchmark scope defined: ex-post routing of fixed accepted set + optimality gap
+- [x] Objective weight policy interpretation: VOT mapping + weight sensitivity table
+- [x] Parameter plausibility: implied VOT benchmarked against Chinese DRT/transit literature
+
+### Active (v3.0 revision)
+
+- [ ] FIX-01: Correct vkm/trip metric — recompute as vkm ÷ accepted_trip_count; audit all tables, abstract, policy claims
+- [ ] FIX-02: Add matched-coverage comparison — FullModel vs DoorToDoor at equal served share or coverage-efficiency frontier where rejection penalty affects decisions
+- [ ] FIX-03: Formalize coupled decision problem — timing/decision diagram + mathematical statement of what ALNS optimizes online
+- [ ] FIX-04: Soften policy thresholds — reframe as scenario-specific managerial insights, not general prescriptions
 
 ### Out of Scope
 
@@ -89,6 +95,10 @@ Transportation Research Part A: Policy and Practice (TR Part A)
 | Simulation-based validation | Standard for DARP; real data hard to obtain; consistent with Work 1 approach | Confirmed |
 | Binary logit for single-offer acceptance | Reviewer CRITICAL: multi-bundle MNL behaviorally inconsistent with single-offer mechanism | v2.0 |
 | Pareto frontier over rejection cost | Reviewer MAJOR: efficiency gains partly driven by endogenous coverage reduction | v2.0 |
+| Correct vkm/trip denominator | Codex CRITICAL: dividing by acceptance rate (not trip count) gives dimensionally wrong metric | v3.0 |
+| Matched-coverage comparison | Codex CRITICAL: 20.8% vs 61% served share confounds efficiency comparison | v3.0 |
+| Formalize ALNS decision problem | Codex MAJOR: unclear what ALNS optimizes (expected cost vs Bernoulli realizations) | v3.0 |
+| Soften policy thresholds | Codex MAJOR: 1000m/15-vehicle thresholds too strong for synthetic-only evidence | v3.0 |
 
 ## Evolution
 
@@ -107,4 +117,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-12 — v2.0 milestone started (reviewer revision)*
+*Last updated: 2026-04-13 — v3.0 milestone started (Codex review fixes)*
