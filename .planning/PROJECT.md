@@ -58,13 +58,13 @@ Transportation Research Part A: Policy and Practice (TR Part A)
 - [x] FIX-03: Formalize coupled decision problem — timing/decision diagram (tab:timing-diagram) + ALNS online objective (eq:alns-objective) added
 - [x] FIX-04: Soften policy thresholds — generalizability caveats added to R1 (1000m) and R2 (15-vehicle ratio)
 
-### Active (v4.0 revision)
+### Validated (v4.0 complete)
 
-- [ ] FIX-A: Endogenous matched-coverage comparison — DoorToDoor with acceptance cap + re-routing; served share ≈ FullModel ~23.5%; replaces post-hoc random rejection
-- [ ] FIX-B: Behavioral consistency check — units/variables table, worked utility example, reconcile offer-stage vs realized attributes vs acceptance rates
-- [ ] FIX-C: Fix old numbers in intro.tex and conclusion — replace "2383.85 vs 3662.33" and "-34.9%" with v3.0 numbers
-- [ ] FIX-D: Add Fielbaum et al. (2021) to literature review — position bidirectional walking flexibility relative to this paper
-- [ ] FIX-E: Add confidence intervals to main results table; clarify commitment assumption for accepted offers after rolling-horizon re-optimization
+- [x] FIX-A: Endogenous matched-coverage comparison — DoorToDoorCapped with acceptance cap + re-routing; FullModel 11.1 vs DoorToDoor 17.1 vkm/trip (35.0%) at matched ~23% served share (Validated in Phase 12)
+- [x] FIX-B: Behavioral consistency check — notation table (tab:notation), worked utility example (Section 4.2), commitment assumption paragraph (algorithm.tex) added (Validated in Phase 13)
+- [x] FIX-C: Fix old numbers — "2383.85/3662.33/-34.9%" replaced with v3.0 numbers throughout intro, conclusion, abstract (Validated in Phase 13)
+- [x] FIX-D: Fielbaum et al. (2021) added to Section 2.2 with positioning sentence (Validated in Phase 13)
+- [x] FIX-E: ± std added to Table 1; commitment assumption clarified; 3-seed note with \citep{wu2025} in Section 5.1 (Validated in Phase 13)
 
 ### Out of Scope
 
@@ -127,4 +127,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-13 — v3.0 milestone started (Codex review fixes)*
+*Last updated: 2026-04-13 — v4.0 milestone complete (GPT-5 review fixes: endogenous comparison, behavioral consistency, stale numbers, Fielbaum citation, ± notation)*
