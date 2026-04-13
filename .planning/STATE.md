@@ -2,11 +2,11 @@
 gsd_state_version: 1.0
 milestone: v5.0
 milestone_name: — Code Review Fixes & Submission Prep
-status: Defining requirements
+status: Roadmap defined
 last_updated: "2026-04-13T00:00:00.000Z"
 last_activity: 2026-04-13
 progress:
-  total_phases: 0
+  total_phases: 2
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -25,15 +25,15 @@ progress:
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: Phase 14 (not started)
 Plan: —
-Status: Defining requirements
-Last activity: 2026-04-13 — Milestone v5.0 started
+Status: Roadmap defined, ready to plan Phase 14
+Last activity: 2026-04-13 — v5.0 roadmap created (Phases 14-15)
 
-**v5.0 scope (from Phase 12-13 code review reports, 2026-04-13):**
+**v5.0 scope (13 requirements across 2 phases):**
 
-- [ ] Phase 14: Paper Numeric Fixes & Response Letter Update
-- [ ] Phase 15: Code Reproducibility & Robustness Fixes
+- [ ] Phase 14: Paper & Response Letter Fixes (NUM-01..03, RESP-01..02, CLEAN-01..03)
+- [ ] Phase 15: Code Reproducibility & Robustness (CODE-01, ROB-01..04)
 
 ---
 
@@ -74,13 +74,20 @@ Last activity: 2026-04-13 — Milestone v5.0 started
 | Unconstrained comparison | FullModel 15.1 vs DoorToDoor 21.3 vkm/trip (29.2% improvement) |
 | Post-hoc lower bound | FullModel 10.9 vs DoorToDoor 42.3 vkm/trip (74.3% at ~23.5% share, footnote) |
 
+### v5.0 Scope Summary
+
+| Phase | Requirements | Focus |
+|-------|-------------|-------|
+| Phase 14 | NUM-01..03, RESP-01..02, CLEAN-01..03 | Paper numeric fixes, response letter update, pre-submission cleanup |
+| Phase 15 | CODE-01, ROB-01..04 | SHA-256 seed, stop ordering warning, tolerance warning, empty-seeds guard, unassigned dedup |
+
 ### Blockers
 
-None. Requirements definition in progress.
+None. Roadmap defined, ready to plan.
 
 ### Notes
 
-- Dissertation timeline: Work 3 planned 2026.09–2027.04 per BUAA schedule
+- Dissertation timeline: Work 3 planned 2026.09-2027.04 per BUAA schedule
 - Supervisor: Prof. Liu Tianliang
 - Language: English (academic paper)
 - GPT-5 review thread ID: 019d84ab-c6a4-7fd1-b91f-01109b57c1f2 (for Round 3 if needed)
@@ -91,3 +98,4 @@ None. Requirements definition in progress.
 *Updated: 2026-04-13 — v3.0 milestone complete (Phases 10-11, 9 requirements)*
 *Updated: 2026-04-13 — v4.0 milestone complete (Phases 12-13, 13 requirements)*
 *Updated: 2026-04-13 — v5.0 milestone started (code review fixes, 13 requirements)*
+*Updated: 2026-04-13 — v5.0 roadmap created (Phases 14-15, 13 requirements, 100% coverage)*
