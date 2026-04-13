@@ -301,6 +301,32 @@ policy consideration for DRT design in low-density urban areas.%
   Table~\ref{tab:vot-mapping} (Section~\ref{subsec:vot-mapping}).
 }
 
+\paragraph{Worked utility example.}
+Consider a walk-sensitive passenger ($k = \text{walk}$) with
+$\beta_1^{\text{walk}} = -0.020$\,utils/m,
+$\beta_2^{\text{walk}} = -0.04$\,utils/min,
+$\beta_3^{\text{walk}} = -0.02$\,utils/min, and
+$\beta_4^{\text{walk}} = -0.05$\,utils/CNY.
+Suppose the system offers a bundle with walking distance $d_{\text{walk}} = 300$\,m,
+waiting time $t_{\text{wait}} = 5$\,min, in-vehicle time $t_{\text{ivt}} = 20$\,min,
+and fare $p = 8$\,CNY.
+The deterministic utility is:
+\begin{align}
+  U &= \beta_1 \cdot d_{\text{walk}} + \beta_2 \cdot t_{\text{wait}}
+       + \beta_3 \cdot t_{\text{ivt}} + \beta_4 \cdot p \notag \\
+    &= (-0.020)(300) + (-0.04)(5) + (-0.02)(20) + (-0.05)(8) \notag \\
+    &= -6.0 - 0.2 - 0.4 - 0.4 = -7.0\text{ utils.} \notag
+\end{align}
+With an outside option penalty of $\mu_0 = 5.0$, the acceptance probability is:
+\begin{equation}
+  P_{\text{accept}} = \frac{e^{-7.0}}{e^{-7.0} + e^{-5.0}}
+  = \frac{0.000912}{0.000912 + 0.006738} \approx 0.119.
+\end{equation}
+This low acceptance probability (11.9\%) reflects the 300\,m walking requirement,
+which is highly penalised for walk-sensitive passengers. Reducing walking to 100\,m
+would raise $U$ to $-3.0$ and acceptance to approximately 47\%, illustrating the
+sensitivity of demand to meeting point placement.
+
 % ============================================================
 \section{Three-Layer Coupled Model}\label{sec:three-layer}
 % ============================================================
