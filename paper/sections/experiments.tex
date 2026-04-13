@@ -1,17 +1,3 @@
-% Section 5: Numerical Experiments
-% Word target: ~1500 words
-%
-% METRIC AUDIT (Phase 10, 2026-04-13):
-% - Abstract 2383.85 vs 3662.33: these were from an earlier scenario run with
-%   different parameters; replaced with matched-coverage result (Plan 02) and
-%   unconstrained 15.1 vs 21.3 from main table.
-% - Section 5.2 "3022 vs 4268": divided vkm by acceptance_rate fraction (wrong
-%   denominator); corrected to 15.1 vs 21.3 (vkm / accepted_trip_count).
-% - Gamma-sweep 9.893: this IS a correct per-trip value (vkm/accepted_count at
-%   seed=44, gamma=0, scale=200); it is a different scenario from the main table
-%   and is not directly comparable. The sweep CSV column vkm_per_served_trip
-%   already uses the correct denominator (accepted_count).
-
 \section{Numerical Experiments}\label{sec:experiments}
 
 This section evaluates the proposed bidirectional meeting point model through
