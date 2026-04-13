@@ -253,7 +253,7 @@ class BaseVariant(ABC):
                         f"Request {request.id}: pickup_time ({pickup_time:.1f}) >= "
                         f"dropoff_time ({dropoff_time:.1f}); using Euclidean fallback for IVT.",
                         RuntimeWarning,
-                        stacklevel=2,
+                        stacklevel=3,
                     )
                 ivt = max(0.0, dropoff_time - pickup_time) if dropoff_time > pickup_time else (
                     euclidean(request.origin, request.destination) / TRAVEL_SPEED

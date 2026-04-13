@@ -143,6 +143,9 @@ def main() -> None:
     # Print summary
     fm = [r for r in rows if r["variant"] == "FullModel"]
     dtdc = [r for r in rows if r["variant"] == "DoorToDoorCapped"]
+    if not fm or not dtdc:
+        print("WARNING: no rows found for one or both variants; skipping summary.")
+        return
     fm_mean_vkm = sum(r["vkm_per_trip"] for r in fm) / len(fm)
     dtdc_mean_vkm = sum(r["vkm_per_trip"] for r in dtdc) / len(dtdc)
     improvement = (dtdc_mean_vkm - fm_mean_vkm) / dtdc_mean_vkm * 100
