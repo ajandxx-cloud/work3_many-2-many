@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v3.0
-milestone_name: — Codex Review Fixes
-status: v4.0 milestone started; phases 12-13 planned; no plans executed yet
-last_updated: "2026-04-13T05:17:17.214Z"
+milestone: v5.0
+milestone_name: — Code Review Fixes & Submission Prep
+status: Defining requirements
+last_updated: "2026-04-13T00:00:00.000Z"
 last_activity: 2026-04-13
 progress:
-  total_phases: 7
-  completed_phases: 7
-  total_plans: 25
-  completed_plans: 25
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # STATE: Work 3 — Many-to-Many DRT Bidirectional Meeting Point Paper
@@ -19,34 +19,21 @@ progress:
 
 **Core value:** Demonstrate that bidirectional meeting point assignment with passenger choice significantly improves DRT efficiency and equity, with actionable policy implications for TR Part A.
 **Target journal:** Transportation Research Part A: Policy and Practice
-**Current focus:** v4.0 — GPT-5 Review Fixes (2 blocking issues)
+**Current focus:** v5.0 — Code Review Fixes & Submission Prep
 
 ---
 
 ## Current Position
 
-Phase: 8
-Plan: Not started
-Status: v4.0 milestone started; phases 12-13 planned; no plans executed yet
-Last activity: 2026-04-13
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-04-13 — Milestone v5.0 started
 
-**v4.0 revision scope (from GPT-5 MCP review, 2026-04-13, score 5/10):**
+**v5.0 scope (from Phase 12-13 code review reports, 2026-04-13):**
 
-- [ ] Phase 12: Endogenous Matched-Coverage Experiment
-  - [ ] COMP-01: Implement DoorToDoorCapped variant with acceptance cap + re-routing
-  - [ ] COMP-02: Run experiment (seeds 42/43/44, n=200, 15 vehicles)
-  - [ ] COMP-03: Update Section 5.2 with endogenous result as primary claim
-- [ ] Phase 13: Paper Fixes & Literature Update
-  - [ ] BEHAV-01: Add units/variables reference table
-  - [ ] BEHAV-02: Add worked utility example with explicit unit conversions
-  - [ ] BEHAV-03: Add commitment assumption paragraph
-  - [ ] TEXT-01: Fix intro.tex old numbers (2383.85 vs 3662.33, -34.9%)
-  - [ ] TEXT-02: Fix conclusion old numbers
-  - [ ] TEXT-03: Grep-verify no old numbers remain
-  - [ ] LIT-01: Add Fielbaum et al. (2021) to references.bib
-  - [ ] LIT-02: Add positioning sentences in Section 2.2
-  - [ ] ROB-01: Add ± notation to Table 1
-  - [ ] ROB-02: Add 3-seed justification note in Section 5.1
+- [ ] Phase 14: Paper Numeric Fixes & Response Letter Update
+- [ ] Phase 15: Code Reproducibility & Robustness Fixes
 
 ---
 
@@ -77,20 +64,19 @@ Last activity: 2026-04-13
 - Work 2 (service menu design, assortment optimization): working paper
 - Work 3 natural extension: bidirectional spatial service menu (pickup + dropoff) in many-to-many scenario
 
-### v3.0 Results (for reference)
+### v4.0 Results (for reference)
 
 | Metric | Value |
 |--------|-------|
-| v3.0 phases complete | 2/2 (Phases 10-11) |
-| v3.0 requirements complete | 9/9 |
-| GPT-5 review score (post-v3.0) | 5/10 (borderline Major Revisions) |
-| Corrected vkm/trip | FullModel 15.1, DoorToDoor 21.3 (29.2% improvement, unconstrained) |
-| Post-hoc matched-coverage | FullModel 10.9, DoorToDoor 42.3 vkm/trip (74.3% at equal ~23.5% share) |
-| GPT-5 verdict | "Not fully sufficient as main proof" — needs endogenous re-routing |
+| v4.0 phases complete | 2/2 (Phases 12-13) |
+| v4.0 requirements complete | 13/13 |
+| Endogenous matched-coverage | FullModel 11.1 vs DoorToDoor 17.1 vkm/trip (35.0% improvement at ~23% matched share) |
+| Unconstrained comparison | FullModel 15.1 vs DoorToDoor 21.3 vkm/trip (29.2% improvement) |
+| Post-hoc lower bound | FullModel 10.9 vs DoorToDoor 42.3 vkm/trip (74.3% at ~23.5% share, footnote) |
 
 ### Blockers
 
-None. Phase 12 (DoorToDoorCapped implementation) is ready to start.
+None. Requirements definition in progress.
 
 ### Notes
 
@@ -103,4 +89,5 @@ None. Phase 12 (DoorToDoorCapped implementation) is ready to start.
 
 *State initialized: 2026-04-11*
 *Updated: 2026-04-13 — v3.0 milestone complete (Phases 10-11, 9 requirements)*
-*Updated: 2026-04-13 — v4.0 milestone started (GPT-5 review fixes, Phases 12-13, 13 requirements)*
+*Updated: 2026-04-13 — v4.0 milestone complete (Phases 12-13, 13 requirements)*
+*Updated: 2026-04-13 — v5.0 milestone started (code review fixes, 13 requirements)*

@@ -18,16 +18,16 @@ Transportation Research Part A: Policy and Practice (TR Part A)
 - Under what urban conditions (demand density, fleet size, walking tolerance) does bidirectional meeting point assignment deliver the most benefit?
 - Policy recommendations for Chinese city DRT deployment
 
-## Current Milestone: v4.0 — GPT-5 Review Fixes (Third Round)
+## Current Milestone: v5.0 — Code Review Fixes & Submission Prep
 
-**Goal:** Address the two blocking issues identified by GPT-5 (high reasoning) review to move from 5/10 to ≥7/10 and achieve genuine submission readiness for TR Part A.
+**Goal:** Address all outstanding code review findings from phases 12-13 to achieve final submission readiness for TR Part A.
 
 **Target features:**
-- FIX-A [BLOCKING]: Endogenous matched-coverage comparison — implement DoorToDoor variant with acceptance cap + re-routing so served share ≈ FullModel's ~23.5%; replace post-hoc random rejection with endogenous comparison
-- FIX-B [BLOCKING]: Behavioral consistency check — add units/variables table, one worked utility example, reconcile offer-stage attributes vs realized attributes vs aggregate acceptance rates
-- FIX-C [MAJOR]: Fix old numbers in intro.tex and conclusion — replace "2383.85 vs 3662.33" and "-34.9%" with v3.0 numbers throughout
-- FIX-D [MAJOR]: Add missing reference — Fielbaum, Bai & Alonso-Mora (2021) on bidirectional walking flexibility in ridepooling; position relative to this paper
-- FIX-E [MINOR]: Add confidence intervals to main results table; clarify commitment assumption for accepted offers after rolling-horizon re-optimization
+- FIX-NUM: Fix paper numeric inconsistencies — Gini 0.1216 vs 0.122; 22.8% vs 23.5% cap target; weight-sensitivity table vkm/trip vs raw vkm
+- FIX-RESP: Update response_to_reviewers.tex — FIX-02 section stale description; R1 body old numbers 3022/4268
+- FIX-CODE: Fix code reproducibility — replace hash(request.id) with SHA-256 deterministic seed
+- FIX-ROBUST: Code robustness fixes — stop ordering warning, tolerance failure non-silent, division-by-zero guard, unassigned deduplication
+- FIX-CLEAN: Pre-submission cleanup — remove audit comment blocks, provisional annotations, internal development notes
 
 ## Requirements
 
@@ -65,6 +65,22 @@ Transportation Research Part A: Policy and Practice (TR Part A)
 - [x] FIX-C: Fix old numbers — "2383.85/3662.33/-34.9%" replaced with v3.0 numbers throughout intro, conclusion, abstract (Validated in Phase 13)
 - [x] FIX-D: Fielbaum et al. (2021) added to Section 2.2 with positioning sentence (Validated in Phase 13)
 - [x] FIX-E: ± std added to Table 1; commitment assumption clarified; 3-seed note with \citep{wu2025} in Section 5.1 (Validated in Phase 13)
+
+### Active (v5.0)
+
+- [ ] NUM-01: Fix Gini coefficient inconsistency — policy.tex 0.122 → 0.1216 to match experiments.tex and abstract
+- [ ] NUM-02: Reconcile cap target — verify actual FullModel mean served share (22.8% vs 23.5%) and align code default, paper text, table caption, and footnote
+- [ ] NUM-03: Fix weight-sensitivity table — verify denominator and correct column headers (vkm/trip vs raw vkm)
+- [ ] RESP-01: Update response_to_reviewers.tex FIX-02 section — reflect endogenous result (11.1 vs 17.1, 35.0%) as primary claim; correct 23.5% → 22.8%
+- [ ] RESP-02: Update response_to_reviewers.tex R1 body — replace 3022/4268 with 15.1/21.3 vkm/trip
+- [ ] CODE-01: Fix hash(request.id) → SHA-256 deterministic seed for cross-process reproducibility
+- [ ] ROB-01: Add stop ordering warning in _find_stop_info when pickup_time >= dropoff_time
+- [ ] ROB-02: Make tolerance failure non-silent in endogenous_matched_coverage.py
+- [ ] ROB-03: Add empty seeds guard (ZeroDivisionError) in endogenous_matched_coverage_experiment
+- [ ] ROB-04: Deduplicate state.unassigned in DoorToDoor._solve and DoorToDoorCapped._solve
+- [ ] CLEAN-01: Remove audit comment block from experiments.tex (lines 1-13)
+- [ ] CLEAN-02: Remove "(provisional)" annotation from model.tex beta parameters
+- [ ] CLEAN-03: Fix cross-reference robustness in model.tex footnote (subsec:vot-mapping)
 
 ### Out of Scope
 
@@ -127,4 +143,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-13 — v4.0 milestone complete (GPT-5 review fixes: endogenous comparison, behavioral consistency, stale numbers, Fielbaum citation, ± notation)*
+*Last updated: 2026-04-13 — v5.0 milestone started (code review fixes: numeric inconsistencies, response letter updates, code reproducibility, robustness, pre-submission cleanup)*
