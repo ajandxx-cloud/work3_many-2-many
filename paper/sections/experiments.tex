@@ -149,7 +149,7 @@ For reference, the unconstrained comparison (FullModel 20.8\% vs.\ DoorToDoor
 consistent with the endogenous result and confirming that the efficiency
 gain is structural, not an artefact of lower coverage.%
 \footnote{A post-hoc matched-coverage estimate (randomly rejecting DoorToDoor
-passengers to match the 23.5\% target) yields 10.9 vs.\ 42.3\,vkm/trip
+passengers to match the 22.8\% target) yields 10.9 vs.\ 42.3\,vkm/trip
 (74.3\% improvement), providing a conservative lower bound on the efficiency
 advantage. The endogenous re-routing result reported above is the primary
 evidence; the post-hoc figure is retained here for reference.}
@@ -157,7 +157,9 @@ evidence; the post-hoc figure is retained here for reference.}
 \begin{table}[h]
 \centering
 \caption{Endogenous matched-coverage comparison: FullModel vs.\ DoorToDoor\,(capped)
-         at equal served share ($\approx$22.8\%), mean across 3 seeds}
+         at approximately equal served share ($\approx$22.8\%), mean across 3 seeds.
+         DoorToDoor\,(capped) achieves 23.0\%, a 0.2\,pp overshoot due to discrete
+         request granularity.}
 \label{tab:matched-coverage}
 \begin{tabular}{lcc}
 \toprule
@@ -359,9 +361,9 @@ for coverage differences across configurations and isolates routing efficiency.
 Weight config & $\alpha_{\text{wait}}, \alpha_{\text{walk}}, \alpha_{\text{IVT}}$ &
 FullModel vkm/trip & DoorToDoor vkm/trip & Reduction (\%) \\
 \midrule
-Efficiency-focused & 0.5,\ 0.5,\ 2.0 & $2155 \pm 378$ & $3107 \pm 128$ & 30.8 \\
-Equity-focused     & 2.0,\ 2.0,\ 0.5 & $2135 \pm 524$ & $3093 \pm 170$ & 31.4 \\
-Balanced (baseline)& 1.0,\ 1.0,\ 1.0 & $2121 \pm 425$ & $3040 \pm 151$ & 30.5 \\
+Efficiency-focused & 0.5,\ 0.5,\ 2.0 & $10.8 \pm 1.9$ & $15.5 \pm 0.6$ & 30.8 \\
+Equity-focused     & 2.0,\ 2.0,\ 0.5 & $10.7 \pm 2.6$ & $15.5 \pm 0.8$ & 31.4 \\
+Balanced (baseline)& 1.0,\ 1.0,\ 1.0 & $10.6 \pm 2.1$ & $15.2 \pm 0.8$ & 30.5 \\
 \bottomrule
 \end{tabular}
 \end{table}
