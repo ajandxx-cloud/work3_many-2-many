@@ -18,16 +18,20 @@ Transportation Research Part A: Policy and Practice (TR Part A)
 - Under what urban conditions (demand density, fleet size, walking tolerance) does bidirectional meeting point assignment deliver the most benefit?
 - Policy recommendations for Chinese city DRT deployment
 
-## Current Milestone: v5.0 — Code Review Fixes & Submission Prep
+## Current Milestone: v6.0 — Round 1 Review Revision & Resubmission
 
-**Goal:** Address all outstanding code review findings from phases 12-13 to achieve final submission readiness for TR Part A.
+**Goal:** Address all 4 CRITICAL and 4 MAJOR reviewer comments from Round 1 (GPT-5.5, score 3/10), unify model/experiment narrative, rerun key experiments, and prepare TR Part A resubmission-ready manuscript.
 
 **Target features:**
-- FIX-NUM: Fix paper numeric inconsistencies — Gini 0.1216 vs 0.122; 22.8% vs 23.5% cap target; weight-sensitivity table vkm/trip vs raw vkm
-- FIX-RESP: Update response_to_reviewers.tex — FIX-02 section stale description; R1 body old numbers 3022/4268
-- FIX-CODE: Fix code reproducibility — replace hash(request.id) with SHA-256 deterministic seed
-- FIX-ROBUST: Code robustness fixes — stop ordering warning, tolerance failure non-silent, division-by-zero guard, unassigned deduplication
-- FIX-CLEAN: Pre-submission cleanup — remove audit comment blocks, provisional annotations, internal development notes
+- C1-CHOICE: Unify choice model — binary logit with U_0=0, consistent 4-tuple betas, remove mu_0=5.0, fix worked example, rename MNL→binary logit throughout paper
+- C2-OBJECTIVE: Reconcile system/ALNS/welfare objectives — document pre-filter-then-route mechanism, remove Gamma from Section 3, fix ALNS description
+- C3-MILP: Downgrade MILP from "exact benchmark" to "ex-post routing diagnostic" — fix claims, honest gap characterization
+- C4-NUMERIC: Unify numerical baselines across all tables — consistent acceptance rates, fix detour ratio ≥1, remove "74.3% conservative lower bound"
+- M1-POLICY: Scope down policy claims — 1000m threshold and fleet ratio as scenario-specific, fix daily→peak-hour
+- M2-BEIJING: Add Beijing semi-realistic scenario results table to experiments section
+- M3-LITERATURE: Fix literature positioning — add Fielbaum et al. 2021 to comparison table, scope "first" claims
+- M4-NOTATION: Unify notation/units — add units table, fix ρ/ρ^P/ρ^D, seconds vs minutes
+- MINOR: Fix British/American spelling, add missing std in tables, resolve LaTeX warnings
 
 ## Requirements
 
@@ -66,21 +70,53 @@ Transportation Research Part A: Policy and Practice (TR Part A)
 - [x] FIX-D: Fielbaum et al. (2021) added to Section 2.2 with positioning sentence (Validated in Phase 13)
 - [x] FIX-E: ± std added to Table 1; commitment assumption clarified; 3-seed note with \citep{wu2025} in Section 5.1 (Validated in Phase 13)
 
-### Active (v5.0)
+### Validated (v5.0 complete)
 
-- [ ] NUM-01: Fix Gini coefficient inconsistency — policy.tex 0.122 → 0.1216 to match experiments.tex and abstract
-- [ ] NUM-02: Reconcile cap target — verify actual FullModel mean served share (22.8% vs 23.5%) and align code default, paper text, table caption, and footnote
-- [ ] NUM-03: Fix weight-sensitivity table — verify denominator and correct column headers (vkm/trip vs raw vkm)
-- [ ] RESP-01: Update response_to_reviewers.tex FIX-02 section — reflect endogenous result (11.1 vs 17.1, 35.0%) as primary claim; correct 23.5% → 22.8%
-- [ ] RESP-02: Update response_to_reviewers.tex R1 body — replace 3022/4268 with 15.1/21.3 vkm/trip
-- [ ] CODE-01: Fix hash(request.id) → SHA-256 deterministic seed for cross-process reproducibility
-- [ ] ROB-01: Add stop ordering warning in _find_stop_info when pickup_time >= dropoff_time
-- [ ] ROB-02: Make tolerance failure non-silent in endogenous_matched_coverage.py
-- [ ] ROB-03: Add empty seeds guard (ZeroDivisionError) in endogenous_matched_coverage_experiment
-- [ ] ROB-04: Deduplicate state.unassigned in DoorToDoor._solve and DoorToDoorCapped._solve
-- [ ] CLEAN-01: Remove audit comment block from experiments.tex (lines 1-13)
-- [ ] CLEAN-02: Remove "(provisional)" annotation from model.tex beta parameters
-- [ ] CLEAN-03: Fix cross-reference robustness in model.tex footnote (subsec:vot-mapping)
+- [x] NUM-01: Fix Gini coefficient inconsistency — policy.tex 0.122 → 0.1216 to match experiments.tex and abstract
+- [x] NUM-02: Reconcile cap target — verify actual FullModel mean served share (22.8% vs 23.5%) and align code default, paper text, table caption, and footnote
+- [x] NUM-03: Fix weight-sensitivity table — verify denominator and correct column headers (vkm/trip vs raw vkm)
+- [x] RESP-01: Update response_to_reviewers.tex FIX-02 section — reflect endogenous result (11.1 vs 17.1, 35.0%) as primary claim; correct 23.5% → 22.8%
+- [x] RESP-02: Update response_to_reviewers.tex R1 body — replace 3022/4268 with 15.1/21.3 vkm/trip
+- [x] CODE-01: Fix hash(request.id) → SHA-256 deterministic seed for cross-process reproducibility
+- [x] ROB-01: Add stop ordering warning in _find_stop_info when pickup_time >= dropoff_time
+- [x] ROB-02: Make tolerance failure non-silent in endogenous_matched_coverage.py
+- [x] ROB-03: Add empty seeds guard (ZeroDivisionError) in endogenous_matched_coverage_experiment
+- [x] ROB-04: Deduplicate state.unassigned in DoorToDoor._solve and DoorToDoorCapped._solve
+- [x] CLEAN-01: Remove audit comment block from experiments.tex (lines 1-13)
+- [x] CLEAN-02: Remove "(provisional)" annotation from model.tex beta parameters
+- [x] CLEAN-03: Fix cross-reference robustness in model.tex footnote (subsec:vot-mapping)
+
+### Active (v6.0)
+
+- [ ] C1-01: Remove mu_0=5.0 from worked example in model.tex, recalculate with U_0=0
+- [ ] C1-02: Delete beta_price=-0.012/beta_time=-0.008/beta_walk=-0.015 from experiments.tex, reference 12 beta values from model.tex
+- [ ] C1-03: Replace "MNL" → "binary logit" in abstract, intro, model sections
+- [ ] C2-01: Remove C_rej/Gamma from Section 3 system objective (model.tex Eq. 5)
+- [ ] C2-02: Rewrite ALNS objective description in algorithm.tex — replace P_accept*routing_cost with pre-filter-then-route
+- [ ] C2-03: Update ALNS design rationale and iteration count in algorithm.tex
+- [ ] C3-01: Downgrade MILP from "exact benchmark" to "ex-post routing diagnostic" in algorithm.tex, abstract, intro, conclusion
+- [ ] C3-02: Remove "small optimality gap" claims, honestly characterize 99-170% gaps
+- [ ] C4-01: Unify acceptance rate baselines across all 6 tables, add configuration footnotes
+- [ ] C4-02: Fix detour ratio 0.76 → actual value ≥1.0, fix "74.3% conservative lower bound"
+- [ ] C4-03: Update all numerical claims in abstract, conclusion, policy from regenerated CSVs
+- [ ] M1-01: Scope 1000m threshold as scenario-specific, move caveats before recommendation in policy.tex
+- [ ] M1-02: Fix "daily requests" → "peak-hour requests" for fleet ratio in policy.tex, abstract, conclusion
+- [ ] M2-01: Add Beijing semi-realistic scenario results table to experiments.tex
+- [ ] M3-01: Add Fielbaum et al. 2021 and Alonso-Mora et al. 2017 to literature positioning table
+- [ ] M3-02: Scope "first formulation" claims to specific combination in intro, conclusion
+- [ ] M4-01: Add units table, fix ρ/ρ^P/ρ^D notation, unify seconds/minutes across paper
+- [ ] M4-02: Unify British→American spelling throughout all sections
+- [ ] MINOR-01: Add missing references (McFadden 1974, Train 2009, etc.) if not in bib
+- [ ] MINOR-02: Fix LaTeX overfull/float warnings, add missing std in tables
+
+### Active (code v6.0)
+
+- [ ] CODE-01: Change alns_iterations 5→50 in FullModel and AblationNoChoice variants
+- [ ] CODE-02: Add max(1.0, ...) guard on detour ratio in metrics.py
+- [ ] CODE-03: Document unit scaling in variants.py _scale_ptype and pre-filtering mechanism
+- [ ] CODE-04: Rerun all experiments — synthetic, Beijing, MILP gap, Pareto, weight sensitivity, matched coverage
+- [ ] CODE-05: Regenerate data-dependent figures (fig04, fig05, fig07)
+- [ ] CODE-06: Update response_to_reviewers.tex with point-by-point Round 1 responses
 
 ### Out of Scope
 
@@ -143,4 +179,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-13 — v5.0 milestone started (code review fixes: numeric inconsistencies, response letter updates, code reproducibility, robustness, pre-submission cleanup)*
+*Last updated: 2026-04-27 — v6.0 milestone started (Round 1 review revision: 4 CRITICAL + 4 MAJOR fixes, model unification, experiment rerun, resubmission prep)*

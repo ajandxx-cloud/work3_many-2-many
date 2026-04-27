@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v5.0
-milestone_name: — Code Review Fixes & Submission Prep
-status: Complete
-last_updated: "2026-04-13T00:00:00.000Z"
-last_activity: 2026-04-13
+milestone: v6.0
+milestone_name: "Round 1 Review Revision & Resubmission"
+status: Defining requirements
+last_updated: "2026-04-27T00:00:00.000Z"
+last_activity: 2026-04-27
 progress:
-  total_phases: 2
-  completed_phases: 2
-  total_plans: 3
-  completed_plans: 3
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # STATE: Work 3 — Many-to-Many DRT Bidirectional Meeting Point Paper
@@ -25,15 +25,20 @@ progress:
 
 ## Current Position
 
-Phase: Phase 15 (complete)
-Plan: 15-01 (complete)
-Status: v5.0 milestone complete — all 13 requirements satisfied
-Last activity: 2026-04-13 — Phase 15 verified (5/5 criteria pass)
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-04-27 — Milestone v6.0 started (Round 1 review revision)
 
 **v5.0 scope (13 requirements across 2 phases):**
 
 - [x] Phase 14: Paper & Response Letter Fixes (NUM-01..03, RESP-01..02, CLEAN-01..03) — completed 2026-04-13
 - [x] Phase 15: Code Reproducibility & Robustness (CODE-01, ROB-01..04) — completed 2026-04-13
+
+**v6.0 scope (pending definition):**
+
+- Round 1 review (GPT-5.5, score 3/10): 4 CRITICAL + 4 MAJOR issues to address
+- Template: `.planning/plans/buzzing-coalescing-badger.md` (9 phases planned: 16-24)
 
 ---
 
@@ -99,3 +104,4 @@ None. Roadmap defined, ready to plan.
 *Updated: 2026-04-13 — v4.0 milestone complete (Phases 12-13, 13 requirements)*
 *Updated: 2026-04-13 — v5.0 milestone started (code review fixes, 13 requirements)*
 *Updated: 2026-04-13 — v5.0 roadmap created (Phases 14-15, 13 requirements, 100% coverage)*
+*Updated: 2026-04-27 — v6.0 milestone started (Round 1 review revision, 4 CRITICAL + 4 MAJOR)*
