@@ -1,12 +1,86 @@
 # Requirements: Work 3 — Many-to-Many DRT Bidirectional Meeting Point Paper
 
 **Defined:** 2026-04-11
-**Updated:** 2026-04-13 (v5.0 milestone)
+**Updated:** 2026-04-27 (v6.0 milestone)
 **Core Value:** Demonstrate that bidirectional meeting point assignment with passenger choice significantly improves DRT efficiency and equity, with actionable policy implications for TR Part A.
 
 ---
 
-## v5.0 Requirements (Active)
+## v6.0 Requirements (Active)
+
+### CRITICAL 1: Choice Model Unification
+
+- [ ] **C1-01**: Remove `mu_0=5.0` worked example from model.tex, recalculate acceptance probability with `U_0=0` (matching code `choice.py` line 97)
+- [ ] **C1-02**: Delete `beta_price=-0.012`, `beta_time=-0.008`, `beta_walk=-0.015` from experiments.tex (these values do not exist in code); replace with cross-reference to the 12 type-specific beta values in model.tex Eqs. 31-33
+- [ ] **C1-03**: Replace "Multinomial Logit (MNL)" with "binary logit" (or "binary logit, special case of MNL") in abstract.tex, intro.tex, model.tex — wherever the single-offer acceptance mechanism is described
+- [ ] **C1-04**: Unify outside option: keep `U_0=0` throughout paper (already correct in model.tex Eq. 22 and code); remove all references to "outside option penalty" and `mu_0`
+
+### CRITICAL 2: Objective Function Reconciliation
+
+- [ ] **C2-01**: Remove `C_rej` term with `Gamma` from Section 3 system objective (model.tex Eq. 5); note that Gamma is used only in post-hoc social welfare metric (Section 7.6)
+- [ ] **C2-02**: Rewrite ALNS online objective description in algorithm.tex — replace `E[Delta C] = P_accept(b*) * routing_cost` with accurate description of the pre-filter-then-route mechanism (MNL Bernoulli sampling before routing, deterministic cost minimization over accepted set)
+- [ ] **C2-03**: Update ALNS design rationale in algorithm.tex — explain that pre-filtering decouples stochastic acceptance from deterministic routing, avoiding the perverse incentive where low P_accept artificially reduces expected routing cost
+- [ ] **C2-04**: Fix ALNS iteration count in algorithm.tex: change "100 iterations" to the actual benchmark default of 50
+
+### CRITICAL 3: MILP Benchmark Restatement
+
+- [ ] **C3-01**: Rewrite MILP section in algorithm.tex — rename from "Exact Algorithm: MILP" to "Ex-Post Routing Diagnostic: MILP"; clarify that it solves only the routing subproblem given a fixed accepted set, not the full joint optimization
+- [ ] **C3-02**: Replace "exact benchmark" / "provably optimal solutions" with "ex-post routing diagnostic" / "optimal routing for the given accepted set" in algorithm.tex, abstract.tex, intro.tex, conclusion.tex
+- [ ] **C3-03**: Remove "small optimality gap" claim in algorithm.tex; honestly characterize gaps of 169.6% (n=20) and 98.8% (n=30) as reflecting the difficulty of online insertion with fixed meeting points
+- [ ] **C3-04**: Update Table 7 caption in experiments.tex from "MILP vs. ALNS optimality gap" to "MILP ex-post routing diagnostic"
+
+### CRITICAL 4: Numerical Consistency
+
+- [ ] **C4-01**: Unify acceptance rate baseline across all tables — every table must include a footnote explicitly stating the experimental configuration (scale, seeds, scenario type, gamma value where applicable)
+- [ ] **C4-02**: Update all hardcoded numerical values in all 6 tables from regenerated experiment CSVs after Phase 19 rerun
+- [ ] **C4-03**: Fix detour ratio: remove the physically impossible 0.76 value for AblationNoChoice; ensure all detour ratios are >= 1.0 after metrics.py fix
+- [ ] **C4-04**: Remove or correctly reframe the "74.3% conservative lower bound" (it is larger than the 35.0% primary result, so cannot be a conservative lower bound)
+- [ ] **C4-05**: Update all numerical claims in abstract.tex, conclusion.tex, policy.tex to match the regenerated table values
+
+### MAJOR 1: Policy Claim Repairs
+
+- [ ] **M1-01**: Scope "1000m walking threshold" as scenario-specific — dependent on MP spacing, beta parameters, and U_0=0 normalization; move generalizability caveats BEFORE the policy recommendation in policy.tex
+- [ ] **M1-02**: Fix "15 vehicles per 100 daily requests" to "15 vehicles per 100 peak-hour requests" in policy.tex, abstract.tex, conclusion.tex (experiment used 200 peak-hour requests over 4-hour horizon)
+- [ ] **M1-03**: Add fleet ratio caveats — bind the ratio to time window, demand intensity, vehicle capacity, and service area
+
+### MAJOR 2: Beijing Scenario Results
+
+- [ ] **M2-01**: Add "Beijing Semi-Realistic Scenario Results" subsection to experiments.tex with a complete metrics table (acceptance, vkm/trip, wait, walk, IVT, detour, equity, CPU for all 6 variants)
+- [ ] **M2-02**: Reference the Beijing table in abstract and conclusion alongside synthetic results
+- [ ] **M2-03**: Either strengthen "calibrated to Chinese suburban conditions" claims with Beijing evidence, or weaken them if Beijing results don't support them
+
+### MAJOR 3: Literature Positioning
+
+- [ ] **M3-01**: Add Fielbaum et al. (2021) to literature positioning table (Tab:literature-gap) — already cited in text but missing from comparison table
+- [ ] **M3-02**: Add Alonso-Mora et al. (2017) to literature positioning table as row
+- [ ] **M3-03**: Scope all "first formulation" claims to the specific combination: "first to jointly address bidirectional meeting points, binary logit passenger choice with heterogeneous types, and rolling horizon re-optimization for many-to-many DRT"
+
+### MAJOR 4: Notation and Units
+
+- [ ] **M4-01**: Add "Units and Implementation Parameters" table to appendix — unify seconds/minutes/meters/CNY for all symbols
+- [ ] **M4-02**: Fix ρ vs ρ^P/ρ^D notation — add both to notation table, note that `ρ = ρ^P = ρ^D` in experiments
+- [ ] **M4-03**: Fix Gamma description in notation table: "Rejection penalty in ALNS objective" → "Rejection penalty in social welfare metric (post-hoc only)"
+- [ ] **M4-04**: Resolve time unit confusion — model uses minutes for utility, code uses seconds internally, Table 6 reports seconds; add conversion notes where needed
+
+### MINOR: Writing and Formatting
+
+- [ ] **MINOR-01**: Unify to American English spelling throughout all sections (Neighborhood, optimization, modeled, behavior, utilizes)
+- [ ] **MINOR-02**: Add missing references to references.bib if not present (McFadden 1974, Train 2009, Santi et al. 2014, Simonetto et al. 2019, Vansteenwegen et al. 2022, Quadrifoglio et al. 2008) and cite them where appropriate
+- [ ] **MINOR-03**: Add missing ± std values to tables that claim "mean ± std" in caption but don't report std
+- [ ] **MINOR-04**: Fix LaTeX overfull hbox and float-too-large warnings; verify PDF layout
+
+### Code Changes
+
+- [ ] **CODE-01**: Change `alns_iterations` from 5 → 50 in FullModel and AblationNoChoice variants (variants.py)
+- [ ] **CODE-02**: Add `max(1.0, ...)` guard on detour ratio computation in metrics.py
+- [ ] **CODE-03**: Document unit scaling logic in variants.py `_scale_ptype` and pre-filtering mechanism in `FullModel._solve`
+- [ ] **CODE-04**: Rerun all experiments (synthetic + Beijing + MILP gap + Pareto + weight sensitivity + matched coverage + endogenous matched coverage)
+- [ ] **CODE-05**: Regenerate data-dependent figures (fig04 baseline comparison, fig05 sensitivity, fig07 Pareto)
+- [ ] **CODE-06**: Update response_to_reviewers.tex with point-by-point Round 1 responses
+
+---
+
+## v5.0 Requirements (Validated)
 
 ### Paper Numeric Fixes
 
@@ -82,29 +156,28 @@
 
 ---
 
-## Traceability (v5.0)
+## Traceability (v6.0)
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| NUM-01 | Phase 14 | Pending |
-| NUM-02 | Phase 14 | Pending |
-| NUM-03 | Phase 14 | Pending |
-| RESP-01 | Phase 14 | Pending |
-| RESP-02 | Phase 14 | Pending |
-| CLEAN-01 | Phase 14 | Pending |
-| CLEAN-02 | Phase 14 | Pending |
-| CLEAN-03 | Phase 14 | Pending |
-| CODE-01 | Phase 15 | Pending |
-| ROB-01 | Phase 15 | Pending |
-| ROB-02 | Phase 15 | Pending |
-| ROB-03 | Phase 15 | Pending |
-| ROB-04 | Phase 15 | Pending |
+| C1-01..04 | Phase 16 | Pending |
+| C2-01..04 | Phase 17 | Pending |
+| C3-01..04 | Phase 21 | Pending |
+| C4-01..05 | Phase 20 | Pending |
+| M1-01..03 | Phase 22 | Pending |
+| M2-01..03 | Phase 22 | Pending |
+| M3-01..03 | Phase 23 | Pending |
+| M4-01..04 | Phase 23 | Pending |
+| MINOR-01..04 | Phase 23 | Pending |
+| CODE-01..03 | Phase 18 | Pending |
+| CODE-04..05 | Phase 19 | Pending |
+| CODE-06 | Phase 24 | Pending |
 
 **Coverage:**
-- v5.0 requirements: 13 total
-- Mapped to phases: 13
-- Unmapped: 0 ✓
+- v6.0 requirements: 33 total
+- Mapped to phases: 33
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-11*
-*Last updated: 2026-04-13 — v5.0 milestone (code review fixes & submission prep)*
+*Last updated: 2026-04-27 — v6.0 milestone (Round 1 review revision, 4 CRITICAL + 4 MAJOR)*

@@ -3,7 +3,7 @@
 **Project:** Many-to-Many DRT with Bidirectional Meeting Point Assignment and Passenger Choice
 **Target:** Transportation Research Part A: Policy and Practice
 **Granularity:** Standard (6 phases)
-**Coverage:** 47/47 v1 requirements mapped; 73/73 total (v1–v5.0)
+**Coverage:** 47/47 v1 requirements mapped; 73/73 total (v1–v5.0); 33/33 v6.0 requirements mapped (v6.0)
 
 ---
 
@@ -218,7 +218,19 @@ Plans:
 ### v5.0 Phases
 
 - [x] **Phase 14: Paper & Response Letter Fixes** - Fix numeric inconsistencies in paper (Gini, cap target, weight-sensitivity table); update response_to_reviewers.tex with current numbers; remove pre-submission development artifacts (completed 2026-04-13)
-- [ ] **Phase 15: Code Reproducibility & Robustness** - Replace non-deterministic hash seed with SHA-256; add stop ordering warning, tolerance failure warning, empty-seeds guard, and unassigned deduplication
+- [x] **Phase 15: Code Reproducibility & Robustness** - Replace non-deterministic hash seed with SHA-256; add stop ordering warning, tolerance failure warning, empty-seeds guard, and unassigned deduplication (completed 2026-04-13)
+
+### Phases (v6.0)
+
+- [ ] **Phase 16: Choice Model Unification** - Remove mu_0=5.0, fix beta references, rename MNL→binary logit throughout paper
+- [ ] **Phase 17: Objective Function Reconciliation** - Align paper with pre-filter-then-route code; remove Gamma from Section 3; fix ALNS description
+- [ ] **Phase 18: Code Fixes & Prep for Rerun** - ALNS iterations 5→50, detour ratio guard, unit scaling documentation
+- [ ] **Phase 19: Experiment Rerun** - Regenerate all CSVs, Beijing results, data-dependent figures
+- [ ] **Phase 20: Table & Numerical Updates** - Update all 6 tables from new CSVs, unify baselines, fix detour ratio
+- [ ] **Phase 21: MILP Section Revision** - Downgrade from "exact benchmark" to "ex-post routing diagnostic"
+- [ ] **Phase 22: Beijing Results & Policy Repairs** - Add Beijing table, scope down policy claims to scenario-specific
+- [ ] **Phase 23: Literature, Notation & Formatting** - Fix literature table, unify notation/units, fix spelling
+- [ ] **Phase 24: Response Letter & Final Integration** - Write point-by-point response, cross-check, final PDF
 
 ### Phase Details (v5.0)
 
