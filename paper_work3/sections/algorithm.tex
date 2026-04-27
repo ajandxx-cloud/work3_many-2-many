@@ -1,0 +1,281 @@
+%% algorithm.tex — Solution Methodology
+%% Many-to-Many DRT Bidirectional Meeting Point Paper
+%% Section 6 of the paper.
+
+% ============================================================
+\section{Solution Methodology}\label{sec:algorithm}
+% ============================================================
+
+The problem defined in Section~\ref{sec:model} is NP-hard (see
+Section~\ref{subsec:complexity}). We develop two complementary solution approaches: an
+exact MILP formulation solved by Gurobi for small instances, and a rolling horizon
+Adaptive Large Neighborhood Search (ALNS) heuristic for real-time operation at scale.
+
+% ------------------------------------------------------------
+\subsection{Ex-Post Routing Diagnostic: MILP Formulation}\label{subsec:milp}
+% ------------------------------------------------------------
+
+For small instances, we formulate the static batch routing problem as a
+Mixed-Integer Linear Program (MILP) to compute the optimal routing cost for a
+given accepted set. The MILP serves as an \emph{ex-post routing diagnostic},
+not a full exact benchmark for the joint optimization problem (which includes
+co-optimization of meeting point assignment, routing, and stochastic acceptance).
+
+\paragraph{Decision Variables.}
+The MILP uses binary assignment variables $x_{r,m^P,m^D,v} \in \{0,1\}$, equal to 1 if
+request $r$ is assigned to meeting point pair $(m^P, m^D) \in M_r^P \times M_r^D$ and
+served by vehicle $v \in \mathcal{V}$. Continuous variables $s_{v,i} \geq 0$ represent
+the scheduled service time at node $i$ in vehicle $v$'s route. The acceptance indicator
+is recovered as $z_r = \sum_{m^P, m^D, v} x_{r,m^P,m^D,v}$.
+
+\paragraph{Objective.}
+The MILP minimizes the same weighted cost (Equation~\ref{eq:objective}), with each cost
+component linearized in terms of $x_{r,m^P,m^D,v}$ and $s_{v,i}$.
+
+\paragraph{Constraints.}
+The formulation enforces all fourteen operational constraints
+(\ref{con:capacity})--(\ref{con:domain-md}). Capacity constraint~(\ref{con:capacity}) is
+linearized using standard load-tracking variables. Time-window
+constraints~(\ref{con:tw-early})--(\ref{con:tw-late}), ride-time
+constraint~(\ref{con:ridetime}), and route time consistency~(\ref{con:time-consistency})
+are expressed as linear inequalities in $s_{v,i}$. Walking radius
+constraints~(\ref{con:walk-pickup})--(\ref{con:walk-dropoff}) are enforced implicitly by
+restricting the domain of $x_{r,m^P,m^D,v}$ to feasible meeting point pairs.
+
+\paragraph{Solver and Scope.}
+The MILP is solved using Gurobi~10 with a 300-second time limit; Gurobi reports
+the optimality gap for instances where the time limit binds.
+
+\textbf{Ex-post benchmark role.}
+The MILP serves as an \emph{ex-post} benchmark, not a real-time solver.
+Given the realized accepted set $\mathcal{R}^{\text{acc}}$ produced by a
+completed ALNS run --- i.e., the set of requests for which the sampled
+acceptance indicator $z_r = 1$ --- the MILP solves the optimal vehicle routing
+for that \emph{fixed} accepted set.
+Formally, the MILP treats $z_r$ as a known constant (equal to 1 for
+$r \in \mathcal{R}^{\text{acc}}$ and 0 otherwise) and optimizes only over the
+assignment variables $x_{r,m^P,m^D,v}$ and schedule variables $s_{v,i}$.
+It does \emph{not} re-optimize the acceptance decisions: the stochastic
+passenger responses are realized outcomes of the ALNS run, not MILP decision
+variables.
+The resulting MILP objective value is therefore a lower bound on the routing
+cost achievable for the same accepted set, and the optimality gap
+$\delta = (C^{\text{ALNS}} - C^{\text{MILP}}) / C^{\text{MILP}} \times 100\%$
+measures how close the ALNS heuristic comes to the ex-post routing optimum.
+Instances with up to 30--50 passengers and 5--8 vehicles are tractable within
+the time limit.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{../figures/fig03_algorithm}
+\caption{Online insertion and rolling horizon ALNS algorithm flowchart.}
+\label{fig:algorithm}
+\end{figure}
+
+% ------------------------------------------------------------
+\subsection{Heuristic Algorithm: Rolling Horizon ALNS}\label{subsec:alns}
+% ------------------------------------------------------------
+
+For real-time operation, we develop a rolling horizon ALNS heuristic that processes
+arriving requests online and periodically re-optimizes committed routes. The algorithm
+follows the three-layer architecture of Section~\ref{sec:three-layer}.
+
+\paragraph{Online Insertion Mechanism.}
+The ALNS heuristic uses a \emph{pre-filter-then-route} mechanism that decouples
+stochastic passenger acceptance from deterministic routing optimization.
+At each request arrival, the system performs the following steps:
+\begin{enumerate}
+  \item \textbf{Bundle selection (Layer~1):} The system selects the best feasible bundle
+        $b^*$ by minimizing the \emph{deterministic} incremental routing cost
+        $\Delta C_{\text{routing}}(b, \{\sigma_v\})$, evaluated as the weighted sum
+        $\alpha_1 \Delta C^{op} + \alpha_2 \Delta C^{wait} + \alpha_3 \Delta C^{walk}
+        + \alpha_4 \Delta C^{IVT}$ of inserting bundle $b$ into the current vehicle
+        schedules $\{\sigma_v\}$. The acceptance probability $P_{\text{accept}}(b^*)$
+        is \emph{not} part of the bundle-selection objective.
+  \item \textbf{Acceptance sampling (Layer~2):} After bundle selection, the binary logit
+        acceptance probability $P_{\text{accept}}(b^*) = \exp(U_{rb^*}^k) /
+        (1 + \exp(U_{rb^*}^k))$ (Equation~\ref{eq:binary-logit}) is computed, and
+        the passenger's response is sampled as
+        $z_r \sim \text{Bernoulli}(P_{\text{accept}}(b^*))$.
+        If $z_r = 1$, the bundle is inserted into the vehicle route.
+\end{enumerate}
+
+\paragraph{Rationale for pre-filter-then-route.}
+This design separates the stochastic acceptance decision from the deterministic
+cost minimization. An alternative approach that integrates $P_{\text{accept}}$
+directly into the routing objective as $\mathbb{E}[\Delta C] = P_{\text{accept}}(b)
+\times \Delta C_{\text{routing}}(b)$ would create a perverse incentive: bundles with
+lower acceptance probability (worse service quality) would appear to have lower
+expected routing cost, driving the system toward offering unattractive bundles.
+The pre-filtering approach avoids this pathology while preserving the structural
+benefit of passenger self-selection: passengers who would face high walking or
+waiting disutility reject the service, and the system concentrates vehicle resources
+on spatially compatible requests. Integrating $P_{\text{accept}}$ into the routing
+objective in a welfare-consistent manner remains a direction for future work.
+
+\paragraph{Rejection penalty (post-hoc only).}
+The rejection penalty $\Gamma$ enters only the social welfare metric
+$W = \sum_r [z_r U_{rb^*} - (1-z_r)\Gamma]$ (Section~\ref{sec:pareto}),
+which is a post-hoc evaluation tool. $\Gamma$ does \emph{not} enter the bundle
+selection, the routing objective, or the binary logit acceptance probability.
+The acceptance probability $P_{\text{accept}}(b^*)$ is invariant to $\Gamma$.
+This separation ensures that the operational decisions are consistent across
+different policy preferences encoded through $\Gamma$.
+
+\subsubsection{Candidate Generation}
+
+Upon arrival of request $r$, the system generates candidate meeting point sets $M_r^P$
+and $M_r^D$ by filtering $\mathcal{M}$ against walking radii $\rho^P$ and $\rho^D$
+(constraints~\ref{con:walk-pickup}--\ref{con:walk-dropoff}), then retaining the
+top-$k^{\text{top}}$ candidates ranked by proximity to $o_r$ and $\delta_r$ respectively.
+This yields $|M_r^P| \leq k^{\text{top}}$ pickup candidates and
+$|M_r^D| \leq k^{\text{top}}$ dropoff candidates. The filtering step runs in
+$O(|\mathcal{M}| \log |\mathcal{M}|)$ per request using a pre-sorted distance index.
+
+\subsubsection{Online Insertion Evaluation}
+
+For each bundle $(m^P, m^D) \in M_r^P \times M_r^D$, the algorithm enumerates all
+vehicles $v \in \mathcal{V}$ and all insertion position pairs $(\pi^P, \pi^D)$ with
+$\pi^D > \pi^P$ (constraint~\ref{con:precedence-pos}). Feasibility against
+constraints~(\ref{con:capacity}), (\ref{con:tw-early})--(\ref{con:tw-late}),
+(\ref{con:ridetime}), and (\ref{con:time-consistency}) is checked in $O(1)$ per position
+pair using forward and backward schedule arrays maintained for each vehicle route. The
+best feasible insertion is selected by minimum incremental cost $\Delta C$ to the
+objective~(\ref{eq:objective}). After selecting $b^*$, the binary logit acceptance probability
+$P_{\text{accept}}(b^*) = \exp(U_{rb^*}^k) / (1 + \exp(U_{rb^*}^k))$
+(Equation~\ref{eq:binary-logit}) is computed and the passenger's response is sampled
+as $z_r \sim \text{Bernoulli}(P_{\text{accept}}(b^*))$.
+
+\subsubsection{ALNS Destroy and Repair Operators}
+
+Every $\Delta$ minutes, the rolling horizon re-optimization applies ALNS
+\citep{ropke2006} to the active request set $\mathcal{R}^{\text{act}}(t^{\text{now}})$.
+The algorithm uses five operators:
+
+\begin{enumerate}
+  \item \textbf{Request reassignment:} Remove $k$ randomly selected requests from their
+        current vehicle routes and reinsert them greedily into the best feasible positions
+        across all vehicles.
+  \item \textbf{Pickup/dropoff pair swap:} Exchange the meeting point pair
+        $(m_r^P, m_r^D)$ assignments between two requests $r$ and $r'$, updating
+        insertion positions accordingly.
+  \item \textbf{Insertion position exchange:} Swap the route positions of two service
+        nodes on the same vehicle, subject to precedence and feasibility.
+  \item \textbf{Route segment reconstruction:} Remove a contiguous route segment from a
+        vehicle, then reinsert the affected requests optimally across all vehicles.
+  \item \textbf{Worst removal:} Remove the $k$ requests with the highest marginal cost
+        contribution to the objective, then reinsert greedily.
+\end{enumerate}
+
+Operator selection follows the standard ALNS roulette-wheel mechanism
+\citep{ropke2006}: each operator maintains a score updated by its historical improvement
+contribution, and operators are selected with probability proportional to their score.
+Meeting point reassignment is integrated into the repair step of operators 1, 4, and 5:
+when a request is reinserted, the algorithm re-evaluates all $(m^P, m^D)$ pairs in
+$M_r^P \times M_r^D$ and selects the pair that minimizes insertion cost.
+
+\subsubsection{Rolling Horizon Loop}
+
+The rolling horizon framework \citep{bent2004} triggers ALNS re-optimization at times
+$t^{\text{now}} = 0, \Delta, 2\Delta, \ldots$ (Equation~\ref{eq:rh-trigger}). At each
+trigger, the algorithm operates on the active set
+$\mathcal{R}^{\text{act}}(t^{\text{now}})$ over the window
+$[t^{\text{now}},\; t^{\text{now}} + H]$ with $H = 30$ minutes and $\Delta = 5$ minutes.
+Committed nodes (already served or within the commitment horizon) are locked and cannot
+be reassigned.
+
+\paragraph{Commitment assumption.}
+Once a service offer bundle $b_r^* = (m_r^P, m_r^D, \tau_r, p_r)$ is communicated to
+passenger $r$ and accepted ($z_r = 1$), the assigned meeting points and scheduled pickup
+time are \emph{committed}: they are not subject to re-optimisation in subsequent rolling
+horizon cycles. This commitment is operationally necessary --- passengers who have begun
+walking to a meeting point cannot be redirected --- and is enforced by locking the
+corresponding nodes in the route graph before each ALNS re-optimisation trigger.
+Formally, a node $i \in \sigma_v$ is committed if its scheduled service time satisfies
+$\tau_i \leq t^{\text{now}} + \delta_{\text{commit}}$, where $\delta_{\text{commit}} = 5$
+minutes is the commitment horizon (equal to the re-optimisation interval $\Delta$).
+Uncommitted accepted nodes may be re-sequenced within the vehicle route to improve
+efficiency, but their assigned meeting points remain fixed.
+
+The ALNS runs for 50 iterations per re-optimization trigger, with each
+iteration applying one destroy--repair operator pair. After re-optimization, updated
+routes are committed for the next $\Delta$ minutes and fed back to Layer~1 for subsequent
+request evaluations.
+
+\begin{algorithm}[h]
+\caption{Rolling Horizon ALNS for Bidirectional DARPmp}
+\label{alg:rh-alns}
+\begin{algorithmic}[1]
+\Require Request stream $\mathcal{R}$, fleet $\mathcal{V}$, meeting points $\mathcal{M}$,
+         horizon $H$, re-opt interval $\Delta$, rejection penalty $\Gamma$
+\Ensure  Accepted set $\mathcal{R}^{\text{acc}}$, routes $\{\sigma_v\}_{v \in \mathcal{V}}$
+
+\State Initialize routes $\sigma_v \leftarrow \emptyset$ for all $v \in \mathcal{V}$
+\State $t^{\text{now}} \leftarrow 0$
+
+\While{request stream not exhausted}
+  \State \textbf{// --- Online dispatch: process next arriving request ---}
+  \State Receive request $r$ at time $t_r^{\text{req}}$
+  \State $M_r^P \leftarrow \{m \in \mathcal{M} \mid d(o_r, m) \leq \rho^P\}$,
+         $M_r^D \leftarrow \{m \in \mathcal{M} \mid d(\delta_r, m) \leq \rho^D\}$
+         \Comment{Candidate meeting points}
+  \State $b^* \leftarrow \textsc{BestInsertion}(r, M_r^P, M_r^D, \{\sigma_v\})$
+         \Comment{Layer 1: select best feasible bundle}
+  \If{$b^* = \emptyset$}
+    \State $z_r \leftarrow 0$; record rejection
+    \Comment{No feasible insertion found}
+  \Else
+    \State $p_{\text{acc}} \leftarrow \dfrac{\exp(U_{rb^*}^{k_r})}{1 + \exp(U_{rb^*}^{k_r})}$
+           \Comment{Binary logit acceptance (Eq.~\ref{eq:binary-logit})}
+    \State $z_r \sim \text{Bernoulli}(p_{\text{acc}})$
+           \Comment{Layer 2: passenger response}
+    \If{$z_r = 1$}
+      \State Insert $b^*$ into $\sigma_{v_{b^*}}$ at positions $(\pi^P, \pi^D)$
+      \State $\mathcal{R}^{\text{acc}} \leftarrow \mathcal{R}^{\text{acc}} \cup \{r\}$
+    \EndIf
+  \EndIf
+
+  \State \textbf{// --- Periodic re-optimization ---}
+  \If{$t^{\text{now}} \bmod \Delta = 0$}
+    \State $\mathcal{R}^{\text{act}} \leftarrow \{r' \in \mathcal{R}^{\text{acc}} \mid r' \text{ not yet completed}\}$
+    \State $\{\sigma_v\} \leftarrow \textsc{ALNS}(\mathcal{R}^{\text{act}}, \{\sigma_v\}, H)$
+           \Comment{Layer 3: rolling horizon re-opt}
+  \EndIf
+  \State $t^{\text{now}} \leftarrow t^{\text{now}} + \delta t$
+\EndWhile
+\State \Return $\mathcal{R}^{\text{acc}},\; \{\sigma_v\}$
+\end{algorithmic}
+\end{algorithm}
+
+% ------------------------------------------------------------
+\subsection{Computational Complexity}\label{subsec:complexity}
+% ------------------------------------------------------------
+
+\paragraph{NP-Hardness.}
+The many-to-many DRT problem with bidirectional meeting points is NP-hard. This follows
+by reduction from the Dial-a-Ride Problem (DARP) \citep{cordeau2007}: setting
+$|\mathcal{M}| = 1$ (a single meeting point) and $\rho^P = \rho^D = \infty$ recovers
+the standard DARP, which is NP-hard. The bidirectional meeting-point extension strictly
+generalizes the DARP by adding the joint optimization of $m_r^P$ and $m_r^D$, so the
+problem is at least as hard.
+
+\paragraph{Heuristic Complexity.}
+The per-request candidate generation step runs in $O(|\mathcal{M}| \log |\mathcal{M}|)$.
+Online insertion evaluation for a single request costs
+$O(|\mathcal{V}| \cdot |\sigma_v|^2 \cdot (k^{\text{top}})^2)$, where $|\sigma_v|$ is
+the average route length. Each ALNS iteration costs
+$O(n \cdot |\mathcal{V}| \cdot |\sigma_v|)$ where $n = |\mathcal{R}^{\text{act}}|$.
+The rolling horizon bounds the active set size: at any trigger, at most
+$H / \bar{\lambda}^{-1}$ requests are active, where $\bar{\lambda}$ is the average
+arrival rate. This keeps per-step complexity manageable even as the total number of
+requests grows.
+
+\paragraph{Practical Performance.}
+On benchmark instances with 200 requests and 15 vehicles, the average decision time per
+request is below 1 second, satisfying the real-time requirement of online DRT operation.
+The MILP ex-post routing diagnostic (Section~\ref{subsec:milp}) evaluates how close the
+ALNS routing comes to the optimal offline routing for a fixed accepted set
+on small instances (gaps of 99--170\% for $n = 20$--30; see Table~\ref{tab:milp-gap}).
+These gaps reflect the inherent difficulty of online insertion with fixed meeting
+points relative to optimal ex-post routing, not an assessment of overall solution
+quality, since the MILP does not co-optimize acceptance decisions.

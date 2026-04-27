@@ -27,7 +27,12 @@ RHO_D = 1500.0                     # dropoff walking radius
 H_WINDOW = 30 * 60.0               # rolling horizon window
 DELTA = 5 * 60.0                   # time step between decisions
 
-# MNL attribute weights [walk, wait, ivt, price, opting-out penalty]
+# ALNS iterations per re-optimization trigger
+ALNS_ITERATIONS = 50
+
+# Binary logit cost weights [alpha_op, alpha_wait, alpha_walk, alpha_ivt]
+# NOTE: alpha_weights[4] (rejection penalty Gamma) is NOT used in routing.
+# It is used only for post-hoc social welfare computation (metrics.py).
 ALPHA_WEIGHTS = [1.0, 1.0, 1.0, 1.0, 5.0]
 
 # Vehicle parameters

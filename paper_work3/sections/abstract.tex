@@ -1,0 +1,36 @@
+\begin{abstract}
+Demand-responsive transit (DRT) offers flexible mobility in low-density urban areas,
+but door-to-door service is operationally costly and difficult to scale.
+Meeting-point-based DRT reduces vehicle detours by consolidating pickups and dropoffs
+at pre-defined locations, yet existing work assigns meeting points only on the pickup
+side and ignores passenger heterogeneity in mode choice.
+We address this gap by proposing a many-to-many DRT model with bidirectional meeting
+point sets ($M_r^P$ for pickup, $M_r^D$ for dropoff) and explicit binary logit
+passenger choice with three passenger types and an outside option.
+The model is formulated as a coupled three-layer system — service offer generation,
+passenger response, and dynamic dispatch — and solved with a Mixed-Integer Linear
+Program (MILP) exact benchmark for small instances and a rolling horizon Adaptive
+Large Neighbourhood Search (ALNS) heuristic for large-scale deployment.
+Numerical experiments on synthetic scenarios calibrated to Chinese suburban conditions
+show that, at equal served share ($\approx$22.8\%), the full bidirectional model
+achieves \textbf{11.1\,vkm/trip} compared to \textbf{17.1\,vkm/trip} for the
+DoorToDoor\,(capped) baseline --- a \textbf{35.0\%} improvement in per-trip vehicle
+utilisation that cannot be attributed to coverage differences (endogenous
+matched-coverage comparison). Under the unconstrained comparison (FullModel 20.8\%
+vs.\ DoorToDoor 61.0\% served share), FullModel achieves 15.1\,vkm/trip versus
+21.3\,vkm/trip (29.2\% improvement). For reference, a post-hoc matched-coverage
+estimate yields 10.9 vs.\ 42.3\,vkm/trip (74.3\% improvement), providing a
+conservative lower bound.
+Equity analysis across passenger types reveals a Gini coefficient of 0.1216 in
+acceptance rates: time-sensitive passengers are systematically disadvantaged
+(14.4\% acceptance) relative to price-sensitive (25.4\%) and walk-sensitive (20.2\%)
+passengers.
+Based on these findings, we derive five actionable policy recommendations for Chinese
+city DRT operators, including a walking radius threshold of 1000~m for viable
+bidirectional deployment and a minimum fleet ratio of 15 vehicles per 100 daily
+requests.
+\end{abstract}
+
+\begin{keyword}
+demand-responsive transit \sep meeting points \sep passenger choice \sep ALNS \sep rolling horizon \sep equity
+\end{keyword}

@@ -608,7 +608,7 @@ class FullModel(BaseVariant):
             delta=DELTA,
             cost_weights=self._cost_weights,
             travel_speed=TRAVEL_SPEED,
-            alns_iterations=5,
+            alns_iterations=50,
             seed=42,
         )
 
@@ -704,7 +704,7 @@ class AblationNoChoice(BaseVariant):
             delta=DELTA,
             cost_weights=_COST_WEIGHTS,
             travel_speed=TRAVEL_SPEED,
-            alns_iterations=5,  # reduced for tractable runtime at scales 100-500
+            alns_iterations=50,
             seed=42,
         )
 
