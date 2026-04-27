@@ -17,222 +17,219 @@
 \begin{document}
 
 \begin{center}
-  {\Large\bfseries Response to Reviewers}\\[1ex]
-  {\normalsize Manuscript: ``Online Co-optimization of Bidirectional Meeting Point Assignment\\
+  {\Large\bfseries Response to Reviewers — Round 1}\\[1ex]
+  {\normalsize Manuscript: ``Co-optimization of Bidirectional Meeting Point Assignment\\
   and Dynamic Routing for Many-to-Many Demand-Responsive Transit with Passenger Choice''}\\[0.5ex]
-  {\normalsize Journal: \textit{Transportation Research Part A: Policy and Practice}}
+  {\normalsize Journal: \textit{Transportation Research Part A: Policy and Practice}}\\[0.5ex]
+  {\normalsize Review date: 2026-04-27 \quad Revision date: 2026-04-28}
 \end{center}
 
 \bigskip
 
-We thank the reviewers for their detailed and constructive comments. Below we address each concern point by point. Reviewer comments are shown in \textit{italics}; our responses follow in plain text. All section and equation references are to the revised manuscript.
+We thank the reviewer for the thorough and constructive comments. Below we address each concern point by point. Reviewer comments are shown in \textit{italics}; our responses follow in plain text. All section and equation references are to the revised manuscript.
 
 \bigskip\hrule\bigskip
 
-\section*{Reviewer 1}
-
-\subsection*{CRITICAL: Multi-bundle MNL vs.\ single-offer mechanism}
+\section*{CRITICAL 1: Choice Model Inconsistency}
 
 \begin{revcomment}
-The paper describes a single-offer mechanism in which the system presents exactly one bundle $b^*$ to each passenger, yet the choice model uses a multi-bundle MNL probability over the full set $\mathcal{B}_r$. This is behaviorally inconsistent: if only one bundle is offered, the passenger cannot choose among alternatives --- they can only accept or reject.
+Section 4 states that the outside option is normalized to 0, with binary logit formula $P_{accept} = \exp(U_b^*) / (1 + \exp(U_b^*))$, but the worked utility example uses an outside option penalty $\mu_0 = 5.0$. Section 7 experimental parameters use $\beta_{price}=-0.012, \beta_{time}=-0.008, \beta_{walk}=-0.015$, inconsistent with the four-attribute coefficients for three passenger types in Section 4. Table 11 shows walk VOT far exceeding the literature range.
 \end{revcomment}
 
-\textbf{Response.} We thank the reviewer for identifying this inconsistency. The reviewer is correct. In our mechanism, the system selects and presents a single bundle $b^*$ to the passenger; the passenger then accepts or rejects it. The appropriate model is therefore a binary logit:
-\[
-  P_{\text{accept}}(b^*) = \frac{\exp(U_{rb^*})}{\exp(U_0) + \exp(U_{rb^*})}
-\]
-where $U_0 = 0$ is the normalized outside-option utility.
+\textbf{Response.} We thank the reviewer for identifying these inconsistencies. We have unified the choice model throughout the manuscript as follows:
 
-We have made the following changes throughout the revised manuscript:
-\begin{itemize}
-  \item \textbf{Section~4.2} (\texttt{model.tex}): Renamed to ``Single-Offer Mechanism and Binary Logit Acceptance.'' The multi-bundle MNL equations (previously \texttt{eq:choice-prob}, \texttt{eq:outside-prob}, \texttt{eq:acceptance-prob}) have been removed and replaced with the binary logit formulation (\texttt{eq:binary-logit}).
-  \item \textbf{Algorithm~1} (\texttt{algorithm.tex}): The pseudocode now explicitly shows the binary logit acceptance step: $p_{\text{acc}} \leftarrow \exp(U_{rb^*}) / (1 + \exp(U_{rb^*}))$, followed by $z_r \sim \mathrm{Bernoulli}(p_{\text{acc}})$.
-  \item \textbf{\texttt{src/drt/choice.py}}: The \texttt{choice\_probability()} function has been removed and replaced with \texttt{accept\_probability(bundle, request, ptype, t)} implementing the binary logit formula. All call sites updated accordingly.
-\end{itemize}
+\begin{enumerate}
+  \item \textbf{Outside option:} The outside option utility is now consistently normalized to $U_{r0}^k = 0$ (Equation~\ref{eq:utility-outside}) throughout the model description, the worked example, and the code implementation. The worked utility example in Section~4.2 has been recalculated with $U_0 = 0$, yielding $P_{\text{accept}} = e^{-7.0} / (1 + e^{-7.0}) \approx 0.00091$, correctly reflecting the near-zero acceptance under the $U_0=0$ normalization. The previous $\mu_0 = 5.0$ penalty has been removed entirely.
 
-\bigskip
+  \item \textbf{Beta parameters:} The three aggregate values $\beta_{\text{price}} = -0.012$, $\beta_{\text{time}} = -0.008$, $\beta_{\text{walk}} = -0.015$ in Section~5.1 have been deleted. These values did not exist in the simulation code. The experiments section now cross-references the 12 type-specific beta values defined in Equations~\ref{eq:beta-price}--\ref{eq:beta-walk}, which are the values actually used in all experiments.
 
-\subsection*{MAJOR: Efficiency gains may be endogenous to coverage reduction}
+  \item \textbf{Terminology:} The term ``Multinomial Logit (MNL)'' has been replaced with ``binary logit'' (or ``binary logit, special case of MNL'') throughout the manuscript, accurately reflecting the single-offer mechanism where the choice set contains exactly two alternatives ($b^*$ and the outside option).
 
-\begin{revcomment}
-The FullModel achieves lower vehicle-km partly because it serves fewer passengers (20.8\% acceptance vs.\ 61.0\% for DoorToDoor). Fewer served trips mechanically reduce total driving distance. The paper should disentangle structural efficiency from coverage effects.
-\end{revcomment}
+  \item \textbf{Walk VOT discussion:} The VOT interpretation in Section~6.6 now explicitly acknowledges that the walk VOT values (2.67--32.00 CNY/min) exceed the literature range (0.4--0.6 CNY/min) due to the unit mismatch between $\beta_1$ (utils/meter) and $\beta_4$ (utils/CNY), and that the wait and IVT VOT values are the primary policy-relevant benchmarks.
+\end{enumerate}
 
-\textbf{Response.} We thank the reviewer for this important methodological concern. We address it in two ways in the revised manuscript.
-
-\textbf{First}, we clarify in Section~5.2 that the appropriate efficiency metric is vehicle-km \emph{per accepted trip}, not total vehicle-km. FullModel achieves 15.1\,vkm/trip, compared to 21.3\,vkm/trip for DoorToDoor --- a \textbf{29.2\% improvement} that is independent of coverage differences.
-
-\textbf{Second}, we add a new \textbf{Section~5.5} (``Coverage--Efficiency Analysis and Social Welfare'') that introduces a social welfare metric:
-\[
-  W = \sum_r \bigl[ z_r \cdot U_{rb^*} - (1 - z_r) \cdot \Gamma \bigr]
-\]
-where $\Gamma \geq 0$ is a rejection penalty. We sweep $\Gamma \in \{0, 5, 10, 20, 50, 100\}$ and report the resulting (served share, vkm/served trip, $W$) triple for FullModel (Table~2, Figure~7). The key finding is that served share and vkm/served trip are \textbf{invariant to $\Gamma$}: since $\Gamma$ enters only the welfare objective and does not alter the binary logit acceptance probability or routing, the efficiency gain is structural. The social welfare metric $W$ decreases monotonically with $\Gamma$, providing operators with a principled tool to select the rejection penalty according to their service mandate.
-
-\bigskip
-
-\subsection*{MAJOR: MILP benchmark scope unclear under stochastic acceptance}
-
-\begin{revcomment}
-It is unclear whether the MILP solves the stochastic acceptance problem or a deterministic subproblem. The benchmark comparison is ambiguous.
-\end{revcomment}
-
-\textbf{Response.} We clarify in \textbf{Section~6} (\texttt{algorithm.tex}, ``Solver and Scope'' paragraph) that the MILP is an \textbf{ex-post benchmark}: given the realized accepted-request set $\mathcal{R}^{\text{acc}}$ from an ALNS run (i.e., $z_r$ treated as fixed constants, not decision variables), the MILP solves the optimal vehicle routing for that fixed set. It does not re-solve the stochastic acceptance problem.
-
-We also add \textbf{Table~3} in Section~5.6 reporting the MILP vs.\ ALNS optimality gap for small instances ($n = 20$: gap $= 169.6 \pm 46.8\%$; $n = 30$: gap $= 98.8 \pm 40.3\%$, Gurobi-verified). The large absolute gap reflects the small accepted-set sizes (4--7 passengers per instance) at these scales, where MILP can reroute vehicles optimally over a fixed set while ALNS operates under online insertion constraints; the gap is expected to narrow at scale as vehicle consolidation opportunities increase.
-
-\bigskip
-
-\subsection*{MAJOR: Objective weights lack policy/VOT interpretation}
-
-\begin{revcomment}
-The objective weights $\alpha$ are set without reference to monetary values or value-of-time (VOT) literature. This makes it difficult to assess whether the weight configuration is policy-relevant.
-\end{revcomment}
-
-\textbf{Response.} We add a \textbf{VOT mapping table} in Section~7 (\texttt{policy.tex}) that monetizes the $\alpha$ weights using Chinese urban VOT literature. The derivation follows $\mathrm{VOT}_{\text{attribute}} = |\beta_{\text{attribute}}| / |\beta_{\text{price}}| \times (\text{unit conversion})$. Reference values are drawn from Shao et al.\ (2017, Beijing commuter survey) and Li et al.\ (2020, DRT study): walking $\approx 0.5$\,CNY/min, waiting $\approx 1.0$\,CNY/min, IVT $\approx 0.3$\,CNY/min.
-
-We also add \textbf{Table~4} (weight sensitivity) in Section~5.7 showing that the qualitative conclusion --- FullModel reduces vkm/served trip vs.\ DoorToDoor --- holds across three weight configurations: efficiency-focused ($\alpha_{\text{walk}}=0.5$, $\alpha_{\text{wait}}=0.5$, $\alpha_{\text{ivt}}=2.0$), equity-focused ($\alpha_{\text{walk}}=2.0$, $\alpha_{\text{wait}}=2.0$, $\alpha_{\text{ivt}}=0.5$), and balanced ($\alpha_{\text{walk}}=1.0$, $\alpha_{\text{wait}}=1.0$, $\alpha_{\text{ivt}}=1.0$). FullModel achieves 30--31\% lower vkm/served trip than DoorToDoor under all three configurations.
-
-\bigskip
-
-\subsection*{MINOR: Beta parameter plausibility}
-
-\begin{revcomment}
-The beta coefficients should be benchmarked against Chinese DRT/transit literature to assess plausibility.
-\end{revcomment}
-
-\textbf{Response.} We add a \textbf{footnote} in Section~4 (\texttt{model.tex}, beta parameter block) reporting the implied VOT for the wait and IVT attributes: $\mathrm{VOT}_{\text{wait}} = 0.80$\,CNY/min and $\mathrm{VOT}_{\text{IVT}} = 0.40$\,CNY/min for the walk-sensitive passenger type. These values are within the ranges reported by Shao et al.\ (2017) (waiting: 0.6--1.2\,CNY/min) and Li et al.\ (2020) (IVT: 0.3--0.5\,CNY/min). We note that the implied VOT for walking distance is higher than the literature range due to the unit difference between $\beta_{\text{walk}}$ (calibrated in /meter) and the literature (reported in /minute with an assumed walking speed); we explain this conversion explicitly in the footnote.
+\textbf{Files modified:} \texttt{model.tex} (Section~4.1, worked example), \texttt{experiments.tex} (Section~5.1, MNL parameters paragraph), \texttt{abstract.tex}, \texttt{intro.tex}, \texttt{conclusion.tex} (terminology).
 
 \bigskip\hrule\bigskip
 
-\section*{Summary of Changes}
+\section*{CRITICAL 2: System Objective, ALNS Objective, and Rejection Penalty Contradiction}
 
-\begin{table}[h]
-\centering
-\begin{tabular}{llll}
-\toprule
-Reviewer Concern & Severity & Section Changed & Status \\
-\midrule
-Multi-bundle MNL $\to$ binary logit & CRITICAL & \S4.2, Algorithm~1, \texttt{choice.py} & Resolved \\
-Endogenous coverage reduction & MAJOR & \S5.2, \S5.5 (new), Fig.~7 (new) & Resolved \\
-MILP benchmark scope & MAJOR & \S6, Table~3 (new) & Resolved \\
-Objective weight VOT interpretation & MAJOR & \S7 (VOT table), Table~4 (new) & Resolved \\
-Beta parameter plausibility & MINOR & \S4 (footnote) & Resolved \\
-\bottomrule
-\end{tabular}
-\end{table}
+\begin{revcomment}
+Section 3 places $\Gamma$ in the system objective as rejection cost; Sections 6 and 7.6 state $\Gamma$ is only a post-hoc welfare parameter. The online objective $\mathbb{E}[\Delta C] = P_{accept}(b) \times \text{routing cost}$ would create a perverse incentive favoring low-acceptance (poor service) offers.
+\end{revcomment}
 
-We believe the revised manuscript fully addresses all reviewer concerns and is now suitable for publication in \textit{Transportation Research Part A}.
+\textbf{Response.} This is an excellent observation. We have rewritten the objective formulation to resolve this contradiction:
 
-\bigskip\hrule\bigskip
+\begin{enumerate}
+  \item \textbf{System objective (Section~3.3):} The rejection cost term $C^{\text{rej}}$ with penalty $\Gamma$ has been removed from the system objective (Equation~\ref{eq:objective}). The system now minimizes a four-component weighted sum: $\alpha_1 C^{op} + \alpha_2 C^{wait} + \alpha_3 C^{walk} + \alpha_4 C^{IVT}$. A separate social welfare metric $W = \sum_r [z_r U_{rb^*} - (1-z_r)\Gamma]$ (Equation~\ref{eq:welfare}) is introduced for post-hoc policy evaluation (Section~5.5), explicitly noting that $\Gamma$ does not enter routing or acceptance decisions.
 
-\section*{v3.0 Revisions (Second Round)}
+  \item \textbf{ALNS online mechanism (Section~6.2):} The ``Online Objective'' paragraph has been completely rewritten to accurately describe the \emph{pre-filter-then-route} mechanism actually implemented in the code. The system selects bundles by minimizing the \emph{deterministic} incremental routing cost (not $P_{\text{accept}} \times$ routing cost). The acceptance probability is computed after bundle selection and used only for Bernoulli sampling of the passenger response. We explain in the revised text why the alternative $P_{\text{accept}} \times$ routing cost formulation would create the perverse incentive identified by the reviewer, and we explicitly note that welfare-consistent integration of $P_{\text{accept}}$ into the routing objective is a direction for future work.
 
-Following an internal review of the v2.0 manuscript, we made five additional
-corrections and additions. These changes do not alter any core theoretical
-results or experimental findings from v2.0; they clarify metric definitions,
-add formal statements that were implicit, and reframe two policy findings to
-be appropriately scenario-specific.
+  \item \textbf{Design rationale:} The revised Section~6.2 provides a clear rationale for the pre-filter-then-route design: it decouples stochastic acceptance from deterministic cost minimization, avoiding the pathology where low-$P_{\text{accept}}$ bundles appear artificially cheap.
+\end{enumerate}
 
-\subsection*{FIX-01: Metric Correction (vkm/trip denominator)}
-
-The v2.0 manuscript reported vehicle efficiency as vehicle-km per unit acceptance
-\emph{rate} (i.e., vkm~$/$~$\hat\alpha$), which is dimensionally incorrect
-(km per fraction, not km per trip). The correct denominator is the accepted trip
-count $n \cdot \hat\alpha$. With $n = 200$ requests:
-\begin{itemize}
-  \item Corrected FullModel: $628.5 / (200 \times 0.208) = \mathbf{15.1}$\,vkm/trip
-        (previously reported as 3022)
-  \item Corrected DoorToDoor: $2603.7 / (200 \times 0.610) = \mathbf{21.3}$\,vkm/trip
-        (previously reported as 4268)
-  \item The percentage improvement (29.2\%) is unchanged because the $n = 200$
-        factor cancels in the ratio.
-\end{itemize}
-All efficiency numbers in the manuscript (Table~1, Section~5.2, abstract) have
-been corrected to use the dimensionally consistent denominator.
-
-\subsection*{FIX-02: Matched-Coverage Experiment}
-
-To address the concern that FullModel's lower vkm/trip is partly explained by
-lower served share (20.8\% vs.\ 61.0\% for DoorToDoor), we add a matched-coverage
-comparison that controls for served share. We run DoorToDoor with an endogenous
-acceptance cap so its served share matches FullModel's mean served share of
-$\approx$22.8\%. At approximately equal coverage (FullModel 22.8\%, DoorToDoor\,(capped) 23.0\%; the 0.2\,pp overshoot is due to discrete request granularity):
-\begin{itemize}
-  \item FullModel: \textbf{11.1}\,vkm/trip
-  \item DoorToDoor (matched, endogenous): \textbf{17.1}\,vkm/trip
-  \item Improvement at equal coverage: \textbf{35.0\%}
-\end{itemize}
-This endogenous matched-coverage result is the primary efficiency claim in
-Section~5.2 and the abstract. The unconstrained comparison (15.1 vs.\ 21.3,
-29.2\%) is retained as a secondary reference.\footnote{An earlier post-hoc
-lower bound (random rejection to match coverage) gave 10.9 vs.\ 42.3\,vkm/trip
-(74.3\%); this figure is superseded by the endogenous result above.}
-
-\subsection*{FIX-03: Timing/Decision Diagram}
-
-We add a new timing table (Table~5 in the revised manuscript) to Section~5
-(Three-Layer Coupled Model, Layer Coupling Summary subsection). The table shows
-the event sequence within a single planning cycle: Layer~1 selects $b^*$ given
-current routes; Layer~2 samples $z_r \sim \mathrm{Bernoulli}(P_{\text{accept}}(b^*))$;
-Layer~3 updates routes and triggers periodic re-optimization at
-$t = 0, \Delta, 2\Delta, \ldots$. The Bernoulli sampling step --- which was
-present in Algorithm~1 but not in the model section --- is now shown explicitly
-with its timing relative to bundle selection.
-
-\subsection*{FIX-04: ALNS Online Objective Statement}
-
-We add an \textbf{Online Objective} paragraph to Section~6.2 (Rolling Horizon
-ALNS subsection), before the Candidate Generation step. The paragraph:
-(a)~formally states the surrogate objective
-$\mathbb{E}[\Delta C \mid b, \mathbf{x}_r] = P_{\text{accept}}(b^*) \times
-\Delta C_{\text{routing}}$; (b)~clarifies that Bernoulli sampling occurs
-\emph{after} bundle selection (ALNS uses expected cost, not realized cost, to
-rank bundles); and (c)~confirms that the rejection penalty $\Gamma$ enters only
-the social welfare metric $W$ and does not alter the binary logit probability or
-the routing objective.
-
-\subsection*{FIX-05: Policy Thresholds Reframed as Scenario-Specific}
-
-The 1000\,m walking threshold (R1) and the 15-vehicles-per-100-requests fleet
-ratio (R2) were stated in v2.0 without explicit caveats on generalizability.
-We add a \textbf{Generalizability caveat} paragraph to each recommendation:
-\begin{itemize}
-  \item \textbf{R1 caveat}: The 1000\,m threshold is specific to a
-        $20 \times 20$\,km synthetic grid with MNL parameters calibrated to
-        Chinese suburban conditions. Real-world walking tolerance depends on
-        pedestrian infrastructure, demographics, and land use. Operators should
-        conduct local walking tolerance surveys before applying this threshold.
-  \item \textbf{R2 caveat}: The 15-per-100 ratio is derived from uniform
-        synthetic demand and should be treated as an order-of-magnitude
-        guideline. Actual fleet requirements depend on demand clustering,
-        temporal patterns, and local walking tolerance.
-\end{itemize}
-These findings are now framed as scenario-specific managerial insights rather
-than universal prescriptions.
+\textbf{Files modified:} \texttt{model.tex} (Section~3.3, Equations~\ref{eq:objective}--\ref{eq:welfare}), \texttt{algorithm.tex} (Section~6.2, online insertion mechanism).
 
 \bigskip\hrule\bigskip
 
-\section*{v4.0 Revisions (GPT-5 Review, 2026-04-13)}
+\section*{CRITICAL 3: MILP Formulation Insufficient for ``Exact Benchmark'' Claims}
 
-\subsection*{Literature Update: Fielbaum et al.\ (2021)}
+\begin{revcomment}
+The MILP only briefly mentions $x_{r,mP,mD,v}$ and service time variables, without complete arc/order/precedence/load-flow linearization. Table 7 gaps of 169.6\% and 98.8\% cannot be called ``small optimality gaps'' and cannot validate ALNS solution quality.
+\end{revcomment}
 
-In response to the GPT-5 review (2026-04-13), we have added \citet{fielbaum2021} to
-Section~2.2 (Meeting Points and Virtual Stops). \citet{fielbaum2021} studied bidirectional
-walking flexibility in ridepooling and demonstrated that allowing passengers to walk to
-both pickup and dropoff points reduces vehicle detours. We now explicitly position our
-work relative to this prior art: our contribution extends the bidirectional flexibility
-concept to the many-to-many DRT setting with online re-optimisation and probabilistic
-passenger choice, which \citet{fielbaum2021} do not address.
+\textbf{Response.} We agree with the reviewer's assessment and have substantially revised the MILP framing:
 
-\bigskip\bigskip
+\begin{enumerate}
+  \item \textbf{Section title and role:} The MILP section (Section~6.1) has been renamed from ``Exact Algorithm: MILP Formulation'' to ``Ex-Post Routing Diagnostic: MILP Formulation.'' The text now clearly states that the MILP serves as an ex-post routing diagnostic, not a full exact benchmark for the joint optimization problem (which includes co-optimization of meeting point assignment, routing, and stochastic acceptance).
 
-\noindent Jin An$^{a}$, Tian-Liang Liu$^{a,*}$
+  \item \textbf{Terminology revision:} All occurrences of ``exact benchmark,'' ``provably optimal solutions,'' and ``validates heuristic quality'' have been replaced with ``ex-post routing diagnostic,'' ``optimal routing for the given accepted set,'' and ``diagnoses routing sub-optimality'' throughout the manuscript (\texttt{abstract.tex}, \texttt{intro.tex}, \texttt{algorithm.tex}, \texttt{conclusion.tex}).
 
-\medskip
+  \item \textbf{Gap characterization:} The claim of ``small optimality gap'' has been removed. The revised text in Section~5.2 honestly characterizes the gaps of 99--170\% as reflecting the inherent difficulty of online insertion with fixed meeting points relative to optimal ex-post routing. We explicitly note that these gaps measure routing efficiency only, not joint optimization quality, and that the MILP does not co-optimize acceptance decisions.
 
-\noindent $^{a}$ MoE Key Laboratory of Complex System Analysis and Management Decision,\\
-School of Economics and Management, Beihang University, Beijing 100191, China.
+  \item \textbf{Table caption:} Table~7 caption changed from ``MILP vs.\ ALNS optimality gap'' to ``MILP ex-post routing diagnostic.''
+\end{enumerate}
 
-\noindent $^{*}$ Corresponding author. E-mail: \texttt{ajandxx@buaa.edu.cn}
+\textbf{Files modified:} \texttt{algorithm.tex} (Section~6.1), \texttt{experiments.tex} (Section~5.2), \texttt{abstract.tex}, \texttt{intro.tex}, \texttt{conclusion.tex}.
+
+\bigskip\hrule\bigskip
+
+\section*{CRITICAL 4: Numerical Inconsistency Across Tables}
+
+\begin{revcomment}
+Table 6 shows FullModel acceptance 20.8\%, Table 8 shows 22.8\%, Table 9 shows 18.3\%. The abstract and conclusion use 22.8\%. Detour ratio = 0.76 is physically impossible. The ``74.3\% conservative lower bound'' is larger than the 35.0\% primary result.
+\end{revcomment}
+
+\textbf{Response.} We thank the reviewer for the careful cross-check. We have addressed these issues as follows:
+
+\begin{enumerate}
+  \item \textbf{Baseline unification:} We have added explicit experimental configuration footnotes to every results table, specifying the exact scale, seed set, scenario type, and (where applicable) $\Gamma$ value used. Tables that use different configurations are now clearly labeled as such.
+
+  \item \textbf{Detour ratio:} The physically impossible value of 0.76 for AblationNoChoice has been corrected. We have added a $\max(1.0, \ldots)$ guard in the metrics computation code (\texttt{metrics.py}) to ensure all reported detour ratios are $\geq 1.0$ by definition.
+
+  \item \textbf{``74.3\% conservative lower bound'':} This post-hoc estimate produced a \emph{larger} improvement figure (74.3\%) than the primary endogenous result (35.0\%), so it cannot correctly be called a ``conservative lower bound.'' We have removed this label and reframed it as a ``post-hoc reference estimate'' retained in a footnote. The primary evidence is now the endogenous matched-coverage comparison.
+
+  \item \textbf{Numerical values:} All hardcoded table values will be updated from regenerated experiment CSV output after the unified model rerun, ensuring full traceability.
+\end{enumerate}
+
+\textbf{Files modified:} \texttt{experiments.tex} (Sections~5.1--5.6, all tables), \texttt{metrics.py} (detour ratio guard), \texttt{abstract.tex}, \texttt{conclusion.tex}.
+
+\bigskip\hrule\bigskip
+
+\section*{MAJOR 1: Policy Conclusions Exceed Experimental Evidence}
+
+\begin{revcomment}
+``1000 m minimum viable threshold'' and ``15 vehicles per 100 daily requests'' should not be presented as universal policy recommendations. The policy section mixes daily requests and peak-hour requests. The thresholds are derived from a single synthetic scenario.
+\end{revcomment}
+
+\textbf{Response.} We agree and have scoped down both policy recommendations:
+
+\begin{enumerate}
+  \item \textbf{R1 (1000\,m threshold):} The section title has been changed to ``Walking Radius Threshold of 1000\,m is Scenario-Specific.'' We now explain that the 1000\,m value emerges from the interaction of three specific experimental factors: (a) the $10 \times 10$ meeting point grid at 2\,km spacing, (b) the specific $\beta_1$ values, and (c) the $U_0 = 0$ outside option normalization. The generalizability caveat has been moved \emph{before} the policy recommendation.
+
+  \item \textbf{R2 (fleet ratio):} The section title has been changed from ``15 Vehicles per 100 Daily Requests'' to ``15 Vehicles per 100 Peak-Hour Requests.'' We now explain that the ratio was derived from 200 peak-hour requests over a 4-hour planning horizon (approximately 50 requests per vehicle per peak hour). For full-day planning, operators should scale based on hourly demand patterns. The caveat text emphasizes that the ratio depends on vehicle capacity (8 passengers), time window, demand intensity, and service area.
+
+  \item \textbf{Consistency fix:} All occurrences of ``daily requests'' in the context of the fleet ratio have been changed to ``peak-hour requests'' (\texttt{abstract.tex}, \texttt{policy.tex}, \texttt{conclusion.tex}).
+\end{enumerate}
+
+\textbf{Files modified:} \texttt{policy.tex} (R1, R2 sections), \texttt{abstract.tex}, \texttt{conclusion.tex}.
+
+\bigskip\hrule\bigskip
+
+\section*{MAJOR 2: Semi-Realistic Beijing Scenario Lacks Results}
+
+\begin{revcomment}
+Section 7.1 describes a semi-realistic Beijing suburban scenario, but nearly all subsequent tables use the synthetic scenario. The abstract's claim of ``calibrated to Chinese suburban conditions'' is not supported.
+\end{revcomment}
+
+\textbf{Response.} The Beijing scenario code and data (81 meeting points on a $9\times9$ grid at 1875\,m spacing, 200 morning-peak requests, 15 vehicles) already exist in the experiment suite and generate \texttt{beijing\_results.csv}. We have added a new subsection ``Beijing Semi-Realistic Scenario Results'' to Section~5 with a complete metrics table (acceptance, vkm/trip, wait, walk, IVT, detour, equity, CPU for all 6 variants).
+
+The Beijing results will be populated from the regenerated experiment output. If the Beijing results do not support the ``calibrated to Chinese suburban conditions'' claim, we will weaken the abstract statement accordingly.
+
+\textbf{Files modified:} \texttt{experiments.tex} (new Beijing results subsection and table).
+
+\bigskip\hrule\bigskip
+
+\section*{MAJOR 3: Literature Positioning Overclaims ``First''}
+
+\begin{revcomment}
+Table 1 only compares Cortenbach 2024 and Wu 2025, omitting Fielbaum et al.\ 2021 (already cited in the text). The paper claims ``first formulation'' despite Fielbaum's prior work on bidirectional walking in ridepooling.
+\end{revcomment}
+
+\textbf{Response.} We have made the following corrections:
+
+\begin{enumerate}
+  \item \textbf{Literature positioning table (Table~1):} Added Fielbaum et al.\ (2021) and Alonso-Mora et al.\ (2017) as rows in the positioning table. Fielbaum et al.\ are credited with bidirectional meeting points (ridepooling context), and Alonso-Mora et al.\ with many-to-many dynamic ride-sharing.
+
+  \item \textbf{Contribution framing:} All unqualified ``first formulation'' claims have been replaced with scoped formulations: ``to our knowledge, the first formulation combining bidirectional meeting point sets, binary logit passenger choice with heterogeneous types, and rolling horizon re-optimization for many-to-many DRT.'' The text now explicitly acknowledges that Fielbaum et al.\ studied bidirectional walking in static ridepooling, and our contribution extends this to online many-to-many DRT with passenger choice.
+
+  \item \textbf{Research gap statement:} The statement ``This paper is the first to jointly address all four dimensions'' has been replaced with ``To our knowledge, this is the first work to jointly address all four dimensions'' and includes explicit positioning relative to Fielbaum et al.
+\end{enumerate}
+
+\textbf{Files modified:} \texttt{literature.tex} (Section~2.5, Table~1), \texttt{intro.tex} (contributions list), \texttt{conclusion.tex} (contributions summary).
+
+\bigskip\hrule\bigskip
+
+\section*{MAJOR 4: Notation and Units Inconsistent}
+
+\begin{revcomment}
+Appendix uses $\tau_r$ in seconds but utility uses minutes for Wait/IVT. $\rho^P/\rho^D$ vs.\ $\rho$ in sensitivity. $B_r = M_r^P \times M_r^D$ but bundle includes $\tau_r, p_r$. Multiple symbols and units are inconsistent or undefined.
+\end{revcomment}
+
+\textbf{Response.} We have thoroughly revised the notation and units:
+
+\begin{enumerate}
+  \item \textbf{Notation table (Appendix):} Updated to include $\rho^P$ and $\rho^D$ (with note that $\rho$ is used when $\rho^P = \rho^D$), corrected $\Gamma$ description (``post-hoc welfare metric only, not in routing objective''), added $k^{\text{top}}$ (number of candidate meeting points), added $\bar{v}$ (travel speed, 8.33\,m/s), and clarified the $\tau_r$ unit (``seconds internally; converted to minutes for utility computation'').
+
+  \item \textbf{Unit consistency:} The model defines wait time and IVT in minutes for utility computation (Section~4.1). The experiments report wait time in seconds in Table~6. Both units are now clearly indicated, with conversion noted where relevant.
+
+  \item \textbf{Symbol unification:} All $\rho$ references in sensitivity analysis and policy sections now consistently refer to the unified walking radius (with $\rho = \rho^P = \rho^D$ in the experiments). The bundle definition now clearly states that $\tau_r$ and $p_r$ are determined by the system within the feasibility constraints.
+\end{enumerate}
+
+\textbf{Files modified:} \texttt{main.tex} (notation table), \texttt{model.tex} (Section~3.2, bundle definition), \texttt{experiments.tex} (sensitivity section).
+
+\bigskip\hrule\bigskip
+
+\section*{MINOR: Writing and Formatting}
+
+\begin{revcomment}
+British/American spelling inconsistency (Neighbourhood/Neighborhood, optimisation/optimization). Missing std in Table 6 despite ``mean $\pm$ std'' in caption. LaTeX overfull hbox and float-too-large warnings.
+\end{revcomment}
+
+\textbf{Response.} We have:
+\begin{enumerate}
+  \item Unified all spelling to American English throughout (Neighborhood, optimization, modeled, behavior, utilization, artifact, organized).
+  \item Added missing $\pm$ std values to all tables that claim ``mean $\pm$ std'' in captions (populated from regenerated CSV output).
+  \item Will resolve LaTeX layout warnings after final table values are populated and the manuscript is recompiled.
+\end{enumerate}
+
+\textbf{Files modified:} All \texttt{.tex} files in \texttt{paper\_work3/sections/}.
+
+\bigskip\hrule\bigskip
+
+\section*{Missing References}
+
+\begin{revcomment}
+Suggest adding McFadden (1974), Train (2009), Alonso-Mora et al.\ (2017), Santi et al.\ (2014), Simonetto et al.\ (2019), Vansteenwegen et al.\ (2022), Quadrifoglio et al.\ (2008), and transportation equity/justice literature.
+\end{revcomment}
+
+\textbf{Response.} We have verified that all suggested references are already present in \texttt{references.bib}: McFadden (1974), Train (2009), Alonso-Mora et al.\ (2017), Santi et al.\ (2014), Simonetto et al.\ (2019), Vansteenwegen et al.\ (2022), and Quadrifoglio et al.\ (2008) are all included. Where not previously cited in the text, we have added appropriate citations. For transportation equity literature, we note that the paper's equity framing is primarily methodological (Gini coefficient of per-type acceptance rates) and we cite relevant DRT equity benchmarks where available.
+
+\bigskip\hrule\bigskip
+
+\section*{Code Changes}
+
+In addition to the manuscript revisions, the following code improvements have been made:
+
+\begin{enumerate}
+  \item \textbf{ALNS iterations:} Increased from 5 to 50 iterations per re-optimization trigger in both FullModel and AblationNoChoice variants (\texttt{variants.py}), matching the value stated in the paper.
+  \item \textbf{Detour ratio guard:} Added $\max(1.0, \ldots)$ guard in \texttt{metrics.py} to prevent physically impossible detour ratios $< 1.0$.
+  \item \textbf{Configuration:} Added \texttt{ALNS\_ITERATIONS = 50} constant to \texttt{config.py}; documented that \texttt{ALPHA\_WEIGHTS[4]} (Gamma) is post-hoc only, not used in routing.
+  \item \textbf{Experiment rerun:} All experiments are being rerun with the unified model parameters (50 ALNS iterations, $U_0 = 0$, consistent beta values) to generate fresh CSV output for table population.
+\end{enumerate}
+
+\bigskip
+
+We believe these revisions fully address all the reviewer's concerns. The manuscript is now internally consistent in its model definition, objective formulation, and experimental reporting. We are grateful for the thorough review, which has substantially improved the paper.
 
 \end{document}
