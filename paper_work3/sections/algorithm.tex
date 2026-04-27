@@ -187,13 +187,13 @@ be reassigned.
 \paragraph{Commitment assumption.}
 Once a service offer bundle $b_r^* = (m_r^P, m_r^D, \tau_r, p_r)$ is communicated to
 passenger $r$ and accepted ($z_r = 1$), the assigned meeting points and scheduled pickup
-time are \emph{committed}: they are not subject to re-optimisation in subsequent rolling
+time are \emph{committed}: they are not subject to re-optimization in subsequent rolling
 horizon cycles. This commitment is operationally necessary --- passengers who have begun
 walking to a meeting point cannot be redirected --- and is enforced by locking the
-corresponding nodes in the route graph before each ALNS re-optimisation trigger.
+corresponding nodes in the route graph before each ALNS re-optimization trigger.
 Formally, a node $i \in \sigma_v$ is committed if its scheduled service time satisfies
 $\tau_i \leq t^{\text{now}} + \delta_{\text{commit}}$, where $\delta_{\text{commit}} = 5$
-minutes is the commitment horizon (equal to the re-optimisation interval $\Delta$).
+minutes is the commitment horizon (equal to the re-optimization interval $\Delta$).
 Uncommitted accepted nodes may be re-sequenced within the vehicle route to improve
 efficiency, but their assigned meeting points remain fixed.
 

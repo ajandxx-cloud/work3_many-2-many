@@ -10,7 +10,7 @@ and transport authorities.
 However, the dominant door-to-door DRT model — in which vehicles travel directly
 between each passenger's origin and destination — is operationally costly: vehicles
 accumulate large detour distances serving spatially dispersed requests, and fleet
-utilisation remains low.
+utilization remains low.
 Meeting-point-based DRT addresses this inefficiency by requiring passengers to walk
 to and from pre-defined consolidation points (e.g., bus stops, commercial landmarks),
 enabling vehicles to serve multiple passengers along shared route segments.
@@ -37,14 +37,14 @@ Crucially, \citet{cortenbach2024} do not model passenger choice: all offered mee
 points are assumed to be accepted, ignoring the reality that passengers with low
 walking tolerance will reject inconvenient offers.
 On the dynamic side, \citet{wu2025} proposed a rolling horizon framework for
-online DRT re-optimisation, demonstrating that periodic re-assignment of requests
+online DRT re-optimization, demonstrating that periodic re-assignment of requests
 to vehicles significantly reduces operational cost under dynamic demand.
 However, \citet{wu2025} do not incorporate meeting points: their model retains
 door-to-door service.
 No existing work combines: (a)~bidirectional meeting point sets ($M_r^P$ for pickup,
 $M_r^D$ for dropoff), (b)~explicit binary logit passenger choice with
 heterogeneous passenger types and an outside option, and (c)~rolling horizon
-re-optimisation in a many-to-many DRT setting.
+re-optimization in a many-to-many DRT setting.
 This is the gap the present paper fills.
 
 We propose a many-to-many DRT model with bidirectional meeting point sets.
@@ -55,7 +55,7 @@ $M_r^D \subseteq \mathcal{M}$ (within $\rho^D$ of the destination).
 The system jointly optimises the selection of pickup meeting point $m_r^P \in M_r^P$
 and dropoff meeting point $m_r^D \in M_r^D$ for each accepted request, together with
 vehicle routing and scheduling.
-Passenger response is modelled via a binary logit model (special case of MNL) with three
+Passenger response is modeled via a binary logit model (special case of MNL) with three
 passenger types — price-sensitive, time-sensitive, and walk-sensitive — each with
 distinct utility coefficients over walking time, waiting time, in-vehicle travel time,
 and fare.
@@ -66,7 +66,7 @@ The full model is formulated as a coupled three-layer system:
 $\mathcal{B}_r = M_r^P \times M_r^D$ and computes binary logit choice probabilities;
 (2)~passenger response, which determines the accepted bundle based on the binary logit acceptance rule;
 and (3)~dynamic dispatch, which routes vehicles using a rolling horizon ALNS
-heuristic with re-optimisation at fixed time intervals.
+heuristic with re-optimization at fixed time intervals.
 We solve small instances exactly using a Mixed-Integer Linear Program (MILP)
 implemented in Gurobi, and large instances with the rolling horizon ALNS heuristic.
 Numerical experiments on synthetic scenarios calibrated to Chinese suburban conditions
@@ -81,14 +81,14 @@ The contributions of this paper are as follows:
   \item MILP ex-post routing diagnostic and rolling horizon ALNS heuristic for the bidirectional
         DARP with passenger choice.
   \item Empirical demonstration of a \textbf{35.0\%} vehicle efficiency gain in
-        per-trip vehicle utilisation at equal served share (FullModel 11.1 vs.\
+        per-trip vehicle utilization at equal served share (FullModel 11.1 vs.\
         DoorToDoor\,(capped) 17.1\,vkm/trip, endogenous matched-coverage comparison),
         and a 29.2\% gain under the unconstrained comparison (15.1 vs.\ 21.3\,vkm/trip).
   \item Equity analysis across three passenger types (Gini coefficient = 0.1216) and
         five actionable policy recommendations for Chinese city DRT operators.
 \end{enumerate}
 
-The remainder of this paper is organised as follows.
+The remainder of this paper is organized as follows.
 Section~\ref{sec:literature} reviews related work on DARP, meeting-point DRT, and
 passenger choice modelling.
 Section~\ref{sec:model} presents the problem formulation, including the three-layer

@@ -1,0 +1,89 @@
+%% Work 3: Many-to-Many DRT Bidirectional Meeting Point Paper
+%% Target: Transportation Research Part A: Policy and Practice
+%% Compiled: pdflatex main.tex (requires elsarticle.cls)
+
+\documentclass[review,12pt]{elsarticle}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\journal{Transportation Research Part A: Policy and Practice}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Co-optimization of Bidirectional Meeting Point Assignment and Dynamic Routing for Many-to-Many Demand-Responsive Transit with Passenger Choice}
+
+\author[buaa]{An Jin}
+\author[buaa]{Tianliang Liu\corref{cor1}}
+\cortext[cor1]{Corresponding author}
+\address[buaa]{School of Transportation Science and Engineering, Beihang University, Beijing 100191, China}
+
+\input{sections/abstract}
+
+\end{frontmatter}
+
+\input{sections/intro}
+\input{sections/literature}
+\input{sections/model}
+\input{sections/algorithm}
+\input{sections/experiments}
+\input{sections/policy}
+\input{sections/conclusion}
+
+\bibliographystyle{elsarticle-num-names}
+\bibliography{references}
+
+\appendix
+
+\section{Notation and Units Reference}
+\label{sec:appendix-notation}
+
+\begin{table}[h]
+\centering
+\caption{Notation and units reference}
+\label{tab:notation}
+\begin{tabular}{lll}
+\toprule
+Symbol & Description & Unit \\
+\midrule
+$r$ & Passenger request index & --- \\
+$v$ & Vehicle index & --- \\
+$m_r^P$ & Pickup meeting point for request $r$ & --- \\
+$m_r^D$ & Dropoff meeting point for request $r$ & --- \\
+$M_r^P$ & Candidate pickup meeting point set & --- \\
+$M_r^D$ & Candidate dropoff meeting point set & --- \\
+$b_r$ & Service offer bundle $(m_r^P, m_r^D, \tau_r, p_r)$ & --- \\
+$\tau_r$ & Scheduled pickup time (internal: seconds; utility: converted to minutes) & s / min \\
+$p_r$ & Fare offered to passenger $r$ & CNY \\
+$\rho^P$, $\rho^D$ & Pickup/dropoff walking radius (unified as $\rho$ when $\rho^P = \rho^D$) & meters \\
+$H$ & Rolling horizon window length & minutes \\
+$\Delta$ & Re-optimization interval & minutes \\
+$\Gamma$ & Rejection penalty in social welfare metric (post-hoc only; not in routing objective) & CNY \\
+$U_r(b)$ & Deterministic utility of bundle $b$ for request $r$ & utils \\
+$P_{\text{accept}}(b)$ & Binary logit acceptance probability & [0,1] \\
+$z_r$ & Acceptance indicator ($z_r \sim \text{Bernoulli}(P_{\text{accept}})$) & \{0,1\} \\
+$\beta_1^k$ & Walk disutility coefficient for type $k$ & utils/meter \\
+$\beta_2^k$ & Wait disutility coefficient for type $k$ & utils/minute \\
+$\beta_3^k$ & IVT disutility coefficient for type $k$ & utils/minute \\
+$\beta_4^k$ & Price disutility coefficient for type $k$ & utils/CNY \\
+$k^{\text{top}}$ & Number of candidate meeting points retained per request side & integer \\
+$\bar{v}$ & Average vehicle travel speed (30 km/h = 8.33 m/s) & m/s \\
+$\mathcal{R}^{\text{acc}}$ & Set of accepted requests & --- \\
+$\mathcal{R}^{\text{act}}(t)$ & Active request set at time $t$ & --- \\
+$\sigma_v$ & Route sequence for vehicle $v$ & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{document}
