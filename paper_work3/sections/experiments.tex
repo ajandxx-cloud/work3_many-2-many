@@ -77,12 +77,12 @@ for the synthetic scenario with 200 requests and 15 vehicles.
 \toprule
 Variant & Accept. & vkm & vkm/trip & Avg Wait (s) & Avg Walk (m) & Detour & CPU (s) \\
 \midrule
-DoorToDoor               & $0.610 \pm 0.091$ & $2603.7 \pm 246.8$ & $21.3 \pm 0.8$ & 5003.5 & 0.0    & 3.63 & 12.3 \\
-SingleSidedPickup        & $0.440 \pm 0.076$ & $1199.4 \pm 192.8$ & $13.6 \pm 0.5$ & 3847.1 & 1025.3 & 2.42 & 19.1 \\
-BidirectionalNoChoice    & $0.533 \pm 0.084$ & $1721.6 \pm 165.0$ & $16.1 \pm 0.5$ & 4626.7 & 1652.6 & 3.60 & 25.7 \\
-FullModel                & $0.208 \pm 0.026$ & $628.5 \pm 96.7$   & $15.1 \pm 1.4$ & 450.3  & 95.9   & 1.00 & 1.4  \\
-AblationNoChoice         & $0.398 \pm 0.046$ & $923.9 \pm 99.2$   & $11.6 \pm 1.9$ & 309.9  & 78.5   & 0.76 & 15.7 \\
-AblationNoRollingHorizon & $0.252 \pm 0.033$ & $753.4 \pm 96.6$   & $14.9 \pm 1.1$ & 3948.8 & 1814.5 & 6.82 & 5.4  \\
+DoorToDoor               & $0.610 \pm 0.118$ & $2603.7 \pm 1666.4$ & $21.3$ & 5003.5 & 0.0    & 3.63 & 12.5 \\
+SingleSidedPickup        & $0.440 \pm 0.275$ & $1199.4 \pm 970.6$  & $13.6$ & 3847.1 & 1025.3 & 2.42 & 19.6 \\
+BidirectionalNoChoice    & $0.533 \pm 0.193$ & $1721.6 \pm 1149.0$ & $16.1$ & 4626.7 & 1652.6 & 3.60 & 26.1 \\
+FullModel                & $0.183 \pm 0.018$ & $552.0 \pm 343.3$   & $15.1$ & 454.2  & 109.0  & 1.00 & 10.5 \\
+AblationNoChoice         & $0.135 \pm 0.245$ & $159.3 \pm 290.1$   & $5.9$  & 118.1  & 25.7   & 1.00 & 5.9  \\
+AblationNoRollingHorizon & $0.206 \pm 0.062$ & $668.5 \pm 373.9$   & $16.2$ & 3114.5 & 1803.8 & 6.14 & 3.5  \\
 \bottomrule
 \end{tabular}
 \end{table}
