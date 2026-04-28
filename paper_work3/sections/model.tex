@@ -214,7 +214,7 @@ where:
 \end{itemize}
 
 The random utility is $U_{rb}^k + \varepsilon_{rb}$ where $\varepsilon_{rb}$ is i.i.d.\
-Gumbel$(0,1)$, yielding the standard MNL form. The utility function captures the
+Gumbel$(0,1)$, yielding the standard random-utility form. The utility function captures the
 bidirectional walking cost explicitly through $\text{Walk}_{rb}$, which depends on both
 $m_r^P$ and $m_r^D$ --- a key distinction from one-sided meeting-point models.
 
@@ -302,9 +302,13 @@ policy consideration for DRT design in low-density urban areas.%
   benchmark range of 0.8--1.2\,CNY/min (waiting) and 0.2--0.4\,CNY/min (IVT) reported
   by \citet{shao2017} for Beijing commuters and \citet{li2020drt} for DRT users.
   The walk VOT (32.0\,CNY/min) exceeds the literature range (0.4--0.6\,CNY/min);
-  this reflects the unit mismatch between $\beta_1$ (utility/meter) and $\beta_4$
-  (utility/CNY): at 80\,m/min walking speed, the implied per-minute disutility of
-  walking is high relative to the fare sensitivity, consistent with the walk-sensitive
+  this reflects the strong walking disutility assumed for the walk-sensitive type
+  ($|\beta_1^{\text{walk}}| = 0.020$\,utils/meter) combined with low price sensitivity
+  ($|\beta_4^{\text{walk}}| = 0.05$\,utils/CNY). The resulting ratio
+  (0.020/0.05 $\times$ 80 = 32.0\,CNY/min) is an upper bound; calibration against
+  revealed-preference data from Chinese DRT users would likely yield lower walking
+  disutility coefficients. This limitation is discussed in
+  Section~\ref{sec:policy} (VOT interpretation) and Section~\ref{sec:conclusion}.
   type's defining characteristic.
   Full VOT mapping across all three passenger types is reported in
   Table~\ref{tab:vot-mapping} (Section~\ref{sec:policy}).
@@ -380,8 +384,10 @@ candidate service offer bundles $\hat{\mathcal{B}}_r \subseteq \mathcal{B}_r$ as
         evaluate feasibility against constraints~\ref{con:capacity}--\ref{con:time-consistency}
         for each vehicle $v \in \mathcal{V}$ and each insertion position pair $(\pi^P, \pi^D)$.
   \item \textbf{Bundle selection:} Select the bundle
-        $b^* = \arg\max_{b \in \hat{\mathcal{B}}_r} \mathbb{E}[\text{system benefit} \mid b,\, \mathbf{x}_r]$
-        that maximizes expected system objective contribution, subject to feasibility.
+        $b^* = \arg\min_{b \in \hat{\mathcal{B}}_r} \Delta C_{\text{routing}}(b, \{\sigma_v\})$
+        that minimizes the deterministic incremental routing cost
+        $\alpha_1 \Delta C^{op} + \alpha_2 \Delta C^{wait} + \alpha_3 \Delta C^{walk} + \alpha_4 \Delta C^{IVT}$
+        (see Section~\ref{sec:algorithm} for implementation details).
 \end{enumerate}
 
 The output of Layer~1 is the online decision vector $\mathbf{x}_r$ (Equation~\ref{eq:decvec})
@@ -400,9 +406,14 @@ If $z_r = 1$, the vehicle route $\sigma_{v_r}$ is updated by inserting the picku
 $m_r^P$ at position $\pi_r^P$ and the dropoff node $m_r^D$ at position $\pi_r^D$.
 If $z_r = 0$, the decision vector is discarded and vehicle routes remain unchanged.
 
-The coupling between Layer~1 and Layer~2 is \emph{anticipatory}: the system selects $b^*$
-to maximize expected system benefit, accounting for the probability that the passenger will
-accept. This distinguishes the model from a deterministic assignment approach.
+The coupling between Layer~1 and Layer~2 follows a \emph{pre-filter-then-route} design
+(Section~\ref{sec:algorithm}): Layer~1 selects $b^*$ by minimizing deterministic
+incremental routing cost; the binary logit acceptance probability
+$P_{\text{accept}}(b^*)$ is computed after bundle selection and used only for
+the Bernoulli acceptance sampling in Layer~2. This decoupling avoids the perverse
+incentive where multiplying $P_{\text{accept}}$ into the routing objective would
+favor low-acceptance (poor service) offers. Integrating $P_{\text{accept}}$ into a
+welfare-consistent anticipatory objective remains a direction for future work.
 
 \subsection{Layer 3: Dynamic Dispatch and Rolling Horizon Re-optimization}
 
@@ -431,7 +442,7 @@ influencing the next Layer~1 evaluation.
 
 Typical parameter values: $H = 30$ minutes (horizon window), $\Delta = 5$ minutes
 (re-optimization frequency). These are configurable and subject to sensitivity analysis
-in Phase~4.
+in the sensitivity analysis (Section~\ref{sec:experiments}).
 
 \subsection{Layer Coupling Summary}
 

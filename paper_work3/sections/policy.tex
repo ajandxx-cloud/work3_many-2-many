@@ -20,7 +20,7 @@ commonly deployed in China.
 The sensitivity analysis (Section~\ref{sec:experiments}) shows that
 FullModel acceptance rate is \textbf{0.0\%} at $\rho \leq 400$\,m and
 rises to \textbf{9.0\%} at $\rho = 1000$\,m. Below the 1000\,m threshold,
-the MNL utility penalty for walking is so large that no meeting-point offer
+the binary logit utility penalty for walking is so large that no meeting-point offer
 clears the outside option, and the bidirectional system delivers no
 efficiency benefit over door-to-door service. At $\rho = 1000$\,m,
 FullModel vehicle-km drops to 219.7 versus 1693.8 for DoorToDoor in the
@@ -92,9 +92,10 @@ The 15-vehicles-per-100-peak-hour-requests ratio is derived from a synthetic
 scenario with 200 peak-hour requests over a 4-hour planning horizon, uniform
 spatial demand on a $20 \times 20$\,km grid, and 8-passenger vehicles.
 It should be treated as an order-of-magnitude guideline, not a universal planning norm.
-The ratio corresponds to approximately 50 requests per vehicle per peak hour;
-for full-day planning, operators should scale based on hourly demand patterns
-rather than applying the ratio directly to daily totals.
+With 200 requests served by 30 vehicles over a 4-hour horizon, the average
+load is approximately 6.7 requests per vehicle (200/30), or 1.7 requests per
+vehicle per hour on average. For full-day planning, operators should scale
+based on hourly demand patterns rather than applying the ratio directly to daily totals.
 Actual fleet requirements depend on demand clustering (concentrated demand can be
 served with fewer vehicles than dispersed demand at the same total request count),
 temporal patterns (peak-hour concentration vs.\ uniform arrivals), vehicle
@@ -123,7 +124,7 @@ function. The Gini coefficient of per-type acceptance rates is
 \paragraph{Policy implication.}
 DRT operators should track per-type acceptance rates in real deployments.
 If time-sensitive passengers are disproportionately rejected, operators
-should consider: (a) adjusting MNL utility weights to reduce the penalty
+should consider: (a) adjusting utility weights to reduce the penalty
 for this type; (b) offering a door-to-door fallback option for passengers
 who opt out of meeting-point service; or (c) subsidizing the disadvantaged
 type through reduced fares or priority dispatch. Regulatory bodies in
@@ -138,7 +139,7 @@ provides a measurable accountability mechanism for service providers.
 
 \paragraph{Evidence.}
 The standard scenario (200 requests, 15 vehicles) shows FullModel
-vehicle-km = 628.5 versus DoorToDoor = 2603.7, a \textbf{75.9\%} efficiency
+vehicle-km = 552.0 versus DoorToDoor = 2603.7, a \textbf{78.8\%} efficiency
 gain. However, this gain is density-dependent: at low demand densities
 (100 requests per $20\,\text{km}^2$), FullModel acceptance approaches 0\%
 at $\rho = 500$\,m, while DoorToDoor remains viable. The three-tier
@@ -148,9 +149,9 @@ framework below synthesizes these findings into a practical deployment guide.
 A three-tier deployment framework for Chinese cities:
 \begin{itemize}
   \item \textbf{Tier 1} ($>$300 requests/day in service zone): Bidirectional
-        meeting points with full MNL choice model. Demand density is
+        meeting points with binary logit choice model. Demand density is
         sufficient to generate spatially compatible request clusters, and
-        the efficiency gains (up to 75.9\% vehicle-km reduction) justify
+        the efficiency gains (up to 78.8\% vehicle-km reduction) justify
         the system complexity and passenger walking burden.
   \item \textbf{Tier 2} (100--300 requests/day): Single-sided pickup meeting
         points with door-to-door dropoff. This hybrid mode captures
@@ -175,9 +176,9 @@ A three-tier deployment framework for Chinese cities:
 
 \paragraph{Evidence.}
 The AblationNoRollingHorizon experiment shows a \textbf{16.6\%} increase in
-vehicle-km when rolling horizon re-optimization is disabled (753.4 vs.\
-628.5\,vkm). More critically, average waiting time rises from 450.3\,s
-(FullModel) to \textbf{3948.8\,s} without rolling horizon --- an 8.8-fold
+vehicle-km when rolling horizon re-optimization is disabled (668.5 vs.\
+552.0\,vkm). More critically, average waiting time rises from 454.2\,s
+(FullModel) to \textbf{3114.5\,s} without rolling horizon --- a 6.9-fold
 increase. Static greedy assignment cannot correct early routing decisions
 as new requests arrive, leading to cascading delays and inefficient vehicle
 positioning.
@@ -216,7 +217,7 @@ using the \emph{value of time} (VOT) framework standard in transport economics.
 The VOT for each service attribute is the marginal willingness to pay (in CNY per
 minute) to reduce that attribute by one unit, holding utility constant.
 
-For the MNL utility function (Equation~\ref{eq:utility}), the implied VOT for
+For the binary logit utility function (Equation~\ref{eq:utility}), the implied VOT for
 passenger type $k$ is:
 \begin{equation}\label{eq:vot-formula}
   \text{VOT}_{\text{wait}}^k = \frac{|\beta_2^k|}{|\beta_4^k|}, \quad
@@ -263,13 +264,18 @@ prioritise fare savings over time, consistent with the low-income suburban
 DRT user profile documented in \citet{li2020drt}.
 
 The walk VOT values for all three types (2.67, 13.33, and 32.00\,CNY/min)
-exceed the literature walking VOT range of 0.4--0.6\,CNY/min. This reflects
-a unit mismatch: $\beta_1$ is specified in utility/meter while literature VOT
-is reported in CNY/minute; the conversion via walking speed amplifies the ratio.
+exceed the literature walking VOT range of 0.4--0.6\,CNY/min. These high values
+reflect the strong walking disutility assumed in the calibration: particularly
+for the walk-sensitive type ($\beta_1^{\text{walk}} = -0.020$\,utils/meter),
+the coefficient implies an extremely high walking time valuation once converted
+through walking speed (80\,m/min). This is a calibration limitation: the
+$\beta_1$ values were chosen to represent qualitative ordering among passenger
+types rather than calibrated against revealed-preference data.
 For types with low price sensitivity (low $|\beta_4|$), the implied walk VOT
-is further inflated. Operators should treat the wait and IVT VOT values as the
-primary policy-relevant benchmarks, as these are measured in consistent units
-across both the model and the literature.
+is further inflated. The wait and IVT VOT values (0.27--3.33 and 0.13--2.67\,CNY/min
+respectively) are the primary policy-relevant benchmarks; the walk VOT should
+be treated as an upper bound pending empirical calibration. This limitation is
+discussed further in Section~\ref{sec:conclusion}.
 
 The objective weights $\alpha_2$ (waiting) and $\alpha_3$ (walking) in the
 baseline configuration ($\alpha_2 = \alpha_3 = 1.0$) implicitly weight these

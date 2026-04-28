@@ -22,7 +22,7 @@ that allowing passengers to walk to both pickup and dropoff points reduces vehic
 and improves system efficiency. Their analysis demonstrates that the efficiency gains from
 dropoff-side flexibility are comparable in magnitude to those from pickup-side flexibility,
 providing empirical motivation for the bidirectional design adopted in the present paper.
-Our work extends this insight to the many-to-many DRT setting with explicit MNL passenger
+Our work extends this insight to the many-to-many DRT setting with explicit binary logit passenger
 choice and online re-optimization: unlike \citet{fielbaum2021}, who study a static
 ridepooling context, we address the online assignment problem where meeting points must be
 selected in real time as requests arrive, and passenger acceptance is modeled
@@ -44,7 +44,7 @@ Rolling horizon (receding horizon) methods decompose the infinite-horizon online
 
 The Adaptive Large Neighborhood Search (ALNS) of \citet{ropke2006} is the dominant metaheuristic for DARP and related problems, combining destroy-and-repair operators with an adaptive weight mechanism that favors operators performing well on recent iterations. ALNS has been applied to static DARP \citep{parragh2008a}, dynamic ridesharing \citep{agatz2012}, and, most recently, to online DRT re-optimization.
 
-\citet{wu2025} present a rolling horizon ALNS framework for many-to-many DRT that re-optimises vehicle routes at fixed time intervals as new requests arrive. Their computational experiments on synthetic and real-world instances demonstrate that rolling horizon ALNS achieves near-optimal acceptance rates with tractable computation times. However, the formulation of \citet{wu2025} assumes door-to-door service — no meeting points are considered — and treats passenger acceptance as deterministic. The present paper integrates the rolling horizon ALNS architecture of \citet{wu2025} with the bidirectional meeting point assignment and MNL choice model described above, yielding a unified online co-optimization framework.
+\citet{wu2025} present a rolling horizon ALNS framework for many-to-many DRT that re-optimises vehicle routes at fixed time intervals as new requests arrive. Their computational experiments on synthetic and real-world instances demonstrate that rolling horizon ALNS achieves near-optimal acceptance rates with tractable computation times. However, the formulation of \citet{wu2025} assumes door-to-door service — no meeting points are considered — and treats passenger acceptance as deterministic. The present paper integrates the rolling horizon ALNS architecture of \citet{wu2025} with the bidirectional meeting point assignment and binary logit choice model described above, yielding a unified online co-optimization framework.
 
 \subsection{Research Gap and Positioning}
 

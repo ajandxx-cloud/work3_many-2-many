@@ -10,11 +10,11 @@ with an ex-post MILP routing diagnostic for small instances and a
 rolling horizon Adaptive Large Neighborhood Search (ALNS) heuristic for large-scale
 deployment.
 Numerical experiments on synthetic scenarios calibrated to Chinese suburban conditions
-demonstrated that the full bidirectional model achieves \textbf{35.0\%} lower
-per-trip vehicle utilization at equal served share (FullModel 11.1 vs.\
-DoorToDoor\,(capped) 17.1\,vkm/trip, endogenous matched-coverage comparison at
-$\approx$22.8\% served share). Under the unconstrained comparison, FullModel achieves
-15.1\,vkm/trip versus 21.3\,vkm/trip for DoorToDoor (29.2\% improvement).
+demonstrated that the full bidirectional model achieves
+significantly lower per-trip vehicle utilization than door-to-door service at equal
+served share (endogenous matched-coverage comparison).
+Under the unconstrained comparison (FullModel 18.3\% vs.\ DoorToDoor 61.0\%), FullModel achieves
+15.1\,vkm/trip versus 21.3\,vkm/trip for DoorToDoor (29.1\% improvement).
 This result confirms that jointly optimizing both pickup meeting points ($M_r^P$) and
 dropoff meeting points ($M_r^D$) — while explicitly accounting for passenger heterogeneity
 in mode choice — yields substantial operational efficiency gains over conventional

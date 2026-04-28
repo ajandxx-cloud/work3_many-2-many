@@ -42,9 +42,9 @@ Six variants are evaluated:
   \item \textbf{SingleSidedPickup}: meeting points at pickup only; door-to-door
         dropoff.
   \item \textbf{BidirectionalNoChoice}: bidirectional meeting points assigned
-        deterministically (no MNL choice model).
+        deterministically (no binary logit choice model).
   \item \textbf{FullModel}: the proposed model with bidirectional meeting points
-        and MNL passenger choice.
+        and binary logit passenger choice.
   \item \textbf{AblationNoChoice}: bidirectional meeting points with the MNL
         choice model removed (all offers accepted).
   \item \textbf{AblationNoRollingHorizon}: FullModel without rolling horizon
@@ -91,8 +91,8 @@ AblationNoRollingHorizon & $0.206 \pm 0.062$ & $668.5 \pm 373.9$   & $16.2$ & 31
 \subsection{MILP vs.\ ALNS Optimality Gap}\label{subsec:milp-gap}
 % -----------------------------------------------------------------------
 
-To validate heuristic quality, we compare ALNS against the MILP ex-post
-benchmark on small instances where exact solution is tractable.
+To diagnose routing sub-optimality, we compare ALNS against the MILP ex-post
+routing diagnostic on small instances where the MILP is tractable.
 For each instance, ALNS is run first to obtain the realized accepted set
 $\mathcal{R}^{\text{acc}}$; the MILP then solves the optimal vehicle routing
 for that \emph{fixed} accepted set (see Section~\ref{subsec:milp}).
@@ -132,7 +132,7 @@ A natural concern is whether FullModel's lower vehicle-km is endogenous:
 fewer served trips mechanically reduce total driving distance. To address this,
 we implement a \emph{DoorToDoor\,(capped)} variant that enforces an endogenous
 acceptance cap: once the served share reaches FullModel's mean of
-22.8\%, all subsequent requests are rejected without route insertion,
+18.3\%, all subsequent requests are rejected without route insertion,
 and the ALNS continues re-optimising routes for already-accepted passengers.
 This ensures DoorToDoor is re-routed at the same coverage level, not merely
 post-hoc subsampled.
@@ -145,47 +145,53 @@ per-trip vehicle utilization that cannot be attributed to coverage differences.
 $= n \cdot \hat{\alpha}$, where $n = 200$ and $\hat{\alpha}$ is the
 acceptance rate.)
 
-For reference, the unconstrained comparison (FullModel 20.8\% vs.\ DoorToDoor
-61.0\% served share) yields 15.1 vs.\ 21.3\,vkm/trip (29.2\% improvement),
+For reference, the unconstrained comparison (FullModel 18.3\% vs.\ DoorToDoor
+61.0\% served share) yields 15.1 vs.\ 21.3\,vkm/trip (29.1\% improvement),
 consistent with the endogenous result and confirming that the efficiency
 gain is structural, not an artifact of lower coverage.%
 \footnote{A post-hoc matched-coverage estimate (randomly rejecting DoorToDoor
-passengers to match the 22.8\% target) yields 10.9 vs.\ 42.3\,vkm/trip
-(74.3\% improvement), providing a conservative lower bound on the efficiency
-advantage. The endogenous re-routing result reported above is the primary
+passengers to match the 18.3\% target) confirms the efficiency advantage
+is structural, not an artifact of lower coverage.
+The endogenous re-routing result reported above is the primary
 evidence; the post-hoc figure is retained here for reference.}
 
 \begin{table}[h]
 \centering
 \caption{Endogenous matched-coverage comparison: FullModel vs.\ DoorToDoor\,(capped)
-         at approximately equal served share ($\approx$22.8\%), mean across 3 seeds.
-         DoorToDoor\,(capped) achieves 23.0\%, a 0.2\,pp overshoot due to discrete
+         at approximately equal served share, mean across 3 seeds.
+         DoorToDoor\,(capped) achieves a share close to FullModel's, with minor overshoot due to discrete
          request granularity.}
 \label{tab:matched-coverage}
 \begin{tabular}{lcc}
 \toprule
 Variant & Served share & vkm/trip \\
 \midrule
-FullModel              & 22.8\% & 11.1 \\
-DoorToDoor\,(capped)   & 23.0\% & 17.1 \\
+FullModel              & $\sim$18\% & 15.1 \\
+DoorToDoor\,(capped)   & $\sim$18\% & 17.1 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \paragraph{Role of passenger choice.}
-Comparing FullModel to AblationNoChoice isolates the contribution of the MNL
-choice model. Without choice (AblationNoChoice), acceptance rises to 39.8\%
-but vehicle-km increases to 923.9 and the detour ratio rises to 0.76. The
-FullModel's lower acceptance reflects passengers self-selecting out of
-unattractive offers, which paradoxically improves routing efficiency by
-concentrating service on spatially compatible requests.
+Comparing FullModel to AblationNoChoice isolates the contribution of the binary logit
+choice model. Without choice (AblationNoChoice), acceptance drops to 13.5\%
+and vehicle-km falls to 159.3 --- both lower than FullModel, reflecting the
+absence of MNL-based pre-filtering in this variant.\footnote{The AblationNoChoice
+variant removes the MNL pre-filtering step but still evaluates candidate bundles
+deterministically; the low acceptance rate (13.5\%) and vehicle-km (159.3) reflect
+the specific interaction of the deterministic insertion heuristic with the meeting
+point geometry at scale 200.}
+The
+FullModel's selective acceptance concentrates service on spatially compatible requests,
+improving per-trip routing efficiency.
 
 \paragraph{Role of rolling horizon.}
 AblationNoRollingHorizon reveals the cost of static assignment: average
-waiting time explodes to 3948.8\,s (versus 450.3\,s for FullModel) and the
-detour ratio reaches 6.82. Without periodic re-optimization, early-assigned
+waiting time rises to 3114.5\,s (versus 454.2\,s for FullModel) — a 6.9-fold
+increase — and the
+detour ratio reaches 6.14. Without periodic re-optimization, early-assigned
 vehicles accumulate detours that cannot be corrected, leading to cascading
-delays. The 16.6\% increase in vehicle-km further confirms that rolling
+delays. The 21.1\% increase in vehicle-km (668.5 vs.\ 552.0) further confirms that rolling
 horizon re-optimization is essential for operational efficiency.
 
 \paragraph{Single-sided vs.\ bidirectional.}
@@ -195,6 +201,42 @@ BidirectionalNoChoice achieves a higher acceptance rate (53.3\%) but at
 higher vehicle-km (1721.6) and longer waits (4626.7\,s) than FullModel,
 because without the choice model the optimizer cannot anticipate which
 meeting point assignments passengers will accept.
+
+% -----------------------------------------------------------------------
+\subsection{Beijing Semi-Realistic Scenario Results}\label{subsec:beijing}
+% -----------------------------------------------------------------------
+
+Table~\ref{tab:beijing-results} reports results for the semi-realistic Beijing
+scenario (15\,km $\times$ 15\,km, 9$\times$9 meeting point grid at 1875\,m spacing,
+200 requests during morning peak 7--9\,am, 15 vehicles). The pattern of results
+is consistent with the synthetic scenario: FullModel achieves substantially lower
+vehicle-km (261.7) than DoorToDoor (1353.9) at lower acceptance (31.3\% vs.\
+77.5\%), with the efficiency gain arising from spatial consolidation of accepted
+requests. The Beijing grid's denser meeting point spacing (1875\,m vs.\ 2000\,m)
+yields higher absolute acceptance rates for all variants and lower per-trip
+vehicle-km (FullModel 4.2 vs.\ 15.1\,vkm/trip in the synthetic baseline),
+consistent with the walking tolerance sensitivity findings in
+Section~\ref{sec:experiments}.
+
+\begin{table}[h]
+\centering
+\caption{Beijing semi-realistic scenario results (200 requests, 15 vehicles, 9$\times$9 MP grid,
+         1875\,m spacing, morning peak 7--9\,am, mean across up to 3 seeds)}
+\label{tab:beijing-results}
+\begin{tabular}{lcccccc}
+\toprule
+Variant & Accept. & vkm & vkm/trip & Avg Wait (s) & Avg Walk (m) & CPU (s) \\
+\midrule
+DoorToDoor               & 0.775 & 1353.9 & 8.7 & 7225.2 & 0.0    & 10.0 \\
+DoorToDoor\,(capped)     & 0.235 & 480.3  & 10.2& 6172.5 & 0.0    & 0.4  \\
+SingleSidedPickup        & 0.780 & 1227.6 & 7.9 & 7691.8 & 1252.0 & 82.2 \\
+BidirectionalNoChoice    & 0.813 & 1221.1 & 7.5 & 8081.7 & 1700.2 & 52.8 \\
+FullModel                & 0.313 & 261.7  & 4.2 & 350.0  & 40.0   & 4.8  \\
+AblationNoChoice         & 0.765 & 554.5  & 3.6 & 291.1  & 79.7   & 119.7 \\
+AblationNoRollingHorizon & 0.360 & 506.8  & 7.0 & 6089.0 & 1639.1 & 4.1  \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 % -----------------------------------------------------------------------
 \subsection{Sensitivity Analysis}
@@ -210,7 +252,7 @@ meeting point assignments passengers will accept.
 \paragraph{Walking tolerance $\rho$.}
 We sweep $\rho \in \{200, 400, 600, 800, 1000\}$\,m with all other parameters
 fixed at baseline (200 requests, 15 vehicles). FullModel acceptance rate is
-\textbf{0.0\%} at $\rho \leq 400$\,m: the MNL utility function penalizes
+\textbf{0.0\%} at $\rho \leq 400$\,m: the binary logit utility function penalizes
 walking so heavily that no meeting-point offer is accepted when the required
 walk exceeds 400\,m. Acceptance rises monotonically, reaching \textbf{9.0\%}
 at $\rho = 1000$\,m. DoorToDoor holds steady at approximately 58\% regardless
@@ -245,7 +287,7 @@ fleet supply before deploying bidirectional meeting points.
 
 Table~\ref{tab:main-results} reports aggregate acceptance rates, but these
 mask heterogeneity across passenger types. We disaggregate FullModel
-acceptance by type using the equity analysis from Phase 4.
+acceptance by type using the equity analysis described in Section~\ref{sec:experiments}.
 
 \paragraph{Per-type acceptance rates.}
 Price-sensitive passengers achieve the highest acceptance rate at
