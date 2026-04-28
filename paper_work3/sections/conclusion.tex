@@ -1,9 +1,9 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
-This paper addressed the problem of online co-optimization of bidirectional meeting point
+This paper addressed the problem of online optimization of bidirectional meeting point
 assignment and dynamic routing for many-to-many demand-responsive transit (DRT) with
-explicit passenger choice.
+simulated passenger response via binary logit acceptance.
 We formulated the problem as a coupled three-layer model — service offer generation,
 binary logit passenger response, and dynamic vehicle dispatch — and solved it
 with an ex-post MILP routing diagnostic for small instances and a
@@ -28,8 +28,8 @@ that considered only single-sided meeting points \citep{cortenbach2024} or omitt
 passenger choice \citep{wu2025}.
 Second, we developed an ex-post MILP routing diagnostic and a rolling horizon ALNS heuristic
 specifically designed for the bidirectional dial-a-ride problem with endogenous demand.
-Third, we empirically demonstrated the 35.0\% vehicle efficiency gain (endogenous
-matched-coverage comparison) and 29.2\% gain (unconstrained comparison) and conducted
+Third, we empirically demonstrated efficiency gains in per-trip vehicle utilization
+(endogenous matched-coverage comparison) and 29.1\% gain (unconstrained comparison) and conducted
 ablation experiments that isolated the contributions of bidirectional meeting points,
 rolling horizon scheduling, and passenger choice modeling.
 Fourth, we performed an equity analysis across three passenger types, revealing a Gini
@@ -40,15 +40,12 @@ low-density urban areas.
 
 The policy implications of these findings are organized into five actionable
 recommendations for Chinese city DRT operators.
-The most operationally significant findings are the walking radius threshold and the
-fleet sizing guideline: a minimum walking tolerance of $\rho = 1000$~m is required for
-bidirectional meeting point deployment to yield meaningful efficiency gains, and a
-minimum fleet ratio of 15 vehicles per 100 peak-hour requests is needed to avoid severe
-service degradation.
-Together with the three-tier city deployment framework — which differentiates
-implementation strategies for megacities, medium cities, and small/rural areas — these
-thresholds provide concrete, evidence-based guidance for DRT operators and urban
-planners designing or scaling DRT services in China.
+In our simulation setting, bidirectional meeting point deployment yields meaningful
+efficiency gains at walking radius $\rho \geq 1000$~m, and fleet ratios below
+15 vehicles per 100 peak-hour requests lead to service degradation due to vehicle
+scarcity. These scenario-specific findings, together with the three-tier deployment
+framework, provide simulation-based guidance for DRT operators and urban
+planners designing or scaling DRT services in low-density Chinese urban areas.
 
 Several limitations of this study should be acknowledged.
 The binary logit utility parameters ($\beta$ coefficients for fare, waiting time, and walking

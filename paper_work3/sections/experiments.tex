@@ -19,11 +19,13 @@ reproducibility (seeds 42, 43, 44). Results are averaged over three random seeds
 are reported in Table~\ref{tab:main-results}.
 
 The \emph{semi-realistic scenario} is calibrated to a Beijing suburban
-district: a $15\,\text{km} \times 15\,\text{km}$ service zone with 80 meeting
-points arranged on a $9 \times 9$ grid at 1875\,m spacing, 200 requests
-during the morning peak (7--9\,am), and 15 vehicles. This scenario tests
-whether the efficiency gains observed in the synthetic setting transfer to a
-realistic Chinese city context.
+district: a $15\,\text{km} \times 15\,\text{km}$ service zone with 81 meeting
+points arranged on a $9 \times 9$ grid at 1875\,m spacing (one corner point
+excluded), 200 requests
+during the morning peak (7--9\,am), and 15 vehicles. This Beijing-inspired
+synthetic grid scenario tests
+whether the efficiency gains observed in the synthetic setting extend to a
+denser meeting point configuration.
 
 \paragraph{Choice model parameters.}
 The binary logit choice model (Section~\ref{sec:choice}) uses the type-specific
@@ -35,21 +37,39 @@ one-third of the demand. The per-type beta values and the pre-filter-then-route
 implementation are documented in Sections~\ref{sec:choice} and~\ref{sec:algorithm}.
 
 \paragraph{Model variants.}
-Six variants are evaluated:
-\begin{enumerate}
-  \item \textbf{DoorToDoor}: no meeting points; vehicles serve origin--destination
-        pairs directly.
-  \item \textbf{SingleSidedPickup}: meeting points at pickup only; door-to-door
-        dropoff.
-  \item \textbf{BidirectionalNoChoice}: bidirectional meeting points assigned
-        deterministically (no binary logit choice model).
-  \item \textbf{FullModel}: the proposed model with bidirectional meeting points
-        and binary logit passenger choice.
-  \item \textbf{AblationNoChoice}: bidirectional meeting points with the MNL
-        choice model removed (all offers accepted).
-  \item \textbf{AblationNoRollingHorizon}: FullModel without rolling horizon
-        re-optimization (greedy static assignment).
-\end{enumerate}
+Six variants are evaluated, differing across three dimensions: meeting point
+configuration (none / single-sided / bidirectional), choice mechanism (none /
+binary logit / pre-filter), and re-optimization (rolling horizon ALNS / static
+greedy). Table~\ref{tab:variants} summarizes the design of each variant.
+
+\begin{table}[h]
+\centering
+\caption{Model variant definitions across three design dimensions}
+\label{tab:variants}
+\begin{tabular}{lccc}
+\toprule
+Variant & Meeting Points & Choice Mechanism & Re-optimization \\
+\midrule
+DoorToDoor               & None (O-D direct) & All feasible accepted & Rolling horizon ALNS \\
+SingleSidedPickup        & Pickup only        & All feasible accepted & Rolling horizon ALNS \\
+BidirectionalNoChoice    & Bidirectional      & All feasible accepted & Rolling horizon ALNS \\
+FullModel                & Bidirectional      & Binary logit sampling & Rolling horizon ALNS \\
+AblationNoChoice         & Bidirectional      & Deterministic (no pre-filter) & Rolling horizon ALNS \\
+AblationNoRollingHorizon & Bidirectional      & Binary logit sampling & Static greedy \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{DoorToDoor} serves requests directly, without meeting points or binary
+logit acceptance. \textbf{SingleSidedPickup} assigns pickup meeting points only.
+\textbf{BidirectionalNoChoice} assigns bidirectional meeting points deterministically
+(all feasible requests accepted). \textbf{FullModel} is the proposed model with
+bidirectional meeting points and binary logit passenger choice (pre-filter-then-route
+mechanism, Section~\ref{sec:algorithm}).
+\textbf{AblationNoChoice} removes the binary logit pre-filtering: candidate
+bundles are evaluated and inserted deterministically without Bernoulli
+acceptance sampling. \textbf{AblationNoRollingHorizon} disables the rolling
+horizon, using static greedy insertion instead.
 
 \paragraph{Performance metrics.}
 Nine metrics are recorded: acceptance rate, vehicle-km (vkm), average and
@@ -68,6 +88,15 @@ Section~\ref{sec:pareto}). All results are averaged across three seeds.
 
 Table~\ref{tab:main-results} reports mean performance across the six variants
 for the synthetic scenario with 200 requests and 15 vehicles.
+Vkm/trip values use accepted trip count as the denominator ($n \cdot \hat{\alpha}$).
+\textbf{Note:} the binary logit acceptance model (Section~\ref{sec:choice}) applies
+only to FullModel and AblationNoRollingHorizon. DoorToDoor, SingleSidedPickup,
+and BidirectionalNoChoice accept all feasible requests; DoorToDoor's acceptance
+(61.0\%) reflects infeasibility rejections, not binary logit sampling. The
+different vkm/trip values for FullModel across tables reflect different
+experimental configurations: Table~\ref{tab:main-results} (15.1, baseline),
+Table~\ref{tab:pareto} (9.893, Gamma sweep, FullModel only), and
+Table~\ref{tab:weight-sensitivity} (10.6, balanced weights configuration).
 
 \begin{table}[h]
 \centering
@@ -113,12 +142,14 @@ $n$ & ALNS vkm & MILP vkm & Gap (\%) & MILP status & Solve time (s) \\
 \end{tabular}
 \end{table}
 
-The ALNS heuristic achieves solutions within 170\% of the MILP ex-post
-optimum on $n = 20$ instances and within 99\% on $n = 30$ instances.
-The large absolute gap reflects the small accepted-set sizes (4--7 passengers
-per instance), where MILP can reroute vehicles optimally over a fixed set
-while ALNS operates under online insertion constraints; the gap is expected
-to narrow at scale as vehicle consolidation opportunities increase.
+The ALNS heuristic solutions are 170\% above the MILP ex-post
+optimum on $n = 20$ instances and 99\% above on $n = 30$ instances.
+These large gaps reflect the very small accepted-set sizes (4--7 passengers
+per instance, MILP solve time $<$0.001\,s); the MILP solves an over-simplified
+routing problem on a known fixed set, not a meaningful benchmark for ALNS
+performance. We retain this comparison only as a minimal sanity check that
+the ALNS solution is feasible; it does not validate heuristic quality at
+operational scales.
 
 \begin{figure}[h]
 \centering
@@ -254,15 +285,17 @@ We sweep $\rho \in \{200, 400, 600, 800, 1000\}$\,m with all other parameters
 fixed at baseline (200 requests, 15 vehicles). FullModel acceptance rate is
 \textbf{0.0\%} at $\rho \leq 400$\,m: the binary logit utility function penalizes
 walking so heavily that no meeting-point offer is accepted when the required
-walk exceeds 400\,m. Acceptance rises monotonically, reaching \textbf{9.0\%}
+walk exceeds 400\,m (under the current parameterization). Acceptance rises
+monotonically, reaching \textbf{9.0\%}
 at $\rho = 1000$\,m. DoorToDoor holds steady at approximately 58\% regardless
-of $\rho$, since it imposes no walking requirement.
+of $\rho$, since it imposes no walking requirement and does not use the
+binary logit acceptance model.
 
-The implication is clear: $\rho = 1000$\,m is the \emph{minimum viable
-threshold} for bidirectional meeting point service. Below this threshold,
-the system degenerates to near-zero acceptance and the efficiency gains
-disappear. Operators must verify that the target population is willing to
-walk at least 1000\,m before deploying bidirectional meeting points.
+In our simulation setting, acceptance becomes non-zero only at $\rho \geq 1000$\,m.
+Below this threshold, the system degenerates to near-zero acceptance under the
+current utility parameters. This is a joint consequence of the meeting point
+spacing (2\,km grid), the binary logit parameters, and the $U_0=0$ normalization;
+operators should re-evaluate this threshold using locally calibrated parameters.
 
 \paragraph{Fleet size.}
 We sweep $n_{\text{vehicles}} \in \{5, 10, 15, 20, 25, 30\}$ with
@@ -272,11 +305,11 @@ requests). The marginal gain in acceptance rate diminishes beyond 20
 vehicles: adding vehicles 21--30 yields only 2.1 percentage points of
 additional acceptance, compared to 8.3 pp for vehicles 11--20. This
 diminishing returns pattern indicates that vehicle scarcity is the binding
-constraint at low fleet sizes, while at higher fleet sizes the MNL outside
+constraint at low fleet sizes, while at higher fleet sizes the binary logit outside
 option becomes the binding constraint.
 
 At $n_{\text{vehicles}} = 15$ (baseline), DoorToDoor acceptance exceeds
-FullModel by 38 percentage points (61.0\% vs.\ 20.8\%), confirming that
+FullModel by 43 percentage points (61.0\% vs.\ 18.3\%), confirming that
 door-to-door service is more robust under vehicle scarcity because it does
 not impose walking penalties. Operators should therefore ensure adequate
 fleet supply before deploying bidirectional meeting points.

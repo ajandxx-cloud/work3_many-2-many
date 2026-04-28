@@ -253,11 +253,14 @@ request evaluations.
 
 \paragraph{NP-Hardness.}
 The many-to-many DRT problem with bidirectional meeting points is NP-hard. This follows
-by reduction from the Dial-a-Ride Problem (DARP) \citep{cordeau2007}: setting
-$|\mathcal{M}| = 1$ (a single meeting point) and $\rho^P = \rho^D = \infty$ recovers
-the standard DARP, which is NP-hard. The bidirectional meeting-point extension strictly
-generalizes the DARP by adding the joint optimization of $m_r^P$ and $m_r^D$, so the
-problem is at least as hard.
+by reduction from the Dial-a-Ride Problem (DARP) \citep{cordeau2007}: for each request
+$r$, set the candidate pickup set to a singleton containing only the passenger's origin
+($M_r^P = \{o_r\}$) and the candidate dropoff set to a singleton containing only the
+destination ($M_r^D = \{\delta_r\}$), with $\rho^P$ and $\rho^D$ set sufficiently large
+to include these singletons. The problem then reduces to standard DARP (door-to-door
+with no meeting point choice), which is NP-hard. The bidirectional meeting-point
+extension strictly generalizes this case by allowing $|M_r^P|, |M_r^D| \geq 1$, adding
+the joint optimization of $m_r^P$ and $m_r^D$, so the problem is at least as hard.
 
 \paragraph{Heuristic Complexity.}
 The per-request candidate generation step runs in $O(|\mathcal{M}| \log |\mathcal{M}|)$.

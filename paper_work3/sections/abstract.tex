@@ -5,11 +5,11 @@ Meeting-point-based DRT reduces vehicle detours by consolidating pickups and dro
 at pre-defined locations, yet existing work assigns meeting points only on the pickup
 side and ignores passenger heterogeneity in mode choice.
 We address this gap by proposing a many-to-many DRT model with bidirectional meeting
-point sets ($M_r^P$ for pickup, $M_r^D$ for dropoff) and explicit binary logit
-passenger choice with three passenger types and an outside option.
+point sets ($M_r^P$ for pickup, $M_r^D$ for dropoff) and passenger choice modeled
+via single-offer binary logit acceptance with three passenger types and an outside option.
 The model is formulated as a coupled three-layer system — service offer generation,
-passenger response, and dynamic dispatch — and solved with a Mixed-Integer Linear
-Program (MILP) ex-post routing diagnostic for small instances and a rolling horizon Adaptive
+passenger response, and dynamic dispatch — and solved with an ex-post MILP routing
+diagnostic for small instances and a rolling horizon Adaptive
 Large Neighborhood Search (ALNS) heuristic for large-scale deployment.
 Numerical experiments on synthetic scenarios calibrated to Chinese suburban conditions
 show that, at equal served share (endogenous matched-coverage comparison), the full bidirectional model
@@ -23,10 +23,8 @@ Equity analysis across passenger types reveals a Gini coefficient of 0.1216 in
 acceptance rates: time-sensitive passengers are systematically disadvantaged
 (14.4\% acceptance) relative to price-sensitive (25.4\%) and walk-sensitive (20.2\%)
 passengers.
-Based on these findings, we derive five actionable policy recommendations for Chinese
-city DRT operators, including a walking radius threshold of 1000~m for viable
-bidirectional deployment and a minimum fleet ratio of 15 vehicles per 100 peak-hour
-requests.
+Based on these findings, we derive five scenario-specific policy implications for
+DRT deployment in low-density Chinese urban areas.
 \end{abstract}
 
 \begin{keyword}
