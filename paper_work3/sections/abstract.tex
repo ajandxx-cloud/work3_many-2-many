@@ -4,21 +4,20 @@ but door-to-door service is operationally costly and difficult to scale.
 Meeting-point-based DRT reduces vehicle detours by consolidating pickups and dropoffs
 at pre-defined locations, yet existing work assigns meeting points only on the pickup
 side and ignores passenger heterogeneity in mode choice.
-We address this gap by proposing a many-to-many DRT model with bidirectional meeting
-point sets ($M_r^P$ for pickup, $M_r^D$ for dropoff) and passenger choice modeled
+We address this gap by proposing a many-to-many DRT framework with bidirectional meeting
+point sets ($M_r^P$ for pickup, $M_r^D$ for dropoff) and simulated passenger response
 via single-offer binary logit acceptance with three passenger types and an outside option.
-The model is formulated as a coupled three-layer system — service offer generation,
-passenger response, and dynamic dispatch — and solved with an ex-post MILP routing
+The model is formulated as a coupled three-layer system --- service offer generation,
+passenger response, and dynamic dispatch --- and solved with an ex-post MILP routing
 diagnostic for small instances and a rolling horizon Adaptive
 Large Neighborhood Search (ALNS) heuristic for large-scale deployment.
-Numerical experiments on synthetic scenarios calibrated to Chinese suburban conditions
-show that, at equal served share (endogenous matched-coverage comparison), the full bidirectional model
-achieves significantly lower per-trip vehicle utilization than the
-DoorToDoor\,(capped) baseline.
-Under the unconstrained comparison (FullModel 18.3\%
+Numerical experiments on stylized scenarios inspired by Chinese suburban conditions
+show that, under the unconstrained comparison (FullModel 18.3\%
 vs.\ DoorToDoor 61.0\% served share), FullModel achieves 15.1\,vkm/trip versus
-21.3\,vkm/trip (29.1\% improvement). For reference, a post-hoc matched-coverage
-estimate confirms the efficiency advantage is not an artifact of lower coverage.
+21.3\,vkm/trip (29.1\% improvement).
+A separate matched-coverage diagnostic suggests that the efficiency advantage
+persists after coverage differences are reduced, but this diagnostic is treated
+as exploratory rather than as the primary headline estimate.
 Equity analysis across passenger types reveals a Gini coefficient of 0.1216 in
 acceptance rates: time-sensitive passengers are systematically disadvantaged
 (14.4\% acceptance) relative to price-sensitive (25.4\%) and walk-sensitive (20.2\%)

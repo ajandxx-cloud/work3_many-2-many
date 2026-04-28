@@ -4,46 +4,48 @@
 This paper addressed the problem of online optimization of bidirectional meeting point
 assignment and dynamic routing for many-to-many demand-responsive transit (DRT) with
 simulated passenger response via binary logit acceptance.
-We formulated the problem as a coupled three-layer model — service offer generation,
-binary logit passenger response, and dynamic vehicle dispatch — and solved it
+We formulated the problem as a coupled three-layer model --- service offer generation,
+binary logit passenger response, and dynamic vehicle dispatch --- and solved it
 with an ex-post MILP routing diagnostic for small instances and a
 rolling horizon Adaptive Large Neighborhood Search (ALNS) heuristic for large-scale
 deployment.
-Numerical experiments on synthetic scenarios calibrated to Chinese suburban conditions
-demonstrated that the full bidirectional model achieves
-significantly lower per-trip vehicle utilization than door-to-door service at equal
-served share (endogenous matched-coverage comparison).
-Under the unconstrained comparison (FullModel 18.3\% vs.\ DoorToDoor 61.0\%), FullModel achieves
+Numerical experiments on stylized scenarios inspired by Chinese suburban conditions
+demonstrated that, under the unconstrained comparison (FullModel 18.3\% vs.\ DoorToDoor 61.0\%), FullModel achieves
 15.1\,vkm/trip versus 21.3\,vkm/trip for DoorToDoor (29.1\% improvement).
-This result confirms that jointly optimizing both pickup meeting points ($M_r^P$) and
-dropoff meeting points ($M_r^D$) — while explicitly accounting for passenger heterogeneity
-in mode choice — yields substantial operational efficiency gains over conventional
-door-to-door and single-sided meeting point approaches.
+A separate matched-coverage diagnostic suggests that this efficiency advantage
+persists when served shares are brought closer together, but we treat that estimate
+as exploratory because it is produced by a separate diagnostic run.
+This result suggests that selecting both pickup meeting points ($M_r^P$) and
+dropoff meeting points ($M_r^D$), while simulating heterogeneous passenger acceptance,
+can yield operational efficiency gains over conventional door-to-door and single-sided
+meeting point approaches.
 
 The paper made four contributions to the DRT literature.
-First, we proposed the first formulation combining bidirectional meeting
-point sets, binary logit passenger choice with heterogeneous types, and
-rolling horizon re-optimisation for many-to-many DRT — a coupled three-layer model extending prior work
+First, we proposed a simulation framework combining bidirectional meeting
+point sets, binary logit passenger acceptance with heterogeneous types, and
+rolling horizon re-optimisation for many-to-many DRT, extending prior work
 that considered only single-sided meeting points \citep{cortenbach2024} or omitted
 passenger choice \citep{wu2025}.
-Second, we developed an ex-post MILP routing diagnostic and a rolling horizon ALNS heuristic
-specifically designed for the bidirectional dial-a-ride problem with endogenous demand.
-Third, we empirically demonstrated efficiency gains in per-trip vehicle utilization
-(endogenous matched-coverage comparison) and 29.1\% gain (unconstrained comparison) and conducted
+Second, we used an ex-post MILP routing diagnostic and a rolling horizon ALNS
+heuristic as the computational vehicle for studying the bidirectional dial-a-ride
+problem with simulated endogenous demand.
+Third, we empirically demonstrated a 29.1\% gain in per-trip vehicle utilization
+under the unconstrained comparison, reported a separate exploratory matched-coverage
+diagnostic, and conducted
 ablation experiments that isolated the contributions of bidirectional meeting points,
-rolling horizon scheduling, and passenger choice modeling.
+rolling horizon scheduling, and passenger-response modeling.
 Fourth, we performed an equity analysis across three passenger types, revealing a Gini
 coefficient of 0.1216 in acceptance rates: time-sensitive passengers are systematically
 disadvantaged (14.4\% acceptance) relative to price-sensitive (25.4\%) and walk-sensitive
 (20.2\%) passengers, a finding with direct implications for service equity in Chinese
 low-density urban areas.
 
-The policy implications of these findings are organized into five actionable
-recommendations for Chinese city DRT operators.
+The policy implications of these findings are organized into five scenario-specific
+insights for Chinese city DRT operators.
 In our simulation setting, bidirectional meeting point deployment yields meaningful
-efficiency gains at walking radius $\rho \geq 1000$~m, and fleet ratios below
-15 vehicles per 100 peak-hour requests lead to service degradation due to vehicle
-scarcity. These scenario-specific findings, together with the three-tier deployment
+efficiency gains at walking radius $\rho = 1000$~m in the tested grid, and lower
+fleet ratios reduce service quality due to vehicle scarcity. These scenario-specific
+findings, together with the illustrative three-tier deployment
 framework, provide simulation-based guidance for DRT operators and urban
 planners designing or scaling DRT services in low-density Chinese urban areas.
 
@@ -52,7 +54,7 @@ The binary logit utility parameters ($\beta$ coefficients for fare, waiting time
 distance) were calibrated from simulation rather than from real passenger survey data;
 future work should validate these parameters against stated or revealed preference surveys
 from Chinese DRT users.
-The numerical experiments rely on synthetic and semi-realistic scenarios; validation
+The numerical experiments rely on stylized synthetic scenarios; validation
 against real GPS trajectories and smart card data from operational Chinese DRT systems
 remains an important direction for future research.
 Additionally, the set of candidate meeting point locations $M$ is treated as a given
@@ -67,6 +69,6 @@ scenario-based stochastic optimization \citep{bent2004} — could improve perfor
 under high demand uncertainty.
 Third, incorporating time-dependent travel times would make the model more realistic for
 peak-hour DRT operations in congested urban networks.
-Fourth, the joint optimization of meeting point placement and dynamic routing represents
+Fourth, the joint design of meeting point placement and dynamic routing represents
 a promising research frontier that would unify the location and scheduling decisions
 currently treated separately in the literature.

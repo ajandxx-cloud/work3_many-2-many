@@ -4,22 +4,22 @@
 \section{Policy Implications}\label{sec:policy}
 
 The numerical experiments in Section~\ref{sec:experiments} provide
-evidence-based guidance for DRT deployment decisions in Chinese cities.
+simulation-based guidance for DRT deployment decisions in Chinese cities.
 Bidirectional meeting point systems offer substantial vehicle efficiency
 gains, but their viability depends critically on walking tolerance, fleet
 supply, and demand density. This section translates the experimental
-findings into five actionable recommendations for DRT operators and urban
+findings into five scenario-specific insights for DRT operators and urban
 planners, framed for the low-density suburban contexts where DRT is most
 commonly deployed in China.
 
 % -----------------------------------------------------------------------
-\subsection{R1: Walking Radius Threshold of 1000\,m is Scenario-Specific}
+\subsection{R1: Walking Radius Threshold is Scenario-Specific}
 % -----------------------------------------------------------------------
 
 \paragraph{Evidence.}
 The sensitivity analysis (Section~\ref{sec:experiments}) shows that
 FullModel acceptance rate is \textbf{0.0\%} at $\rho \leq 400$\,m and
-rises to \textbf{9.0\%} at $\rho = 1000$\,m. Below the 1000\,m threshold,
+rises to \textbf{9.0\%} at $\rho = 1000$\,m. Below this threshold in the tested setup,
 the binary logit utility penalty for walking is so large that no meeting-point offer
 clears the outside option, and the bidirectional system delivers no
 efficiency benefit over door-to-door service. At $\rho = 1000$\,m, FullModel vehicle-km is 219.7 versus 1693.8 for
@@ -28,7 +28,7 @@ partly reflects the lower served share (9.0\% vs.\ 58\%) and should not be
 interpreted as an equal-coverage efficiency gain.
 
 \paragraph{Policy implication.}
-DRT operators in Chinese cities should conduct walking tolerance surveys
+DRT operators in Chinese cities should treat this as a local calibration question and conduct walking tolerance surveys
 before deploying bidirectional meeting points. Districts where residents
 routinely walk more than 1000\,m to transit stops --- common in suburban
 areas with sparse bus networks --- are prime candidates. Districts with
@@ -36,9 +36,8 @@ elderly-dominant populations or poor pedestrian infrastructure (inadequate
 lighting, missing footpaths) should retain door-to-door service. Operators
 should pilot bidirectional meeting points with opt-in enrollment, allowing
 passengers to self-select based on their own walking tolerance before
-system-wide rollout. The 1000\,m threshold should be treated as a
-\emph{minimum} viable radius; higher thresholds will yield higher acceptance
-rates and greater efficiency gains.
+system-wide rollout. The 1000\,m value should be treated as a simulation
+threshold under our parameterization, not as a universal minimum radius.
 
 \paragraph{Generalizability caveat (placed before recommendation).}
 The 1000\,m threshold is specific to our synthetic scenario: a $20 \times 20$\,km
@@ -63,7 +62,7 @@ This finding should be treated as a scenario-specific managerial insight,
 not a universal prescription.
 
 % -----------------------------------------------------------------------
-\subsection{R2: Minimum Fleet Ratio of 15 Vehicles per 100 Peak-Hour Requests}
+\subsection{R2: Fleet Ratio Insight from the Synthetic Peak-Period Scenario}
 % -----------------------------------------------------------------------
 
 \paragraph{Evidence.}
@@ -72,25 +71,25 @@ Fleet size sensitivity analysis shows that FullModel acceptance peaks at
 vehicles per 100 requests). Diminishing returns set in beyond 20 vehicles:
 the marginal acceptance gain per additional vehicle drops sharply after this
 point. At $n_{\text{vehicles}} = 15$ (baseline), DoorToDoor acceptance
-exceeds FullModel by \textbf{38 percentage points}, confirming that
+exceeds FullModel by \textbf{43 percentage points} (61.0\% vs.\ 18.3\%), confirming that
 door-to-door service is more robust under vehicle scarcity because it does
 not impose walking penalties on passengers.
 
 \paragraph{Policy implication.}
-Chinese city DRT operators planning new services should budget for at least
-15 vehicles per 100 peak-hour requests. Underfleeting negates the efficiency
-gains from bidirectional meeting point optimization: a system with too few
+In the tested 200-request synthetic horizon, the high-fleet endpoint of
+15 vehicles per 100 requests gives the highest FullModel acceptance. This
+should be interpreted as a stress-test insight rather than a budgeting rule.
+A system with too few
 vehicles will achieve lower acceptance than a simple door-to-door service,
 while still imposing walking burdens on passengers. Operators can phase in
 vehicles incrementally, using the sensitivity curve (Figure~\ref{fig:sensitivity})
-to project service quality at each fleet size. Bidirectional meeting points
-deliver their greatest advantage when fleet supply is sufficient to serve
-the majority of requests; the 15-per-100 ratio is the minimum threshold for
-this condition to hold.
+to project service quality at each fleet size under locally observed demand.
+Bidirectional meeting points deliver their greatest advantage when fleet supply
+is sufficient to offset the acceptance penalty from walking.
 
 \paragraph{Generalizability caveat (placed before recommendation).}
-The 15-vehicles-per-100-peak-hour-requests ratio is derived from a synthetic
-scenario with 200 peak-hour requests over a 4-hour planning horizon, uniform
+The 15-vehicles-per-100-requests ratio is derived from a synthetic
+scenario with 200 requests over a 4-hour planning horizon, uniform
 spatial demand on a $20 \times 20$\,km grid, and 8-passenger vehicles.
 It should be treated as an order-of-magnitude guideline, not a universal planning norm.
 With 200 requests served by 30 vehicles over a 4-hour horizon, the average
@@ -140,25 +139,29 @@ provides a measurable accountability mechanism for service providers.
 
 \paragraph{Evidence.}
 The standard scenario (200 requests, 15 vehicles) shows FullModel
-vehicle-km = 552.0 versus DoorToDoor = 2603.7, a \textbf{78.8\%} efficiency
-gain. However, this gain is density-dependent: at low demand densities
-(100 requests per $20\,\text{km}^2$), FullModel acceptance approaches 0\%
-at $\rho = 500$\,m, while DoorToDoor remains viable. The three-tier
-framework below synthesizes these findings into a practical deployment guide.
+vehicle-km = 552.0 versus DoorToDoor = 2603.7, a \textbf{78.8\%} reduction
+in total vehicle-km. This total-distance comparison is coverage-confounded
+because FullModel serves fewer trips; the equal-coverage comparison in
+Section~\ref{sec:experiments} should be used for efficiency claims. The
+pattern is also density-dependent: at low demand levels
+(100 requests per 4-hour horizon in a $20\,\text{km} \times 20\,\text{km}$
+service zone), FullModel acceptance approaches 0\% at $\rho = 500$\,m,
+while DoorToDoor remains viable. The three-tier framework below should be
+read as an illustrative deployment heuristic for the tested simulation setup.
 
 \paragraph{Policy implication.}
-A three-tier deployment framework for Chinese cities:
+An illustrative three-tier deployment framework for the tested setting is:
 \begin{itemize}
-  \item \textbf{Tier 1} ($>$300 requests/day in service zone): Bidirectional
+  \item \textbf{Tier 1} ($>$300 requests per 4-hour horizon in the service zone): Bidirectional
         meeting points with binary logit choice model. Demand density is
         sufficient to generate spatially compatible request clusters, and
-        the efficiency gains (up to 78.8\% vehicle-km reduction) justify
+        the vehicle-km reductions may justify
         the system complexity and passenger walking burden.
-  \item \textbf{Tier 2} (100--300 requests/day): Single-sided pickup meeting
+  \item \textbf{Tier 2} (100--300 requests per 4-hour horizon): Single-sided pickup meeting
         points with door-to-door dropoff. This hybrid mode captures
         approximately half the vehicle-km savings of full bidirectional
         assignment while reducing the walking burden to pickup only.
-  \item \textbf{Tier 3} ($<$100 requests/day): Door-to-door service.
+  \item \textbf{Tier 3} ($<$100 requests per 4-hour horizon): Door-to-door service.
         Meeting point overhead exceeds efficiency gains at low demand
         levels; the system cannot generate enough spatially compatible
         clusters to justify passenger walking.
@@ -167,7 +170,7 @@ A three-tier deployment framework for Chinese cities:
 \begin{figure}[h]
 \centering
 \includegraphics[width=\columnwidth]{../figures/fig06_policy_map}
-\caption{Policy deployment map: recommended service mode by demand density and walking tolerance.}
+\caption{Illustrative deployment map: service mode by demand density and walking tolerance in the tested simulation setting.}
 \label{fig:policy-map}
 \end{figure}
 
@@ -193,16 +196,16 @@ requests and 15 vehicles, making real-time deployment feasible on standard
 server hardware. Chinese city operators should plan for cloud-based dispatch
 systems rather than on-vehicle computation, enabling centralized
 re-optimization across the full fleet. Static assignment (greedy insertion
-without re-optimization) is insufficient for dynamic urban demand patterns
-and should not be used in production deployments of bidirectional DRT.
+without re-optimization) performed poorly in our dynamic-demand simulation and
+should be treated cautiously in production deployments of bidirectional DRT.
 
 \paragraph{Deployment summary.}
 Operators should assess three factors before choosing a service mode:
-(1) walking tolerance of the target population ($\rho \geq 1000$\,m
-required for bidirectional service); (2) fleet supply ($\geq$15 vehicles
-per 100 peak-hour requests); and (3) demand density ($>$300 requests/day
-for full bidirectional, 100--300 for single-sided, $<$100 for
-door-to-door). The three-tier framework in R4 and the deployment map in
+(1) walking tolerance of the target population; (2) fleet supply relative
+to peak-period demand; and (3) demand density in requests per horizon and
+per service area. In our simulation, non-zero bidirectional acceptance emerged
+at $\rho = 1000$\,m and improved with larger fleets, but these values require
+local recalibration before deployment. The three-tier framework in R4 and the deployment map in
 Figure~\ref{fig:policy-map} provide a practical decision tool for Chinese
 city DRT planners navigating these trade-offs.
 
@@ -275,8 +278,11 @@ types rather than calibrated against revealed-preference data.
 For types with low price sensitivity (low $|\beta_4|$), the implied walk VOT
 is further inflated. The wait and IVT VOT values (0.27--3.33 and 0.13--2.67\,CNY/min
 respectively) are the primary policy-relevant benchmarks; the walk VOT should
-be treated as an upper bound pending empirical calibration. This limitation is
-discussed further in Section~\ref{sec:conclusion}.
+be treated as an upper bound pending empirical calibration. Accordingly, the
+walking-radius threshold, equity gap, and type-specific acceptance rates reported
+above should be read as calibration-dependent numerical illustrations rather than
+transferable behavioral estimates. This limitation is discussed further in
+Section~\ref{sec:conclusion}.
 
 The objective weights $\alpha_2$ (waiting) and $\alpha_3$ (walking) in the
 baseline configuration ($\alpha_2 = \alpha_3 = 1.0$) implicitly weight these

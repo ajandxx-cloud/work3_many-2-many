@@ -18,22 +18,23 @@ Adaptive Large Neighborhood Search (ALNS) heuristic for real-time operation at s
 For small instances, we formulate the static batch routing problem as a
 Mixed-Integer Linear Program (MILP) to compute the optimal routing cost for a
 given accepted set. The MILP serves as an \emph{ex-post routing diagnostic},
-not a full exact benchmark for the joint optimization problem (which includes
-co-optimization of meeting point assignment, routing, and stochastic acceptance).
+not a validation tool for the complete simulation framework, which includes
+offer generation, routing, and stochastic passenger response.
 
 \paragraph{Decision Variables.}
 The MILP uses binary assignment variables $x_{r,m^P,m^D,v} \in \{0,1\}$, equal to 1 if
 request $r$ is assigned to meeting point pair $(m^P, m^D) \in M_r^P \times M_r^D$ and
 served by vehicle $v \in \mathcal{V}$. Continuous variables $s_{v,i} \geq 0$ represent
-the scheduled service time at node $i$ in vehicle $v$'s route. The acceptance indicator
-is recovered as $z_r = \sum_{m^P, m^D, v} x_{r,m^P,m^D,v}$.
+the scheduled service time at node $i$ in vehicle $v$'s route. The MILP is solved
+only for the fixed realized set $\mathcal{R}^{\text{acc}}$; it does not optimize
+the passenger response variable $z_r$.
 
 \paragraph{Objective.}
 The MILP minimizes the same weighted cost (Equation~\ref{eq:objective}), with each cost
 component linearized in terms of $x_{r,m^P,m^D,v}$ and $s_{v,i}$.
 
 \paragraph{Constraints.}
-The formulation enforces all fourteen operational constraints
+The formulation enforces the operational feasibility conditions
 (\ref{con:capacity})--(\ref{con:domain-md}). Capacity constraint~(\ref{con:capacity}) is
 linearized using standard load-tracking variables. Time-window
 constraints~(\ref{con:tw-early})--(\ref{con:tw-late}), ride-time
@@ -46,8 +47,8 @@ restricting the domain of $x_{r,m^P,m^D,v}$ to feasible meeting point pairs.
 The MILP is solved using Gurobi~10 with a 300-second time limit; Gurobi reports
 the optimality gap for instances where the time limit binds.
 
-\textbf{Ex-post benchmark role.}
-The MILP serves as an \emph{ex-post} benchmark, not a real-time solver.
+\textbf{Ex-post diagnostic role.}
+The MILP serves as an \emph{ex-post} routing diagnostic, not a real-time solver.
 Given the realized accepted set $\mathcal{R}^{\text{acc}}$ produced by a
 completed ALNS run --- i.e., the set of requests for which the sampled
 acceptance indicator $z_r = 1$ --- the MILP solves the optimal vehicle routing
@@ -59,9 +60,10 @@ It does \emph{not} re-optimize the acceptance decisions: the stochastic
 passenger responses are realized outcomes of the ALNS run, not MILP decision
 variables.
 The resulting MILP objective value is therefore a lower bound on the routing
-cost achievable for the same accepted set, and the optimality gap
+cost achievable for the same accepted set, and the diagnostic gap
 $\delta = (C^{\text{ALNS}} - C^{\text{MILP}}) / C^{\text{MILP}} \times 100\%$
-measures how close the ALNS heuristic comes to the ex-post routing optimum.
+measures how close the ALNS heuristic comes to the ex-post routing optimum on
+this fixed, realized set only.
 Instances with up to 30--50 passengers and 5--8 vehicles are tractable within
 the time limit.
 
@@ -81,7 +83,7 @@ arriving requests online and periodically re-optimizes committed routes. The alg
 follows the three-layer architecture of Section~\ref{sec:three-layer}.
 
 \paragraph{Online Insertion Mechanism.}
-The ALNS heuristic uses a \emph{pre-filter-then-route} mechanism that decouples
+The ALNS heuristic uses a \emph{route-then-sample} mechanism that decouples
 stochastic passenger acceptance from deterministic routing optimization.
 At each request arrival, the system performs the following steps:
 \begin{enumerate}
@@ -100,14 +102,14 @@ At each request arrival, the system performs the following steps:
         If $z_r = 1$, the bundle is inserted into the vehicle route.
 \end{enumerate}
 
-\paragraph{Rationale for pre-filter-then-route.}
+\paragraph{Rationale for route-then-sample.}
 This design separates the stochastic acceptance decision from the deterministic
 cost minimization. An alternative approach that integrates $P_{\text{accept}}$
 directly into the routing objective as $\mathbb{E}[\Delta C] = P_{\text{accept}}(b)
 \times \Delta C_{\text{routing}}(b)$ would create a perverse incentive: bundles with
 lower acceptance probability (worse service quality) would appear to have lower
 expected routing cost, driving the system toward offering unattractive bundles.
-The pre-filtering approach avoids this pathology while preserving the structural
+The route-then-sample approach avoids this pathology while preserving the structural
 benefit of passenger self-selection: passengers who would face high walking or
 waiting disutility reject the service, and the system concentrates vehicle resources
 on spatially compatible requests. Integrating $P_{\text{accept}}$ into the routing
@@ -274,11 +276,11 @@ arrival rate. This keeps per-step complexity manageable even as the total number
 requests grows.
 
 \paragraph{Practical Performance.}
-On benchmark instances with 200 requests and 15 vehicles, the average decision time per
+On the 200-request, 15-vehicle simulation instances, the average decision time per
 request is below 1 second, satisfying the real-time requirement of online DRT operation.
 The MILP ex-post routing diagnostic (Section~\ref{subsec:milp}) evaluates how close the
 ALNS routing comes to the optimal offline routing for a fixed accepted set
 on small instances (gaps of 99--170\% for $n = 20$--30; see Table~\ref{tab:milp-gap}).
 These gaps reflect the inherent difficulty of online insertion with fixed meeting
 points relative to optimal ex-post routing, not an assessment of overall solution
-quality, since the MILP does not co-optimize acceptance decisions.
+quality, since the MILP does not model stochastic passenger response.

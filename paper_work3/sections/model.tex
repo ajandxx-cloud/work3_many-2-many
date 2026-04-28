@@ -51,14 +51,14 @@ The service offer bundle $b$ is the central decision object: the system selects 
 from $\mathcal{B}_r$ or rejects the request.
 
 The bidirectional meeting-point structure distinguishes this model from prior work. In
-many-to-one DRT, only the pickup side is flexible; here both pickup and dropoff meeting
-points are co-optimized, creating a richer trade-off between vehicle routing efficiency
+many-to-one DRT, only the pickup side is flexible; here pickup and dropoff meeting
+points are both decision attributes, creating a richer trade-off between vehicle routing efficiency
 and passenger walking burden.
 
-\subsection{System Objective}
+\subsection{Routing Cost and Welfare Accounting}
 
-The system minimizes a weighted sum of operational and passenger service costs over the
-planning horizon:
+For offer generation and route construction, the system scores feasible insertions using
+a weighted sum of operational and passenger service costs:
 \begin{equation}\label{eq:objective}
   \min \quad \alpha_1 C^{op} + \alpha_2 C^{wait} + \alpha_3 C^{walk}
              + \alpha_4 C^{IVT},
@@ -66,9 +66,9 @@ planning horizon:
 where:
 \begin{align}
   C^{op}   &= \sum_{v \in \mathcal{V}} c_v \cdot D_v, \label{eq:cop}\\
-  C^{wait} &= \sum_{r \in \mathcal{R}} z_r \cdot (\tau_r - t_r^{\text{req}}), \label{eq:cwait}\\
-  C^{walk} &= \sum_{r \in \mathcal{R}} z_r \cdot \bigl(d(o_r, m_r^P) + d(m_r^D, \delta_r)\bigr), \label{eq:cwalk}\\
-  C^{IVT}  &= \sum_{r \in \mathcal{R}} z_r \cdot \text{IVT}_{rb}. \label{eq:civt}
+  C^{wait} &= \sum_{r \in \mathcal{R}^{\text{acc}}} (\tau_r - t_r^{\text{req}}), \label{eq:cwait}\\
+  C^{walk} &= \sum_{r \in \mathcal{R}^{\text{acc}}} \bigl(d(o_r, m_r^P) + d(m_r^D, \delta_r)\bigr), \label{eq:cwalk}\\
+  C^{IVT}  &= \sum_{r \in \mathcal{R}^{\text{acc}}} \text{IVT}_{rb}. \label{eq:civt}
 \end{align}
 Here $D_v$ is the total distance driven by vehicle $v$, $c_v$ is cost per unit distance,
 and $t_r^{\text{req}}$ is the time request $r$ was submitted.
@@ -86,9 +86,11 @@ selection, or the binary logit acceptance probability. The separation ensures th
 operational decisions are consistent across different policy preferences encoded
 through $\Gamma$.
 
-\subsection{Operational Constraints}
+\subsection{Operational Feasibility Conditions}
 
-The feasibility region is defined by the following fourteen constraints.
+The routing layer enforces the following feasibility conditions for requests whose
+offers are accepted. These conditions define the simulation's feasible routing state;
+they are not presented as a complete arc-flow mixed-integer programming formulation.
 
 \paragraph{Vehicle Capacity.}
 \begin{equation}\label{con:capacity}
@@ -97,31 +99,31 @@ The feasibility region is defined by the following fourteen constraints.
 
 \paragraph{Time Windows.}
 \begin{equation}\label{con:tw-early}
-  s_{v_r,\, m_r^P} \geq e_r \quad \forall r \in \mathcal{R},\; z_r = 1
+  s_{v_r,\, m_r^P} \geq e_r \quad \forall r \in \mathcal{R}^{\text{acc}}
 \end{equation}
 \begin{equation}\label{con:tw-late}
-  s_{v_r,\, m_r^P} \leq l_r \quad \forall r \in \mathcal{R},\; z_r = 1
+  s_{v_r,\, m_r^P} \leq l_r \quad \forall r \in \mathcal{R}^{\text{acc}}
 \end{equation}
 
 \paragraph{In-Vehicle Ride Time.}
 \begin{equation}\label{con:ridetime}
-  s_{v_r,\, m_r^D} - s_{v_r,\, m_r^P} \leq L^{\max} \quad \forall r \in \mathcal{R},\; z_r = 1
+  s_{v_r,\, m_r^D} - s_{v_r,\, m_r^P} \leq L^{\max} \quad \forall r \in \mathcal{R}^{\text{acc}}
 \end{equation}
 
 \paragraph{Walking Radius.}
 \begin{equation}\label{con:walk-pickup}
-  d(o_r,\, m_r^P) \leq \rho^P \quad \forall r \in \mathcal{R},\; z_r = 1
+  d(o_r,\, m_r^P) \leq \rho^P \quad \forall r \in \mathcal{R}^{\text{acc}}
 \end{equation}
 \begin{equation}\label{con:walk-dropoff}
-  d(\delta_r,\, m_r^D) \leq \rho^D \quad \forall r \in \mathcal{R},\; z_r = 1
+  d(\delta_r,\, m_r^D) \leq \rho^D \quad \forall r \in \mathcal{R}^{\text{acc}}
 \end{equation}
 
 \paragraph{Precedence: Pickup Before Dropoff.}
 \begin{equation}\label{con:precedence-pos}
-  \pi_r^P < \pi_r^D \quad \forall r \in \mathcal{R},\; z_r = 1
+  \pi_r^P < \pi_r^D \quad \forall r \in \mathcal{R}^{\text{acc}}
 \end{equation}
 \begin{equation}\label{con:precedence-time}
-  s_{v_r,\, m_r^P} + t(m_r^P,\, m_r^D) \leq s_{v_r,\, m_r^D} \quad \forall r \in \mathcal{R},\; z_r = 1
+  s_{v_r,\, m_r^P} + t(m_r^P,\, m_r^D) \leq s_{v_r,\, m_r^D} \quad \forall r \in \mathcal{R}^{\text{acc}}
 \end{equation}
 
 \paragraph{Route Time Consistency.}
@@ -137,13 +139,12 @@ The feasibility region is defined by the following fourteen constraints.
 
 \paragraph{Domain Constraints.}
 \begin{align}
-  z_r &\in \{0,1\} \quad &&\forall r \in \mathcal{R} \label{con:binary-z}\\
-  v_r &\in \mathcal{V} \quad &&\forall r \in \mathcal{R},\; z_r = 1 \label{con:domain-v}\\
-  m_r^P &\in M_r^P \quad &&\forall r \in \mathcal{R},\; z_r = 1 \label{con:domain-mp}\\
-  m_r^D &\in M_r^D \quad &&\forall r \in \mathcal{R},\; z_r = 1 \label{con:domain-md}
+  v_r &\in \mathcal{V} \quad &&\forall r \in \mathcal{R}^{\text{acc}} \label{con:domain-v}\\
+  m_r^P &\in M_r^P \quad &&\forall r \in \mathcal{R}^{\text{acc}} \label{con:domain-mp}\\
+  m_r^D &\in M_r^D \quad &&\forall r \in \mathcal{R}^{\text{acc}} \label{con:domain-md}
 \end{align}
 
-Table~\ref{tab:constraints} summarizes all fourteen constraints.
+Table~\ref{tab:constraints} summarizes the operational feasibility conditions.
 
 \begin{table}[h]
 \centering
@@ -163,7 +164,6 @@ Table~\ref{tab:constraints} summarizes all fourteen constraints.
 \ref{con:precedence-time}  & Precedence (time)           & $s_{v_r, m_r^P}$, $s_{v_r, m_r^D}$, $t(m_r^P, m_r^D)$ \\
 \ref{con:time-consistency} & Route Time Consistency      & $s_{v,i}$, $s_{v,i+1}$, $t(\sigma_v(i), \sigma_v(i+1))$ \\
 \ref{con:route-duration}   & Maximum Route Duration      & $s_{v,1}$, $s_{v,|\sigma_v|}$, $T_v^{\max}$ \\
-\ref{con:binary-z}         & Domain (acceptance)         & $z_r$ \\
 \ref{con:domain-v}         & Domain (vehicle)            & $v_r$ \\
 \ref{con:domain-mp}        & Domain (pickup point)       & $m_r^P$, $M_r^P$ \\
 \ref{con:domain-md}        & Domain (dropoff point)      & $m_r^D$, $M_r^D$ \\
@@ -171,18 +171,21 @@ Table~\ref{tab:constraints} summarizes all fourteen constraints.
 \end{tabular}
 \end{table}
 
-\subsection{Online Decision Vector}
+\subsection{Online Offer and Response Variables}
 
-Upon arrival of request $r$, the system must immediately determine the \emph{online decision
-vector}:
+Upon arrival of request $r$, the system immediately determines the \emph{online
+offer/routing decision}:
 \begin{equation}\label{eq:decvec}
-  \mathbf{x}_r = (z_r,\; m_r^P,\; m_r^D,\; v_r,\; \pi_r^P,\; \pi_r^D),
+  \mathbf{a}_r = (m_r^P,\; m_r^D,\; v_r,\; \pi_r^P,\; \pi_r^D,\; \tau_r),
 \end{equation}
-where $z_r \in \{0,1\}$ is the acceptance indicator, $m_r^P \in M_r^P$ and
-$m_r^D \in M_r^D$ are the assigned meeting points, $v_r \in \mathcal{V}$ is the assigned
-vehicle, and $\pi_r^P < \pi_r^D$ are the insertion positions of the pickup and dropoff
-nodes in vehicle $v_r$'s route. The decision must be made online --- before future requests
-are known --- and subject to all feasibility constraints above.
+where $m_r^P \in M_r^P$ and $m_r^D \in M_r^D$ are the assigned meeting points,
+$v_r \in \mathcal{V}$ is the assigned vehicle, $\pi_r^P < \pi_r^D$ are the
+insertion positions of the pickup and dropoff nodes in vehicle $v_r$'s route,
+and $\tau_r$ is the scheduled pickup time implied by the insertion. The offer
+decision must be made online --- before future requests are known --- and
+subject to all feasibility constraints above. The binary variable $z_r$ is not
+optimized by the system; it is the realized passenger response generated after
+the offer is presented, as defined in Section~\ref{sec:choice}.
 
 % ============================================================
 \section{Passenger Choice Model}\label{sec:choice}
@@ -190,7 +193,7 @@ are known --- and subject to all feasibility constraints above.
 
 \subsection{Binary Logit Utility Function}
 
-We model passenger choice using a binary logit model (special case of MNL when $|\text{choice set}| = 2$). For request $r$ of
+We model passenger response using a two-alternative binary logit model. For request $r$ of
 passenger type $k \in \mathcal{K}$, the deterministic utility of service offer bundle
 $b = (m_r^P, m_r^D, \tau_r, p_r)$ is:
 
@@ -243,9 +246,9 @@ The realized acceptance indicator is:
 \end{equation}
 
 This formulation is behaviorally consistent with the single-offer mechanism: the passenger
-responds to the one bundle they are shown, not to a hypothetical full menu. The binary
-logit is the special case of MNL with $|\text{choice set}| = 2$, so the standard
-random-utility interpretation (i.i.d.\ Gumbel$(0,1)$ errors) is preserved.
+responds to the one bundle they are shown, not to a hypothetical full menu. The standard
+random-utility interpretation (i.i.d.\ Gumbel$(0,1)$ errors) is preserved for this
+two-alternative setting.
 
 \subsection{Passenger Heterogeneity}
 
@@ -335,8 +338,8 @@ With the outside option utility normalized to zero ($U_{r0}^k = 0$, Equation~\re
   P_{\text{accept}} = \frac{e^{-7.0}}{e^{-7.0} + e^{0}}
   = \frac{0.000912}{0.000912 + 1} \approx 0.00091.
 \end{equation}
-This near-zero acceptance probability (0.091\%) illustrates why the pre-filtering
-step in the online algorithm is critical: under the $U_0 = 0$ normalization, any
+This near-zero acceptance probability (0.091\%) illustrates why the offer quality
+generated by the online algorithm is critical: under the $U_0 = 0$ normalization, any
 bundle with strongly negative utility will be rejected with very high probability.
 The system must therefore offer bundles with substantially higher utility (e.g., by
 reducing walking distance, lowering wait times, or offering price discounts) to
@@ -390,7 +393,7 @@ candidate service offer bundles $\hat{\mathcal{B}}_r \subseteq \mathcal{B}_r$ as
         (see Section~\ref{sec:algorithm} for implementation details).
 \end{enumerate}
 
-The output of Layer~1 is the online decision vector $\mathbf{x}_r$ (Equation~\ref{eq:decvec})
+The output of Layer~1 is the online offer/routing decision $\mathbf{a}_r$ (Equation~\ref{eq:decvec})
 and the service offer bundle $b^*$ presented to the passenger.
 
 \subsection{Layer 2: Passenger Response}
@@ -404,9 +407,9 @@ $1 - P_{\text{accept}}(b^*)$. The realized acceptance indicator is:
 
 If $z_r = 1$, the vehicle route $\sigma_{v_r}$ is updated by inserting the pickup node
 $m_r^P$ at position $\pi_r^P$ and the dropoff node $m_r^D$ at position $\pi_r^D$.
-If $z_r = 0$, the decision vector is discarded and vehicle routes remain unchanged.
+If $z_r = 0$, the offer is rejected and vehicle routes remain unchanged.
 
-The coupling between Layer~1 and Layer~2 follows a \emph{pre-filter-then-route} design
+The coupling between Layer~1 and Layer~2 follows a \emph{route-then-sample} design
 (Section~\ref{sec:algorithm}): Layer~1 selects $b^*$ by minimizing deterministic
 incremental routing cost; the binary logit acceptance probability
 $P_{\text{accept}}(b^*)$ is computed after bundle selection and used only for
@@ -456,7 +459,7 @@ Table~\ref{tab:layer-coupling} summarizes the information flows between layers.
 \toprule
 Layer & Input & Output & Coupling \\
 \midrule
-1: Service Generation & Request $r$, routes $\{\sigma_v\}$ & Bundle $b^*$, decision $\mathbf{x}_r$ & Feeds Layer~2 \\
+1: Service Generation & Request $r$, routes $\{\sigma_v\}$ & Bundle $b^*$, decision $\mathbf{a}_r$ & Feeds Layer~2 \\
 2: Passenger Response & Bundle $b^*$, type $k$ & Acceptance $z_r$ & Updates routes if $z_r=1$ \\
 3: Rolling Horizon & Active set $\mathcal{R}^{\text{act}}$ & Updated routes $\{\sigma_v\}$ & Feeds back to Layer~1 \\
 \bottomrule
@@ -473,7 +476,7 @@ Layer & Input & Output & Coupling \\
 \footnotesize
 \begin{tabular}{p{3.0cm}lp{3.5cm}p{3.5cm}l}
 \toprule
-\textbf{Event} & \textbf{Layer} & \textbf{Decision Variables} & \textbf{Information Flow} & \textbf{Bernoulli?} \\
+\textbf{Event} & \textbf{Layer} & \textbf{Variables / outcomes} & \textbf{Information Flow} & \textbf{Bernoulli?} \\
 \midrule
 Request $r$ arrives at $t_r^{\text{req}}$ &
   1 &

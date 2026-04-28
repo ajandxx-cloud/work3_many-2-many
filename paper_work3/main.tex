@@ -22,7 +22,7 @@
 
 \begin{frontmatter}
 
-\title{Co-optimization of Bidirectional Meeting Point Assignment and Dynamic Routing for Many-to-Many Demand-Responsive Transit with Passenger Choice}
+\title{Bidirectional Meeting Point Assignment and Dynamic Routing for Many-to-Many Demand-Responsive Transit with Simulated Passenger Response}
 
 \author[buaa]{An Jin}
 \author[buaa]{Tianliang Liu\corref{cor1}}
@@ -72,7 +72,7 @@ $\Delta$ & Re-optimization interval & minutes \\
 $\Gamma$ & Rejection penalty in social welfare metric (post-hoc only; not in routing objective) & CNY \\
 $U_r(b)$ & Deterministic utility of bundle $b$ for request $r$ & utils \\
 $P_{\text{accept}}(b)$ & Binary logit acceptance probability & [0,1] \\
-$z_r$ & Acceptance indicator ($z_r \sim \text{Bernoulli}(P_{\text{accept}})$) & \{0,1\} \\
+$z_r$ & Realized acceptance indicator ($z_r \sim \text{Bernoulli}(P_{\text{accept}})$), not an optimized routing decision & \{0,1\} \\
 $\beta_1^k$ & Walk disutility coefficient for type $k$ & utils/meter \\
 $\beta_2^k$ & Wait disutility coefficient for type $k$ & utils/minute \\
 $\beta_3^k$ & IVT disutility coefficient for type $k$ & utils/minute \\

@@ -17,9 +17,9 @@ enabling vehicles to serve multiple passengers along shared route segments.
 The trade-off is clear: meeting points reduce vehicle-kilometres but impose a walking
 burden on passengers, and passengers who find the required walk unacceptable will
 reject the service offer and use an alternative mode.
-Jointly optimising the spatial assignment of meeting points and the vehicle routing
-schedule — while explicitly accounting for passenger heterogeneity in mode choice —
-is therefore the central operational challenge for next-generation DRT systems.
+Designing meeting-point assignments and vehicle routes while representing
+heterogeneous passenger acceptance is therefore a central operational challenge for
+next-generation DRT systems.
 
 Existing literature on meeting-point DRT has made important progress but leaves a
 critical gap.
@@ -52,10 +52,10 @@ For each request $r$, the system constructs a candidate pickup set
 $M_r^P \subseteq \mathcal{M}$ (meeting points within walking radius $\rho^P$ of the
 passenger's origin) and a candidate dropoff set
 $M_r^D \subseteq \mathcal{M}$ (within $\rho^D$ of the destination).
-The system jointly optimises the selection of pickup meeting point $m_r^P \in M_r^P$
-and dropoff meeting point $m_r^D \in M_r^D$ for each accepted request, together with
-vehicle routing and scheduling.
-Passenger response is modeled via a binary logit model (special case of MNL) with three
+The system selects pickup meeting point $m_r^P \in M_r^P$
+and dropoff meeting point $m_r^D \in M_r^D$ for each offered request, together with
+vehicle routing and scheduling; realized passenger acceptance is then simulated.
+Passenger response is modeled via a two-alternative binary logit model with three
 passenger types — price-sensitive, time-sensitive, and walk-sensitive — each with
 distinct utility coefficients over walking time, waiting time, in-vehicle travel time,
 and fare.
@@ -63,34 +63,34 @@ An outside option allows passengers to reject all offered bundles and use an
 alternative mode.
 The full model is formulated as a coupled three-layer system:
 (1)~service offer generation, which enumerates feasible bundles
-$\mathcal{B}_r = M_r^P \times M_r^D$ and computes binary logit choice probabilities;
+$\mathcal{B}_r = M_r^P \times M_r^D$ and selects a routing-feasible offer;
 (2)~passenger response, which determines the accepted bundle based on the binary logit acceptance rule;
 and (3)~dynamic dispatch, which routes vehicles using a rolling horizon ALNS
 heuristic with re-optimization at fixed time intervals.
-We solve small instances exactly using a Mixed-Integer Linear Program (MILP)
-implemented in Gurobi, and large instances with the rolling horizon ALNS heuristic.
-Numerical experiments on synthetic scenarios calibrated to Chinese suburban conditions
-validate the model and quantify the efficiency and equity implications of bidirectional
+For small realized accepted sets, we use a Mixed-Integer Linear Program (MILP)
+implemented in Gurobi as an ex-post routing diagnostic; large-scale simulations use the rolling horizon ALNS heuristic.
+Numerical experiments on stylized scenarios inspired by Chinese suburban conditions
+quantify the efficiency and equity implications of bidirectional
 meeting point assignment.
 
 The contributions of this paper are as follows:
 
 \begin{enumerate}
-  \item First formulation of many-to-many DRT with bidirectional meeting point sets
-        ($M_r^P$, $M_r^D$) and binary logit passenger choice as a coupled three-layer model.
-  \item MILP ex-post routing diagnostic and rolling horizon ALNS heuristic for the bidirectional
-        DARP with passenger choice.
-  \item Empirical demonstration of a \textbf{35.0\%} vehicle efficiency gain in
-        per-trip vehicle utilization at equal served share (FullModel 11.1 vs.\
-        DoorToDoor\,(capped) 17.1\,vkm/trip, endogenous matched-coverage comparison),
-        and a 29.1\% gain under the unconstrained comparison (15.1 vs.\ 21.3\,vkm/trip).
+  \item A three-layer many-to-many DRT simulation framework with bidirectional meeting point sets
+        ($M_r^P$, $M_r^D$), rolling horizon routing, and binary logit passenger acceptance.
+  \item A rolling horizon ALNS implementation and ex-post MILP routing diagnostic for
+        studying bidirectional DARP instances with simulated passenger response.
+  \item Empirical demonstration of a 29.1\% per-trip vehicle-km gain under the
+        unconstrained comparison (FullModel 15.1 vs.\ DoorToDoor 21.3\,vkm/trip),
+        with a separate exploratory matched-coverage diagnostic indicating a 35.0\%
+        gain after coverage differences are reduced.
   \item Equity analysis across three passenger types (Gini coefficient = 0.1216) and
-        five actionable policy recommendations for Chinese city DRT operators.
+        five scenario-specific policy insights for Chinese city DRT operators.
 \end{enumerate}
 
 The remainder of this paper is organized as follows.
 Section~\ref{sec:literature} reviews related work on DARP, meeting-point DRT, and
-passenger choice modelling.
+passenger response modelling.
 Section~\ref{sec:model} presents the problem formulation, including the three-layer
 coupled model and the binary logit choice structure.
 Section~\ref{sec:algorithm} describes the solution methodology: the ex-post MILP routing
