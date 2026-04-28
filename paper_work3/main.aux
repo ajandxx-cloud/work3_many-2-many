@@ -24,41 +24,43 @@
 \citation{stiglic2018}
 \citation{cortenbach2024}
 \citation{cortenbach2024}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Meeting Points and Virtual Stops}{7}{subsection.2.2}\protected@file@percent }
 \citation{cortenbach2024}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Meeting Points and Virtual Stops}{7}{subsection.2.2}\protected@file@percent }
 \citation{fielbaum2021}
 \citation{fielbaum2021}
-\citation{benakiva1985}
+\citation{mcfadden1974,benakiva1985,train2009}
 \citation{lavieri2019}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Passenger Choice in Demand-Responsive Transit}{8}{subsection.2.3}\protected@file@percent }
 \citation{lavieri2019}
 \citation{jin2024work1}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Passenger Choice in Demand-Responsive Transit}{9}{subsection.2.3}\protected@file@percent }
 \citation{psaraftis1988}
 \citation{pillac2013,ho2018}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Dynamic Scheduling and Rolling Horizon Methods}{9}{subsection.2.4}\protected@file@percent }
 \citation{bent2004}
 \citation{bent2004}
 \citation{ropke2006}
 \citation{parragh2008a}
 \citation{agatz2012}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Dynamic Scheduling and Rolling Horizon Methods}{10}{subsection.2.4}\protected@file@percent }
 \citation{wu2025}
 \citation{wu2025}
 \citation{wu2025}
+\citation{fielbaum2021}
+\citation{alonso2017}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Research Gap and Positioning}{11}{subsection.2.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Positioning relative to prior work}}{11}{table.1}\protected@file@percent }
+\newlabel{tab:literature-gap}{{1}{11}{Positioning relative to prior work}{table.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Problem Formulation}{11}{section.3}\protected@file@percent }
 \newlabel{sec:model}{{3}{11}{Problem Formulation}{section.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Network and Meeting Points}{11}{subsection.3.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Positioning relative to prior work}}{12}{table.1}\protected@file@percent }
-\newlabel{tab:literature-gap}{{1}{12}{Positioning relative to prior work}{table.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Service Offer Bundle}{12}{subsection.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}System Objective}{13}{subsection.3.3}\protected@file@percent }
-\newlabel{eq:objective}{{2}{13}{System Objective}{equation.2}{}}
-\newlabel{eq:cop}{{3}{14}{System Objective}{equation.3}{}}
-\newlabel{eq:cwait}{{4}{14}{System Objective}{equation.4}{}}
-\newlabel{eq:cwalk}{{5}{14}{System Objective}{equation.5}{}}
-\newlabel{eq:civt}{{6}{14}{System Objective}{equation.6}{}}
-\newlabel{eq:crej}{{7}{14}{System Objective}{equation.7}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Operational Constraints}{14}{subsection.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Routing Cost and Welfare Accounting}{13}{subsection.3.3}\protected@file@percent }
+\newlabel{eq:objective}{{2}{13}{Routing Cost and Welfare Accounting}{equation.2}{}}
+\newlabel{eq:cop}{{3}{13}{Routing Cost and Welfare Accounting}{equation.3}{}}
+\newlabel{eq:cwait}{{4}{13}{Routing Cost and Welfare Accounting}{equation.4}{}}
+\newlabel{eq:cwalk}{{5}{13}{Routing Cost and Welfare Accounting}{equation.5}{}}
+\newlabel{eq:civt}{{6}{13}{Routing Cost and Welfare Accounting}{equation.6}{}}
+\newlabel{eq:welfare}{{7}{14}{Routing Cost and Welfare Accounting}{equation.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Operational Feasibility Conditions}{14}{subsection.3.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Vehicle Capacity.}{14}{section*.1}\protected@file@percent }
 \newlabel{con:capacity}{{8}{14}{Vehicle Capacity}{equation.8}{}}
 \@writefile{toc}{\contentsline {paragraph}{Time Windows.}{14}{section*.2}\protected@file@percent }
@@ -66,9 +68,9 @@
 \newlabel{con:tw-late}{{10}{14}{Time Windows}{equation.10}{}}
 \@writefile{toc}{\contentsline {paragraph}{In-Vehicle Ride Time.}{14}{section*.3}\protected@file@percent }
 \newlabel{con:ridetime}{{11}{14}{In-Vehicle Ride Time}{equation.11}{}}
-\@writefile{toc}{\contentsline {paragraph}{Walking Radius.}{15}{section*.4}\protected@file@percent }
-\newlabel{con:walk-pickup}{{12}{15}{Walking Radius}{equation.12}{}}
-\newlabel{con:walk-dropoff}{{13}{15}{Walking Radius}{equation.13}{}}
+\@writefile{toc}{\contentsline {paragraph}{Walking Radius.}{14}{section*.4}\protected@file@percent }
+\newlabel{con:walk-pickup}{{12}{14}{Walking Radius}{equation.12}{}}
+\newlabel{con:walk-dropoff}{{13}{14}{Walking Radius}{equation.13}{}}
 \@writefile{toc}{\contentsline {paragraph}{Precedence: Pickup Before Dropoff.}{15}{section*.5}\protected@file@percent }
 \newlabel{con:precedence-pos}{{14}{15}{Precedence: Pickup Before Dropoff}{equation.14}{}}
 \newlabel{con:precedence-time}{{15}{15}{Precedence: Pickup Before Dropoff}{equation.15}{}}
@@ -77,141 +79,149 @@
 \@writefile{toc}{\contentsline {paragraph}{Maximum Route Duration.}{15}{section*.7}\protected@file@percent }
 \newlabel{con:route-duration}{{17}{15}{Maximum Route Duration}{equation.17}{}}
 \@writefile{toc}{\contentsline {paragraph}{Domain Constraints.}{15}{section*.8}\protected@file@percent }
-\newlabel{con:binary-z}{{18}{15}{Domain Constraints}{equation.18}{}}
-\newlabel{con:domain-v}{{19}{15}{Domain Constraints}{equation.19}{}}
-\newlabel{con:domain-mp}{{20}{15}{Domain Constraints}{equation.20}{}}
-\newlabel{con:domain-md}{{21}{15}{Domain Constraints}{equation.21}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Online Decision Vector}{15}{subsection.3.5}\protected@file@percent }
-\newlabel{eq:decvec}{{22}{15}{Online Decision Vector}{equation.22}{}}
+\newlabel{con:domain-v}{{18}{15}{Domain Constraints}{equation.18}{}}
+\newlabel{con:domain-mp}{{19}{15}{Domain Constraints}{equation.19}{}}
+\newlabel{con:domain-md}{{20}{15}{Domain Constraints}{equation.20}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Online Offer and Response Variables}{15}{subsection.3.5}\protected@file@percent }
+\newlabel{eq:decvec}{{21}{15}{Online Offer and Response Variables}{equation.21}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Summary of operational constraints}}{16}{table.2}\protected@file@percent }
 \newlabel{tab:constraints}{{2}{16}{Summary of operational constraints}{table.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Passenger Choice Model}{17}{section.4}\protected@file@percent }
-\newlabel{sec:choice}{{4}{17}{Passenger Choice Model}{section.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}MNL Utility Function}{17}{subsection.4.1}\protected@file@percent }
-\newlabel{eq:utility}{{23}{17}{MNL Utility Function}{equation.23}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Single-Offer Mechanism and Binary Logit Acceptance}{18}{subsection.4.2}\protected@file@percent }
-\newlabel{eq:utility-outside}{{24}{18}{Single-Offer Mechanism and Binary Logit Acceptance}{equation.24}{}}
-\newlabel{eq:binary-logit}{{25}{18}{Single-Offer Mechanism and Binary Logit Acceptance}{equation.25}{}}
-\newlabel{eq:acceptance-indicator}{{26}{18}{Single-Offer Mechanism and Binary Logit Acceptance}{equation.26}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Passenger Choice Model}{16}{section.4}\protected@file@percent }
+\newlabel{sec:choice}{{4}{16}{Passenger Choice Model}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Binary Logit Utility Function}{16}{subsection.4.1}\protected@file@percent }
+\newlabel{eq:utility}{{22}{17}{Binary Logit Utility Function}{equation.22}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Single-Offer Mechanism and Binary Logit Acceptance}{17}{subsection.4.2}\protected@file@percent }
+\newlabel{eq:utility-outside}{{23}{18}{Single-Offer Mechanism and Binary Logit Acceptance}{equation.23}{}}
+\newlabel{eq:binary-logit}{{24}{18}{Single-Offer Mechanism and Binary Logit Acceptance}{equation.24}{}}
+\newlabel{eq:acceptance-indicator}{{25}{18}{Single-Offer Mechanism and Binary Logit Acceptance}{equation.25}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Passenger Heterogeneity}{18}{subsection.4.3}\protected@file@percent }
+\newlabel{eq:type-price}{{26}{18}{Passenger Heterogeneity}{equation.26}{}}
+\newlabel{eq:type-time}{{27}{18}{Passenger Heterogeneity}{equation.27}{}}
+\newlabel{eq:type-walk}{{28}{18}{Passenger Heterogeneity}{equation.28}{}}
 \citation{shao2017}
 \citation{li2020drt}
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Passenger type coefficient profiles (qualitative ordering)}}{19}{table.3}\protected@file@percent }
 \newlabel{tab:passenger-types}{{3}{19}{Passenger type coefficient profiles (qualitative ordering)}{table.3}{}}
-\newlabel{eq:type-price}{{27}{19}{Passenger Heterogeneity}{equation.27}{}}
-\newlabel{eq:type-time}{{28}{19}{Passenger Heterogeneity}{equation.28}{}}
-\newlabel{eq:type-walk}{{29}{19}{Passenger Heterogeneity}{equation.29}{}}
-\newlabel{eq:beta-price}{{30}{19}{Passenger Heterogeneity}{equation.30}{}}
-\newlabel{eq:beta-time}{{31}{19}{Passenger Heterogeneity}{equation.31}{}}
-\newlabel{eq:beta-walk}{{32}{19}{Passenger Heterogeneity}{equation.32}{}}
+\newlabel{eq:beta-price}{{29}{19}{Passenger Heterogeneity}{equation.29}{}}
+\newlabel{eq:beta-time}{{30}{19}{Passenger Heterogeneity}{equation.30}{}}
+\newlabel{eq:beta-walk}{{31}{19}{Passenger Heterogeneity}{equation.31}{}}
 \@writefile{toc}{\contentsline {paragraph}{Worked utility example.}{20}{section*.9}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {5}Three-Layer Coupled Model}{21}{section.5}\protected@file@percent }
 \newlabel{sec:three-layer}{{5}{21}{Three-Layer Coupled Model}{section.5}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Layer 1: Service Offer Generation}{21}{subsection.5.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Layer 2: Passenger Response}{22}{subsection.5.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Layer 3: Dynamic Dispatch and Rolling Horizon Re-optimization}{22}{subsection.5.3}\protected@file@percent }
-\newlabel{eq:rh-trigger}{{35}{23}{Layer 3: Dynamic Dispatch and Rolling Horizon Re-optimization}{equation.35}{}}
+\newlabel{eq:rh-trigger}{{34}{23}{Layer 3: Dynamic Dispatch and Rolling Horizon Re-optimization}{equation.34}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Layer Coupling Summary}{23}{subsection.5.4}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Three-layer model coupling structure}}{23}{table.4}\protected@file@percent }
 \newlabel{tab:layer-coupling}{{4}{23}{Three-layer model coupling structure}{table.4}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Timing and decision sequence in the rolling horizon three-layer model. Each row represents one event within a single planning cycle. Re-optimization triggers fire at $t^{\text  {now}} = 0, \Delta , 2\Delta , \ldots  $ (Equation~\ref {eq:rh-trigger}).}}{24}{table.5}\protected@file@percent }
 \newlabel{tab:timing-diagram}{{5}{24}{Timing and decision sequence in the rolling horizon three-layer model. Each row represents one event within a single planning cycle. Re-optimization triggers fire at $t^{\text {now}} = 0, \Delta , 2\Delta , \ldots $ (Equation~\ref {eq:rh-trigger})}{table.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Solution Methodology}{24}{section.6}\protected@file@percent }
-\newlabel{sec:algorithm}{{6}{24}{Solution Methodology}{section.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Exact Algorithm: MILP Formulation}{24}{subsection.6.1}\protected@file@percent }
-\newlabel{subsec:milp}{{6.1}{24}{Exact Algorithm: MILP Formulation}{subsection.6.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Solution Methodology}{25}{section.6}\protected@file@percent }
+\newlabel{sec:algorithm}{{6}{25}{Solution Methodology}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Ex-Post Routing Diagnostic: MILP Formulation}{25}{subsection.6.1}\protected@file@percent }
+\newlabel{subsec:milp}{{6.1}{25}{Ex-Post Routing Diagnostic: MILP Formulation}{subsection.6.1}{}}
 \@writefile{toc}{\contentsline {paragraph}{Decision Variables.}{25}{section*.10}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Objective.}{25}{section*.11}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Constraints.}{25}{section*.12}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Solver and Scope.}{25}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Solver and Scope.}{26}{section*.13}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Heuristic Algorithm: Rolling Horizon ALNS}{26}{subsection.6.2}\protected@file@percent }
 \newlabel{subsec:alns}{{6.2}{26}{Heuristic Algorithm: Rolling Horizon ALNS}{subsection.6.2}{}}
-\@writefile{toc}{\contentsline {paragraph}{Online Objective.}{26}{section*.14}\protected@file@percent }
-\newlabel{eq:alns-objective}{{36}{26}{Online Objective}{equation.36}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.1}Candidate Generation}{27}{subsubsection.6.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.2}Online Insertion Evaluation}{27}{subsubsection.6.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Online Insertion Mechanism.}{27}{section*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Rationale for route-then-sample.}{27}{section*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Rejection penalty (post-hoc only).}{28}{section*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.1}Candidate Generation}{28}{subsubsection.6.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.2}Online Insertion Evaluation}{28}{subsubsection.6.2.2}\protected@file@percent }
 \citation{ropke2006}
 \citation{ropke2006}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.3}ALNS Destroy and Repair Operators}{28}{subsubsection.6.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.3}ALNS Destroy and Repair Operators}{29}{subsubsection.6.2.3}\protected@file@percent }
 \citation{bent2004}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.4}Rolling Horizon Loop}{30}{subsubsection.6.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Commitment assumption.}{30}{section*.17}\protected@file@percent }
 \citation{cordeau2007}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.4}Rolling Horizon Loop}{29}{subsubsection.6.2.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Commitment assumption.}{29}{section*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Computational Complexity}{31}{subsection.6.3}\protected@file@percent }
+\newlabel{subsec:complexity}{{6.3}{31}{Computational Complexity}{subsection.6.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{NP-Hardness.}{31}{section*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Heuristic Complexity.}{31}{section*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Practical Performance.}{31}{section*.20}\protected@file@percent }
 \citation{wu2025}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Computational Complexity}{30}{subsection.6.3}\protected@file@percent }
-\newlabel{subsec:complexity}{{6.3}{30}{Computational Complexity}{subsection.6.3}{}}
-\@writefile{toc}{\contentsline {paragraph}{NP-Hardness.}{30}{section*.16}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Heuristic Complexity.}{30}{section*.17}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Practical Performance.}{30}{section*.18}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {7}Numerical Experiments}{30}{section.7}\protected@file@percent }
-\newlabel{sec:experiments}{{7}{30}{Numerical Experiments}{section.7}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Experimental Setup}{31}{subsection.7.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Scenarios.}{31}{section*.19}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{MNL parameters.}{31}{section*.20}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Model variants.}{31}{section*.21}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Performance metrics.}{32}{section*.22}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Main Results: Baseline Comparison}{32}{subsection.7.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}MILP vs.\ ALNS Optimality Gap}{32}{subsection.7.3}\protected@file@percent }
-\newlabel{subsec:milp-gap}{{7.3}{32}{MILP vs.\ ALNS Optimality Gap}{subsection.7.3}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Performance comparison across model variants (synthetic scenario, 200 requests, 15 vehicles, mean $\pm $ std)}}{33}{table.6}\protected@file@percent }
-\newlabel{tab:main-results}{{6}{33}{Performance comparison across model variants (synthetic scenario, 200 requests, 15 vehicles, mean $\pm $ std)}{table.6}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces MILP vs.\ ALNS optimality gap on small instances (mean $\pm $ std across 3 seeds)}}{33}{table.7}\protected@file@percent }
-\newlabel{tab:milp-gap}{{7}{33}{MILP vs.\ ALNS optimality gap on small instances (mean $\pm $ std across 3 seeds)}{table.7}{}}
-\@writefile{toc}{\contentsline {paragraph}{Efficiency at equal coverage.}{34}{section*.23}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Role of passenger choice.}{34}{section*.24}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Endogenous matched-coverage comparison: FullModel vs.\ DoorToDoor\,(capped) at approximately equal served share ($\approx $22.8\%), mean across 3 seeds. DoorToDoor\,(capped) achieves 23.0\%, a 0.2\,pp overshoot due to discrete request granularity.}}{35}{table.8}\protected@file@percent }
-\newlabel{tab:matched-coverage}{{8}{35}{Endogenous matched-coverage comparison: FullModel vs.\ DoorToDoor\,(capped) at approximately equal served share ($\approx $22.8\%), mean across 3 seeds. DoorToDoor\,(capped) achieves 23.0\%, a 0.2\,pp overshoot due to discrete request granularity}{table.8}{}}
-\@writefile{toc}{\contentsline {paragraph}{Role of rolling horizon.}{35}{section*.25}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Single-sided vs.\ bidirectional.}{35}{section*.26}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Sensitivity Analysis}{35}{subsection.7.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Walking tolerance $\rho $.}{35}{section*.27}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Fleet size.}{36}{section*.28}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.5}Equity Analysis}{37}{subsection.7.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Per-type acceptance rates.}{37}{section*.29}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Gini coefficient.}{37}{section*.30}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Implications.}{37}{section*.31}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.6}Coverage--Efficiency Analysis and Social Welfare}{38}{subsection.7.6}\protected@file@percent }
-\newlabel{sec:pareto}{{7.6}{38}{Coverage--Efficiency Analysis and Social Welfare}{subsection.7.6}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Social welfare sensitivity to rejection penalty $\Gamma $ (FullModel, scale 200, mean over seeds 42--44).}}{38}{table.9}\protected@file@percent }
-\newlabel{tab:pareto}{{9}{38}{Social welfare sensitivity to rejection penalty $\Gamma $ (FullModel, scale 200, mean over seeds 42--44)}{table.9}{}}
-\@writefile{toc}{\contentsline {paragraph}{Interpretation.}{38}{section*.32}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.7}Weight Sensitivity Analysis}{39}{subsection.7.7}\protected@file@percent }
-\newlabel{subsec:weight-sensitivity}{{7.7}{39}{Weight Sensitivity Analysis}{subsection.7.7}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces Weight sensitivity: vkm/trip for FullModel vs.\ DoorToDoor across three objective weight configurations (mean $\pm $ std, 3 seeds, $n=200$, 15 vehicles).}}{40}{table.10}\protected@file@percent }
-\newlabel{tab:weight-sensitivity}{{10}{40}{Weight sensitivity: vkm/trip for FullModel vs.\ DoorToDoor across three objective weight configurations (mean $\pm $ std, 3 seeds, $n=200$, 15 vehicles)}{table.10}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {8}Policy Implications}{40}{section.8}\protected@file@percent }
-\newlabel{sec:policy}{{8}{40}{Policy Implications}{section.8}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {8.1}R1: Set Walking Radius Threshold at 1000\,m}{41}{subsection.8.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Evidence.}{41}{section*.33}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Policy implication.}{41}{section*.34}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Generalizability caveat.}{41}{section*.35}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {8.2}R2: Minimum Fleet Ratio of 15 Vehicles per 100 Daily Requests}{42}{subsection.8.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Evidence.}{42}{section*.36}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Policy implication.}{42}{section*.37}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Generalizability caveat.}{43}{section*.38}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {8.3}R3: Monitor Time-Sensitive Passengers for Service Equity}{43}{subsection.8.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Evidence.}{43}{section*.39}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Policy implication.}{44}{section*.40}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {8.4}R4: Match Service Mode to City Density Tier}{44}{subsection.8.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Evidence.}{44}{section*.41}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Policy implication.}{44}{section*.42}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {8.5}R5: Deploy Rolling Horizon Re-optimization for Dynamic Demand}{45}{subsection.8.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Evidence.}{45}{section*.43}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Policy implication.}{45}{section*.44}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Numerical Experiments}{32}{section.7}\protected@file@percent }
+\newlabel{sec:experiments}{{7}{32}{Numerical Experiments}{section.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Experimental Setup}{32}{subsection.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Scenarios.}{32}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Choice model parameters.}{33}{section*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Model variants.}{33}{section*.23}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Model variant definitions across three design dimensions}}{33}{table.6}\protected@file@percent }
+\newlabel{tab:variants}{{6}{33}{Model variant definitions across three design dimensions}{table.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{Performance metrics.}{34}{section*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Main Results: Baseline Comparison}{34}{subsection.7.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Performance comparison across model variants (synthetic scenario, 200 requests, 15 vehicles, mean $\pm $ std)}}{35}{table.7}\protected@file@percent }
+\newlabel{tab:main-results}{{7}{35}{Performance comparison across model variants (synthetic scenario, 200 requests, 15 vehicles, mean $\pm $ std)}{table.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}MILP vs.\ ALNS Optimality Gap}{35}{subsection.7.3}\protected@file@percent }
+\newlabel{subsec:milp-gap}{{7.3}{35}{MILP vs.\ ALNS Optimality Gap}{subsection.7.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces MILP vs.\ ALNS optimality gap on small instances (mean $\pm $ std across 3 seeds)}}{36}{table.8}\protected@file@percent }
+\newlabel{tab:milp-gap}{{8}{36}{MILP vs.\ ALNS optimality gap on small instances (mean $\pm $ std across 3 seeds)}{table.8}{}}
+\@writefile{toc}{\contentsline {paragraph}{Efficiency and coverage confounding.}{36}{section*.25}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Exploratory matched-coverage diagnostic: FullModel vs.\ DoorToDoor\,(capped) at approximately equal served share, mean across 3 seeds. DoorToDoor\,(capped) achieves a share close to FullModel's, with minor overshoot due to discrete request granularity.}}{37}{table.9}\protected@file@percent }
+\newlabel{tab:matched-coverage}{{9}{37}{Exploratory matched-coverage diagnostic: FullModel vs.\ DoorToDoor\,(capped) at approximately equal served share, mean across 3 seeds. DoorToDoor\,(capped) achieves a share close to FullModel's, with minor overshoot due to discrete request granularity}{table.9}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces Provenance of the main efficiency numbers.}}{37}{table.10}\protected@file@percent }
+\newlabel{tab:result-provenance}{{10}{37}{Provenance of the main efficiency numbers}{table.10}{}}
+\@writefile{toc}{\contentsline {paragraph}{Role of passenger choice.}{37}{section*.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Role of rolling horizon.}{38}{section*.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Single-sided vs.\ bidirectional.}{38}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Beijing-Inspired Synthetic Grid Scenario Results}{38}{subsection.7.4}\protected@file@percent }
+\newlabel{subsec:beijing}{{7.4}{38}{Beijing-Inspired Synthetic Grid Scenario Results}{subsection.7.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces Beijing-inspired synthetic grid scenario results (200 requests, 15 vehicles, 9$\times $9 MP grid, 1875\,m spacing, morning peak 7--9\,am, mean across up to 3 seeds)}}{39}{table.11}\protected@file@percent }
+\newlabel{tab:beijing-results}{{11}{39}{Beijing-inspired synthetic grid scenario results (200 requests, 15 vehicles, 9$\times $9 MP grid, 1875\,m spacing, morning peak 7--9\,am, mean across up to 3 seeds)}{table.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.5}Sensitivity Analysis}{39}{subsection.7.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Walking tolerance $\rho $.}{39}{section*.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Fleet size.}{40}{section*.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.6}Equity Analysis}{40}{subsection.7.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Per-type acceptance rates.}{41}{section*.31}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Gini coefficient.}{41}{section*.32}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Implications.}{41}{section*.33}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.7}Coverage--Efficiency Analysis and Social Welfare}{41}{subsection.7.7}\protected@file@percent }
+\newlabel{sec:pareto}{{7.7}{41}{Coverage--Efficiency Analysis and Social Welfare}{subsection.7.7}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces Social welfare sensitivity to rejection penalty $\Gamma $ (FullModel diagnostic run, scale 200, mean over seeds 42--44).}}{42}{table.12}\protected@file@percent }
+\newlabel{tab:pareto}{{12}{42}{Social welfare sensitivity to rejection penalty $\Gamma $ (FullModel diagnostic run, scale 200, mean over seeds 42--44)}{table.12}{}}
+\@writefile{toc}{\contentsline {paragraph}{Interpretation.}{42}{section*.34}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.8}Weight Sensitivity Analysis}{43}{subsection.7.8}\protected@file@percent }
+\newlabel{subsec:weight-sensitivity}{{7.8}{43}{Weight Sensitivity Analysis}{subsection.7.8}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {13}{\ignorespaces Weight sensitivity: vkm/trip for FullModel vs.\ DoorToDoor across three objective weight configurations (mean $\pm $ std, 3 seeds, $n=200$, 15 vehicles).}}{43}{table.13}\protected@file@percent }
+\newlabel{tab:weight-sensitivity}{{13}{43}{Weight sensitivity: vkm/trip for FullModel vs.\ DoorToDoor across three objective weight configurations (mean $\pm $ std, 3 seeds, $n=200$, 15 vehicles)}{table.13}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Policy Implications}{44}{section.8}\protected@file@percent }
+\newlabel{sec:policy}{{8}{44}{Policy Implications}{section.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1}R1: Walking Radius Threshold is Scenario-Specific}{44}{subsection.8.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Evidence.}{44}{section*.35}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Policy implication.}{45}{section*.36}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Generalizability caveat (placed before recommendation).}{45}{section*.37}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2}R2: Fleet Ratio Insight from the Synthetic Peak-Period Scenario}{46}{subsection.8.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Evidence.}{46}{section*.38}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Policy implication.}{46}{section*.39}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Generalizability caveat (placed before recommendation).}{47}{section*.40}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3}R3: Monitor Time-Sensitive Passengers for Service Equity}{47}{subsection.8.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Evidence.}{47}{section*.41}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Policy implication.}{48}{section*.42}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.4}R4: Match Service Mode to City Density Tier}{48}{subsection.8.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Evidence.}{48}{section*.43}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Policy implication.}{49}{section*.44}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.5}R5: Deploy Rolling Horizon Re-optimization for Dynamic Demand}{49}{subsection.8.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Evidence.}{49}{section*.45}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Policy implication.}{50}{section*.46}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Deployment summary.}{50}{section*.47}\protected@file@percent }
 \citation{shao2017}
 \citation{li2020drt}
 \citation{shao2017,li2020drt}
 \citation{shao2017}
 \citation{li2020drt}
-\@writefile{toc}{\contentsline {paragraph}{Deployment summary.}{46}{section*.45}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {8.6}Objective Weight Interpretation via Value of Time}{46}{subsection.8.6}\protected@file@percent }
-\newlabel{subsec:vot-mapping}{{8.6}{46}{Objective Weight Interpretation via Value of Time}{subsection.8.6}{}}
-\newlabel{eq:vot-formula}{{37}{46}{Objective Weight Interpretation via Value of Time}{equation.37}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces Implied VOT from MNL parameters vs.\ Chinese urban VOT literature (CNY/min)}}{47}{table.11}\protected@file@percent }
-\newlabel{tab:vot-mapping}{{11}{47}{Implied VOT from MNL parameters vs.\ Chinese urban VOT literature (CNY/min)}{table.11}{}}
-\@writefile{toc}{\contentsline {paragraph}{Interpretation.}{47}{section*.46}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{48}{section.9}\protected@file@percent }
-\newlabel{sec:conclusion}{{9}{48}{Conclusion}{section.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.6}Objective Weight Interpretation via Value of Time}{51}{subsection.8.6}\protected@file@percent }
+\newlabel{subsec:vot-mapping}{{8.6}{51}{Objective Weight Interpretation via Value of Time}{subsection.8.6}{}}
+\newlabel{eq:vot-formula}{{35}{51}{Objective Weight Interpretation via Value of Time}{equation.35}{}}
+\@writefile{toc}{\contentsline {paragraph}{Interpretation.}{51}{section*.48}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {14}{\ignorespaces Implied VOT from binary logit parameters vs.\ Chinese urban VOT literature (CNY/min)}}{52}{table.14}\protected@file@percent }
+\newlabel{tab:vot-mapping}{{14}{52}{Implied VOT from binary logit parameters vs.\ Chinese urban VOT literature (CNY/min)}{table.14}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{53}{section.9}\protected@file@percent }
+\newlabel{sec:conclusion}{{9}{53}{Conclusion}{section.9}{}}
 \citation{cortenbach2024}
 \citation{wu2025}
 \citation{bent2004}
@@ -229,32 +239,35 @@
 \bibcite{stiglic2015}{{10}{2015}{{Stiglic et~al.}}{{Stiglic, Agatz, Savelsbergh, and Gradisar}}}
 \bibcite{stiglic2018}{{11}{2018}{{Stiglic et~al.}}{{Stiglic, Agatz, Savelsbergh, and Gradisar}}}
 \bibcite{fielbaum2021}{{12}{2021}{{Fielbaum et~al.}}{{Fielbaum, Bai, and Alonso-Mora}}}
-\bibcite{benakiva1985}{{13}{1985}{{Ben-Akiva and Lerman}}{{}}}
-\bibcite{lavieri2019}{{14}{2019}{{Lavieri and Bhat}}{{}}}
-\bibcite{jin2024work1}{{15}{2024}{{Jin and Liu}}{{}}}
-\bibcite{bent2004}{{16}{2004}{{Bent and Van~Hentenryck}}{{}}}
-\bibcite{ropke2006}{{17}{2006}{{Ropke and Pisinger}}{{}}}
-\bibcite{shao2017}{{18}{2017}{{Shao et~al.}}{{Shao, Dong, Yin, and Wang}}}
-\bibcite{li2020drt}{{19}{2020}{{Li et~al.}}{{Li, Quadrifoglio, and Jia}}}
+\bibcite{mcfadden1974}{{13}{1974}{{McFadden}}{{}}}
+\bibcite{benakiva1985}{{14}{1985}{{Ben-Akiva and Lerman}}{{}}}
+\bibcite{train2009}{{15}{2009}{{Train}}{{}}}
+\bibcite{lavieri2019}{{16}{2019}{{Lavieri and Bhat}}{{}}}
+\bibcite{jin2024work1}{{17}{2024}{{Jin and Liu}}{{}}}
+\bibcite{bent2004}{{18}{2004}{{Bent and Van~Hentenryck}}{{}}}
+\bibcite{ropke2006}{{19}{2006}{{Ropke and Pisinger}}{{}}}
+\bibcite{alonso2017}{{20}{2017}{{Alonso-Mora et~al.}}{{Alonso-Mora, Samaranayake, Wallar, Frazzoli, and Rus}}}
+\bibcite{shao2017}{{21}{2017}{{Shao et~al.}}{{Shao, Dong, Yin, and Wang}}}
+\bibcite{li2020drt}{{22}{2020}{{Li et~al.}}{{Li, Quadrifoglio, and Jia}}}
 \@writefile{toc}{\let\numberline\tmptocnumberline}
-\@writefile{toc}{\contentsline {section}{\numberline {Appendix~A}Notation and Units Reference}{53}{appendix.A}\protected@file@percent }
-\newlabel{sec:appendix-notation}{{Appendix~A}{53}{Notation and Units Reference}{appendix.A}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces System overview: many-to-many DRT with bidirectional meeting points. Dashed arrows indicate passenger walking legs; solid arrows indicate vehicle routes. $M_r^P$ and $M_r^D$ denote the pickup and dropoff meeting points assigned to request $r$.}}{54}{figure.1}\protected@file@percent }
-\newlabel{fig:system-overview}{{1}{54}{System overview: many-to-many DRT with bidirectional meeting points. Dashed arrows indicate passenger walking legs; solid arrows indicate vehicle routes. $M_r^P$ and $M_r^D$ denote the pickup and dropoff meeting points assigned to request $r$}{figure.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Three-layer coupled model architecture for many-to-many DRT with bidirectional meeting points.}}{55}{figure.2}\protected@file@percent }
-\newlabel{fig:three-layer}{{2}{55}{Three-layer coupled model architecture for many-to-many DRT with bidirectional meeting points}{figure.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Online insertion and rolling horizon ALNS algorithm flowchart.}}{56}{figure.3}\protected@file@percent }
-\newlabel{fig:algorithm}{{3}{56}{Online insertion and rolling horizon ALNS algorithm flowchart}{figure.3}{}}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Rolling Horizon ALNS for Bidirectional DARPmp}}{57}{algorithm.1}\protected@file@percent }
-\newlabel{alg:rh-alns}{{1}{57}{Commitment assumption}{algorithm.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Baseline comparison: acceptance rate and vehicle-km across model variants.}}{58}{figure.4}\protected@file@percent }
-\newlabel{fig:baseline-comparison}{{4}{58}{Baseline comparison: acceptance rate and vehicle-km across model variants}{figure.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Sensitivity analysis: (a) acceptance rate vs.\ walking tolerance $\rho $; (b) acceptance rate vs.\ fleet size.}}{58}{figure.5}\protected@file@percent }
-\newlabel{fig:sensitivity}{{5}{58}{Sensitivity analysis: (a) acceptance rate vs.\ walking tolerance $\rho $; (b) acceptance rate vs.\ fleet size}{figure.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Social welfare $W$ as a function of rejection penalty $\Gamma $ for FullModel. Served share and vkm per served trip are constant across all $\Gamma $ values (0.183 and 9.893 respectively), confirming that $\Gamma $ is a post-hoc welfare parameter that does not affect routing or acceptance. The downward slope of $W$ reflects the increasing penalty applied to the fixed number of unserved passengers as $\Gamma $ rises.}}{59}{figure.6}\protected@file@percent }
-\newlabel{fig:pareto}{{6}{59}{Social welfare $W$ as a function of rejection penalty $\Gamma $ for FullModel. Served share and vkm per served trip are constant across all $\Gamma $ values (0.183 and 9.893 respectively), confirming that $\Gamma $ is a post-hoc welfare parameter that does not affect routing or acceptance. The downward slope of $W$ reflects the increasing penalty applied to the fixed number of unserved passengers as $\Gamma $ rises}{figure.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Policy deployment map: recommended service mode by demand density and walking tolerance.}}{60}{figure.7}\protected@file@percent }
-\newlabel{fig:policy-map}{{7}{60}{Policy deployment map: recommended service mode by demand density and walking tolerance}{figure.7}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {A.12}{\ignorespaces Notation and units reference}}{61}{table.12}\protected@file@percent }
-\newlabel{tab:notation}{{A.12}{61}{Notation and units reference}{table.12}{}}
-\gdef \@abspage@last{61}
+\@writefile{toc}{\contentsline {section}{\numberline {Appendix~A}Notation and Units Reference}{59}{appendix.A}\protected@file@percent }
+\newlabel{sec:appendix-notation}{{Appendix~A}{59}{Notation and Units Reference}{appendix.A}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces System overview: many-to-many DRT with bidirectional meeting points. Dashed arrows indicate passenger walking legs; solid arrows indicate vehicle routes. $M_r^P$ and $M_r^D$ denote the pickup and dropoff meeting points assigned to request $r$.}}{60}{figure.1}\protected@file@percent }
+\newlabel{fig:system-overview}{{1}{60}{System overview: many-to-many DRT with bidirectional meeting points. Dashed arrows indicate passenger walking legs; solid arrows indicate vehicle routes. $M_r^P$ and $M_r^D$ denote the pickup and dropoff meeting points assigned to request $r$}{figure.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Three-layer coupled model architecture for many-to-many DRT with bidirectional meeting points.}}{61}{figure.2}\protected@file@percent }
+\newlabel{fig:three-layer}{{2}{61}{Three-layer coupled model architecture for many-to-many DRT with bidirectional meeting points}{figure.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Online insertion and rolling horizon ALNS algorithm flowchart.}}{62}{figure.3}\protected@file@percent }
+\newlabel{fig:algorithm}{{3}{62}{Online insertion and rolling horizon ALNS algorithm flowchart}{figure.3}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Rolling Horizon ALNS for Bidirectional DARPmp}}{63}{algorithm.1}\protected@file@percent }
+\newlabel{alg:rh-alns}{{1}{63}{Commitment assumption}{algorithm.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Baseline comparison: acceptance rate and vehicle-km across model variants.}}{64}{figure.4}\protected@file@percent }
+\newlabel{fig:baseline-comparison}{{4}{64}{Baseline comparison: acceptance rate and vehicle-km across model variants}{figure.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Sensitivity analysis: (a) acceptance rate vs.\ walking tolerance $\rho $; (b) acceptance rate vs.\ fleet size.}}{64}{figure.5}\protected@file@percent }
+\newlabel{fig:sensitivity}{{5}{64}{Sensitivity analysis: (a) acceptance rate vs.\ walking tolerance $\rho $; (b) acceptance rate vs.\ fleet size}{figure.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Social welfare $W$ as a function of rejection penalty $\Gamma $ for FullModel. Served share and vkm per served trip are constant across all $\Gamma $ values in this diagnostic run (0.183 and 9.893 respectively), confirming that $\Gamma $ is a post-hoc welfare parameter that does not affect routing or acceptance. The downward slope of $W$ reflects the increasing penalty applied to the fixed number of unserved passengers as $\Gamma $ rises.}}{65}{figure.6}\protected@file@percent }
+\newlabel{fig:pareto}{{6}{65}{Social welfare $W$ as a function of rejection penalty $\Gamma $ for FullModel. Served share and vkm per served trip are constant across all $\Gamma $ values in this diagnostic run (0.183 and 9.893 respectively), confirming that $\Gamma $ is a post-hoc welfare parameter that does not affect routing or acceptance. The downward slope of $W$ reflects the increasing penalty applied to the fixed number of unserved passengers as $\Gamma $ rises}{figure.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Illustrative deployment map: service mode by demand density and walking tolerance in the tested simulation setting.}}{66}{figure.7}\protected@file@percent }
+\newlabel{fig:policy-map}{{7}{66}{Illustrative deployment map: service mode by demand density and walking tolerance in the tested simulation setting}{figure.7}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {A.15}{\ignorespaces Notation and units reference}}{67}{table.15}\protected@file@percent }
+\newlabel{tab:notation}{{A.15}{67}{Notation and units reference}{table.15}{}}
+\gdef \@abspage@last{67}

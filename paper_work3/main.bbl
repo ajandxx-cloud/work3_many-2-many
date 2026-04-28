@@ -1,4 +1,4 @@
-\begin{thebibliography}{19}
+\begin{thebibliography}{22}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\href}[2]{#2}
@@ -109,12 +109,26 @@
 \newblock \bibinfo{journal}{Transportation Research Part C: Emerging
   Technologies} \bibinfo{volume}{126} (\bibinfo{year}{2021})
   \bibinfo{pages}{103061}.
+%Type = Incollection
+\bibitem[{McFadden(1974)}]{mcfadden1974}
+\bibinfo{author}{D.~McFadden},
+\newblock \bibinfo{title}{Conditional logit analysis of qualitative choice
+  behavior},
+\newblock in: \bibinfo{editor}{P.~Zarembka} (Ed.),
+  \bibinfo{booktitle}{Frontiers in Econometrics}, \bibinfo{publisher}{Academic
+  Press}, \bibinfo{address}{New York}, \bibinfo{year}{1974}, pp.
+  \bibinfo{pages}{105--142}.
 %Type = Book
 \bibitem[{Ben-Akiva and Lerman(1985)}]{benakiva1985}
 \bibinfo{author}{M.~Ben-Akiva}, \bibinfo{author}{S.~R. Lerman},
   \bibinfo{title}{Discrete Choice Analysis: Theory and Application to Travel
   Demand}, \bibinfo{publisher}{MIT Press}, \bibinfo{address}{Cambridge, MA},
   \bibinfo{year}{1985}.
+%Type = Book
+\bibitem[{Train(2009)}]{train2009}
+\bibinfo{author}{K.~E. Train}, \bibinfo{title}{Discrete Choice Methods with
+  Simulation}, \bibinfo{edition}{2nd} ed., \bibinfo{publisher}{Cambridge
+  University Press}, \bibinfo{address}{Cambridge, UK}, \bibinfo{year}{2009}.
 %Type = Article
 \bibitem[{Lavieri and Bhat(2019)}]{lavieri2019}
 \bibinfo{author}{P.~S. Lavieri}, \bibinfo{author}{C.~R. Bhat},
@@ -144,6 +158,16 @@
   the pickup and delivery problem with time windows},
 \newblock \bibinfo{journal}{Transportation Science} \bibinfo{volume}{40}
   (\bibinfo{year}{2006}) \bibinfo{pages}{455--472}.
+%Type = Article
+\bibitem[{Alonso-Mora et~al.(2017)Alonso-Mora, Samaranayake, Wallar, Frazzoli,
+  and Rus}]{alonso2017}
+\bibinfo{author}{J.~Alonso-Mora}, \bibinfo{author}{S.~Samaranayake},
+  \bibinfo{author}{A.~Wallar}, \bibinfo{author}{E.~Frazzoli},
+  \bibinfo{author}{D.~Rus},
+\newblock \bibinfo{title}{On-demand high-capacity ride-sharing via dynamic
+  trip-vehicle assignment},
+\newblock \bibinfo{journal}{Proceedings of the National Academy of Sciences}
+  \bibinfo{volume}{114} (\bibinfo{year}{2017}) \bibinfo{pages}{462--467}.
 %Type = Article
 \bibitem[{Shao et~al.(2017)Shao, Dong, Yin, and Wang}]{shao2017}
 \bibinfo{author}{C.~Shao}, \bibinfo{author}{C.~Dong}, \bibinfo{author}{C.~Yin},
