@@ -13,7 +13,12 @@ test_cpu_time_positive         : cpu_time > 0 for all variants
 """
 from __future__ import annotations
 
+import os
+import sys
+
 import pytest
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import experiments.variants as variants_module
 from experiments.metrics import SimulationResult, compute_metrics
@@ -25,6 +30,7 @@ from experiments.variants import (
     BidirectionalNoChoice,
     DoorToDoor,
     FullModel,
+    SingleSidedDropoff,
     SingleSidedPickup,
 )
 from drt.types import ChoiceParameters
@@ -43,7 +49,7 @@ MEDIUM_SCENARIO = generate_synthetic(n_requests=20, n_vehicles=3, seed=42)
 
 
 def test_all_variants_list_length():
-    assert len(ALL_VARIANTS) == 7
+    assert len(ALL_VARIANTS) == 8
 
 
 def test_all_variants_unique_names():
@@ -119,6 +125,16 @@ def test_single_sided_no_dropoff_walk():
             )
 
 
+def test_single_sided_dropoff_no_pickup_walk():
+    """SingleSidedDropoff: all accepted passengers have pickup_walk=0."""
+    result = SingleSidedDropoff().run(MEDIUM_SCENARIO)
+    for rec in result.records:
+        if rec.accepted:
+            assert rec.pickup_walk == pytest.approx(0.0, abs=1e-6), (
+                f"SingleSidedDropoff request {rec.request_id} has pickup_walk={rec.pickup_walk}"
+            )
+
+
 # ---------------------------------------------------------------------------
 # Variant-specific structural tests
 # ---------------------------------------------------------------------------
@@ -131,6 +147,11 @@ def test_bidirectional_no_choice_returns_result():
 
 def test_full_model_returns_result():
     result = FullModel().run(SMALL_SCENARIO)
+    assert isinstance(result, SimulationResult)
+
+
+def test_single_sided_dropoff_returns_result():
+    result = SingleSidedDropoff().run(SMALL_SCENARIO)
     assert isinstance(result, SimulationResult)
 
 
@@ -171,19 +192,23 @@ def test_full_model_emits_actual_offer_utility_logs():
 
 
 def test_choice_rejected_offers_are_not_inserted():
-    variant = FullModel(choice_params=ChoiceParameters(service_asc=-1000.0))
-    state = variant._solve(SMALL_SCENARIO)
+    for variant in [
+        DoorToDoor(choice_params=ChoiceParameters(service_asc=-1000.0)),
+        SingleSidedPickup(choice_params=ChoiceParameters(service_asc=-1000.0)),
+        SingleSidedDropoff(choice_params=ChoiceParameters(service_asc=-1000.0)),
+        FullModel(choice_params=ChoiceParameters(service_asc=-1000.0)),
+    ]:
+        state = variant._solve(SMALL_SCENARIO)
+        assigned_ids = variant._assigned_request_ids(state)
+        declined_ids = {
+            request_id
+            for request_id, evaluation in state.choice_evaluations.items()
+            if evaluation.status == "choice_rejected"
+        }
 
-    assigned_ids = variant._assigned_request_ids(state)
-    declined_ids = {
-        request_id
-        for request_id, evaluation in state.choice_evaluations.items()
-        if evaluation.status == "choice_rejected"
-    }
-
-    assert declined_ids
-    assert assigned_ids.isdisjoint(declined_ids)
-    assert len(state.choice_evaluations) == len(SMALL_SCENARIO.requests)
+        assert declined_ids, f"{variant.name} did not produce declined requests"
+        assert assigned_ids.isdisjoint(declined_ids)
+        assert len(state.choice_evaluations) == len(SMALL_SCENARIO.requests)
 
 
 def test_mnl_proxy_filter_is_not_used_by_behavioral_variants(monkeypatch):
@@ -192,19 +217,31 @@ def test_mnl_proxy_filter_is_not_used_by_behavioral_variants(monkeypatch):
 
     monkeypatch.setattr(variants_module, "_mnl_filter_requests", fail_if_called)
 
-    for variant in [DoorToDoor(), SingleSidedPickup(), FullModel(), AblationNoRollingHorizon()]:
+    for variant in [
+        DoorToDoor(),
+        SingleSidedPickup(),
+        SingleSidedDropoff(),
+        FullModel(),
+        AblationNoRollingHorizon(),
+    ]:
         result = variant.run(SMALL_SCENARIO)
         assert isinstance(result, SimulationResult)
 
 
 def test_type_assignment_stable_across_service_designs():
     door_to_door = DoorToDoor().run(SMALL_SCENARIO)
+    single_sided_pickup = SingleSidedPickup().run(SMALL_SCENARIO)
+    single_sided_dropoff = SingleSidedDropoff().run(SMALL_SCENARIO)
     full_model = FullModel().run(SMALL_SCENARIO)
 
     dtd_types = {row["request_id"]: row["passenger_type"] for row in door_to_door.utility_logs}
+    pickup_types = {row["request_id"]: row["passenger_type"] for row in single_sided_pickup.utility_logs}
+    dropoff_types = {row["request_id"]: row["passenger_type"] for row in single_sided_dropoff.utility_logs}
     full_types = {row["request_id"]: row["passenger_type"] for row in full_model.utility_logs}
 
     assert dtd_types == full_types
+    assert pickup_types == full_types
+    assert dropoff_types == full_types
 
 
 def test_type_share_hook_forces_deterministic_type_assignment():
@@ -230,3 +267,35 @@ def test_service_asc_hook_changes_acceptance_probability_direction():
     high = DoorToDoor(choice_params=ChoiceParameters(service_asc=100.0)).run(SMALL_SCENARIO)
 
     assert first_offered_probability(high) > first_offered_probability(low)
+
+
+def test_behavioral_variants_have_concept_metadata():
+    behavioral = [DoorToDoor(), SingleSidedPickup(), SingleSidedDropoff(), FullModel()]
+
+    for variant in behavioral:
+        metadata = variant.method_metadata
+        for key in [
+            "method_label",
+            "service_design",
+            "choice_model",
+            "reoptimization",
+            "routing_solver",
+            "evidence_family",
+            "diagnostic_role",
+        ]:
+            assert metadata[key]
+        assert metadata["evidence_family"] == "behavioral_main"
+        assert metadata["method_label"] not in {"FullModel", "AblationNoChoice"}
+
+    full_metadata = FullModel().method_metadata
+    assert "BidirectionalMP" in full_metadata["method_label"]
+    assert full_metadata["legacy_class"] == "FullModel"
+
+
+def test_deterministic_diagnostics_are_not_behavioral_main():
+    behavioral_role = FullModel().method_metadata["diagnostic_role"]
+
+    for variant in [BidirectionalNoChoice(), AblationNoChoice()]:
+        metadata = variant.method_metadata
+        assert metadata["evidence_family"] == "deterministic_diagnostic"
+        assert metadata["diagnostic_role"] != behavioral_role

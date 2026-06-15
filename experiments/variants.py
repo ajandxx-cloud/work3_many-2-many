@@ -179,6 +179,30 @@ class BaseVariant(ABC):
     """Abstract base for all 6 model variants."""
 
     name: str
+    method_label: str = ""
+    service_design: str = ""
+    choice_model: str = "none"
+    reoptimization: str = "none"
+    routing_solver: str = "greedy_insertion"
+    evidence_family: str = "diagnostic"
+    diagnostic_role: str = "unspecified"
+    legacy_class: str | None = None
+
+    @property
+    def method_metadata(self) -> dict[str, str]:
+        """Return concept-level method metadata for result rows."""
+        data = {
+            "method_label": self.method_label or self.name,
+            "service_design": self.service_design,
+            "choice_model": self.choice_model,
+            "reoptimization": self.reoptimization,
+            "routing_solver": self.routing_solver,
+            "evidence_family": self.evidence_family,
+            "diagnostic_role": self.diagnostic_role,
+        }
+        if self.legacy_class:
+            data["legacy_class"] = self.legacy_class
+        return data
 
     def _default_choice_params(self) -> ChoiceParameters:
         return getattr(
@@ -529,6 +553,14 @@ class DoorToDoor(BaseVariant):
     """
 
     name = "DoorToDoor"
+    method_label = "DoorToDoor_Choice_CommonRouting"
+    service_design = "door_to_door"
+    choice_model = "binary_logit"
+    reoptimization = "common_sequential_insertion"
+    routing_solver = "greedy_insertion"
+    evidence_family = "behavioral_main"
+    diagnostic_role = "behavioral_baseline"
+    legacy_class = "DoorToDoor"
 
     def __init__(
         self,
@@ -617,6 +649,14 @@ class DoorToDoorCapped(BaseVariant):
     """
 
     name = "DoorToDoorCapped"
+    method_label = "DoorToDoor_Capped_MatchedCoverage"
+    service_design = "door_to_door"
+    choice_model = "deterministic_cap"
+    reoptimization = "none"
+    routing_solver = "greedy_insertion"
+    evidence_family = "supplementary_control"
+    diagnostic_role = "matched_coverage_control"
+    legacy_class = "DoorToDoorCapped"
 
     def __init__(
         self,
@@ -693,6 +733,14 @@ class SingleSidedPickup(BaseVariant):
     """
 
     name = "SingleSidedPickup"
+    method_label = "SingleSidedPickup_Choice_CommonRouting"
+    service_design = "single_sided_pickup"
+    choice_model = "binary_logit"
+    reoptimization = "common_sequential_insertion"
+    routing_solver = "greedy_insertion"
+    evidence_family = "behavioral_main"
+    diagnostic_role = "behavioral_service_design_baseline"
+    legacy_class = "SingleSidedPickup"
 
     def __init__(self, choice_params: ChoiceParameters | None = None):
         self._choice_config = choice_params or self._default_choice_params()
@@ -746,6 +794,44 @@ class SingleSidedPickup(BaseVariant):
 
 
 # ---------------------------------------------------------------------------
+# Variant 2b: SingleSidedDropoff
+# ---------------------------------------------------------------------------
+
+
+class SingleSidedDropoff(BaseVariant):
+    """
+    Door-to-door pickup, flexible dropoff meeting point.
+    pickup_walk = 0 for all accepted requests.
+    """
+
+    name = "SingleSidedDropoff"
+    method_label = "SingleSidedDropoff_Choice_CommonRouting"
+    service_design = "single_sided_dropoff"
+    choice_model = "binary_logit"
+    reoptimization = "common_sequential_insertion"
+    routing_solver = "greedy_insertion"
+    evidence_family = "behavioral_main"
+    diagnostic_role = "behavioral_service_design_baseline"
+    legacy_class = "SingleSidedDropoff"
+
+    def __init__(self, choice_params: ChoiceParameters | None = None):
+        self._choice_config = choice_params or self._default_choice_params()
+
+    def _solve(self, scenario: Scenario) -> ALNSState:
+        return self._run_actual_offer_sequence(
+            scenario=scenario,
+            service_design="SingleSidedDropoff",
+            meeting_points_for_request=lambda request: [
+                MeetingPoint(id=f"ssd_pu_{request.id}", coords=request.origin)
+            ] + list(scenario.meeting_points),
+            rho_p=0.0,
+            rho_d=RHO_D,
+            k_top=K_TOP,
+            cost_weights=_COST_WEIGHTS,
+        )
+
+
+# ---------------------------------------------------------------------------
 # Variant 3: BidirectionalNoChoice
 # ---------------------------------------------------------------------------
 
@@ -759,6 +845,14 @@ class BidirectionalNoChoice(BaseVariant):
     """
 
     name = "BidirectionalNoChoice"
+    method_label = "BidirectionalMP_NoChoice_Greedy"
+    service_design = "bidirectional_mp"
+    choice_model = "none"
+    reoptimization = "none"
+    routing_solver = "greedy_insertion"
+    evidence_family = "deterministic_diagnostic"
+    diagnostic_role = "no_choice_feasibility_diagnostic"
+    legacy_class = "BidirectionalNoChoice"
 
     def _solve(self, scenario: Scenario) -> ALNSState:
         vehicles_dict = self._vehicles_dict(scenario)
@@ -791,6 +885,14 @@ class FullModel(BaseVariant):
     """
 
     name = "FullModel"
+    method_label = "BidirectionalMP_Choice_RH_ALNS"
+    service_design = "bidirectional_mp"
+    choice_model = "binary_logit"
+    reoptimization = "rolling_horizon"
+    routing_solver = "alns"
+    evidence_family = "behavioral_main"
+    diagnostic_role = "main_service_design"
+    legacy_class = "FullModel"
 
     def __init__(
         self,
@@ -831,6 +933,14 @@ class AblationNoRollingHorizon(BaseVariant):
     """
 
     name = "AblationNoRollingHorizon"
+    method_label = "BidirectionalMP_Choice_NoRollingHorizon"
+    service_design = "bidirectional_mp"
+    choice_model = "binary_logit"
+    reoptimization = "none"
+    routing_solver = "greedy_insertion"
+    evidence_family = "algorithm_diagnostic"
+    diagnostic_role = "no_rolling_horizon_diagnostic"
+    legacy_class = "AblationNoRollingHorizon"
 
     def __init__(self, choice_params: ChoiceParameters | None = None):
         self._choice_config = choice_params or self._default_choice_params()
@@ -860,6 +970,14 @@ class AblationNoChoice(BaseVariant):
     """
 
     name = "AblationNoChoice"
+    method_label = "BidirectionalMP_NoChoice_RH_ALNS"
+    service_design = "bidirectional_mp"
+    choice_model = "none"
+    reoptimization = "rolling_horizon"
+    routing_solver = "alns"
+    evidence_family = "deterministic_diagnostic"
+    diagnostic_role = "no_choice_routing_diagnostic"
+    legacy_class = "AblationNoChoice"
 
     def _solve(self, scenario: Scenario) -> ALNSState:
         vehicles_dict = self._vehicles_dict(scenario)
@@ -904,6 +1022,7 @@ ALL_VARIANTS = [
     DoorToDoor(),
     DoorToDoorCapped(),
     SingleSidedPickup(),
+    SingleSidedDropoff(),
     BidirectionalNoChoice(),
     FullModel(),
     AblationNoRollingHorizon(),
