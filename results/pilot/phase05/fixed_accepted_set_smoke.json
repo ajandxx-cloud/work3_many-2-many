@@ -1,0 +1,19 @@
+{
+  "detailed_reason": "common accepted request intersection is empty",
+  "diagnostic_role": "fixed_accepted_set_smoke",
+  "evidence_family": "algorithm_diagnostic",
+  "milp_detailed_reason": "optional MILP diagnostic skipped for pilot fixed-set smoke",
+  "milp_non_blocking": true,
+  "milp_status": "skipped",
+  "retained_request_count": 0,
+  "retained_request_ids": [],
+  "retained_share": 0.0,
+  "routing_diagnostic": "GreedyInsertionBaseline",
+  "routing_runtime_s": 0.0,
+  "routing_served_share": 0.0,
+  "routing_status": "skipped_empty_intersection",
+  "routing_vehicle_km": 0.0,
+  "scale": 20,
+  "seed": 42,
+  "status": "empty_intersection"
+}

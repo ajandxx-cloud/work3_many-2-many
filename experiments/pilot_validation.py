@@ -172,6 +172,13 @@ def validate_phase05_outputs(
     raw = _read_csv(root / "synthetic_results.csv", result)
     metrics = _read_csv(root / "metrics_table.csv", result)
     utility = _read_csv(root / "utility_components.csv", result)
+    for optional_name in [
+        "matched_coverage_pilot.csv",
+        "fixed_accepted_set_smoke.json",
+    ]:
+        optional_path = root / optional_name
+        if optional_path.exists():
+            result["checked_files"].append(str(optional_path))
 
     if raw is None or metrics is None or utility is None:
         result["passed"] = False

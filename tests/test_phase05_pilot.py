@@ -5,6 +5,7 @@ import sys
 from pathlib import Path
 
 import pandas as pd
+import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -15,6 +16,10 @@ from experiments.phase05_pilot import (  # noqa: E402
     run_phase05_pilot,
 )
 from experiments.pilot_validation import validate_phase05_outputs  # noqa: E402
+from experiments.phase05_coverage_smoke import (  # noqa: E402
+    run_fixed_accepted_set_smoke,
+    run_matched_coverage_pilot,
+)
 
 
 def _valid_rows(tmp_path: Path):
@@ -196,3 +201,85 @@ def test_validate_phase05_outputs_checks_utility_joinability(tmp_path):
 
     assert result["passed"] is False
     assert any("missing utility rows" in error for error in result["errors"])
+
+
+def test_matched_coverage_output_columns(tmp_path):
+    result = run_matched_coverage_pilot(tmp_path, scale=8, seeds=[42], tolerance=0.20)
+
+    path = tmp_path / "matched_coverage_pilot.csv"
+    assert path.exists()
+    df = pd.read_csv(path)
+    for column in [
+        "target_served_share",
+        "achieved_served_share",
+        "abs_gap",
+        "tolerance",
+        "status",
+        "detailed_reason",
+    ]:
+        assert column in df.columns
+    assert set(df["evidence_family"]) == {"supplementary_control"}
+    assert isinstance(result["passed"], bool)
+
+
+def test_matched_coverage_tolerance_failure_blocks(tmp_path, monkeypatch):
+    import experiments.phase05_coverage_smoke as smoke
+
+    def fake_served_share(variant, scale, seed):
+        if variant.__class__.__name__ == "FullModel":
+            return 0.50, 0.01
+        return 0.10, 0.01
+
+    monkeypatch.setattr(smoke, "_served_share_for_variant", fake_served_share)
+
+    result = run_matched_coverage_pilot(tmp_path, scale=8, seeds=[42], tolerance=0.03)
+
+    assert result["passed"] is False
+    df = pd.read_csv(tmp_path / "matched_coverage_pilot.csv")
+    assert "failed" in set(df["status"])
+
+
+def test_fixed_accepted_set_smoke_durability(tmp_path):
+    _write_valid_outputs(tmp_path)
+
+    result = run_fixed_accepted_set_smoke(tmp_path, scale=8, seed=42)
+
+    path = tmp_path / "fixed_accepted_set_smoke.json"
+    assert path.exists()
+    assert "retained_request_count" in result
+    assert "retained_share" in result
+    assert result["evidence_family"] != "behavioral_main"
+    assert result["diagnostic_role"] == "fixed_accepted_set_smoke"
+
+
+def test_fixed_accepted_set_smoke_handles_empty_intersection(tmp_path):
+    raw, utility = _write_valid_outputs(tmp_path)
+    utility["status"] = "choice_rejected"
+    utility.to_csv(tmp_path / "utility_components.csv", index=False)
+
+    result = run_fixed_accepted_set_smoke(tmp_path, scale=8, seed=42)
+
+    assert result["status"] == "empty_intersection"
+    assert result["retained_request_count"] == 0
+    assert result["passed"] is True
+
+
+def test_fixed_accepted_set_no_gurobi_is_non_blocking(tmp_path, monkeypatch):
+    _write_valid_outputs(tmp_path)
+
+    import experiments.milp_gap as milp_gap
+
+    def fake_gap(scale, seed):
+        return {
+            "status": "no_gurobi",
+            "detailed_reason": "Gurobi unavailable in test",
+            "gap_pct": None,
+            "comparable_gap": False,
+        }
+
+    monkeypatch.setattr(milp_gap, "run_gap_experiment", fake_gap)
+
+    result = run_fixed_accepted_set_smoke(tmp_path, scale=8, seed=42, include_milp=True)
+
+    assert result["milp_status"] == "no_gurobi"
+    assert result["milp_non_blocking"] is True
