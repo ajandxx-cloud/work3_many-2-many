@@ -3,16 +3,16 @@ gsd_state_version: 1.0
 milestone: v1.0 Evidence-chain rebuild
 milestone_name: milestone
 current_phase: 6
-current_phase_name: pilot-experiments
+current_phase_name: formal-synthetic-experiments
 current_plan: Not started
-status: planning
+status: executing
 stopped_at: Phase 6 context gathered
-last_updated: "2026-06-15T15:19:11.372Z"
+last_updated: "2026-06-15T15:36:04.818Z"
 last_activity: 2026-06-15
 progress:
   total_phases: 11
   completed_phases: 6
-  total_plans: 16
+  total_plans: 21
   completed_plans: 16
   percent: 55
 ---
@@ -20,8 +20,8 @@ progress:
 # State: TR_E_Bidirectional_MeetingPoint_DRT_Experiment_Rebuild
 
 **Current Phase:** 6
-**Current Phase Name:** pilot-experiments
-**Status:** Ready to plan
+**Current Phase Name:** formal-synthetic-experiments
+**Status:** Ready to execute
 **Current Plan:** Not started
 **Progress:** [██████████] 100%
 **Last Activity:** 2026-06-15
@@ -35,9 +35,9 @@ See: `.planning/PROJECT.md`
 
 ## Current Position
 
-Phase: 05 (pilot-experiments) - GAP CLOSURE READY FOR VERIFICATION
-Plan: 4 of 4
-Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is complete and verified, Phase 3 is complete and verified, and Phase 4 is complete and verified. Phase 5 pilot experiments ran and produced `05_PILOT_RESULTS.md`; Phase 5 gap closure has now fixed `BUG-05-001`, `BUG-05-002`, and `BUG-05-003` in the ledger without starting formal experiments.
+Phase: 06 (formal-synthetic-experiments) - READY TO EXECUTE
+Plan: 0 of 5
+Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is complete and verified, Phase 3 is complete and verified, and Phase 4 is complete and verified. Phase 5 pilot experiments ran and produced `05_PILOT_RESULTS.md`; Phase 5 gap closure fixed `BUG-05-001`, `BUG-05-002`, and `BUG-05-003` in the ledger without starting formal experiments. Phase 6 formal synthetic experiments are now planned as five executable waves.
 
 ## Decisions
 
@@ -74,6 +74,7 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - [x] Plan Phase 5 pilot experiments.
 - [x] Execute Phase 5 pilot experiments.
 - [x] Resolve Phase 5 pilot blockers before Phase 6 planning.
+- [x] Plan Phase 6 formal synthetic experiments.
 
 ## Artifact Index
 
@@ -120,12 +121,20 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - `.planning/phases/05-pilot-experiments/05-04-SUMMARY.md`
 - `.planning/phases/05-pilot-experiments/05_PILOT_RESULTS.md`
 - `.planning/phases/05-pilot-experiments/05_BUG_LEDGER.csv`
+- `.planning/phases/06-formal-synthetic-experiments/06-RESEARCH.md`
+- `.planning/phases/06-formal-synthetic-experiments/06-PATTERNS.md`
+- `.planning/phases/06-formal-synthetic-experiments/06-VALIDATION.md`
+- `.planning/phases/06-formal-synthetic-experiments/06-01-PLAN.md`
+- `.planning/phases/06-formal-synthetic-experiments/06-02-PLAN.md`
+- `.planning/phases/06-formal-synthetic-experiments/06-03-PLAN.md`
+- `.planning/phases/06-formal-synthetic-experiments/06-04-PLAN.md`
+- `.planning/phases/06-formal-synthetic-experiments/06-05-PLAN.md`
 
 ## Session Continuity
 
-Last session: 2026-06-15T15:19:11.364Z
-Stopped at: Phase 6 context gathered
-Resume file: .planning/phases/06-formal-synthetic-experiments/06-CONTEXT.md
+Last session: 2026-06-15T15:36:04.818Z
+Stopped at: Phase 6 planned and ready to execute
+Resume file: .planning/phases/06-formal-synthetic-experiments/06-01-PLAN.md
 
 ---
-*State updated: 2026-06-15 after Phase 5 gap closure execution*
+*State updated: 2026-06-15 after Phase 6 planning*
