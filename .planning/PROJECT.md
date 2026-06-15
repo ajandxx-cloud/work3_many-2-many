@@ -22,14 +22,15 @@ Produce reproducible, reviewer-resistant evidence that supports only defensible 
 - Phase 0 translated review-note weaknesses into routed risks and future phase gates.
 - Phase 1 audited literature and novelty positioning, forbidding broad first/only and pickup-side-only claims unless later full-text evidence supports a precise scoped version.
 - Phase 1 resolved the venue-positioning conflict for planning by adopting TR-E-level rigor as the evidence bar while keeping policy language secondary and simulation-based.
+- Phase 2 defined the fair-comparison contract separating service design, passenger response, routing algorithm, and diagnostic role.
+- Phase 2 standardized metric denominators and row-level status vocabulary so served share, behavioral acceptance, feasibility rejection, choice rejection, inserted share, and vehicle-km denominators cannot be mixed.
+- Phase 2 locked coverage-confounding controls through unconstrained behavioral, matched-coverage, and fixed accepted-set designs before any new formal runs.
 
 ### Active
 
-- [ ] Separate behavioral choice-based comparisons from deterministic feasibility/routing diagnostics.
-- [ ] Standardize metrics so served share, behavioral acceptance, feasibility rejection, choice rejection, inserted share, and vkm denominators cannot be mixed.
+- [ ] Use the Phase 2 experiment contract when rebuilding choice, baseline, runner, metric, pilot, and formal experiment code.
 - [ ] Rebuild baseline taxonomy around DoorToDoor, SingleSidedPickup, SingleSidedDropoff, BidirectionalMeetingPoint, no-rolling-horizon, greedy insertion, ALNSFullModel, and exact/MILP diagnostics.
 - [ ] Add credible passenger-choice calibration logic, including service ASC, outside-option sensitivity, type shares, and literature-based or explicitly simulated ranges.
-- [ ] Control coverage confounding through unconstrained behavioral, matched-coverage, and fixed accepted-set routing designs.
 - [ ] Validate ALNS and MILP diagnostic scope honestly, including feasibility checks, convergence diagnostics, greedy/exact comparisons, and runtime-quality trade-offs.
 - [ ] Run pilot experiments before formal experiments, and keep pilot/tuning results separate from final evidence.
 - [ ] Run formal paired-seed experiments with at least 20 seeds for synthetic results, preferably 30 if runtime permits.
@@ -89,4 +90,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state.
 
 ---
-*Last updated: 2026-06-15 after Phase 1 completion*
+*Last updated: 2026-06-15 after Phase 2 completion*
