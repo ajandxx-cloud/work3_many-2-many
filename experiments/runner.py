@@ -48,6 +48,8 @@ RESULTS_DIR = os.path.join(_THIS_DIR, "..", "results")
 _RAW_COLS = [
     "variant", "scale", "seed",
     "acceptance_rate", "vehicle_km",
+    "served_share", "behavioral_acceptance_rate",
+    "choice_rejection_rate", "feasibility_rejection_rate",
     "avg_wait", "p95_wait",
     "avg_walk", "avg_ivt",
     "detour_ratio", "fairness_index", "cpu_time",
@@ -55,9 +57,22 @@ _RAW_COLS = [
 
 _METRIC_COLS = [
     "acceptance_rate", "vehicle_km",
+    "served_share", "behavioral_acceptance_rate",
+    "choice_rejection_rate", "feasibility_rejection_rate",
     "avg_wait", "p95_wait",
     "avg_walk", "avg_ivt",
     "detour_ratio", "fairness_index", "cpu_time",
+]
+
+_UTILITY_COLS = [
+    "run_id", "seed", "scenario", "method", "request_id",
+    "status", "detailed_reason", "passenger_type",
+    "pickup_walk", "dropoff_walk", "wait_time", "ivt", "fare",
+    "service_design", "pickup_mp_id", "dropoff_mp_id", "vehicle_id",
+    "scheduled_pickup", "scheduled_dropoff",
+    "walk_utility", "wait_utility", "ivt_utility", "fare_utility",
+    "service_asc", "outside_option_constant", "total_utility",
+    "outside_utility", "acceptance_probability", "random_draw",
 ]
 
 
@@ -89,6 +104,7 @@ def run_all_experiments(
 
     synthetic_rows: list[dict] = []
     beijing_rows: list[dict] = []
+    utility_rows: list[dict] = []
 
     total_synthetic = len(scales) * len(seeds) * len(ALL_VARIANTS)
     done = 0
@@ -107,6 +123,7 @@ def run_all_experiments(
                     variant, scenario, scale, seed,
                     label=f"[{done:3d}/{total_synthetic}] synthetic",
                 )
+                utility_rows.extend(row.pop("__utility_logs", []))
                 synthetic_rows.append(row)
 
     if beijing:
@@ -124,15 +141,18 @@ def run_all_experiments(
                     variant, scenario, BEIJING_SCALE, seed,
                     label=f"[{done_bj:3d}/{total_beijing}] beijing ",
                 )
+                utility_rows.extend(row.pop("__utility_logs", []))
                 beijing_rows.append(row)
 
     # Write CSVs
     syn_path = os.path.join(results_dir, "synthetic_results.csv")
     bei_path = os.path.join(results_dir, "beijing_results.csv")
     tbl_path = os.path.join(results_dir, "metrics_table.csv")
+    utl_path = os.path.join(results_dir, "utility_components.csv")
 
     _write_csv(synthetic_rows, syn_path)
     _write_csv(beijing_rows, bei_path)
+    _write_csv(utility_rows, utl_path, fieldnames=_UTILITY_COLS)
     _write_metrics_table(synthetic_rows, tbl_path)
 
     print(f"\n[runner] Wrote {len(synthetic_rows)} rows → {syn_path}")
@@ -155,6 +175,10 @@ def _make_row(variant_name: str, scale: int, seed: int, m) -> dict:
         "seed": seed,
         "acceptance_rate": m.acceptance_rate,
         "vehicle_km": m.vehicle_km,
+        "served_share": m.served_share,
+        "behavioral_acceptance_rate": m.behavioral_acceptance_rate,
+        "choice_rejection_rate": m.choice_rejection_rate,
+        "feasibility_rejection_rate": m.feasibility_rejection_rate,
         "avg_wait": m.avg_wait,
         "p95_wait": m.p95_wait,
         "avg_walk": m.avg_walk,
@@ -173,6 +197,10 @@ def _make_error_row(variant_name: str, scale: int, seed: int) -> dict:
         "seed": seed,
         "acceptance_rate": 0.0,
         "vehicle_km": 0.0,
+        "served_share": 0.0,
+        "behavioral_acceptance_rate": 0.0,
+        "choice_rejection_rate": 0.0,
+        "feasibility_rejection_rate": 0.0,
         "avg_wait": 0.0,
         "p95_wait": 0.0,
         "avg_walk": 0.0,
@@ -188,7 +216,20 @@ def _run_variant_with_timeout(variant, scenario, scale, seed, label="") -> dict:
     def _task():
         result = variant.run(scenario)
         m = compute_metrics(result)
-        return _make_row(variant.name, scale, seed, m)
+        row = _make_row(variant.name, scale, seed, m)
+        run_id = f"{scenario.name}:{variant.name}:s{seed}"
+        utility_logs = []
+        for log_row in result.utility_logs:
+            enriched = dict(log_row)
+            enriched.update({
+                "run_id": run_id,
+                "seed": seed,
+                "scenario": scenario.name,
+                "method": variant.name,
+            })
+            utility_logs.append(enriched)
+        row["__utility_logs"] = utility_logs
+        return row
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
         future = executor.submit(_task)
@@ -215,11 +256,12 @@ def _run_variant_with_timeout(variant, scenario, scale, seed, label="") -> dict:
             return _make_error_row(variant.name, scale, seed)
 
 
-def _write_csv(rows: list[dict], path: str) -> None:
-    if not rows:
+def _write_csv(rows: list[dict], path: str, fieldnames: list[str] | None = None) -> None:
+    if not rows and fieldnames is None:
         return
+    output_fields = fieldnames if fieldnames is not None else _RAW_COLS
     with open(path, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=_RAW_COLS)
+        writer = csv.DictWriter(f, fieldnames=output_fields, extrasaction="ignore")
         writer.writeheader()
         writer.writerows(rows)
 

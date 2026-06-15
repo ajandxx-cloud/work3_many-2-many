@@ -164,7 +164,7 @@ The utility-components artifact must be joinable by:
 run_id, seed, scenario, method, request_id
 ```
 
-A recommended output name is `utility_components.csv`, written alongside run outputs in the configured results directory. The exact format may be CSV or JSONL if tests document the schema. This implements D-17.
+The chosen output artifact is `utility_components.csv`, written alongside run outputs in the configured results directory. It is a CSV with the utility log fields above plus run-level join keys, and tests assert the schema. This implements D-17.
 
 ## Sensitivity Ownership
 
@@ -224,4 +224,3 @@ Phase 4 still owns missing service baseline validation and ALNS/MILP diagnostic 
 - D-15: Offer attributes include walk, wait, IVT, fare, design, MPs, vehicle, and schedule.
 - D-16: Choice rejections log actual offered utility; feasibility rejections do not fabricate utility.
 - D-17: Raw rows and complete utility components are separate joinable artifacts.
-

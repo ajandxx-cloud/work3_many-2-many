@@ -42,6 +42,10 @@ def make_record(
     ivt: float = 900.0,
     direct_time: float = 600.0,
     total_disutility: float = -5.0,
+    status: str | None = None,
+    detailed_reason: str = "",
+    acceptance_probability: float | None = None,
+    random_draw: float | None = None,
 ) -> PassengerRecord:
     return PassengerRecord(
         request_id=request_id,
@@ -53,6 +57,10 @@ def make_record(
         ivt=ivt,
         direct_time=direct_time,
         total_disutility=total_disutility,
+        status=status,
+        detailed_reason=detailed_reason,
+        acceptance_probability=acceptance_probability,
+        random_draw=random_draw,
     )
 
 
@@ -229,6 +237,53 @@ class TestAcceptanceRate:
         records = [make_record(f"req_{i}", accepted=True) for i in range(10)]
         m = compute_metrics(make_result(records=records))
         assert abs(m.acceptance_rate - 1.0) < 1e-9
+
+
+# ---------------------------------------------------------------------------
+# Status-aware rejection accounting
+# ---------------------------------------------------------------------------
+
+class TestStatusAccounting:
+    def test_status_derives_accepted_flag(self):
+        declined = make_record("declined", accepted=True, status="choice_rejected")
+        served = make_record("served", accepted=False, status="served")
+
+        assert declined.accepted is False
+        assert served.accepted is True
+
+    def test_choice_and_feasibility_rejections_are_separate(self):
+        records = [
+            make_record("served", accepted=True, status="served"),
+            make_record(
+                "declined",
+                accepted=False,
+                status="choice_rejected",
+                acceptance_probability=0.25,
+                random_draw=0.75,
+            ),
+            make_record(
+                "infeasible",
+                accepted=False,
+                status="feasibility_rejected",
+                detailed_reason="no_candidate_mp",
+            ),
+        ]
+
+        m = compute_metrics(make_result(records=records))
+
+        assert m.acceptance_rate == pytest.approx(1 / 3)
+        assert m.served_share == pytest.approx(1 / 3)
+        assert m.choice_rejection_rate == pytest.approx(1 / 3)
+        assert m.feasibility_rejection_rate == pytest.approx(1 / 3)
+        assert m.behavioral_acceptance_rate == pytest.approx(2 / 3)
+
+    def test_empty_status_rates_are_zero(self):
+        m = compute_metrics(make_result(records=[]))
+
+        assert m.served_share == 0.0
+        assert m.choice_rejection_rate == 0.0
+        assert m.feasibility_rejection_rate == 0.0
+        assert m.behavioral_acceptance_rate == 0.0
 
 
 # ---------------------------------------------------------------------------

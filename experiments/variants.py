@@ -27,6 +27,10 @@ from copy import deepcopy
 
 from experiments.config import (
     ALPHA_WEIGHTS,
+    CHOICE_OUTSIDE_OPTION_CONSTANT,
+    CHOICE_SEED,
+    CHOICE_SERVICE_ASC,
+    CHOICE_TYPE_SHARES,
     DELTA,
     H_WINDOW,
     K_TOP,
@@ -35,12 +39,20 @@ from experiments.config import (
 )
 from experiments.metrics import PassengerRecord, SimulationResult
 from experiments.scenarios import Scenario
-from src.drt.alns import ALNSState, RollingHorizon, greedy_insertion
-from src.drt.candidate import euclidean
-from src.drt.choice import accept_probability
+from src.drt.alns import ALNSState, RollingHorizon, _apply_insertion, _to_plain_routes, greedy_insertion
+from src.drt.candidate import euclidean, generate_candidates
+from src.drt.choice import (
+    accept_probability,
+    assign_passenger_type,
+    evaluate_single_offer,
+    feasibility_rejected_evaluation,
+)
+from src.drt.insertion import evaluate_insertion
 from src.drt.types import (
     Bundle,
+    ChoiceParameters,
     MeetingPoint,
+    OfferAttributes,
     PassengerType,
     PRICE_SENSITIVE,
     TIME_SENSITIVE,
@@ -81,6 +93,11 @@ def _mnl_filter_requests(
     scenario,
 ) -> list:
     """
+    Legacy proxy MNL filter retained only for regression checks.
+
+    Phase 3 behavioral variants must use actual feasible offers from
+    _run_actual_offer_sequence instead of this nearest-meeting-point proxy.
+
     Apply MNL Bernoulli acceptance to each request before routing.
 
     For each request, construct a representative Bundle using the nearest
@@ -163,6 +180,18 @@ class BaseVariant(ABC):
 
     name: str
 
+    def _default_choice_params(self) -> ChoiceParameters:
+        return getattr(
+            self,
+            "_choice_config",
+            ChoiceParameters(
+                service_asc=CHOICE_SERVICE_ASC,
+                outside_option_constant=CHOICE_OUTSIDE_OPTION_CONSTANT,
+                choice_seed=CHOICE_SEED,
+                type_shares=dict(CHOICE_TYPE_SHARES),
+            ),
+        )
+
     def run(self, scenario: Scenario) -> SimulationResult:
         """Execute variant on scenario, return SimulationResult."""
         t0 = time.perf_counter()
@@ -171,10 +200,15 @@ class BaseVariant(ABC):
 
         records = self._build_records(scenario, state)
         vehicle_km = self._total_vehicle_km(state, scenario) + getattr(state, 'extra_vehicle_km', 0.0)
+        utility_logs = [
+            evaluation.as_log_row()
+            for evaluation in getattr(state, "choice_evaluations", {}).values()
+        ]
         return SimulationResult(
             records=records,
             total_vehicle_km=vehicle_km,
             cpu_time=cpu_time,
+            utility_logs=utility_logs,
         )
 
     @abstractmethod
@@ -199,6 +233,124 @@ class BaseVariant(ABC):
             cost=0.0,
         )
 
+    def _run_actual_offer_sequence(
+        self,
+        scenario: Scenario,
+        service_design: str,
+        meeting_points_for_request,
+        rho_p: float,
+        rho_d: float,
+        k_top: int,
+        cost_weights: tuple,
+    ) -> ALNSState:
+        """Sequential actual-offer acceptance path shared by behavioral variants."""
+        vehicles_dict = self._vehicles_dict(scenario)
+        state = self._initial_state(scenario)
+        state.unassigned = []
+        choice_evaluations = {}
+        params = self._default_choice_params()
+
+        for request in sorted(scenario.requests, key=lambda r: r.earliest):
+            meeting_points = meeting_points_for_request(request)
+            plain_routes = _to_plain_routes(state.routes)
+            result = evaluate_insertion(
+                request,
+                plain_routes,
+                vehicles_dict,
+                meeting_points,
+                rho_p,
+                rho_d,
+                k_top,
+                cost_weights,
+                TRAVEL_SPEED,
+            )
+            ptype = assign_passenger_type(
+                request.id,
+                PASSENGER_TYPES,
+                params.type_shares,
+                seed=params.choice_seed,
+            )
+            if result is None:
+                reason = self._feasibility_reason(request, meeting_points, rho_p, rho_d, k_top)
+                evaluation = feasibility_rejected_evaluation(
+                    request_id=request.id,
+                    detailed_reason=reason,
+                    passenger_type=ptype.name,
+                )
+                state.unassigned.append(request)
+                choice_evaluations[request.id] = evaluation
+                continue
+
+            offer = self._offer_from_insertion(
+                request,
+                result,
+                plain_routes,
+                vehicles_dict,
+                service_design,
+            )
+            evaluation = evaluate_single_offer(offer, ptype, params)
+            choice_evaluations[request.id] = evaluation
+            if evaluation.accepted:
+                _apply_insertion(state, result, request, vehicles_dict, TRAVEL_SPEED)
+            else:
+                state.unassigned.append(request)
+
+        state.choice_evaluations = choice_evaluations
+        return state
+
+    def _feasibility_reason(
+        self,
+        request,
+        meeting_points,
+        rho_p: float,
+        rho_d: float,
+        k_top: int,
+    ) -> str:
+        pickup_candidates = generate_candidates(request, meeting_points, rho_p, k_top, "pickup")
+        dropoff_candidates = generate_candidates(request, meeting_points, rho_d, k_top, "dropoff")
+        if not pickup_candidates or not dropoff_candidates:
+            return "no_candidate_mp"
+        return "no_feasible_route"
+
+    def _offer_from_insertion(
+        self,
+        request,
+        result,
+        plain_routes,
+        vehicles,
+        service_design: str,
+    ) -> OfferAttributes:
+        route = plain_routes.get(result.vehicle_id, Route(vehicle_id=result.vehicle_id, stops=[]))
+        new_stops = list(route.stops)
+        new_stops.insert(result.pos_p, (result.pickup_mp, 0.0))
+        new_stops.insert(result.pos_d, (result.dropoff_mp, 0.0))
+        vehicle = vehicles[result.vehicle_id]
+        t = vehicle.current_time
+        prev = vehicle.current_position
+        pickup_time = request.earliest
+        dropoff_time = request.earliest
+        for idx, (mp, _) in enumerate(new_stops):
+            t += euclidean(prev, mp.coords) / TRAVEL_SPEED
+            if idx == result.pos_p:
+                pickup_time = t
+            if idx == result.pos_d:
+                dropoff_time = t
+            prev = mp.coords
+        return OfferAttributes(
+            request_id=request.id,
+            service_design=service_design,
+            pickup_walk=euclidean(request.origin, result.pickup_mp.coords) / 1000.0,
+            dropoff_walk=euclidean(result.dropoff_mp.coords, request.destination) / 1000.0,
+            wait_time=max(0.0, pickup_time - request.earliest) / 60.0,
+            ivt=max(0.0, dropoff_time - pickup_time) / 60.0,
+            fare=0.0,
+            pickup_mp_id=result.pickup_mp.id,
+            dropoff_mp_id=result.dropoff_mp.id,
+            vehicle_id=result.vehicle_id,
+            scheduled_pickup=pickup_time,
+            scheduled_dropoff=dropoff_time,
+        )
+
     def _assigned_request_ids(self, state: ALNSState) -> set[str]:
         """Return set of request IDs that appear in routes (tagged stops)."""
         ids: set[str] = set()
@@ -214,10 +366,26 @@ class BaseVariant(ABC):
         completed_ids = getattr(state, 'completed_ids', set())
         assigned_ids = in_route_ids | completed_ids
         unassigned_ids = {r.id for r in state.unassigned}
+        choice_evaluations = getattr(state, "choice_evaluations", {})
 
         records: list[PassengerRecord] = []
         for idx, request in enumerate(scenario.requests):
-            ptype = PASSENGER_TYPES[idx % len(PASSENGER_TYPES)]
+            evaluation = choice_evaluations.get(request.id)
+            if evaluation is not None:
+                ptype = next(
+                    (candidate for candidate in PASSENGER_TYPES if candidate.name == evaluation.passenger_type),
+                    PASSENGER_TYPES[idx % len(PASSENGER_TYPES)],
+                )
+                status = evaluation.status
+                detailed_reason = evaluation.detailed_reason
+                acceptance_probability = evaluation.acceptance_probability
+                random_draw = evaluation.random_draw
+            else:
+                ptype = PASSENGER_TYPES[idx % len(PASSENGER_TYPES)]
+                status = None
+                detailed_reason = ""
+                acceptance_probability = None
+                random_draw = None
             accepted = (request.id in assigned_ids) and (request.id not in unassigned_ids)
 
             if accepted and request.id in in_route_ids:
@@ -261,11 +429,14 @@ class BaseVariant(ABC):
                     euclidean(pickup_mp.coords, dropoff_mp.coords) / TRAVEL_SPEED
                 )
                 direct_time = euclidean(request.origin, request.destination) / TRAVEL_SPEED
-                total_disutility = (
-                    ptype.beta_walk * (pickup_walk + dropoff_walk)
-                    + ptype.beta_wait * wait_time
-                    + ptype.beta_ivt * ivt
-                )
+                if evaluation is not None and evaluation.components is not None:
+                    total_disutility = evaluation.components.total_utility
+                else:
+                    total_disutility = (
+                        ptype.beta_walk * (pickup_walk + dropoff_walk)
+                        + ptype.beta_wait * wait_time
+                        + ptype.beta_ivt * ivt
+                    )
                 records.append(PassengerRecord(
                     request_id=request.id,
                     passenger_type=ptype.name,
@@ -276,9 +447,16 @@ class BaseVariant(ABC):
                     ivt=ivt,
                     direct_time=direct_time,
                     total_disutility=total_disutility,
+                    status="served",
+                    detailed_reason=detailed_reason or "accepted",
+                    acceptance_probability=acceptance_probability,
+                    random_draw=random_draw,
                 ))
             else:
                 direct_time = euclidean(request.origin, request.destination) / TRAVEL_SPEED
+                if status is None:
+                    status = "feasibility_rejected"
+                    detailed_reason = detailed_reason or "no_feasible_route"
                 records.append(PassengerRecord(
                     request_id=request.id,
                     passenger_type=ptype.name,
@@ -289,6 +467,10 @@ class BaseVariant(ABC):
                     ivt=0.0,
                     direct_time=direct_time,
                     total_disutility=0.0,
+                    status=status,
+                    detailed_reason=detailed_reason,
+                    acceptance_probability=acceptance_probability,
+                    random_draw=random_draw,
                 ))
         return records
 
@@ -353,12 +535,26 @@ class DoorToDoor(BaseVariant):
         rho_p: float = None,
         rho_d: float = None,
         cost_weights: tuple | None = None,
+        choice_params: ChoiceParameters | None = None,
     ):
         self._rho_p = rho_p if rho_p is not None else RHO_P
         self._rho_d = rho_d if rho_d is not None else RHO_D
         self._cost_weights = cost_weights if cost_weights is not None else _COST_WEIGHTS
+        self._choice_config = choice_params or self._default_choice_params()
 
     def _solve(self, scenario: Scenario) -> ALNSState:
+        return self._run_actual_offer_sequence(
+            scenario=scenario,
+            service_design="DoorToDoor",
+            meeting_points_for_request=lambda request: [
+                MeetingPoint(id=f"dtd_pu_{request.id}", coords=request.origin),
+                MeetingPoint(id=f"dtd_do_{request.id}", coords=request.destination),
+            ],
+            rho_p=0.0,
+            rho_d=0.0,
+            k_top=1,
+            cost_weights=self._cost_weights,
+        )
         vehicles_dict = self._vehicles_dict(scenario)
         state = self._initial_state(scenario)
         state.unassigned = []
@@ -498,7 +694,20 @@ class SingleSidedPickup(BaseVariant):
 
     name = "SingleSidedPickup"
 
+    def __init__(self, choice_params: ChoiceParameters | None = None):
+        self._choice_config = choice_params or self._default_choice_params()
+
     def _solve(self, scenario: Scenario) -> ALNSState:
+        return self._run_actual_offer_sequence(
+            scenario=scenario,
+            service_design="SingleSidedPickup",
+            meeting_points_for_request=lambda request: list(scenario.meeting_points)
+            + [MeetingPoint(id=f"ssp_do_{request.id}", coords=request.destination)],
+            rho_p=RHO_P,
+            rho_d=0.0,
+            k_top=K_TOP,
+            cost_weights=_COST_WEIGHTS,
+        )
         vehicles_dict = self._vehicles_dict(scenario)
         state = self._initial_state(scenario)
         state.unassigned = []
@@ -589,48 +798,24 @@ class FullModel(BaseVariant):
         rho_d: float = None,
         gamma: float = 0.0,
         cost_weights: tuple | None = None,
+        choice_params: ChoiceParameters | None = None,
     ):
         self._rho_p = rho_p if rho_p is not None else RHO_P
         self._rho_d = rho_d if rho_d is not None else RHO_D
         self._gamma = gamma
         self._cost_weights = cost_weights if cost_weights is not None else _COST_WEIGHTS
+        self._choice_config = choice_params or self._default_choice_params()
 
     def _solve(self, scenario: Scenario) -> ALNSState:
-        vehicles_dict = self._vehicles_dict(scenario)
-
-        rh = RollingHorizon(
-            vehicles=vehicles_dict,
-            meeting_points=scenario.meeting_points,
+        return self._run_actual_offer_sequence(
+            scenario=scenario,
+            service_design="BidirectionalMeetingPoint",
+            meeting_points_for_request=lambda request: scenario.meeting_points,
             rho_p=self._rho_p,
             rho_d=self._rho_d,
             k_top=K_TOP,
-            H=H_WINDOW,
-            delta=DELTA,
             cost_weights=self._cost_weights,
-            travel_speed=TRAVEL_SPEED,
-            alns_iterations=50,
-            seed=42,
         )
-
-        # Apply MNL filtering: only pass requests that accept the offered bundle
-        sorted_requests = sorted(scenario.requests, key=lambda r: r.earliest)
-        arrival_times = [r.earliest for r in sorted_requests]
-
-        mnl_accepted = _mnl_filter_requests(sorted_requests, arrival_times, scenario)
-
-        rh.run_simulation(mnl_accepted, [r.earliest for r in mnl_accepted])
-
-        assigned_ids = set(rh.completed_request_ids)
-        for route in rh.routes.values():
-            for stop in route.stops:
-                if len(stop) >= 3:
-                    assigned_ids.add(stop[2])
-
-        unassigned = [r for r in scenario.requests if r.id not in assigned_ids]
-        return ALNSState(routes=rh.routes, unassigned=unassigned, cost=0.0,
-                         completed_ids=set(rh.completed_request_ids),
-                         extra_vehicle_km=rh.accumulated_vehicle_km,
-                         pickup_times=dict(rh.pickup_times))
 
 
 # ---------------------------------------------------------------------------
@@ -647,34 +832,19 @@ class AblationNoRollingHorizon(BaseVariant):
 
     name = "AblationNoRollingHorizon"
 
+    def __init__(self, choice_params: ChoiceParameters | None = None):
+        self._choice_config = choice_params or self._default_choice_params()
+
     def _solve(self, scenario: Scenario) -> ALNSState:
-        vehicles_dict = self._vehicles_dict(scenario)
-
-        sorted_requests = sorted(scenario.requests, key=lambda r: r.earliest)
-        mnl_accepted = _mnl_filter_requests(sorted_requests, [r.earliest for r in sorted_requests], scenario)
-
-        state = ALNSState(
-            routes={v.id: Route(vehicle_id=v.id, stops=[]) for v in scenario.vehicles},
-            unassigned=list(mnl_accepted),
-            cost=0.0,
-        )
-
-        result_state = greedy_insertion(
-            state,
-            vehicles_dict,
-            scenario.meeting_points,
+        return self._run_actual_offer_sequence(
+            scenario=scenario,
+            service_design="BidirectionalMeetingPointNoRollingHorizon",
+            meeting_points_for_request=lambda request: scenario.meeting_points,
             rho_p=RHO_P,
             rho_d=RHO_D,
             k_top=K_TOP,
             cost_weights=_COST_WEIGHTS,
-            travel_speed=TRAVEL_SPEED,
         )
-
-        # Mark MNL-rejected requests as unassigned
-        mnl_accepted_ids = {r.id for r in mnl_accepted}
-        mnl_rejected = [r for r in scenario.requests if r.id not in mnl_accepted_ids]
-        result_state.unassigned.extend(mnl_rejected)
-        return result_state
 
 
 # ---------------------------------------------------------------------------

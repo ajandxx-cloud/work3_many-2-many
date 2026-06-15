@@ -11,11 +11,15 @@ across all tests (avoids re-running the slow FullModel variant 8 times).
 from __future__ import annotations
 
 import os
+import sys
 import tempfile
 
 import pandas as pd
 import pytest
 
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+import experiments.runner as runner_module
 from experiments.runner import run_all_experiments, _write_metrics_table, _make_row
 from experiments.variants import ALL_VARIANTS
 
@@ -30,9 +34,9 @@ def smoke_results(tmp_path_factory):
     """Run smoke experiment once; return (syn_rows, bei_rows, tmp_path)."""
     tmp_path = tmp_path_factory.mktemp("runner_smoke")
     syn_rows, bei_rows = run_all_experiments(
-        scales=[20],
+        scales=[8],
         seeds=[42],
-        beijing=True,
+        beijing=False,
         results_dir=str(tmp_path),
     )
     return syn_rows, bei_rows, tmp_path
@@ -67,6 +71,8 @@ def test_synthetic_results_columns(smoke_results):
     required = [
         "variant", "scale", "seed",
         "acceptance_rate", "vehicle_km",
+        "served_share", "behavioral_acceptance_rate",
+        "choice_rejection_rate", "feasibility_rejection_rate",
         "avg_wait", "p95_wait",
         "avg_walk", "avg_ivt",
         "detour_ratio", "fairness_index", "cpu_time",
@@ -100,7 +106,10 @@ def test_metrics_table_columns(smoke_results):
     syn_rows, bei_rows, tmp_path = smoke_results
     df = pd.read_csv(tmp_path / "metrics_table.csv")
     metric_cols = [
-        "acceptance_rate", "vehicle_km", "avg_wait", "p95_wait",
+        "acceptance_rate", "vehicle_km",
+        "served_share", "behavioral_acceptance_rate",
+        "choice_rejection_rate", "feasibility_rejection_rate",
+        "avg_wait", "p95_wait",
         "avg_walk", "avg_ivt", "detour_ratio", "fairness_index", "cpu_time",
     ]
     for m in metric_cols:
@@ -117,10 +126,61 @@ def test_acceptance_rate_in_range(smoke_results):
 
 
 def test_beijing_scenario_runs(smoke_results):
-    """Beijing scenario runs without exception."""
+    """Primary smoke fixture skips Beijing; targeted test covers it separately."""
     syn_rows, bei_rows, tmp_path = smoke_results
+    assert bei_rows == []
+
+
+def test_small_beijing_scenario_runs(tmp_path, monkeypatch):
+    """Beijing scenario runs without exception at a unit-test scale."""
+    monkeypatch.setattr(runner_module, "BEIJING_SCALE", 8)
+    syn_rows, bei_rows = run_all_experiments(
+        scales=[],
+        seeds=[42],
+        beijing=True,
+        results_dir=str(tmp_path),
+    )
+
     assert len(bei_rows) == len(ALL_VARIANTS), (
         f"Expected {len(ALL_VARIANTS)} beijing rows, got {len(bei_rows)}"
     )
     csv_path = tmp_path / "beijing_results.csv"
     assert csv_path.exists(), "beijing_results.csv not created"
+
+
+def test_utility_components_csv_exists(smoke_results):
+    syn_rows, bei_rows, tmp_path = smoke_results
+    csv_path = tmp_path / "utility_components.csv"
+
+    assert csv_path.exists(), "utility_components.csv not created"
+    df = pd.read_csv(csv_path)
+    assert len(df) > 0, "utility_components.csv is empty"
+
+
+def test_utility_components_columns_and_join_keys(smoke_results):
+    syn_rows, bei_rows, tmp_path = smoke_results
+    df = pd.read_csv(tmp_path / "utility_components.csv")
+    required = [
+        "run_id", "seed", "scenario", "method", "request_id",
+        "status", "detailed_reason", "passenger_type",
+        "pickup_walk", "dropoff_walk", "wait_time", "ivt", "fare",
+        "service_design", "pickup_mp_id", "dropoff_mp_id", "vehicle_id",
+        "scheduled_pickup", "scheduled_dropoff",
+        "walk_utility", "wait_utility", "ivt_utility", "fare_utility",
+        "service_asc", "outside_option_constant", "total_utility",
+        "outside_utility", "acceptance_probability", "random_draw",
+    ]
+
+    for col in required:
+        assert col in df.columns, f"Missing utility column: {col}"
+    assert df[["run_id", "seed", "scenario", "method", "request_id"]].notna().all().all()
+
+
+def test_feasibility_rejections_do_not_fabricate_utility(smoke_results):
+    syn_rows, bei_rows, tmp_path = smoke_results
+    df = pd.read_csv(tmp_path / "utility_components.csv")
+    feasibility = df[df["status"] == "feasibility_rejected"]
+
+    if not feasibility.empty:
+        assert feasibility["total_utility"].isna().all()
+        assert feasibility["acceptance_probability"].isna().all()

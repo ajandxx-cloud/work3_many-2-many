@@ -35,6 +35,19 @@ ALNS_ITERATIONS = 50
 # It is used only for post-hoc social welfare computation (metrics.py).
 ALPHA_WEIGHTS = [1.0, 1.0, 1.0, 1.0, 5.0]
 
+# Phase 3 passenger choice parameters.
+# Values are inherited/simulation-range inputs documented in
+# .planning/phases/03-passenger-choice-model-rebuild/03_PARAMETER_CALIBRATION.md;
+# they are not real-data calibration.
+CHOICE_SERVICE_ASC = 0.0
+CHOICE_OUTSIDE_OPTION_CONSTANT = 0.0
+CHOICE_SEED = RANDOM_SEED
+CHOICE_TYPE_SHARES = {
+    "price_sensitive": 0.34,
+    "time_sensitive": 0.33,
+    "walk_sensitive": 0.33,
+}
+
 # Vehicle parameters
 VEHICLE_CAPACITY = 8
 MAX_RIDE_TIME = 45 * 60.0          # 45 min max in-vehicle time

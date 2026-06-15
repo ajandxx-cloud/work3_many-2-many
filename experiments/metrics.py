@@ -27,7 +27,7 @@ cpu_time        : wall-clock seconds for the simulation run (passed through)
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 import numpy as np
 
@@ -50,6 +50,16 @@ class PassengerRecord:
     ivt: float                 # in-vehicle travel time (seconds)
     direct_time: float         # Euclidean origin→destination distance / speed (seconds)
     total_disutility: float    # MNL utility value (typically negative)
+    status: str | None = None
+    detailed_reason: str = ""
+    acceptance_probability: float | None = None
+    random_draw: float | None = None
+
+    def __post_init__(self):
+        if self.status is None:
+            self.status = "served" if self.accepted else "feasibility_rejected"
+        else:
+            self.accepted = self.status == "served"
 
 
 @dataclass
@@ -59,6 +69,7 @@ class SimulationResult:
     records: list[PassengerRecord]
     total_vehicle_km: float    # total vehicle distance driven (km)
     cpu_time: float            # wall-clock seconds for the simulation
+    utility_logs: list[dict] = field(default_factory=list)
 
 
 @dataclass
@@ -75,6 +86,10 @@ class MetricsResult:
     fairness_index: float      # Gini coefficient ∈ [0, 1]
     cpu_time: float            # seconds
     social_welfare: float = 0.0  # W = sum_r[z_r*U_rb* - (1-z_r)*gamma]; default 0.0
+    served_share: float = 0.0
+    behavioral_acceptance_rate: float = 0.0
+    choice_rejection_rate: float = 0.0
+    feasibility_rejection_rate: float = 0.0
 
 
 # ---------------------------------------------------------------------------
@@ -122,13 +137,23 @@ def compute_metrics(result: SimulationResult) -> MetricsResult:
         All time-based statistics return 0.0 when no passengers were accepted.
     """
     records = result.records
-    accepted = [r for r in records if r.accepted]
+    accepted = [r for r in records if r.status == "served" or r.accepted]
+    choice_rejected = [r for r in records if r.status == "choice_rejected"]
+    feasibility_rejected = [r for r in records if r.status == "feasibility_rejected"]
 
     # 1. Acceptance rate
     if records:
         acceptance_rate = len(accepted) / len(records)
+        served_share = len(accepted) / len(records)
+        choice_rejection_rate = len(choice_rejected) / len(records)
+        feasibility_rejection_rate = len(feasibility_rejected) / len(records)
+        behavioral_acceptance_rate = 1.0 - choice_rejection_rate
     else:
         acceptance_rate = 0.0
+        served_share = 0.0
+        behavioral_acceptance_rate = 0.0
+        choice_rejection_rate = 0.0
+        feasibility_rejection_rate = 0.0
 
     # 2. Vehicle km — passed through directly
     vehicle_km = result.total_vehicle_km
@@ -184,6 +209,10 @@ def compute_metrics(result: SimulationResult) -> MetricsResult:
         detour_ratio=detour_ratio,
         fairness_index=fairness_index,
         cpu_time=cpu_time,
+        served_share=served_share,
+        behavioral_acceptance_rate=behavioral_acceptance_rate,
+        choice_rejection_rate=choice_rejection_rate,
+        feasibility_rejection_rate=feasibility_rejection_rate,
     )
 
 
