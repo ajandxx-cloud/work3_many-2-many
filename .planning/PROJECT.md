@@ -20,6 +20,8 @@ Produce reproducible, reviewer-resistant evidence that supports only defensible 
 - Existing GSD codebase map exists under `.planning/codebase/` and identifies architecture, stack, conventions, testing, and concerns.
 - Phase 0 mapped current manuscript results and claims to result files, scripts, or explicit ambiguity markers.
 - Phase 0 translated review-note weaknesses into routed risks and future phase gates.
+- Phase 1 audited literature and novelty positioning, forbidding broad first/only and pickup-side-only claims unless later full-text evidence supports a precise scoped version.
+- Phase 1 resolved the venue-positioning conflict for planning by adopting TR-E-level rigor as the evidence bar while keeping policy language secondary and simulation-based.
 
 ### Active
 
@@ -46,7 +48,7 @@ The user-provided rebuild brief requires a strict GSD phase-gated process. It id
 
 The review note `docs/工作3讨论-6.14.md` reinforces the same risk set. It flags novelty overclaiming around DARP with meeting points, the need to audit Cortenbach et al. (2024), Fielbaum et al. (2021), and Wu et al. (2025), the lack of calibrated passenger-choice parameters, coverage confounding in the 29.1% vkm/trip improvement, inconsistent response mechanisms across variants, large MILP-vs-ALNS gaps, incomplete MILP formulation, too few seeds, synthetic Beijing policy overreach, post-hoc gamma/Pareto interpretation problems, and overinterpreted equity diagnostics.
 
-The current README says the target journal is Transportation Research Part A, while the rebuild prompt asks for Transportation Research Part E or comparable quality. Treat this as an open positioning conflict to resolve in Phase 1 literature and novelty audit.
+The current README says the target journal is Transportation Research Part A, while the rebuild prompt asks for Transportation Research Part E or comparable quality. Phase 1 resolved this for planning: use TR-E-level rigor as the evidence bar, and keep TR-A-style policy claims secondary unless later case-study evidence supports them.
 
 ## Constraints
 
@@ -65,7 +67,8 @@ The current README says the target journal is Transportation Research Part A, wh
 | Initialize this as a brownfield GSD project | The repository already has code, manuscript, results, and `.planning/codebase` maps | Complete |
 | Start with Phase 0 only | The rebuild brief explicitly forbids new experiments before repository and manuscript audit pass | Complete |
 | Treat current positive efficiency findings as provisional | Served share and passenger-response differences confound existing vkm/trip comparisons | Confirmed by Phase 0 audit |
-| Use TR-E-level contribution framing | The requested story is an integrated choice-aware dynamic service-design framework with conditional claims | Pending Phase 1 |
+| Use TR-E-level contribution framing | Phase 1 approved the integrated choice-aware dynamic service-design framework as the safe contribution center | Complete |
+| Forbid broad first/only novelty language | Phase 1 found prior work already narrows bidirectional walking and meeting-point novelty | Complete |
 | Treat Phase 0 current results as exploratory provenance inputs, not final evidence | Main table, matched coverage, gamma, weight sensitivity, and policy outputs all have caveats | Complete |
 
 ## Evolution
@@ -86,4 +89,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state.
 
 ---
-*Last updated: 2026-06-15 after Phase 0 transition*
+*Last updated: 2026-06-15 after Phase 1 completion*

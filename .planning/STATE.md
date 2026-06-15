@@ -2,12 +2,12 @@
 gsd_state_version: 1.0
 milestone: v1.0 Evidence-chain rebuild
 milestone_name: milestone
-current_phase: 01
-current_phase_name: literature-and-novelty-audit
-current_plan: 1
-status: verifying
-stopped_at: Completed 01-01-PLAN.md
-last_updated: "2026-06-15T02:33:25.840Z"
+current_phase: 2
+current_phase_name: Experimental Contract and Metric Standardization
+current_plan: Not started
+status: ready_to_plan
+stopped_at: Phase 1 complete; ready to plan Phase 2
+last_updated: 2026-06-15T02:34:38.778Z
 last_activity: 2026-06-15
 progress:
   total_phases: 11
@@ -19,11 +19,11 @@ progress:
 
 # State: TR_E_Bidirectional_MeetingPoint_DRT_Experiment_Rebuild
 
-**Current Phase:** 01
-**Current Phase Name:** literature-and-novelty-audit
-**Status:** Phase complete — ready for verification
-**Current Plan:** 1
-**Progress:** [██████████] 100%
+**Current Phase:** 2
+**Current Phase Name:** Experimental Contract and Metric Standardization
+**Status:** Ready to plan
+**Current Plan:** Not started
+**Progress:** 18%
 **Last Activity:** 2026-06-15
 
 ## Project Reference
@@ -31,15 +31,13 @@ progress:
 See: `.planning/PROJECT.md`
 
 **Core value:** Produce reproducible, reviewer-resistant evidence for defensible conditional claims about bidirectional meeting-point DRT.
-**Current focus:** Phase 01 — literature-and-novelty-audit
+**Current focus:** Phase 2 - experimental contract and metric standardization
 
 ## Current Position
 
-Phase: 01 (literature-and-novelty-audit) — EXECUTING
-Plan: 1 of 1
-Phase 0 is complete as an audit gate. The audit used the rebuild brief, the codebase map, the existing README/manuscript, result artifacts, figure scripts, and review-note risk content.
+Phase 1 is complete and verified. The literature and novelty audit forbids broad first/only and pickup-side-only novelty language, approves the narrower integrated choice-aware dynamic service-design framing for planning, and records TR-E-level rigor as the evidence bar.
 
-No new experiments were run during Phase 0. The immediate next work is Phase 1 discussion and planning for the literature/novelty audit before preserving any strong contribution claim.
+The immediate next work is Phase 2 planning for experimental contract and metric standardization before any new formal experiments are run.
 
 ## Decisions
 
@@ -48,13 +46,12 @@ No new experiments were run during Phase 0. The immediate next work is Phase 1 d
 - Keep Phase 0 audit-only; do not implement new experiments yet.
 - Use the requested project name `TR_E_Bidirectional_MeetingPoint_DRT_Experiment_Rebuild`.
 - Phase 0 passes with caveats: the repository and manuscript evidence chain is mapped, but current headline results remain exploratory rather than final evidence.
-- Route novelty and target-journal positioning to Phase 1 before manuscript rewriting.
 - Route metric denominators, baseline taxonomy, matched coverage, and fixed accepted-set design to Phase 2 before new formal runs.
+- Phase 1 passes: broad first/only novelty wording is not approved; the safe contribution center is an integrated choice-aware dynamic service-design simulation framework under TR-E-level evidence standards.
 
 ## Blockers / Concerns
 
 - Some historical note filenames/text appear to contain encoding damage, but the readable review-note content and extracted risks remain usable.
-- README currently targets Transportation Research Part A, while the rebuild prompt requests Transportation Research Part E or comparable quality.
 - Current baselines mix deterministic all-feasible acceptance and binary-logit passenger response.
 - Current efficiency claims are coverage-confounded because FullModel served share is much lower than DoorToDoor in the headline table.
 - Current passenger utility parameters are not empirically calibrated.
@@ -63,12 +60,14 @@ No new experiments were run during Phase 0. The immediate next work is Phase 1 d
 - Main-table aggregate values match `results/metrics_table.csv`, but the table caption/scenario scope is inconsistent with the aggregation.
 - Weight sensitivity table provenance is ambiguous relative to `results/weight_sensitivity.json`.
 - Gamma/welfare outputs are post-hoc diagnostics and must not be framed as a Pareto frontier unless implementation changes.
+- Cortenbach et al. (2024) and Wu et al. (2025) bibliography metadata should be cleaned during manuscript restructuring.
 
 ## Pending Todos
 
 - [x] Review and confirm Phase 0 audit artifacts.
-- [ ] Run Phase 1 discussion protocol before planning Phase 1.
-- [ ] Resolve target-journal positioning: TR-E versus current Part A manuscript framing.
+- [x] Run Phase 1 literature and novelty audit.
+- [x] Resolve target-journal positioning for planning: use TR-E-level rigor as the evidence bar.
+- [ ] Plan Phase 2 experimental contract and metric standardization.
 
 ## Artifact Index
 
@@ -76,6 +75,7 @@ No new experiments were run during Phase 0. The immediate next work is Phase 1 d
 - `.planning/REQUIREMENTS.md`
 - `.planning/ROADMAP.md`
 - `.planning/STATE.md`
+- `.planning/CLAIMS_AND_RISKS.md`
 - `.planning/phases/00-repository-and-manuscript-audit/00_REPOSITORY_AUDIT.md`
 - `.planning/phases/00-repository-and-manuscript-audit/00_MANUSCRIPT_CLAIM_AUDIT.md`
 - `.planning/phases/00-repository-and-manuscript-audit/00_CURRENT_EXPERIMENT_MAP.md`
@@ -85,12 +85,18 @@ No new experiments were run during Phase 0. The immediate next work is Phase 1 d
 - `.planning/phases/00-repository-and-manuscript-audit/00-VERIFICATION.md`
 - `.planning/phases/01-literature-and-novelty-audit/01-CONTEXT.md`
 - `.planning/phases/01-literature-and-novelty-audit/01-DISCUSSION-LOG.md`
+- `.planning/phases/01-literature-and-novelty-audit/01-01-PLAN.md`
+- `.planning/phases/01-literature-and-novelty-audit/01-01-SUMMARY.md`
+- `.planning/phases/01-literature-and-novelty-audit/01-VERIFICATION.md`
+- `.planning/phases/01-literature-and-novelty-audit/01_LITERATURE_AUDIT.md`
+- `.planning/phases/01-literature-and-novelty-audit/01_NOVELTY_POSITIONING.md`
+- `.planning/phases/01-literature-and-novelty-audit/01_REVISED_RESEARCH_QUESTIONS.md`
 
 ## Session Continuity
 
-Last session: 2026-06-15T02:33:25.832Z
-Stopped at: Completed 01-01-PLAN.md
+Last session: 2026-06-15
+Stopped at: Phase 1 complete; ready to plan Phase 2
 Resume file: None
 
 ---
-*State updated: 2026-06-15 after Phase 0 completion*
+*State updated: 2026-06-15 after Phase 1 completion*
