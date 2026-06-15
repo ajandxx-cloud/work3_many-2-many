@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 5
 current_phase_name: pilot-experiments
 current_plan: Not started
-status: verifying
-stopped_at: Completed 05-02-PLAN.md
-last_updated: "2026-06-15T13:42:38.591Z"
+status: blocked
+stopped_at: Phase 5 pilot gate report written with blockers
+last_updated: "2026-06-15T14:05:00.000Z"
 last_activity: 2026-06-15
 progress:
   total_phases: 11
   completed_phases: 5
   total_plans: 15
-  completed_plans: 14
+  completed_plans: 15
   percent: 45
 ---
 
@@ -21,7 +21,7 @@ progress:
 
 **Current Phase:** 5
 **Current Phase Name:** pilot-experiments
-**Status:** Phase complete — ready for verification
+**Status:** Phase 5 pilot gate blocked
 **Current Plan:** Not started
 **Progress:** [█████████░] 93%
 **Last Activity:** 2026-06-15
@@ -31,13 +31,13 @@ progress:
 See: `.planning/PROJECT.md`
 
 **Core value:** Produce reproducible, reviewer-resistant evidence for defensible conditional claims about bidirectional meeting-point DRT.
-**Current focus:** Phase 5 — pilot experiments
+**Current focus:** Phase 5 pilot experiments are executed; Phase 6 is blocked by pilot readiness issues.
 
 ## Current Position
 
-Phase: 05 (pilot-experiments) - PLANNED
+Phase: 05 (pilot-experiments) - BLOCKED
 Plan: 3 of 3
-Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is complete and verified, Phase 3 is complete and verified, and Phase 4 is complete and verified. The immediate next work is executing Phase 5 pilot experiments.
+Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is complete and verified, Phase 3 is complete and verified, and Phase 4 is complete and verified. Phase 5 pilot experiments ran and produced `05_PILOT_RESULTS.md`, but Phase 6 is not ready to plan until blocking pilot readiness issues are fixed or explicitly redesigned.
 
 ## Decisions
 
@@ -58,6 +58,9 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - Current result provenance and formal seed count are not sufficient for TR-E-level final claims.
 - Gamma/welfare outputs are post-hoc diagnostics and must not be framed as a Pareto frontier unless implementation changes.
 - Cortenbach et al. (2024) and Wu et al. (2025) bibliography metadata should be cleaned during manuscript restructuring.
+- Phase 5 blocker BUG-05-001: matched-coverage seed 42 gap exceeds tolerance.
+- Phase 5 blocker BUG-05-002: matched-coverage seed 44 gap exceeds tolerance.
+- Phase 5 blocker BUG-05-003: fixed accepted-set common served intersection is empty.
 
 ## Pending Todos
 
@@ -70,7 +73,8 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - [x] Execute Phase 3 passenger choice model rebuild.
 - [x] Plan Phase 4 baseline and algorithm implementation check.
 - [x] Plan Phase 5 pilot experiments.
-- [ ] Execute Phase 5 pilot experiments.
+- [x] Execute Phase 5 pilot experiments.
+- [ ] Resolve Phase 5 pilot blockers before Phase 6 planning.
 
 ## Artifact Index
 
@@ -113,12 +117,14 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - `.planning/phases/05-pilot-experiments/05-01-PLAN.md`
 - `.planning/phases/05-pilot-experiments/05-02-PLAN.md`
 - `.planning/phases/05-pilot-experiments/05-03-PLAN.md`
+- `.planning/phases/05-pilot-experiments/05_PILOT_RESULTS.md`
+- `.planning/phases/05-pilot-experiments/05_BUG_LEDGER.csv`
 
 ## Session Continuity
 
 Last session: 2026-06-15T13:42:38.324Z
-Stopped at: Completed 05-02-PLAN.md
-Resume file: None
+Stopped at: Phase 5 pilot gate report written with blockers
+Resume file: .planning/phases/05-pilot-experiments/05_PILOT_RESULTS.md
 
 ---
-*State updated: 2026-06-15 after Phase 5 planning*
+*State updated: 2026-06-15 after Phase 5 pilot gate execution*

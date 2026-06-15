@@ -1,0 +1,4 @@
+bug_id,source_artifact,triggering_configuration,method_label,seed,symptom,severity,fix_status,rerun_result,blocks_phase6
+BUG-05-001,results/pilot/phase05/matched_coverage_pilot.csv,scale=20 tolerance=0.03,DoorToDoor_Capped_MatchedCoverage,42,matched-coverage served-share gap 0.0833 exceeds tolerance 0.03,blocking,open,not_rerun,true
+BUG-05-002,results/pilot/phase05/matched_coverage_pilot.csv,scale=20 tolerance=0.03,DoorToDoor_Capped_MatchedCoverage,44,matched-coverage served-share gap 0.0333 exceeds tolerance 0.03,blocking,open,not_rerun,true
+BUG-05-003,results/pilot/phase05/fixed_accepted_set_smoke.json,scale=20 seed=42,all main behavioral methods,42,common served request intersection is empty so fixed-set routing diagnostic was skipped,blocking,open,not_rerun,true

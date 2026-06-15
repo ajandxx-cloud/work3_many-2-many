@@ -1,7 +1,7 @@
 diagnostic_id,seed,method_label,target_served_share,achieved_served_share,abs_gap,tolerance,status,detailed_reason,runtime_s,evidence_family,diagnostic_role
-phase05_matched_coverage,42,BidirectionalMP_Choice_RH_ALNS,0.15,0.15,0.0,0.03,target,target behavioral-main served share,0.00841389992274344,supplementary_control,matched_coverage_target
-phase05_matched_coverage,43,BidirectionalMP_Choice_RH_ALNS,0.15,0.15,0.0,0.03,target,target behavioral-main served share,0.004805500153452158,supplementary_control,matched_coverage_target
-phase05_matched_coverage,44,BidirectionalMP_Choice_RH_ALNS,0.1,0.1,0.0,0.03,target,target behavioral-main served share,0.0044520997907966375,supplementary_control,matched_coverage_target
-phase05_matched_coverage,42,DoorToDoor_Capped_MatchedCoverage,0.13333333333333333,0.05,0.08333333333333333,0.03,failed,achieved served_share outside tolerance,0.0014083001296967268,supplementary_control,matched_coverage_control
-phase05_matched_coverage,43,DoorToDoor_Capped_MatchedCoverage,0.13333333333333333,0.15,0.016666666666666663,0.03,passed,achieved served_share within tolerance,0.0008763999212533236,supplementary_control,matched_coverage_control
-phase05_matched_coverage,44,DoorToDoor_Capped_MatchedCoverage,0.13333333333333333,0.1,0.033333333333333326,0.03,failed,achieved served_share outside tolerance,0.0018162999767810106,supplementary_control,matched_coverage_control
+phase05_matched_coverage,42,BidirectionalMP_Choice_RH_ALNS,0.15,0.15,0.0,0.03,target,target behavioral-main served share,0.00422260002233088,supplementary_control,matched_coverage_target
+phase05_matched_coverage,43,BidirectionalMP_Choice_RH_ALNS,0.15,0.15,0.0,0.03,target,target behavioral-main served share,0.005726500181481242,supplementary_control,matched_coverage_target
+phase05_matched_coverage,44,BidirectionalMP_Choice_RH_ALNS,0.1,0.1,0.0,0.03,target,target behavioral-main served share,0.0038823001086711884,supplementary_control,matched_coverage_target
+phase05_matched_coverage,42,DoorToDoor_Capped_MatchedCoverage,0.13333333333333333,0.05,0.08333333333333333,0.03,failed,achieved served_share outside tolerance,0.001537499949336052,supplementary_control,matched_coverage_control
+phase05_matched_coverage,43,DoorToDoor_Capped_MatchedCoverage,0.13333333333333333,0.15,0.016666666666666663,0.03,passed,achieved served_share within tolerance,0.0007366999052464962,supplementary_control,matched_coverage_control
+phase05_matched_coverage,44,DoorToDoor_Capped_MatchedCoverage,0.13333333333333333,0.1,0.033333333333333326,0.03,failed,achieved served_share outside tolerance,0.001754299970343709,supplementary_control,matched_coverage_control
