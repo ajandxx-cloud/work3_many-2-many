@@ -5,9 +5,9 @@ milestone_name: milestone
 current_phase: 3
 current_phase_name: Passenger Choice Model Rebuild
 current_plan: Not started
-status: ready_to_plan
-stopped_at: Phase 02 complete (3/3) - ready to discuss Phase 3
-last_updated: 2026-06-15T04:22:42.348Z
+status: planning
+stopped_at: Phase 3 context gathered
+last_updated: "2026-06-15T06:35:39.756Z"
 last_activity: 2026-06-15
 progress:
   total_phases: 11
@@ -94,9 +94,9 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, and Phase 2 
 
 ## Session Continuity
 
-Last session: 2026-06-15T04:22:42.348Z
-Stopped at: Phase 02 complete (3/3) - ready to discuss Phase 3
-Resume file: .planning/ROADMAP.md
+Last session: 2026-06-15T06:35:39.749Z
+Stopped at: Phase 3 context gathered
+Resume file: .planning/phases/03-passenger-choice-model-rebuild/03-CONTEXT.md
 
 ---
 *State updated: 2026-06-15 after Phase 2 completion*
