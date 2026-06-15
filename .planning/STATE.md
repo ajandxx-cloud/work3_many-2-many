@@ -5,9 +5,9 @@ milestone_name: milestone
 current_phase: 5
 current_phase_name: pilot-experiments
 current_plan: Not started
-status: verifying
-stopped_at: Completed 05-04-PLAN.md
-last_updated: "2026-06-15T14:23:18.544Z"
+status: ready_to_plan
+stopped_at: Phase 05 complete (4/4) — ready to discuss Phase 6
+last_updated: 2026-06-15T14:34:01.616Z
 last_activity: 2026-06-15
 progress:
   total_phases: 11
@@ -19,9 +19,9 @@ progress:
 
 # State: TR_E_Bidirectional_MeetingPoint_DRT_Experiment_Rebuild
 
-**Current Phase:** 5
+**Current Phase:** 6
 **Current Phase Name:** pilot-experiments
-**Status:** Ready for verification
+**Status:** Ready to plan
 **Current Plan:** Not started
 **Progress:** [██████████] 100%
 **Last Activity:** 2026-06-15
@@ -31,7 +31,7 @@ progress:
 See: `.planning/PROJECT.md`
 
 **Core value:** Produce reproducible, reviewer-resistant evidence for defensible conditional claims about bidirectional meeting-point DRT.
-**Current focus:** Phase 5 pilot gap closure is implemented; verification can rerun before Phase 6 planning.
+**Current focus:** Phase 6 — formal synthetic experiments
 
 ## Current Position
 
