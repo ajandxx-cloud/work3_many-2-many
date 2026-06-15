@@ -2,12 +2,12 @@
 gsd_state_version: 1.0
 milestone: v1.0 Evidence-chain rebuild
 milestone_name: milestone
-current_phase: 5
+current_phase: 6
 current_phase_name: pilot-experiments
 current_plan: Not started
-status: ready_to_plan
-stopped_at: Phase 05 complete (4/4) — ready to discuss Phase 6
-last_updated: 2026-06-15T14:34:01.616Z
+status: planning
+stopped_at: Phase 6 context gathered
+last_updated: "2026-06-15T15:19:11.372Z"
 last_activity: 2026-06-15
 progress:
   total_phases: 11
@@ -123,9 +123,9 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 
 ## Session Continuity
 
-Last session: 2026-06-15T14:23:18.537Z
-Stopped at: Completed 05-04-PLAN.md
-Resume file: None
+Last session: 2026-06-15T15:19:11.364Z
+Stopped at: Phase 6 context gathered
+Resume file: .planning/phases/06-formal-synthetic-experiments/06-CONTEXT.md
 
 ---
 *State updated: 2026-06-15 after Phase 5 gap closure execution*
