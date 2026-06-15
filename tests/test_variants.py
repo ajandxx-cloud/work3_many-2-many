@@ -22,6 +22,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import experiments.variants as variants_module
 from experiments.metrics import SimulationResult, compute_metrics
+from experiments.runner import _run_variant_with_timeout
 from experiments.scenarios import generate_synthetic
 from experiments.variants import (
     ALL_VARIANTS,
@@ -30,6 +31,7 @@ from experiments.variants import (
     BidirectionalNoChoice,
     DoorToDoor,
     FullModel,
+    GreedyInsertionBaseline,
     SingleSidedDropoff,
     SingleSidedPickup,
 )
@@ -49,7 +51,7 @@ MEDIUM_SCENARIO = generate_synthetic(n_requests=20, n_vehicles=3, seed=42)
 
 
 def test_all_variants_list_length():
-    assert len(ALL_VARIANTS) == 8
+    assert len(ALL_VARIANTS) == 9
 
 
 def test_all_variants_unique_names():
@@ -142,6 +144,11 @@ def test_single_sided_dropoff_no_pickup_walk():
 
 def test_bidirectional_no_choice_returns_result():
     result = BidirectionalNoChoice().run(SMALL_SCENARIO)
+    assert isinstance(result, SimulationResult)
+
+
+def test_greedy_insertion_baseline_returns_result():
+    result = GreedyInsertionBaseline().run(SMALL_SCENARIO)
     assert isinstance(result, SimulationResult)
 
 
@@ -299,3 +306,31 @@ def test_deterministic_diagnostics_are_not_behavioral_main():
         metadata = variant.method_metadata
         assert metadata["evidence_family"] == "deterministic_diagnostic"
         assert metadata["diagnostic_role"] != behavioral_role
+
+
+def test_greedy_insertion_baseline_runner_schema(tmp_path):
+    row = _run_variant_with_timeout(
+        GreedyInsertionBaseline(),
+        SMALL_SCENARIO,
+        scale=len(SMALL_SCENARIO.requests),
+        seed=42,
+        results_dir=str(tmp_path),
+    )
+
+    assert row["diagnostic_role"] == "greedy_insertion"
+    assert "diagnostic" in row["evidence_family"]
+    for key in [
+        "run_id",
+        "method_label",
+        "service_design",
+        "choice_model",
+        "reoptimization",
+        "routing_solver",
+        "status",
+        "runtime_s",
+        "n_requests",
+        "n_served",
+        "vkm_per_served_trip",
+        "vkm_per_original_request",
+    ]:
+        assert key in row

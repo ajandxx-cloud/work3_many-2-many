@@ -872,6 +872,39 @@ class BidirectionalNoChoice(BaseVariant):
 
 
 # ---------------------------------------------------------------------------
+# Variant 3b: GreedyInsertionBaseline
+# ---------------------------------------------------------------------------
+
+
+class GreedyInsertionBaseline(BaseVariant):
+    """Named greedy insertion algorithm diagnostic for small scenarios."""
+
+    name = "GreedyInsertionBaseline"
+    method_label = "GreedyInsertionBaseline_Diagnostic"
+    service_design = "bidirectional_mp"
+    choice_model = "fixed_accepted_set"
+    reoptimization = "none"
+    routing_solver = "greedy_insertion"
+    evidence_family = "algorithm_diagnostic"
+    diagnostic_role = "greedy_insertion"
+    legacy_class = "GreedyInsertionBaseline"
+
+    def _solve(self, scenario: Scenario) -> ALNSState:
+        vehicles_dict = self._vehicles_dict(scenario)
+        state = self._initial_state(scenario)
+        return greedy_insertion(
+            state,
+            vehicles_dict,
+            scenario.meeting_points,
+            rho_p=RHO_P,
+            rho_d=RHO_D,
+            k_top=K_TOP,
+            cost_weights=_COST_WEIGHTS,
+            travel_speed=TRAVEL_SPEED,
+        )
+
+
+# ---------------------------------------------------------------------------
 # Variant 4: FullModel
 # ---------------------------------------------------------------------------
 
@@ -1024,6 +1057,7 @@ ALL_VARIANTS = [
     SingleSidedPickup(),
     SingleSidedDropoff(),
     BidirectionalNoChoice(),
+    GreedyInsertionBaseline(),
     FullModel(),
     AblationNoRollingHorizon(),
     AblationNoChoice(),

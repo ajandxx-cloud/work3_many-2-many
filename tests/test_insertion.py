@@ -128,6 +128,29 @@ def test_no_feasible():
     assert result is None, "Expected None when all insertions are infeasible"
 
 
+def test_walking_radius_failure_returns_none():
+    """Meeting points outside both walking radii produce no feasible insertion."""
+    request = make_request(origin=(0.0, 0.0), destination=(10.0, 10.0))
+    vehicles = {"v1": make_vehicle("v1")}
+    routes: dict = {}
+    meeting_points = [
+        make_mp("far_pickup", (100.0, 100.0)),
+        make_mp("far_dropoff", (120.0, 120.0)),
+    ]
+
+    result = evaluate_insertion(
+        request=request,
+        routes=routes,
+        vehicles=vehicles,
+        meeting_points=meeting_points,
+        rho_p=1.0,
+        rho_d=1.0,
+        k_top=3,
+    )
+
+    assert result is None
+
+
 # ---------------------------------------------------------------------------
 # test_incremental_cost_components
 # ---------------------------------------------------------------------------

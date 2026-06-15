@@ -450,6 +450,7 @@ class RollingHorizon:
         alns_iterations: int = 50,
         destroy_fraction: float = 0.3,
         seed: int = 42,
+        collect_diagnostics: bool = False,
     ):
         self.vehicles = vehicles
         self.meeting_points = meeting_points
@@ -463,6 +464,10 @@ class RollingHorizon:
         self.alns_iterations = alns_iterations
         self.destroy_fraction = destroy_fraction
         self.rng = random.Random(seed)
+        self.collect_diagnostics = collect_diagnostics
+        self.diagnostic_trace: list[dict] = []
+        self.operator_counts: dict[str, int] = {}
+        self.improvement_counts: dict[str, int] = {}
 
         # Current solution state
         self.routes: dict = {vid: Route(vehicle_id=vid, stops=[]) for vid in vehicles}
@@ -535,7 +540,7 @@ class RollingHorizon:
 
         if not horizon_requests:
             elapsed_ms = (time.perf_counter() - t0) * 1000
-            return {
+            result = {
                 'routes': self.routes,
                 'unassigned': [],
                 'cost': 0.0,
@@ -543,6 +548,11 @@ class RollingHorizon:
                 'objective': 0.0,
                 'n_accepted': 0,
             }
+            if self.collect_diagnostics:
+                result['diagnostic_trace'] = list(self.diagnostic_trace)
+                result['operator_counts'] = dict(self.operator_counts)
+                result['improvement_counts'] = dict(self.improvement_counts)
+            return result
 
         # Build initial state from current routes
         # Add unassigned horizon requests so repair operators can insert them
@@ -567,26 +577,29 @@ class RollingHorizon:
         best_state = deepcopy(current_state)
 
         destroy_ops = [
-            lambda s: random_removal(s, k_destroy, self.rng, self.request_registry),
-            lambda s: worst_removal(s, k_destroy, self.request_registry,
-                                    vehicles_at_t, self.travel_speed),
-            lambda s: related_removal(s, k_destroy, self.rng,
-                                      self.request_registry, self.travel_speed),
+            ("random_removal", lambda s: random_removal(s, k_destroy, self.rng, self.request_registry)),
+            ("worst_removal", lambda s: worst_removal(s, k_destroy, self.request_registry,
+                                                      vehicles_at_t, self.travel_speed)),
+            ("related_removal", lambda s: related_removal(s, k_destroy, self.rng,
+                                                          self.request_registry, self.travel_speed)),
         ]
 
         for iteration in range(self.alns_iterations):
+            iter_t0 = time.perf_counter()
             # Select destroy operator uniformly
-            destroy_fn = self.rng.choice(destroy_ops)
+            destroy_name, destroy_fn = self.rng.choice(destroy_ops)
             destroyed = destroy_fn(best_state)
 
             # Select repair operator (alternate greedy / regret)
             if iteration % 2 == 0:
+                repair_name = "greedy_insertion"
                 repaired = greedy_insertion(
                     destroyed, vehicles_at_t, self.meeting_points,
                     self.rho_p, self.rho_d, self.k_top,
                     self.cost_weights, self.travel_speed, self.rng
                 )
             else:
+                repair_name = "regret_insertion"
                 repaired = regret_insertion(
                     destroyed, vehicles_at_t, self.meeting_points,
                     self.rho_p, self.rho_d, self.k_top,
@@ -598,10 +611,39 @@ class RollingHorizon:
             # Acceptance: prefer fewer unassigned (more accepted), break ties by cost
             repaired_unassigned = len(repaired.unassigned)
             best_unassigned = len(best_state.unassigned)
+            previous_best_cost = best_state.cost
+            previous_best_unassigned = best_unassigned
+            improved = (
+                repaired_unassigned < previous_best_unassigned or
+                (repaired_unassigned == previous_best_unassigned and
+                 repaired.cost < previous_best_cost)
+            )
+            accepted_candidate = False
             if (repaired_unassigned < best_unassigned or
                     (repaired_unassigned == best_unassigned and
                      repaired.cost <= best_state.cost)):
                 best_state = repaired
+                accepted_candidate = True
+
+            if self.collect_diagnostics:
+                self.operator_counts[destroy_name] = self.operator_counts.get(destroy_name, 0) + 1
+                self.operator_counts[repair_name] = self.operator_counts.get(repair_name, 0) + 1
+                if improved:
+                    self.improvement_counts[destroy_name] = self.improvement_counts.get(destroy_name, 0) + 1
+                    self.improvement_counts[repair_name] = self.improvement_counts.get(repair_name, 0) + 1
+                self.diagnostic_trace.append({
+                    "iteration": iteration,
+                    "objective": repaired.cost,
+                    "best_objective": best_state.cost,
+                    "runtime_ms": (time.perf_counter() - iter_t0) * 1000,
+                    "accepted_count": len(_get_assigned_ids(repaired)),
+                    "unassigned_count": len(repaired.unassigned),
+                    "destroy_operator": destroy_name,
+                    "repair_operator": repair_name,
+                    "improved": improved,
+                    "accepted_improvement": accepted_candidate and improved,
+                    "accepted": accepted_candidate,
+                })
 
         # Update controller state
         self.routes = best_state.routes
@@ -614,7 +656,7 @@ class RollingHorizon:
 
         elapsed_ms = (time.perf_counter() - t0) * 1000
 
-        return {
+        result = {
             'routes': self.routes,
             'unassigned': best_state.unassigned,
             'cost': best_state.cost,
@@ -622,6 +664,11 @@ class RollingHorizon:
             'objective': best_state.cost,
             'n_accepted': n_accepted,
         }
+        if self.collect_diagnostics:
+            result['diagnostic_trace'] = list(self.diagnostic_trace)
+            result['operator_counts'] = dict(self.operator_counts)
+            result['improvement_counts'] = dict(self.improvement_counts)
+        return result
 
     def run_simulation(
         self, requests: list[Request], arrival_times: list[float]
@@ -668,9 +715,13 @@ class RollingHorizon:
             'routes': self.routes,
             'cost': final_result['cost'],
             'n_accepted': final_result['n_accepted'],
+            'n_unassigned': len(final_result.get('unassigned', [])),
             'total_time_s': total_time,
             'avg_reopt_time_s': avg_time,
             'n_reoptimizations': len(decision_times),
+            'diagnostic_trace': final_result.get('diagnostic_trace', []),
+            'operator_counts': final_result.get('operator_counts', {}),
+            'improvement_counts': final_result.get('improvement_counts', {}),
         }
 
 

@@ -8,17 +8,21 @@ Tests:
 """
 from __future__ import annotations
 
+import os
 import random
 import sys
 import time
 
 import pytest
 
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, "src")
 
+from experiments.algorithm_diagnostics import run_alns_budget_smoke
 from drt.alns import (
     ALNSState,
     RollingHorizon,
+    _apply_insertion,
     benchmark,
     greedy_insertion,
     random_removal,
@@ -27,6 +31,7 @@ from drt.alns import (
     worst_removal,
 )
 from drt.types import MeetingPoint, Request, Route, Vehicle
+from drt.insertion import evaluate_insertion
 
 
 # ---------------------------------------------------------------------------
@@ -163,6 +168,126 @@ def test_reoptimize_returns_keys():
     assert isinstance(result['objective'], float)
     assert isinstance(result['n_accepted'], int)
     assert result['time_ms'] >= 0.0
+
+
+def test_reoptimize_collects_diagnostic_trace():
+    meeting_points = _make_meeting_points()
+    vehicles = _make_vehicles()
+    requests = _make_requests()
+
+    rh = RollingHorizon(
+        vehicles=vehicles,
+        meeting_points=meeting_points,
+        rho_p=5.0,
+        rho_d=5.0,
+        k_top=3,
+        H=60.0,
+        delta=10.0,
+        cost_weights=(1.0, 1.0, 1.0, 1.0),
+        travel_speed=1.0,
+        alns_iterations=4,
+        seed=42,
+        collect_diagnostics=True,
+    )
+    for req in requests:
+        rh.add_request(req, current_time=0.0)
+
+    result = rh.reoptimize(current_time=0.0)
+    trace = result["diagnostic_trace"]
+
+    assert len(trace) == 4
+    for entry in trace:
+        for key in [
+            "iteration",
+            "objective",
+            "best_objective",
+            "runtime_ms",
+            "accepted_count",
+            "unassigned_count",
+            "destroy_operator",
+            "repair_operator",
+            "accepted_improvement",
+        ]:
+            assert key in entry
+        assert isinstance(entry["accepted_improvement"], bool)
+    assert result["operator_counts"]
+
+
+def test_apply_insertion_preserves_tagged_request_ids_and_pickup_times():
+    meeting_points = _make_meeting_points()
+    vehicles = _make_vehicles()
+    request = _make_requests()[0]
+    state = ALNSState(
+        routes={vid: Route(vehicle_id=vid, stops=[]) for vid in vehicles},
+        unassigned=[],
+    )
+    result = evaluate_insertion(
+        request,
+        state.routes,
+        vehicles,
+        meeting_points,
+        rho_p=5.0,
+        rho_d=5.0,
+        k_top=3,
+        cost_weights=(1.0, 1.0, 1.0, 1.0),
+        travel_speed=1.0,
+    )
+
+    assert result is not None
+    _apply_insertion(state, result, request, vehicles, travel_speed=1.0)
+
+    stops = state.routes[result.vehicle_id].stops
+    tagged = [stop for stop in stops if len(stop) >= 4 and stop[2] == request.id]
+    assert {stop[3] for stop in tagged} == {"pickup", "dropoff"}
+    assert all(stop[1] > 0.0 for stop in tagged)
+
+
+def test_rolling_horizon_pruning_preserves_completed_ids_and_pickup_times():
+    meeting_points = _make_meeting_points()
+    vehicles = _make_vehicles()
+    request = _make_requests()[0]
+    rh = RollingHorizon(
+        vehicles=vehicles,
+        meeting_points=meeting_points,
+        rho_p=5.0,
+        rho_d=5.0,
+        k_top=3,
+        H=60.0,
+        delta=10.0,
+        cost_weights=(1.0, 1.0, 1.0, 1.0),
+        travel_speed=1.0,
+        alns_iterations=1,
+        seed=42,
+    )
+    rh.routes["v0"].stops = [
+        (meeting_points[0], 1.0, request.id, "pickup"),
+        (meeting_points[1], 2.0, request.id, "dropoff"),
+    ]
+
+    rh.reoptimize(current_time=3.0)
+
+    assert request.id in rh.completed_request_ids
+    assert rh.pickup_times[request.id] == 1.0
+    assert rh.routes["v0"].stops == []
+
+
+def test_algorithm_diagnostics_budget_smoke_default_rows():
+    rows = run_alns_budget_smoke()
+
+    assert [row["budget_iterations"] for row in rows] == [5, 20, 50]
+    for row in rows:
+        for key in [
+            "budget_iterations",
+            "best_objective",
+            "runtime_s",
+            "n_accepted",
+            "n_unassigned",
+            "operator_selection_counts",
+            "improvement_counts",
+        ]:
+            assert key in row
+        assert row["evidence_family"] == "algorithm_diagnostic"
+        assert row["diagnostic_role"] == "alns_budget_smoke"
 
 
 def test_timing_benchmark():
