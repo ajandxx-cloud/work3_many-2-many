@@ -90,6 +90,8 @@ class MetricsResult:
     behavioral_acceptance_rate: float = 0.0
     choice_rejection_rate: float = 0.0
     feasibility_rejection_rate: float = 0.0
+    vkm_per_served_trip: float = 0.0
+    vkm_per_original_request: float = 0.0
 
 
 # ---------------------------------------------------------------------------
@@ -148,15 +150,18 @@ def compute_metrics(result: SimulationResult) -> MetricsResult:
         choice_rejection_rate = len(choice_rejected) / len(records)
         feasibility_rejection_rate = len(feasibility_rejected) / len(records)
         behavioral_acceptance_rate = 1.0 - choice_rejection_rate
+        vkm_per_original_request = result.total_vehicle_km / len(records)
     else:
         acceptance_rate = 0.0
         served_share = 0.0
         behavioral_acceptance_rate = 0.0
         choice_rejection_rate = 0.0
         feasibility_rejection_rate = 0.0
+        vkm_per_original_request = 0.0
 
     # 2. Vehicle km — passed through directly
     vehicle_km = result.total_vehicle_km
+    vkm_per_served_trip = vehicle_km / len(accepted) if accepted else 0.0
 
     # 3. Average and p95 wait time
     if accepted:
@@ -213,6 +218,8 @@ def compute_metrics(result: SimulationResult) -> MetricsResult:
         behavioral_acceptance_rate=behavioral_acceptance_rate,
         choice_rejection_rate=choice_rejection_rate,
         feasibility_rejection_rate=feasibility_rejection_rate,
+        vkm_per_served_trip=vkm_per_served_trip,
+        vkm_per_original_request=vkm_per_original_request,
     )
 
 

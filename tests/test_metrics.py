@@ -104,7 +104,8 @@ class TestMetricsResultStructure:
         m = compute_metrics(result)
         for field_name in [
             "acceptance_rate", "vehicle_km", "avg_wait", "p95_wait",
-            "avg_walk", "avg_ivt", "detour_ratio", "fairness_index", "cpu_time"
+            "avg_walk", "avg_ivt", "detour_ratio", "fairness_index", "cpu_time",
+            "vkm_per_served_trip", "vkm_per_original_request",
         ]:
             assert getattr(m, field_name) is not None, f"Field {field_name} is None"
 
@@ -284,6 +285,42 @@ class TestStatusAccounting:
         assert m.choice_rejection_rate == 0.0
         assert m.feasibility_rejection_rate == 0.0
         assert m.behavioral_acceptance_rate == 0.0
+
+
+class TestVehicleKmDenominators:
+    def test_vkm_per_served_trip_uses_served_count(self):
+        records = [
+            make_record("served_1", accepted=True, status="served"),
+            make_record("served_2", accepted=True, status="served"),
+            make_record("declined", accepted=False, status="choice_rejected"),
+        ]
+
+        m = compute_metrics(make_result(records=records, total_vehicle_km=12.0))
+
+        assert m.vkm_per_served_trip == pytest.approx(6.0)
+
+    def test_vkm_per_original_request_uses_all_requests(self):
+        records = [
+            make_record("served", accepted=True, status="served"),
+            make_record("declined", accepted=False, status="choice_rejected"),
+            make_record("infeasible", accepted=False, status="feasibility_rejected"),
+        ]
+
+        m = compute_metrics(make_result(records=records, total_vehicle_km=12.0))
+
+        assert m.vkm_per_original_request == pytest.approx(4.0)
+
+    def test_vkm_denominators_are_zero_when_empty_or_unserved(self):
+        empty = compute_metrics(make_result(records=[], total_vehicle_km=12.0))
+        unserved = compute_metrics(make_result(
+            records=[make_record("declined", accepted=False, status="choice_rejected")],
+            total_vehicle_km=12.0,
+        ))
+
+        assert empty.vkm_per_served_trip == 0.0
+        assert empty.vkm_per_original_request == 0.0
+        assert unserved.vkm_per_served_trip == 0.0
+        assert unserved.vkm_per_original_request == pytest.approx(12.0)
 
 
 # ---------------------------------------------------------------------------

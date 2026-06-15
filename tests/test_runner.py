@@ -13,6 +13,7 @@ from __future__ import annotations
 import os
 import sys
 import tempfile
+import time
 
 import pandas as pd
 import pytest
@@ -20,7 +21,8 @@ import pytest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import experiments.runner as runner_module
-from experiments.runner import run_all_experiments, _write_metrics_table, _make_row
+from experiments.metrics import SimulationResult
+from experiments.runner import run_all_experiments, _write_metrics_table, _make_row, _run_variant_with_timeout
 from experiments.variants import ALL_VARIANTS
 
 
@@ -69,10 +71,16 @@ def test_synthetic_results_columns(smoke_results):
     syn_rows, bei_rows, tmp_path = smoke_results
     df = pd.read_csv(tmp_path / "synthetic_results.csv")
     required = [
-        "variant", "scale", "seed",
+        "run_id", "config_id", "variant", "scale", "seed", "scenario",
+        "method_label", "service_design", "choice_model", "reoptimization",
+        "routing_solver", "evidence_family", "diagnostic_role",
+        "status", "detailed_reason", "runtime_s", "error_message",
+        "result_schema_version", "timestamp_utc", "artifact_dir",
+        "git_commit_or_code_hash", "n_requests", "n_offered", "n_served",
         "acceptance_rate", "vehicle_km",
         "served_share", "behavioral_acceptance_rate",
         "choice_rejection_rate", "feasibility_rejection_rate",
+        "vkm_per_served_trip", "vkm_per_original_request",
         "avg_wait", "p95_wait",
         "avg_walk", "avg_ivt",
         "detour_ratio", "fairness_index", "cpu_time",
@@ -109,6 +117,7 @@ def test_metrics_table_columns(smoke_results):
         "acceptance_rate", "vehicle_km",
         "served_share", "behavioral_acceptance_rate",
         "choice_rejection_rate", "feasibility_rejection_rate",
+        "vkm_per_served_trip", "vkm_per_original_request",
         "avg_wait", "p95_wait",
         "avg_walk", "avg_ivt", "detour_ratio", "fairness_index", "cpu_time",
     ]
@@ -174,6 +183,81 @@ def test_utility_components_columns_and_join_keys(smoke_results):
     for col in required:
         assert col in df.columns, f"Missing utility column: {col}"
     assert df[["run_id", "seed", "scenario", "method", "request_id"]].notna().all().all()
+
+
+class SleepingVariant:
+    name = "SleepingVariant"
+    method_metadata = {
+        "method_label": "SleepingVariant_Diagnostic",
+        "service_design": "diagnostic",
+        "choice_model": "none",
+        "reoptimization": "none",
+        "routing_solver": "none",
+        "evidence_family": "algorithm_diagnostic",
+        "diagnostic_role": "timeout_fixture",
+        "legacy_class": "SleepingVariant",
+    }
+
+    def run(self, scenario):
+        time.sleep(0.3)
+        return SimulationResult(records=[], total_vehicle_km=0.0, cpu_time=0.3)
+
+
+class FailingVariant:
+    name = "FailingVariant"
+    method_metadata = {
+        "method_label": "FailingVariant_Diagnostic",
+        "service_design": "diagnostic",
+        "choice_model": "none",
+        "reoptimization": "none",
+        "routing_solver": "none",
+        "evidence_family": "algorithm_diagnostic",
+        "diagnostic_role": "failure_fixture",
+        "legacy_class": "FailingVariant",
+    }
+
+    def run(self, scenario):
+        raise RuntimeError("planned fixture failure")
+
+
+def test_timeout_row_returns_without_waiting_for_worker(tmp_path, monkeypatch):
+    scenario = runner_module.generate_synthetic(8, 3, 42)
+    monkeypatch.setattr(runner_module, "_VARIANT_TIMEOUT_S", 0.01)
+
+    start = time.perf_counter()
+    row = _run_variant_with_timeout(
+        SleepingVariant(),
+        scenario,
+        scale=8,
+        seed=42,
+        results_dir=str(tmp_path),
+    )
+    elapsed = time.perf_counter() - start
+
+    assert elapsed < 0.2
+    assert row["status"] == "timeout"
+    assert "timeout" in row["detailed_reason"]
+    assert "timeout" in row["error_message"]
+    assert row["runtime_s"] < 0.2
+
+
+def test_failed_rows_are_written_to_csv(tmp_path, monkeypatch):
+    monkeypatch.setattr(runner_module, "ALL_VARIANTS", [FailingVariant()])
+
+    syn_rows, _ = run_all_experiments(
+        scales=[8],
+        seeds=[42],
+        beijing=False,
+        results_dir=str(tmp_path),
+    )
+
+    assert syn_rows[0]["status"] == "failed"
+    assert "planned fixture failure" in syn_rows[0]["error_message"]
+
+    df = pd.read_csv(tmp_path / "synthetic_results.csv")
+    assert len(df) == 1
+    assert df.loc[0, "status"] == "failed"
+    assert "planned fixture failure" in df.loc[0, "error_message"]
 
 
 def test_feasibility_rejections_do_not_fabricate_utility(smoke_results):

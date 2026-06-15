@@ -19,10 +19,12 @@ from __future__ import annotations
 
 import csv
 import os
+import subprocess
 import sys
 import time
 import traceback
 import concurrent.futures
+from datetime import datetime, timezone
 
 import pandas as pd
 
@@ -46,10 +48,16 @@ RESULTS_DIR = os.path.join(_THIS_DIR, "..", "results")
 # ---------------------------------------------------------------------------
 
 _RAW_COLS = [
-    "variant", "scale", "seed",
+    "run_id", "config_id", "variant", "scale", "seed", "scenario",
+    "method_label", "service_design", "choice_model", "reoptimization",
+    "routing_solver", "evidence_family", "diagnostic_role", "legacy_class",
+    "status", "detailed_reason", "runtime_s", "error_message",
+    "result_schema_version", "timestamp_utc", "artifact_dir",
+    "git_commit_or_code_hash", "n_requests", "n_offered", "n_served",
     "acceptance_rate", "vehicle_km",
     "served_share", "behavioral_acceptance_rate",
     "choice_rejection_rate", "feasibility_rejection_rate",
+    "vkm_per_served_trip", "vkm_per_original_request",
     "avg_wait", "p95_wait",
     "avg_walk", "avg_ivt",
     "detour_ratio", "fairness_index", "cpu_time",
@@ -59,6 +67,7 @@ _METRIC_COLS = [
     "acceptance_rate", "vehicle_km",
     "served_share", "behavioral_acceptance_rate",
     "choice_rejection_rate", "feasibility_rejection_rate",
+    "vkm_per_served_trip", "vkm_per_original_request",
     "avg_wait", "p95_wait",
     "avg_walk", "avg_ivt",
     "detour_ratio", "fairness_index", "cpu_time",
@@ -122,6 +131,7 @@ def run_all_experiments(
                 row = _run_variant_with_timeout(
                     variant, scenario, scale, seed,
                     label=f"[{done:3d}/{total_synthetic}] synthetic",
+                    results_dir=results_dir,
                 )
                 utility_rows.extend(row.pop("__utility_logs", []))
                 synthetic_rows.append(row)
@@ -140,6 +150,7 @@ def run_all_experiments(
                 row = _run_variant_with_timeout(
                     variant, scenario, BEIJING_SCALE, seed,
                     label=f"[{done_bj:3d}/{total_beijing}] beijing ",
+                    results_dir=results_dir,
                 )
                 utility_rows.extend(row.pop("__utility_logs", []))
                 beijing_rows.append(row)
@@ -168,17 +179,99 @@ def run_all_experiments(
 # ---------------------------------------------------------------------------
 
 
-def _make_row(variant_name: str, scale: int, seed: int, m) -> dict:
+def _variant_metadata(variant) -> dict:
+    defaults = {
+        "method_label": getattr(variant, "name", ""),
+        "service_design": "",
+        "choice_model": "",
+        "reoptimization": "",
+        "routing_solver": "",
+        "evidence_family": "",
+        "diagnostic_role": "",
+        "legacy_class": "",
+    }
+    metadata = getattr(variant, "method_metadata", None)
+    if metadata is not None:
+        defaults.update(metadata)
+    return defaults
+
+
+def _git_commit_or_code_hash() -> str:
+    try:
+        return subprocess.check_output(
+            ["git", "rev-parse", "--short", "HEAD"],
+            stderr=subprocess.DEVNULL,
+            text=True,
+        ).strip()
+    except Exception:
+        return "unknown"
+
+
+def _schema_fields(
+    variant,
+    scenario,
+    scale: int,
+    seed: int,
+    results_dir: str,
+    status: str,
+    detailed_reason: str,
+    runtime_s: float,
+    error_message: str = "",
+    n_served: int = 0,
+    n_offered: int = 0,
+) -> dict:
+    scenario_name = getattr(scenario, "name", f"scale_{scale}")
+    metadata = _variant_metadata(variant)
+    method_label = metadata["method_label"]
     return {
-        "variant": variant_name,
+        "run_id": f"{scenario_name}:{method_label}:s{seed}",
+        "config_id": f"{scenario_name}:scale_{scale}:seed_{seed}",
+        "variant": variant.name,
         "scale": scale,
         "seed": seed,
+        "scenario": scenario_name,
+        **metadata,
+        "status": status,
+        "detailed_reason": detailed_reason,
+        "runtime_s": runtime_s,
+        "error_message": error_message,
+        "result_schema_version": "phase04.v1",
+        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+        "artifact_dir": os.path.abspath(results_dir),
+        "git_commit_or_code_hash": _git_commit_or_code_hash(),
+        "n_requests": len(getattr(scenario, "requests", [])),
+        "n_offered": n_offered,
+        "n_served": n_served,
+    }
+
+
+def _make_row(variant, scenario, scale: int, seed: int, result, m, results_dir: str) -> dict:
+    n_served = sum(1 for record in result.records if record.status == "served")
+    n_offered = sum(
+        1 for record in result.records
+        if record.status in {"served", "choice_rejected"}
+    )
+    row = _schema_fields(
+        variant,
+        scenario,
+        scale,
+        seed,
+        results_dir,
+        status="completed",
+        detailed_reason="completed",
+        runtime_s=m.cpu_time,
+        n_served=n_served,
+        n_offered=n_offered,
+    )
+    row.update({
         "acceptance_rate": m.acceptance_rate,
         "vehicle_km": m.vehicle_km,
         "served_share": m.served_share,
         "behavioral_acceptance_rate": m.behavioral_acceptance_rate,
         "choice_rejection_rate": m.choice_rejection_rate,
         "feasibility_rejection_rate": m.feasibility_rejection_rate,
+        "vkm_per_served_trip": m.vkm_per_served_trip,
+        "vkm_per_original_request": m.vkm_per_original_request,
         "avg_wait": m.avg_wait,
         "p95_wait": m.p95_wait,
         "avg_walk": m.avg_walk,
@@ -186,21 +279,42 @@ def _make_row(variant_name: str, scale: int, seed: int, m) -> dict:
         "detour_ratio": m.detour_ratio,
         "fairness_index": m.fairness_index,
         "cpu_time": m.cpu_time,
-    }
+    })
+    return row
 
 
-def _make_error_row(variant_name: str, scale: int, seed: int) -> dict:
+def _make_error_row(
+    variant,
+    scenario,
+    scale: int,
+    seed: int,
+    results_dir: str,
+    status: str,
+    detailed_reason: str,
+    error_message: str,
+    runtime_s: float,
+) -> dict:
     """Return a zero-filled row so CSV row counts stay consistent on error."""
-    return {
-        "variant": variant_name,
-        "scale": scale,
-        "seed": seed,
+    row = _schema_fields(
+        variant,
+        scenario,
+        scale,
+        seed,
+        results_dir,
+        status=status,
+        detailed_reason=detailed_reason,
+        runtime_s=runtime_s,
+        error_message=error_message,
+    )
+    row.update({
         "acceptance_rate": 0.0,
         "vehicle_km": 0.0,
         "served_share": 0.0,
         "behavioral_acceptance_rate": 0.0,
         "choice_rejection_rate": 0.0,
         "feasibility_rejection_rate": 0.0,
+        "vkm_per_served_trip": 0.0,
+        "vkm_per_original_request": 0.0,
         "avg_wait": 0.0,
         "p95_wait": 0.0,
         "avg_walk": 0.0,
@@ -208,16 +322,18 @@ def _make_error_row(variant_name: str, scale: int, seed: int) -> dict:
         "detour_ratio": 0.0,
         "fairness_index": 0.0,
         "cpu_time": 0.0,
-    }
+        "__utility_logs": [],
+    })
+    return row
 
 
-def _run_variant_with_timeout(variant, scenario, scale, seed, label="") -> dict:
+def _run_variant_with_timeout(variant, scenario, scale, seed, label="", results_dir=RESULTS_DIR) -> dict:
     """Run a single variant with a timeout. Returns error row on timeout/exception."""
     def _task():
         result = variant.run(scenario)
         m = compute_metrics(result)
-        row = _make_row(variant.name, scale, seed, m)
-        run_id = f"{scenario.name}:{variant.name}:s{seed}"
+        row = _make_row(variant, scenario, scale, seed, result, m, results_dir)
+        run_id = row["run_id"]
         utility_logs = []
         for log_row in result.utility_logs:
             enriched = dict(log_row)
@@ -231,29 +347,57 @@ def _run_variant_with_timeout(variant, scenario, scale, seed, label="") -> dict:
         row["__utility_logs"] = utility_logs
         return row
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
-        future = executor.submit(_task)
-        try:
-            row = future.result(timeout=_VARIANT_TIMEOUT_S)
-            print(
-                f"{label} variant={variant.name:<28} scale={scale:3d} seed={seed} "
-                f"accept={row['acceptance_rate']:.3f} vkm={row['vehicle_km']:.1f}"
-            )
-            return row
-        except concurrent.futures.TimeoutError:
-            print(
-                f"{label} TIMEOUT variant={variant.name} scale={scale} seed={seed} "
-                f"(>{_VARIANT_TIMEOUT_S}s)",
-                file=sys.stderr,
-            )
-            return _make_error_row(variant.name, scale, seed)
-        except Exception as exc:
-            print(
-                f"{label} ERROR variant={variant.name} scale={scale} seed={seed}: {exc}",
-                file=sys.stderr,
-            )
-            traceback.print_exc(file=sys.stderr)
-            return _make_error_row(variant.name, scale, seed)
+    started = time.perf_counter()
+    executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
+    future = executor.submit(_task)
+    try:
+        row = future.result(timeout=_VARIANT_TIMEOUT_S)
+        executor.shutdown(wait=True)
+        print(
+            f"{label} variant={variant.name:<28} scale={scale:3d} seed={seed} "
+            f"accept={row['acceptance_rate']:.3f} vkm={row['vehicle_km']:.1f}"
+        )
+        return row
+    except concurrent.futures.TimeoutError:
+        runtime_s = time.perf_counter() - started
+        future.cancel()
+        executor.shutdown(wait=False, cancel_futures=True)
+        message = f"timeout after {_VARIANT_TIMEOUT_S}s"
+        print(
+            f"{label} TIMEOUT variant={variant.name} scale={scale} seed={seed} "
+            f"(>{_VARIANT_TIMEOUT_S}s)",
+            file=sys.stderr,
+        )
+        return _make_error_row(
+            variant,
+            scenario,
+            scale,
+            seed,
+            results_dir,
+            status="timeout",
+            detailed_reason=message,
+            error_message=message,
+            runtime_s=runtime_s,
+        )
+    except Exception as exc:
+        runtime_s = time.perf_counter() - started
+        executor.shutdown(wait=True)
+        print(
+            f"{label} ERROR variant={variant.name} scale={scale} seed={seed}: {exc}",
+            file=sys.stderr,
+        )
+        traceback.print_exc(file=sys.stderr)
+        return _make_error_row(
+            variant,
+            scenario,
+            scale,
+            seed,
+            results_dir,
+            status="failed",
+            detailed_reason="exception",
+            error_message=str(exc),
+            runtime_s=runtime_s,
+        )
 
 
 def _write_csv(rows: list[dict], path: str, fieldnames: list[str] | None = None) -> None:

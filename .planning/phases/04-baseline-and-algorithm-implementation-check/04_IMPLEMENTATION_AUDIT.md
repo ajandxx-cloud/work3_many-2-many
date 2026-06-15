@@ -25,13 +25,24 @@ the shared actual-offer choice harness:
 kept available as diagnostics. Their `evidence_family` and `diagnostic_role`
 metadata prevent accidental mixing with behavioral main comparisons.
 
+## Runner Schema and Failure Rows
+
+`04_BASELINE_VALIDATION.md` records the Phase 04 runner schema contract,
+failure-row behavior, timeout handling, and metric denominator checks. Raw
+runner rows now carry the D-22/D-23 method, provenance, status, and count fields;
+failed and timeout runs are persisted as rows instead of being silently omitted.
+
 ## Required Tests
 
 ```bash
 PYTHONPATH=src pytest tests/test_variants.py -q
+PYTHONPATH=src pytest tests/test_runner.py tests/test_metrics.py -q
 ```
 
-Latest local result: 21 passed.
+Latest local results:
+
+- `tests/test_variants.py`: 21 passed.
+- `tests/test_runner.py tests/test_metrics.py`: 54 passed.
 
 ## Caveats
 
@@ -39,4 +50,3 @@ Latest local result: 21 passed.
   runs and Phase 6 owns formal paired experiments.
 - `FullModel` remains the implementation class name for provenance; paper-facing
   outputs must use `BidirectionalMP_Choice_RH_ALNS`.
-
