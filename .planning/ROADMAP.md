@@ -67,6 +67,8 @@
 
 ## Phase 3: Passenger Choice Model Rebuild
 
+**Status:** Complete - 2026-06-15
+
 **Goal:** Make passenger response credible, interpretable, and sensitivity-tested.
 
 **Requirements:** CHO-01, CHO-02, CHO-03, CHO-04

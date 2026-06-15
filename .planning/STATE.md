@@ -2,28 +2,28 @@
 gsd_state_version: 1.0
 milestone: v1.0 Evidence-chain rebuild
 milestone_name: milestone
-current_phase: 03
-current_phase_name: Passenger Choice Model Rebuild
+current_phase: 04
+current_phase_name: Baseline and Algorithm Implementation Check
 current_plan: 1
-status: executing
-stopped_at: Completed 03-02-PLAN.md
-last_updated: "2026-06-15T06:49:27.005Z"
+status: ready_to_plan
+stopped_at: Phase 03 complete (3/3) — ready to discuss Phase 4
+last_updated: 2026-06-15T07:12:21.560Z
 last_activity: 2026-06-15
 progress:
   total_phases: 11
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 8
-  completed_plans: 7
-  percent: 27
+  completed_plans: 8
+  percent: 36
 ---
 
 # State: TR_E_Bidirectional_MeetingPoint_DRT_Experiment_Rebuild
 
-**Current Phase:** 03
-**Current Phase Name:** Passenger Choice Model Rebuild
-**Status:** Ready to execute
-**Current Plan:** 1
-**Progress:** [█████████░] 88%
+**Current Phase:** 4
+**Current Phase Name:** Baseline and Algorithm Implementation Check
+**Status:** Ready to plan
+**Current Plan:** Not started
+**Progress:** [██████████] 100%
 **Last Activity:** 2026-06-15
 
 ## Project Reference
@@ -31,13 +31,13 @@ progress:
 See: `.planning/PROJECT.md`
 
 **Core value:** Produce reproducible, reviewer-resistant evidence for defensible conditional claims about bidirectional meeting-point DRT.
-**Current focus:** Phase 03 — Passenger Choice Model Rebuild
+**Current focus:** Phase 4 — baseline and algorithm implementation check
 
 ## Current Position
 
-Phase: 03 (Passenger Choice Model Rebuild) — EXECUTING
-Plan: 3 of 3
-Phase 0 is complete with caveats, Phase 1 is complete and verified, and Phase 2 is complete and verified. The immediate next work is Phase 3 planning for passenger choice model rebuild, using the Phase 2 shared-response and metric-denominator contracts.
+Phase: 04 (Baseline and Algorithm Implementation Check) - READY TO PLAN
+Plan: not started
+Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is complete and verified, and Phase 3 is complete and verified. The immediate next work is Phase 4 planning for baseline and algorithm implementation checks.
 
 ## Decisions
 
@@ -66,7 +66,9 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, and Phase 2 
 - [x] Resolve target-journal positioning for planning: use TR-E-level rigor as the evidence bar.
 - [x] Plan Phase 2 experimental contract and metric standardization.
 - [x] Execute Phase 2 experimental contract and metric standardization.
-- [ ] Plan Phase 3 passenger choice model rebuild.
+- [x] Plan Phase 3 passenger choice model rebuild.
+- [x] Execute Phase 3 passenger choice model rebuild.
+- [ ] Plan Phase 4 baseline and algorithm implementation check.
 
 ## Artifact Index
 
@@ -93,12 +95,22 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, and Phase 2 
 - `.planning/phases/02-experimental-contract-and-metric-standardization/02-02-SUMMARY.md`
 - `.planning/phases/02-experimental-contract-and-metric-standardization/02-03-SUMMARY.md`
 - `.planning/phases/02-experimental-contract-and-metric-standardization/02-VERIFICATION.md`
+- `.planning/phases/03-passenger-choice-model-rebuild/03-CONTEXT.md`
+- `.planning/phases/03-passenger-choice-model-rebuild/03-01-PLAN.md`
+- `.planning/phases/03-passenger-choice-model-rebuild/03-02-PLAN.md`
+- `.planning/phases/03-passenger-choice-model-rebuild/03-03-PLAN.md`
+- `.planning/phases/03-passenger-choice-model-rebuild/03_CHOICE_MODEL_CONTRACT.md`
+- `.planning/phases/03-passenger-choice-model-rebuild/03_PARAMETER_CALIBRATION.md`
+- `.planning/phases/03-passenger-choice-model-rebuild/03-01-SUMMARY.md`
+- `.planning/phases/03-passenger-choice-model-rebuild/03-02-SUMMARY.md`
+- `.planning/phases/03-passenger-choice-model-rebuild/03-03-SUMMARY.md`
+- `.planning/phases/03-passenger-choice-model-rebuild/03-VERIFICATION.md`
 
 ## Session Continuity
 
-Last session: 2026-06-15T06:49:26.998Z
-Stopped at: Completed 03-02-PLAN.md
+Last session: 2026-06-15T07:12:21.302Z
+Stopped at: Phase 03 complete (3/3) - ready to discuss Phase 4
 Resume file: None
 
 ---
-*State updated: 2026-06-15 after Phase 2 completion*
+*State updated: 2026-06-15 after Phase 3 completion*
