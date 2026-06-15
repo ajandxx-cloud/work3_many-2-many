@@ -93,6 +93,111 @@ class Bundle:
     price: float                         # p_r
 
 
+@dataclass(frozen=True)
+class OfferAttributes:
+    """Actual feasible single-offer attributes used by the Phase 3 choice model."""
+
+    request_id: str
+    service_design: str
+    pickup_walk: float
+    dropoff_walk: float
+    wait_time: float
+    ivt: float
+    fare: float
+    pickup_mp_id: str | None
+    dropoff_mp_id: str | None
+    vehicle_id: str | None
+    scheduled_pickup: float | None
+    scheduled_dropoff: float | None
+
+
+@dataclass(frozen=True)
+class ChoiceParameters:
+    """Choice-model parameters shared across behavioral service designs."""
+
+    service_asc: float = 0.0
+    outside_option_constant: float = 0.0
+    choice_seed: int = 42
+    type_shares: dict[str, float] = field(
+        default_factory=lambda: {
+            "price_sensitive": 0.34,
+            "time_sensitive": 0.33,
+            "walk_sensitive": 0.33,
+        }
+    )
+
+
+@dataclass(frozen=True)
+class UtilityComponents:
+    """Utility decomposition for one actual offered bundle."""
+
+    walk_utility: float
+    wait_utility: float
+    ivt_utility: float
+    fare_utility: float
+    service_asc: float
+    outside_option_constant: float
+    total_utility: float
+    outside_utility: float
+
+
+@dataclass(frozen=True)
+class ChoiceEvaluation:
+    """Logged result of evaluating one request under the single-offer model."""
+
+    request_id: str
+    status: str
+    detailed_reason: str
+    passenger_type: str
+    offer: OfferAttributes | None
+    components: UtilityComponents | None
+    acceptance_probability: float | None
+    random_draw: float | None
+    accepted: bool
+
+    def as_log_row(self) -> dict[str, object]:
+        """Flatten the evaluation for utility-component CSV/JSONL outputs."""
+        row: dict[str, object] = {
+            "request_id": self.request_id,
+            "status": self.status,
+            "detailed_reason": self.detailed_reason,
+            "passenger_type": self.passenger_type,
+            "acceptance_probability": self.acceptance_probability,
+            "random_draw": self.random_draw,
+            "accepted": self.accepted,
+        }
+        if self.offer is not None:
+            row.update(
+                {
+                    "pickup_walk": self.offer.pickup_walk,
+                    "dropoff_walk": self.offer.dropoff_walk,
+                    "wait_time": self.offer.wait_time,
+                    "ivt": self.offer.ivt,
+                    "fare": self.offer.fare,
+                    "service_design": self.offer.service_design,
+                    "pickup_mp_id": self.offer.pickup_mp_id,
+                    "dropoff_mp_id": self.offer.dropoff_mp_id,
+                    "vehicle_id": self.offer.vehicle_id,
+                    "scheduled_pickup": self.offer.scheduled_pickup,
+                    "scheduled_dropoff": self.offer.scheduled_dropoff,
+                }
+            )
+        if self.components is not None:
+            row.update(
+                {
+                    "walk_utility": self.components.walk_utility,
+                    "wait_utility": self.components.wait_utility,
+                    "ivt_utility": self.components.ivt_utility,
+                    "fare_utility": self.components.fare_utility,
+                    "service_asc": self.components.service_asc,
+                    "outside_option_constant": self.components.outside_option_constant,
+                    "total_utility": self.components.total_utility,
+                    "outside_utility": self.components.outside_utility,
+                }
+            )
+        return row
+
+
 @dataclass
 class Route:
     """
