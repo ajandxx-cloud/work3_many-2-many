@@ -36,9 +36,9 @@ Formal experiments must be split into main-evidence experiments and supplementar
 
 ### Choice
 
-- [ ] **CHO-01**: Passenger utility model includes service ASC or equivalent service-attractiveness constant.
-- [ ] **CHO-02**: Outside-option utility is explicit and tested through sensitivity analysis.
-- [ ] **CHO-03**: Passenger-type parameters are sourced from literature/data or labeled as simulation ranges.
+- [x] **CHO-01**: Passenger utility model includes service ASC or equivalent service-attractiveness constant.
+- [x] **CHO-02**: Outside-option utility is explicit and tested through sensitivity analysis.
+- [x] **CHO-03**: Passenger-type parameters are sourced from literature/data or labeled as simulation ranges.
 - [ ] **CHO-04**: Utility-component logging explains acceptance outcomes under each parameter setting.
 
 ### Algorithms
@@ -100,9 +100,9 @@ Formal experiments must be split into main-evidence experiments and supplementar
 | MET-02 | Phase 2 | Complete |
 | MET-03 | Phase 2 | Complete |
 | MET-04 | Phase 8 | Pending |
-| CHO-01 | Phase 3 | Pending |
-| CHO-02 | Phase 3 | Pending |
-| CHO-03 | Phase 3 | Pending |
+| CHO-01 | Phase 3 | Complete |
+| CHO-02 | Phase 3 | Complete |
+| CHO-03 | Phase 3 | Complete |
 | CHO-04 | Phase 3 | Pending |
 | ALG-01 | Phase 4 | Pending |
 | ALG-02 | Phase 4 | Pending |
