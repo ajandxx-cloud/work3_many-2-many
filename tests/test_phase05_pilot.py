@@ -210,6 +210,10 @@ def test_matched_coverage_output_columns(tmp_path):
     assert path.exists()
     df = pd.read_csv(path)
     for column in [
+        "original_fullmodel_served_share",
+        "target_count",
+        "target_basis",
+        "target_adjusted",
         "target_served_share",
         "achieved_served_share",
         "abs_gap",
@@ -222,21 +226,50 @@ def test_matched_coverage_output_columns(tmp_path):
     assert isinstance(result["passed"], bool)
 
 
+def test_matched_coverage_default_scale20_closes_prior_seed_failures(tmp_path):
+    result = run_matched_coverage_pilot(
+        tmp_path,
+        scale=20,
+        seeds=[42, 43, 44],
+        tolerance=0.03,
+    )
+
+    df = pd.read_csv(tmp_path / "matched_coverage_pilot.csv")
+    capped = df[df["method_label"].eq("DoorToDoor_Capped_MatchedCoverage")]
+
+    assert result["passed"] is True
+    assert set(capped["seed"].astype(int)) == {42, 43, 44}
+    assert set(capped["status"]) == {"passed"}
+    assert (capped["abs_gap"].astype(float) <= capped["tolerance"].astype(float)).all()
+    assert set(capped["target_basis"]).issubset(
+        {
+            "fullmodel_served_count",
+            "uncapped_doortodoor_serviceable_count",
+        }
+    )
+
+
 def test_matched_coverage_tolerance_failure_blocks(tmp_path, monkeypatch):
     import experiments.phase05_coverage_smoke as smoke
 
-    def fake_served_share(variant, scale, seed):
+    def fake_served_stats(variant, scale, seed):
         if variant.__class__.__name__ == "FullModel":
-            return 0.50, 0.01
-        return 0.10, 0.01
+            return 4, 0.50, 0.01
+        if getattr(variant, "_cap_share", None) == 1.0:
+            return 4, 0.50, 0.01
+        return 1, 0.125, 0.01
 
-    monkeypatch.setattr(smoke, "_served_share_for_variant", fake_served_share)
+    monkeypatch.setattr(smoke, "_served_stats_for_variant", fake_served_stats)
 
     result = run_matched_coverage_pilot(tmp_path, scale=8, seeds=[42], tolerance=0.03)
 
     assert result["passed"] is False
     df = pd.read_csv(tmp_path / "matched_coverage_pilot.csv")
-    assert "failed" in set(df["status"])
+    capped = df[df["method_label"].eq("DoorToDoor_Capped_MatchedCoverage")]
+    assert "failed" in set(capped["status"])
+    assert capped.iloc[0]["target_count"] == 4
+    assert "target_count=4" in capped.iloc[0]["detailed_reason"]
+    assert "achieved_count=1" in capped.iloc[0]["detailed_reason"]
 
 
 def test_fixed_accepted_set_smoke_durability(tmp_path):
@@ -246,22 +279,57 @@ def test_fixed_accepted_set_smoke_durability(tmp_path):
 
     path = tmp_path / "fixed_accepted_set_smoke.json"
     assert path.exists()
+    assert "served_intersection_count" in result
+    assert "serviceable_intersection_count" in result
+    assert "construction_rule" in result
     assert "retained_request_count" in result
     assert "retained_share" in result
     assert result["evidence_family"] != "behavioral_main"
     assert result["diagnostic_role"] == "fixed_accepted_set_smoke"
+    assert result["construction_rule"] == "common_served"
 
 
-def test_fixed_accepted_set_smoke_handles_empty_intersection(tmp_path):
+def test_fixed_accepted_set_smoke_uses_serviceable_fallback(tmp_path, monkeypatch):
     raw, utility = _write_valid_outputs(tmp_path)
     utility["status"] = "choice_rejected"
     utility.to_csv(tmp_path / "utility_components.csv", index=False)
 
+    import experiments.phase05_coverage_smoke as smoke
+
+    routed = {}
+
+    def fake_greedy(scale, seed, retained_ids):
+        routed["retained_ids"] = set(retained_ids)
+        return {
+            "routing_diagnostic": "GreedyInsertionBaseline",
+            "routing_status": "completed",
+            "routing_runtime_s": 0.01,
+            "routing_vehicle_km": 1.0,
+            "routing_served_share": 1.0,
+        }
+
+    monkeypatch.setattr(smoke, "_run_greedy_fixed_set", fake_greedy)
+
     result = run_fixed_accepted_set_smoke(tmp_path, scale=8, seed=42)
 
-    assert result["status"] == "empty_intersection"
-    assert result["retained_request_count"] == 0
+    assert result["status"] == "passed"
+    assert result["construction_rule"] == "common_serviceable"
+    assert result["served_intersection_count"] == 0
+    assert result["serviceable_intersection_count"] > 0
+    assert result["retained_request_count"] > 0
+    assert result["routing_status"] == "completed"
+    assert routed["retained_ids"] == {"req_0"}
     assert result["passed"] is True
+
+
+def test_fixed_accepted_set_default_seed42_routes_retained_set(tmp_path):
+    result = run_fixed_accepted_set_smoke(tmp_path, scale=20, seed=42)
+
+    assert result["status"] == "passed"
+    assert result["routing_status"] == "completed"
+    assert result["retained_request_count"] > 0
+    assert result["construction_rule"] in {"common_served", "common_serviceable"}
+    assert result["evidence_family"] == "algorithm_diagnostic"
 
 
 def test_fixed_accepted_set_no_gurobi_is_non_blocking(tmp_path, monkeypatch):
