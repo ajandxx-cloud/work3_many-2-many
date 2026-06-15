@@ -43,8 +43,8 @@ Formal experiments must be split into main-evidence experiments and supplementar
 
 ### Algorithms
 
-- [ ] **ALG-01**: Feasibility checks cover capacity, pickup windows, ride time, precedence, walking radius, route-time consistency, and committed nodes.
-- [ ] **ALG-02**: ALNS is compared against greedy insertion, no-reoptimization, and exact/MILP diagnostics on fixed accepted sets.
+- [x] **ALG-01**: Feasibility checks cover capacity, pickup windows, ride time, precedence, walking radius, route-time consistency, and committed nodes.
+- [x] **ALG-02**: ALNS is compared against greedy insertion, no-reoptimization, and exact/MILP diagnostics on fixed accepted sets.
 - [ ] **ALG-03**: ALNS convergence diagnostics include objective vs iteration, runtime-quality trade-offs, and operator contribution.
 - [ ] **ALG-04**: MILP/exact diagnostic scope is documented honestly and not presented as a full online stochastic benchmark unless implemented as such.
 
@@ -104,8 +104,8 @@ Formal experiments must be split into main-evidence experiments and supplementar
 | CHO-02 | Phase 3 | Complete |
 | CHO-03 | Phase 3 | Complete |
 | CHO-04 | Phase 3 | Complete |
-| ALG-01 | Phase 4 | Pending |
-| ALG-02 | Phase 4 | Pending |
+| ALG-01 | Phase 4 | Complete |
+| ALG-02 | Phase 4 | Complete |
 | ALG-03 | Phase 4 | Pending |
 | ALG-04 | Phase 4 | Pending |
 | CLM-01 | Phase 8 | Pending |
