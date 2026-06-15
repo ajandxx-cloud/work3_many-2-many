@@ -1,107 +1,76 @@
 ---
-gsd_state_version: 1.0
-milestone: v6.0
-milestone_name: "Round 1 Review Revision & Resubmission"
-status: Defining requirements
-last_updated: "2026-04-27T00:00:00.000Z"
-last_activity: 2026-04-27
-progress:
-  total_phases: 0
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+status: active
+milestone: v1.0 Evidence-chain rebuild
+current_phase: 0
+current_phase_name: Repository and Manuscript Audit
+phase_progress: complete
+last_updated: 2026-06-15
 ---
 
-# STATE: Work 3 — Many-to-Many DRT Bidirectional Meeting Point Paper
+# State: TR_E_Bidirectional_MeetingPoint_DRT_Experiment_Rebuild
+
+**Current Phase:** 0
+**Current Phase Name:** Repository and Manuscript Audit
+**Status:** active
+**Current Plan:** Phase 1 discussion: Literature and Novelty Audit
+**Progress:** Phase 0 complete; Phase 1 pending
+**Last Activity:** 2026-06-15 - completed Phase 0 repository/manuscript/result provenance audit with caveats
 
 ## Project Reference
 
-**Core value:** Demonstrate that bidirectional meeting point assignment with passenger choice significantly improves DRT efficiency and equity, with actionable policy implications for TR Part A.
-**Target journal:** Transportation Research Part A: Policy and Practice
-**Current focus:** v5.0 — Code Review Fixes & Submission Prep (COMPLETE)
+See: `.planning/PROJECT.md`
 
----
+**Core value:** Produce reproducible, reviewer-resistant evidence for defensible conditional claims about bidirectional meeting-point DRT.
+**Current focus:** Phase 1: literature and novelty audit.
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-04-27 — Milestone v6.0 started (Round 1 review revision)
+Phase 0 is complete as an audit gate. The audit used the rebuild brief, the codebase map, the existing README/manuscript, result artifacts, figure scripts, and review-note risk content.
 
-**v5.0 scope (13 requirements across 2 phases):**
+No new experiments were run during Phase 0. The immediate next work is Phase 1 discussion and planning for the literature/novelty audit before preserving any strong contribution claim.
 
-- [x] Phase 14: Paper & Response Letter Fixes (NUM-01..03, RESP-01..02, CLEAN-01..03) — completed 2026-04-13
-- [x] Phase 15: Code Reproducibility & Robustness (CODE-01, ROB-01..04) — completed 2026-04-13
+## Decisions
 
-**v6.0 scope (pending definition):**
+- Initialize as brownfield because the repo already contains working code, manuscript source, results, tests, and `.planning/codebase` maps.
+- Treat current results and manuscript claims as provisional until claim/evidence audit passes.
+- Keep Phase 0 audit-only; do not implement new experiments yet.
+- Use the requested project name `TR_E_Bidirectional_MeetingPoint_DRT_Experiment_Rebuild`.
+- Phase 0 passes with caveats: the repository and manuscript evidence chain is mapped, but current headline results remain exploratory rather than final evidence.
+- Route novelty and target-journal positioning to Phase 1 before manuscript rewriting.
+- Route metric denominators, baseline taxonomy, matched coverage, and fixed accepted-set design to Phase 2 before new formal runs.
 
-- Round 1 review (GPT-5.5, score 3/10): 4 CRITICAL + 4 MAJOR issues to address
-- Template: `.planning/plans/buzzing-coalescing-badger.md` (9 phases planned: 16-24)
+## Blockers / Concerns
 
----
+- Some historical note filenames/text appear to contain encoding damage, but the readable review-note content and extracted risks remain usable.
+- README currently targets Transportation Research Part A, while the rebuild prompt requests Transportation Research Part E or comparable quality.
+- Current baselines mix deterministic all-feasible acceptance and binary-logit passenger response.
+- Current efficiency claims are coverage-confounded because FullModel served share is much lower than DoorToDoor in the headline table.
+- Current passenger utility parameters are not empirically calibrated.
+- Current ALNS/MILP diagnostic gap is large and MILP scope appears simplified.
+- Current result provenance and formal seed count are not sufficient for TR-E-level final claims.
+- Main-table aggregate values match `results/metrics_table.csv`, but the table caption/scenario scope is inconsistent with the aggregation.
+- Weight sensitivity table provenance is ambiguous relative to `results/weight_sensitivity.json`.
+- Gamma/welfare outputs are post-hoc diagnostics and must not be framed as a Pareto frontier unless implementation changes.
 
-## Accumulated Context
+## Pending Todos
 
-### Key Decisions Logged
+- [x] Review and confirm Phase 0 audit artifacts.
+- [ ] Run Phase 1 discussion protocol before planning Phase 1.
+- [ ] Resolve target-journal positioning: TR-E versus current Part A manuscript framing.
 
-| Decision | Rationale | Phase |
-|----------|-----------|-------|
-| Target TR Part A not TR Part C | Policy framing differentiates from Work 1; TR Part A accepts optimization with strong policy angle | Pre-phase |
-| Fix price, don't optimize it | Avoid overlap with Work 1/2; keep Work 3 focused on bidirectional spatial assignment | Pre-phase |
-| Rolling horizon + ALNS as main heuristic | Standard in dynamic DRT literature 2024-2025; matches dissertation framework | Pre-phase |
-| Simulation-based validation | Standard for DARP; real data hard to obtain; consistent with Work 1 approach | Pre-phase |
-| Gurobi solver for MILP | Industry standard, best performance for DARP-scale MILPs | Phase 2 |
-| Binary logit for single-offer acceptance | Reviewer CRITICAL: multi-bundle MNL behaviorally inconsistent with single-offer mechanism | Phase 7 |
-| Pareto frontier reframed as welfare sensitivity | gamma is post-hoc; served_share constant; narrative shows structural efficiency gain | Phase 8 |
-| MILP gap large (99-170%) explained honestly | Small accepted sets (4-7 pax) at n=20/30; gap expected to narrow at scale | Phase 9 |
-| Correct vkm/trip denominator | Codex CRITICAL: dividing by acceptance rate (not trip count) gives dimensionally wrong metric | Phase 10 |
-| Matched-coverage comparison (post-hoc) | Codex CRITICAL: 20.8% vs 61% served share confounds efficiency comparison | Phase 10 |
-| Formalize ALNS decision problem | Codex MAJOR: unclear what ALNS optimizes (expected cost vs Bernoulli realizations) | Phase 11 |
-| Soften policy thresholds | Codex MAJOR: 1000m/15-vehicle thresholds too strong for synthetic-only evidence | Phase 11 |
-| Endogenous matched-coverage required | GPT-5 BLOCKING: post-hoc random rejection not credible as primary evidence; DoorToDoor with acceptance cap + re-routing needed | Phase 12 |
-| Add Fielbaum et al. (2021) | GPT-5 MAJOR: bidirectional walking flexibility in ridepooling is prior art that must be acknowledged | Phase 13 |
+## Artifact Index
 
-### Prior Work Context
-
-- Work 1 (many-to-one dynamic pricing, DRPO framework): complete, submitted to TR Part C
-- Work 2 (service menu design, assortment optimization): working paper
-- Work 3 natural extension: bidirectional spatial service menu (pickup + dropoff) in many-to-many scenario
-
-### v4.0 Results (for reference)
-
-| Metric | Value |
-|--------|-------|
-| v4.0 phases complete | 2/2 (Phases 12-13) |
-| v4.0 requirements complete | 13/13 |
-| Endogenous matched-coverage | FullModel 11.1 vs DoorToDoor 17.1 vkm/trip (35.0% improvement at ~23% matched share) |
-| Unconstrained comparison | FullModel 15.1 vs DoorToDoor 21.3 vkm/trip (29.2% improvement) |
-| Post-hoc lower bound | FullModel 10.9 vs DoorToDoor 42.3 vkm/trip (74.3% at ~23.5% share, footnote) |
-
-### v5.0 Scope Summary
-
-| Phase | Requirements | Focus |
-|-------|-------------|-------|
-| Phase 14 | NUM-01..03, RESP-01..02, CLEAN-01..03 | Paper numeric fixes, response letter update, pre-submission cleanup |
-| Phase 15 | CODE-01, ROB-01..04 | SHA-256 seed, stop ordering warning, tolerance warning, empty-seeds guard, unassigned dedup |
-
-### Blockers
-
-None. Roadmap defined, ready to plan.
-
-### Notes
-
-- Dissertation timeline: Work 3 planned 2026.09-2027.04 per BUAA schedule
-- Supervisor: Prof. Liu Tianliang
-- Language: English (academic paper)
-- GPT-5 review thread ID: 019d84ab-c6a4-7fd1-b91f-01109b57c1f2 (for Round 3 if needed)
+- `.planning/PROJECT.md`
+- `.planning/REQUIREMENTS.md`
+- `.planning/ROADMAP.md`
+- `.planning/STATE.md`
+- `.planning/phases/00-repository-and-manuscript-audit/00_REPOSITORY_AUDIT.md`
+- `.planning/phases/00-repository-and-manuscript-audit/00_MANUSCRIPT_CLAIM_AUDIT.md`
+- `.planning/phases/00-repository-and-manuscript-audit/00_CURRENT_EXPERIMENT_MAP.md`
+- `.planning/phases/00-repository-and-manuscript-audit/00-CONTEXT.md`
+- `.planning/phases/00-repository-and-manuscript-audit/00-01-PLAN.md`
+- `.planning/phases/00-repository-and-manuscript-audit/00-01-SUMMARY.md`
+- `.planning/phases/00-repository-and-manuscript-audit/00-VERIFICATION.md`
 
 ---
-
-*State initialized: 2026-04-11*
-*Updated: 2026-04-13 — v3.0 milestone complete (Phases 10-11, 9 requirements)*
-*Updated: 2026-04-13 — v4.0 milestone complete (Phases 12-13, 13 requirements)*
-*Updated: 2026-04-13 — v5.0 milestone started (code review fixes, 13 requirements)*
-*Updated: 2026-04-13 — v5.0 roadmap created (Phases 14-15, 13 requirements, 100% coverage)*
-*Updated: 2026-04-27 — v6.0 milestone started (Round 1 review revision, 4 CRITICAL + 4 MAJOR)*
+*State updated: 2026-06-15 after Phase 0 completion*
