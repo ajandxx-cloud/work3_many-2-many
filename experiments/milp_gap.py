@@ -13,6 +13,9 @@ Writes results to results/milp_gap.json.
 
 Notes
 -----
+- Gaps are comparable only for fixed accepted sets or static small instances
+  where objective units and semantics match. This is not a full online exact
+  stochastic DRT benchmark.
 - The MILP import (gurobipy) is deferred inside run_gap_experiment so this
   module can be imported without a Gurobi installation.
 - If Gurobi is unavailable, run_gap_experiment returns milp_status='no_gurobi'
@@ -51,6 +54,46 @@ from experiments.variants import FullModel
 # Public API
 # ---------------------------------------------------------------------------
 
+_DIAGNOSTIC_META = {
+    "method_label": "MILPStaticSnapshot_Diagnostic",
+    "service_design": "fixed_accepted_set",
+    "choice_model": "none",
+    "reoptimization": "static_snapshot",
+    "routing_solver": "milp",
+    "evidence_family": "algorithm_diagnostic",
+    "diagnostic_role": "milp_static_snapshot",
+    "objective_units": "weighted_cost_units",
+}
+
+
+def _base_row(
+    n_requests: int,
+    seed: int,
+    alns_vkm: float,
+    n_accepted: int,
+    status: str,
+    detailed_reason: str,
+    runtime_s: float,
+    error_message: str = "",
+) -> dict:
+    return {
+        **_DIAGNOSTIC_META,
+        "n_requests": n_requests,
+        "seed": seed,
+        "alns_vkm": alns_vkm,
+        "milp_vkm": None,
+        "gap_pct": None,
+        "milp_status": status,
+        "status": status,
+        "detailed_reason": detailed_reason,
+        "solve_time": 0.0,
+        "runtime_s": runtime_s,
+        "error_message": error_message,
+        "n_accepted": n_accepted,
+        "n_unassigned": n_requests - n_accepted,
+        "comparable_gap": False,
+    }
+
 
 def run_gap_experiment(n_requests: int, seed: int) -> dict:
     """Run ALNS (FullModel) then MILP ex-post on the same instance.
@@ -78,6 +121,7 @@ def run_gap_experiment(n_requests: int, seed: int) -> dict:
                        Gurobi not run)
         n_accepted   : int — number of requests in the realized accepted set
     """
+    overall_t0 = time.perf_counter()
     n_vehicles = max(3, n_requests // 5)   # ~5 requests per vehicle
 
     # --- Step 1: Generate scenario ---
@@ -94,32 +138,31 @@ def run_gap_experiment(n_requests: int, seed: int) -> dict:
     accepted_requests = [r for r in scenario.requests if r.id in accepted_ids]
 
     if not accepted_requests:
-        return {
-            "n_requests": n_requests,
-            "seed": seed,
-            "alns_vkm": alns_vkm,
-            "milp_vkm": None,
-            "gap_pct": None,
-            "milp_status": "no_accepted",
-            "solve_time": 0.0,
-            "n_accepted": 0,
-        }
+        return _base_row(
+            n_requests,
+            seed,
+            alns_vkm,
+            n_accepted=0,
+            status="no_accepted",
+            detailed_reason="FullModel accepted no requests; fixed accepted-set MILP gap is incomparable.",
+            runtime_s=time.perf_counter() - overall_t0,
+        )
 
     # --- Step 3: MILP ex-post benchmark ---
     # Deferred import so module is importable without Gurobi.
     try:
         from drt.milp import DRTModel  # noqa: PLC0415
     except ImportError:
-        return {
-            "n_requests": n_requests,
-            "seed": seed,
-            "alns_vkm": alns_vkm,
-            "milp_vkm": None,
-            "gap_pct": None,
-            "milp_status": "no_gurobi",
-            "solve_time": 0.0,
-            "n_accepted": len(accepted_requests),
-        }
+        return _base_row(
+            n_requests,
+            seed,
+            alns_vkm,
+            n_accepted=len(accepted_requests),
+            status="no_gurobi",
+            detailed_reason="Gurobi is unavailable; MILP static snapshot solve skipped.",
+            runtime_s=time.perf_counter() - overall_t0,
+            error_message="gurobipy not available",
+        )
 
     # Build MILP on the realized accepted set only (z_r fixed = 1 for all).
     # cost_weights uses alpha1..alpha5 from config; C^rej = 0 since all
@@ -140,27 +183,27 @@ def run_gap_experiment(n_requests: int, seed: int) -> dict:
     except ImportError:
         # gurobipy present at import time but license missing causes ImportError
         # on solve() — treat same as no_gurobi
-        return {
-            "n_requests": n_requests,
-            "seed": seed,
-            "alns_vkm": alns_vkm,
-            "milp_vkm": None,
-            "gap_pct": None,
-            "milp_status": "no_gurobi",
-            "solve_time": 0.0,
-            "n_accepted": len(accepted_requests),
-        }
+        return _base_row(
+            n_requests,
+            seed,
+            alns_vkm,
+            n_accepted=len(accepted_requests),
+            status="no_gurobi",
+            detailed_reason="Gurobi is unavailable or unlicensed; MILP static snapshot solve skipped.",
+            runtime_s=time.perf_counter() - overall_t0,
+            error_message="gurobipy not available or unlicensed",
+        )
     except Exception as exc:
-        return {
-            "n_requests": n_requests,
-            "seed": seed,
-            "alns_vkm": alns_vkm,
-            "milp_vkm": None,
-            "gap_pct": None,
-            "milp_status": f"error:{exc}",
-            "solve_time": 0.0,
-            "n_accepted": len(accepted_requests),
-        }
+        return _base_row(
+            n_requests,
+            seed,
+            alns_vkm,
+            n_accepted=len(accepted_requests),
+            status="error",
+            detailed_reason="MILP static snapshot solve failed.",
+            runtime_s=time.perf_counter() - overall_t0,
+            error_message=str(exc),
+        )
 
     # The MILP objective_value is a composite weighted cost, not raw vkm.
     # For the gap table we compare ALNS vkm to MILP objective_value normalized
@@ -172,22 +215,37 @@ def run_gap_experiment(n_requests: int, seed: int) -> dict:
     milp_vkm = (milp_obj / alpha_op) if milp_obj is not None else None
 
     gap_pct = None
+    comparable_gap = False
+    detailed_reason = "MILP status is not comparable for gap computation."
     if (
         result["status"] in ("optimal", "feasible")
         and milp_vkm is not None
         and milp_vkm > 0
     ):
         gap_pct = (alns_vkm - milp_vkm) / milp_vkm * 100.0
+        comparable_gap = True
+        detailed_reason = "Comparable fixed accepted-set static snapshot gap in weighted-cost units."
+    elif result["status"] == "timeout":
+        detailed_reason = "MILP timed out; gap suppressed as incomparable."
+    elif result["status"] == "infeasible":
+        detailed_reason = "MILP infeasible; gap suppressed as incomparable."
 
     return {
+        **_DIAGNOSTIC_META,
         "n_requests": n_requests,
         "seed": seed,
         "alns_vkm": alns_vkm,
         "milp_vkm": milp_vkm,
         "gap_pct": gap_pct,
         "milp_status": result["status"],
+        "status": result["status"],
+        "detailed_reason": detailed_reason,
         "solve_time": result["solve_time"],
+        "runtime_s": time.perf_counter() - overall_t0,
+        "error_message": "",
         "n_accepted": len(accepted_requests),
+        "n_unassigned": n_requests - len(accepted_requests),
+        "comparable_gap": comparable_gap,
     }
 
 

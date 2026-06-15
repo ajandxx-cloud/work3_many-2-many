@@ -32,17 +32,27 @@ failure-row behavior, timeout handling, and metric denominator checks. Raw
 runner rows now carry the D-22/D-23 method, provenance, status, and count fields;
 failed and timeout runs are persisted as rows instead of being silently omitted.
 
+## MILP Diagnostic Status
+
+ALG-04 is covered as a limited static snapshot diagnostic. `src/drt/milp.py` and
+`experiments/milp_gap.py` now state that the MILP path is not a full
+route-sequencing exact online DRT benchmark. The no-Gurobi path returns durable
+diagnostic rows, and comparable gaps are reported only for fixed accepted-set or
+static tiny-instance semantics with documented objective units.
+
 ## Required Tests
 
 ```bash
 PYTHONPATH=src pytest tests/test_variants.py -q
 PYTHONPATH=src pytest tests/test_runner.py tests/test_metrics.py -q
+PYTHONPATH=src pytest tests/test_milp.py -q
 ```
 
 Latest local results:
 
 - `tests/test_variants.py`: 21 passed.
 - `tests/test_runner.py tests/test_metrics.py`: 54 passed.
+- `tests/test_milp.py`: 7 passed, 1 skipped.
 
 ## Caveats
 
@@ -50,3 +60,4 @@ Latest local results:
   runs and Phase 6 owns formal paired experiments.
 - `FullModel` remains the implementation class name for provenance; paper-facing
   outputs must use `BidirectionalMP_Choice_RH_ALNS`.
+- Full route-sequencing exact online DRT is out of Phase 4 scope.

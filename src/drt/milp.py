@@ -9,6 +9,12 @@ Formulates and solves a batch assignment problem:
 
 Requires Gurobi (gurobipy). Import is deferred to build()/solve() so the
 module can be imported without a Gurobi installation.
+
+Diagnostic scope: this is a static snapshot assignment/scheduling diagnostic,
+not a full online stochastic DRT benchmark. It uses a simplified vehicle
+capacity bound and does not model the complete online route sequence. Valid
+comparisons are limited to fixed accepted sets or static tiny instances where
+objective units and semantics match.
 """
 from __future__ import annotations
 
@@ -28,7 +34,8 @@ class DRTModel:
 
     Solves a batch of requests assigned to vehicles in a single optimisation
     window.  The model is a *static snapshot* — it takes a fixed set of
-    requests and vehicles and finds the optimal assignment.
+    requests and vehicles and finds the optimal assignment. It is not a full
+    online route-sequencing exact DRT model.
 
     Parameters
     ----------

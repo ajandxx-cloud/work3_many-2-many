@@ -8,18 +8,23 @@ from __future__ import annotations
 import math
 import sys
 import os
+from types import SimpleNamespace
 
 import pytest
 
-# ---------------------------------------------------------------------------
-# Skip entire module if gurobipy is not installed
-# ---------------------------------------------------------------------------
-gp = pytest.importorskip("gurobipy", reason="gurobipy not installed")
-
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
-from drt.types import MeetingPoint, Request, Vehicle
+try:
+    import gurobipy as gp
+except ImportError:
+    gp = None
+
+import experiments.milp_gap as milp_gap
+from drt.candidate import generate_candidates
+from drt.feasibility import check_feasibility
 from drt.milp import DRTModel
+from drt.types import MeetingPoint, Request, Route, Vehicle
 
 
 # ---------------------------------------------------------------------------
@@ -27,9 +32,10 @@ from drt.milp import DRTModel
 # ---------------------------------------------------------------------------
 
 def _gurobi_licensed() -> bool:
+    if gp is None:
+        return False
     try:
-        import gurobipy
-        gurobipy.Model()
+        gp.Model()
         return True
     except Exception:
         return False
@@ -129,6 +135,7 @@ def _make_scale_instance():
 # ---------------------------------------------------------------------------
 
 def test_small_instance():
+    pytest.importorskip("gurobipy", reason="gurobipy not installed")
     """10 requests, 3 vehicles — assert feasible solution found."""
     requests, vehicles, meeting_points = _make_small_instance()
     model = DRTModel(
@@ -158,6 +165,7 @@ def test_small_instance():
 
 
 def test_reports_gap():
+    pytest.importorskip("gurobipy", reason="gurobipy not installed")
     """After solve, mip_gap is a float (not None) when a solution is found."""
     requests, vehicles, meeting_points = _make_small_instance()
     model = DRTModel(
@@ -179,6 +187,7 @@ def test_reports_gap():
 
 
 def test_reports_solve_time():
+    pytest.importorskip("gurobipy", reason="gurobipy not installed")
     """solve_time > 0 after any solve call."""
     requests, vehicles, meeting_points = _make_small_instance()
     model = DRTModel(
@@ -198,6 +207,7 @@ def test_reports_solve_time():
 
 
 def test_accepted_subset():
+    pytest.importorskip("gurobipy", reason="gurobipy not installed")
     """result['accepted'] is a list; all ids are valid request ids."""
     requests, vehicles, meeting_points = _make_small_instance()
     model = DRTModel(
@@ -239,3 +249,101 @@ def test_scale_instance():
 
     assert result["status"] in ("optimal", "feasible", "timeout")
     assert result["solve_time"] > 0
+
+
+def test_candidate_filtering_without_gurobi():
+    request = Request(
+        id="tiny",
+        origin=(0.0, 0.0),
+        destination=(10.0, 0.0),
+        earliest=0.0,
+        latest=20.0,
+        max_ride_time=20.0,
+    )
+    near_pickup = MeetingPoint("near_pickup", (1.0, 0.0))
+    near_dropoff = MeetingPoint("near_dropoff", (9.0, 0.0))
+    far = MeetingPoint("far", (100.0, 100.0))
+
+    pickup_candidates = generate_candidates(
+        request, [near_pickup, near_dropoff, far], rho=2.0, k_top=3, side="pickup"
+    )
+    dropoff_candidates = generate_candidates(
+        request, [near_pickup, near_dropoff, far], rho=2.0, k_top=3, side="dropoff"
+    )
+
+    assert [mp.id for mp in pickup_candidates] == ["near_pickup"]
+    assert [mp.id for mp in dropoff_candidates] == ["near_dropoff"]
+
+
+def test_static_tiny_instance_feasibility_and_objective_units_without_gurobi():
+    request = Request(
+        id="tiny",
+        origin=(0.0, 0.0),
+        destination=(10.0, 0.0),
+        earliest=0.0,
+        latest=20.0,
+        max_ride_time=20.0,
+    )
+    vehicle = Vehicle(
+        id="v0",
+        capacity=1,
+        max_route_duration=30.0,
+        current_position=(0.0, 0.0),
+        current_time=0.0,
+    )
+    pickup = MeetingPoint("pickup", (0.0, 0.0))
+    dropoff = MeetingPoint("dropoff", (10.0, 0.0))
+    model = DRTModel(
+        requests=[request],
+        vehicles=[vehicle],
+        meeting_points=[pickup, dropoff],
+        rho_p=1.0,
+        rho_d=1.0,
+        travel_speed=2.0,
+    )
+
+    ok, reason = check_feasibility(
+        Route(vehicle_id=vehicle.id, stops=[]),
+        request,
+        pickup,
+        dropoff,
+        pos_p=0,
+        pos_d=1,
+        vehicle=vehicle,
+        travel_speed=2.0,
+    )
+
+    assert ok is True
+    assert reason == ""
+    assert model._travel_time(pickup.coords, dropoff.coords) == pytest.approx(5.0)
+
+
+def test_milp_gap_no_gurobi_path_returns_durable_diagnostic_row(monkeypatch):
+    class FakeFullModel:
+        def run(self, scenario):
+            return SimpleNamespace(
+                total_vehicle_km=12.0,
+                records=[
+                    SimpleNamespace(request_id=scenario.requests[0].id, accepted=True),
+                    *[
+                        SimpleNamespace(request_id=request.id, accepted=False)
+                        for request in scenario.requests[1:]
+                    ],
+                ],
+            )
+
+    def raise_import_error(self):
+        raise ImportError("forced no gurobi")
+
+    monkeypatch.setattr(milp_gap, "FullModel", FakeFullModel)
+    monkeypatch.setattr(DRTModel, "solve", raise_import_error)
+
+    row = milp_gap.run_gap_experiment(n_requests=3, seed=42)
+
+    assert row["milp_status"] == "no_gurobi"
+    assert row["status"] == "no_gurobi"
+    assert row["gap_pct"] is None
+    assert row["comparable_gap"] is False
+    assert row["evidence_family"] == "algorithm_diagnostic"
+    assert "milp" in row["diagnostic_role"]
+    assert row["detailed_reason"]
