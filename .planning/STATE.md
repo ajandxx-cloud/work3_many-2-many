@@ -5,14 +5,14 @@ milestone_name: milestone
 current_phase: 2
 current_phase_name: Experimental Contract and Metric Standardization
 current_plan: Not started
-status: planning
-stopped_at: Phase 2 context gathered
-last_updated: "2026-06-15T04:01:49.352Z"
+status: executing
+stopped_at: Phase 2 planned
+last_updated: "2026-06-15T04:13:21.083Z"
 last_activity: 2026-06-15
 progress:
   total_phases: 11
   completed_phases: 2
-  total_plans: 2
+  total_plans: 5
   completed_plans: 2
   percent: 18
 ---
@@ -21,7 +21,7 @@ progress:
 
 **Current Phase:** 2
 **Current Phase Name:** Experimental Contract and Metric Standardization
-**Status:** Ready to plan
+**Status:** Ready to execute
 **Current Plan:** Not started
 **Progress:** 18%
 **Last Activity:** 2026-06-15
@@ -37,7 +37,7 @@ See: `.planning/PROJECT.md`
 
 Phase 1 is complete and verified. The literature and novelty audit forbids broad first/only and pickup-side-only novelty language, approves the narrower integrated choice-aware dynamic service-design framing for planning, and records TR-E-level rigor as the evidence bar.
 
-The immediate next work is Phase 2 planning for experimental contract and metric standardization before any new formal experiments are run.
+The immediate next work is Phase 2 execution for experimental contract and metric standardization before any new formal experiments are run.
 
 ## Decisions
 
@@ -67,7 +67,8 @@ The immediate next work is Phase 2 planning for experimental contract and metric
 - [x] Review and confirm Phase 0 audit artifacts.
 - [x] Run Phase 1 literature and novelty audit.
 - [x] Resolve target-journal positioning for planning: use TR-E-level rigor as the evidence bar.
-- [ ] Plan Phase 2 experimental contract and metric standardization.
+- [x] Plan Phase 2 experimental contract and metric standardization.
+- [ ] Execute Phase 2 experimental contract and metric standardization.
 
 ## Artifact Index
 
@@ -91,12 +92,19 @@ The immediate next work is Phase 2 planning for experimental contract and metric
 - `.planning/phases/01-literature-and-novelty-audit/01_LITERATURE_AUDIT.md`
 - `.planning/phases/01-literature-and-novelty-audit/01_NOVELTY_POSITIONING.md`
 - `.planning/phases/01-literature-and-novelty-audit/01_REVISED_RESEARCH_QUESTIONS.md`
+- `.planning/phases/02-experimental-contract-and-metric-standardization/02-CONTEXT.md`
+- `.planning/phases/02-experimental-contract-and-metric-standardization/02-DISCUSSION-LOG.md`
+- `.planning/phases/02-experimental-contract-and-metric-standardization/02-RESEARCH.md`
+- `.planning/phases/02-experimental-contract-and-metric-standardization/02-PATTERNS.md`
+- `.planning/phases/02-experimental-contract-and-metric-standardization/02-01-PLAN.md`
+- `.planning/phases/02-experimental-contract-and-metric-standardization/02-02-PLAN.md`
+- `.planning/phases/02-experimental-contract-and-metric-standardization/02-03-PLAN.md`
 
 ## Session Continuity
 
 Last session: 2026-06-15T04:01:49.330Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-experimental-contract-and-metric-standardization/02-CONTEXT.md
+Stopped at: Phase 2 planned
+Resume file: .planning/phases/02-experimental-contract-and-metric-standardization/02-03-PLAN.md
 
 ---
-*State updated: 2026-06-15 after Phase 1 completion*
+*State updated: 2026-06-15 after Phase 2 planning*
