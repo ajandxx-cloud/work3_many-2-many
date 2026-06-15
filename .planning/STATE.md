@@ -5,9 +5,9 @@ milestone_name: milestone
 current_phase: 2
 current_phase_name: Experimental Contract and Metric Standardization
 current_plan: Not started
-status: executing
-stopped_at: Phase 2 planned
-last_updated: "2026-06-15T04:21:40.099Z"
+status: ready_to_plan
+stopped_at: Phase 02 complete (3/3) — ready to discuss Phase 3
+last_updated: 2026-06-15T04:22:42.348Z
 last_activity: 2026-06-15
 progress:
   total_phases: 11
@@ -19,9 +19,9 @@ progress:
 
 # State: TR_E_Bidirectional_MeetingPoint_DRT_Experiment_Rebuild
 
-**Current Phase:** 2
+**Current Phase:** 3
 **Current Phase Name:** Experimental Contract and Metric Standardization
-**Status:** Ready to execute
+**Status:** Ready to plan
 **Current Plan:** Not started
 **Progress:** [██████████] 100%
 **Last Activity:** 2026-06-15
@@ -31,7 +31,7 @@ progress:
 See: `.planning/PROJECT.md`
 
 **Core value:** Produce reproducible, reviewer-resistant evidence for defensible conditional claims about bidirectional meeting-point DRT.
-**Current focus:** Phase 2 - experimental contract and metric standardization
+**Current focus:** Phase 3 — passenger choice model rebuild
 
 ## Current Position
 
