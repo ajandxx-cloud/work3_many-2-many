@@ -328,7 +328,13 @@ def test_fixed_accepted_set_default_seed42_routes_retained_set(tmp_path):
     assert result["status"] == "passed"
     assert result["routing_status"] == "completed"
     assert result["retained_request_count"] > 0
-    assert result["construction_rule"] in {"common_served", "common_serviceable"}
+    assert result["construction_rule"] in {
+        "common_served",
+        "common_serviceable",
+        "common_candidate_serviceable",
+    }
+    if result["construction_rule"] == "common_candidate_serviceable":
+        assert result["candidate_serviceable_intersection_count"] > 0
     assert result["evidence_family"] == "algorithm_diagnostic"
 
 
