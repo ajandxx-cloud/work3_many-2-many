@@ -13,9 +13,9 @@
 
 ### Positioning
 
-- [ ] **POS-01**: Literature and novelty audit verifies whether prior DARPmp and ridepooling work already covers pickup/dropoff walking locations.
-- [ ] **POS-02**: Contribution framing avoids unverified "first" claims and centers the integrated choice-aware dynamic service-design framework.
-- [ ] **POS-03**: Target-journal positioning conflict between current Part A framing and requested TR-E-level framing is resolved.
+- [x] **POS-01**: Literature and novelty audit verifies whether prior DARPmp and ridepooling work already covers pickup/dropoff walking locations.
+- [x] **POS-02**: Contribution framing avoids unverified "first" claims and centers the integrated choice-aware dynamic service-design framework.
+- [x] **POS-03**: Target-journal positioning conflict between current Part A framing and requested TR-E-level framing is resolved.
 
 ### Experiments
 
@@ -88,9 +88,9 @@ Formal experiments must be split into main-evidence experiments and supplementar
 | AUD-01 | Phase 0 | Complete |
 | AUD-02 | Phase 0 | Complete |
 | AUD-03 | Phase 0 | Complete |
-| POS-01 | Phase 1 | Pending |
-| POS-02 | Phase 1 | Pending |
-| POS-03 | Phase 1 | Pending |
+| POS-01 | Phase 1 | Complete |
+| POS-02 | Phase 1 | Complete |
+| POS-03 | Phase 1 | Complete |
 | EXP-01 | Phase 2 | Pending |
 | EXP-02 | Phase 2 | Pending |
 | EXP-03 | Phase 2 | Pending |
