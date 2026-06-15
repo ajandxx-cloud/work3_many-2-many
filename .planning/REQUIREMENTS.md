@@ -22,16 +22,16 @@
 - [x] **EXP-01**: Method definitions separate service design, passenger response, routing algorithm, and diagnostic role.
 - [x] **EXP-02**: Behavioral choice-based comparisons use consistent passenger response assumptions across all service variants.
 - [x] **EXP-03**: Deterministic feasibility/routing diagnostics are reported separately from behavioral comparisons.
-- [ ] **EXP-04**: Coverage-confounding controls include unconstrained behavioral, matched-coverage, and fixed accepted-set designs.
+- [x] **EXP-04**: Coverage-confounding controls include unconstrained behavioral, matched-coverage, and fixed accepted-set designs.
 - [ ] **EXP-05**: Formal experiments use paired seeds, at least 20 synthetic seeds, saved configs, raw rows, logs, and failure rows.
 Formal experiments must be split into main-evidence experiments and supplementary diagnostic experiments. The main-evidence experiment should be small enough to guarantee paired-seed completion and should focus on the central claim: whether bidirectional pickup/dropoff meeting-point service design improves operating efficiency under consistent passenger-response assumptions. Supplementary experiments, including matched coverage, fixed accepted-set routing, utility sensitivity, meeting-point density, fleet-demand stress tests, equity analysis, and ALNS/MILP diagnostics, must be executed as separate subphases. No supplementary result may be used to support a headline claim unless its corresponding subphase passes its own reproducibility and validity gate.
 
 
 ### Metrics
 
-- [ ] **MET-01**: Metric definitions include formulas, units, denominators, and valid value ranges.
-- [ ] **MET-02**: Served share, behavioral acceptance rate, feasibility rejection rate, choice rejection rate, and deterministic inserted share are distinct.
-- [ ] **MET-03**: Main tables report total vkm, vkm per served trip, vkm per original request, and served share together.
+- [x] **MET-01**: Metric definitions include formulas, units, denominators, and valid value ranges.
+- [x] **MET-02**: Served share, behavioral acceptance rate, feasibility rejection rate, choice rejection rate, and deterministic inserted share are distinct.
+- [x] **MET-03**: Main tables report total vkm, vkm per served trip, vkm per original request, and served share together.
 - [ ] **MET-04**: Equity metrics include type-level outcomes and, where possible, individual-level burden distributions.
 
 ### Choice
@@ -94,11 +94,11 @@ Formal experiments must be split into main-evidence experiments and supplementar
 | EXP-01 | Phase 2 | Complete |
 | EXP-02 | Phase 2 | Complete |
 | EXP-03 | Phase 2 | Complete |
-| EXP-04 | Phase 2 | Pending |
+| EXP-04 | Phase 2 | Complete |
 | EXP-05 | Phase 6 | Pending |
-| MET-01 | Phase 2 | Pending |
-| MET-02 | Phase 2 | Pending |
-| MET-03 | Phase 2 | Pending |
+| MET-01 | Phase 2 | Complete |
+| MET-02 | Phase 2 | Complete |
+| MET-03 | Phase 2 | Complete |
 | MET-04 | Phase 8 | Pending |
 | CHO-01 | Phase 3 | Pending |
 | CHO-02 | Phase 3 | Pending |
