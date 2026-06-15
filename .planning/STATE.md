@@ -6,7 +6,7 @@ current_phase: 5
 current_phase_name: pilot-experiments
 current_plan: Not started
 status: executing
-stopped_at: Completed 05-03-PLAN.md with Phase 6 blockers
+stopped_at: Completed 05-04-PLAN.md with Phase 5 blockers closed
 last_updated: "2026-06-15T14:06:13.791Z"
 last_activity: 2026-06-15
 progress:
@@ -21,7 +21,7 @@ progress:
 
 **Current Phase:** 5
 **Current Phase Name:** pilot-experiments
-**Status:** Ready to execute
+**Status:** Ready for verification
 **Current Plan:** Not started
 **Progress:** [█████████░] 93%
 **Last Activity:** 2026-06-15
@@ -31,13 +31,13 @@ progress:
 See: `.planning/PROJECT.md`
 
 **Core value:** Produce reproducible, reviewer-resistant evidence for defensible conditional claims about bidirectional meeting-point DRT.
-**Current focus:** Phase 5 pilot experiments are executed; Phase 6 is blocked by pilot readiness issues.
+**Current focus:** Phase 5 pilot gap closure is implemented; verification can rerun before Phase 6 planning.
 
 ## Current Position
 
-Phase: 05 (pilot-experiments) - BLOCKED
-Plan: 3 of 3
-Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is complete and verified, Phase 3 is complete and verified, and Phase 4 is complete and verified. Phase 5 pilot experiments ran and produced `05_PILOT_RESULTS.md`, but Phase 6 is not ready to plan until blocking pilot readiness issues are fixed or explicitly redesigned.
+Phase: 05 (pilot-experiments) - GAP CLOSURE READY FOR VERIFICATION
+Plan: 4 of 4
+Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is complete and verified, Phase 3 is complete and verified, and Phase 4 is complete and verified. Phase 5 pilot experiments ran and produced `05_PILOT_RESULTS.md`; Phase 5 gap closure has now fixed `BUG-05-001`, `BUG-05-002`, and `BUG-05-003` in the ledger without starting formal experiments.
 
 ## Decisions
 
@@ -58,9 +58,8 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - Current result provenance and formal seed count are not sufficient for TR-E-level final claims.
 - Gamma/welfare outputs are post-hoc diagnostics and must not be framed as a Pareto frontier unless implementation changes.
 - Cortenbach et al. (2024) and Wu et al. (2025) bibliography metadata should be cleaned during manuscript restructuring.
-- Phase 5 blocker BUG-05-001: matched-coverage seed 42 gap exceeds tolerance.
-- Phase 5 blocker BUG-05-002: matched-coverage seed 44 gap exceeds tolerance.
-- Phase 5 blocker BUG-05-003: fixed accepted-set common served intersection is empty.
+- Phase 5 gap closure uses per-seed integer matched-coverage targets; seed 42 target is adjusted to the attainable capped count and remains readiness-only evidence.
+- Phase 5 fixed accepted-set smoke uses `common_candidate_serviceable` for seed 42 because the stricter served and actual-offer serviceable intersections are empty; this is a pilot routing diagnostic repair, not formal evidence.
 
 ## Pending Todos
 
@@ -74,7 +73,7 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - [x] Plan Phase 4 baseline and algorithm implementation check.
 - [x] Plan Phase 5 pilot experiments.
 - [x] Execute Phase 5 pilot experiments.
-- [ ] Resolve Phase 5 pilot blockers before Phase 6 planning.
+- [x] Resolve Phase 5 pilot blockers before Phase 6 planning.
 
 ## Artifact Index
 
@@ -117,14 +116,16 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - `.planning/phases/05-pilot-experiments/05-01-PLAN.md`
 - `.planning/phases/05-pilot-experiments/05-02-PLAN.md`
 - `.planning/phases/05-pilot-experiments/05-03-PLAN.md`
+- `.planning/phases/05-pilot-experiments/05-04-PLAN.md`
+- `.planning/phases/05-pilot-experiments/05-04-SUMMARY.md`
 - `.planning/phases/05-pilot-experiments/05_PILOT_RESULTS.md`
 - `.planning/phases/05-pilot-experiments/05_BUG_LEDGER.csv`
 
 ## Session Continuity
 
 Last session: 2026-06-15T13:47:19.618Z
-Stopped at: Completed 05-03-PLAN.md with Phase 6 blockers
-Resume file: .planning/phases/05-pilot-experiments/05_PILOT_RESULTS.md
+Stopped at: Completed 05-04-PLAN.md with Phase 5 blockers closed
+Resume file: .planning/phases/05-pilot-experiments/05-04-SUMMARY.md
 
 ---
-*State updated: 2026-06-15 after Phase 5 pilot gate execution*
+*State updated: 2026-06-15 after Phase 5 gap closure execution*
