@@ -58,7 +58,7 @@ Formal experiments must be split into main-evidence experiments and supplementar
 
 - [ ] **REP-01**: Reproducibility package records commands, dependencies, configs, seeds, code revision, and result manifests.
 - [ ] **REP-02**: Main tables and figures can be regenerated from saved artifacts.
-- [ ] **REP-03**: Failed, timeout, and infeasible runs are durable rows with status, error message, runtime, config ID, seed, method, and scenario.
+- [x] **REP-03**: Failed, timeout, and infeasible runs are durable rows with status, error message, runtime, config ID, seed, method, and scenario.
 
 ## v2 Requirements
 
@@ -113,7 +113,7 @@ Formal experiments must be split into main-evidence experiments and supplementar
 | CLM-03 | Phase 8 | Pending |
 | REP-01 | Phase 10 | Pending |
 | REP-02 | Phase 10 | Pending |
-| REP-03 | Phase 5 | Pending |
+| REP-03 | Phase 5 | Complete |
 
 **Coverage:**
 - v1 requirements: 27 total
