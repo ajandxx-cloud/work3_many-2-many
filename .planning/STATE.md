@@ -3,16 +3,16 @@ gsd_state_version: 1.0
 milestone: v1.0 Evidence-chain rebuild
 milestone_name: milestone
 current_phase: 5
-current_phase_name: baseline-and-algorithm-implementation-check
+current_phase_name: pilot-experiments
 current_plan: Not started
-status: planning
+status: executing
 stopped_at: Phase 5 context gathered
-last_updated: "2026-06-15T13:22:08.983Z"
+last_updated: "2026-06-15T13:29:53.195Z"
 last_activity: 2026-06-15
 progress:
   total_phases: 11
   completed_phases: 5
-  total_plans: 12
+  total_plans: 15
   completed_plans: 12
   percent: 45
 ---
@@ -20,8 +20,8 @@ progress:
 # State: TR_E_Bidirectional_MeetingPoint_DRT_Experiment_Rebuild
 
 **Current Phase:** 5
-**Current Phase Name:** baseline-and-algorithm-implementation-check
-**Status:** Ready to plan
+**Current Phase Name:** pilot-experiments
+**Status:** Ready to execute
 **Current Plan:** Not started
 **Progress:** [██████████] 100%
 **Last Activity:** 2026-06-15
@@ -35,9 +35,9 @@ See: `.planning/PROJECT.md`
 
 ## Current Position
 
-Phase: 04 (baseline-and-algorithm-implementation-check) — EXECUTING
-Plan: 4 of 4
-Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is complete and verified, and Phase 3 is complete and verified. The immediate next work is Phase 4 planning for baseline and algorithm implementation checks.
+Phase: 05 (pilot-experiments) - PLANNED
+Plan: 3 of 3
+Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is complete and verified, Phase 3 is complete and verified, and Phase 4 is complete and verified. The immediate next work is executing Phase 5 pilot experiments.
 
 ## Decisions
 
@@ -68,7 +68,9 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - [x] Execute Phase 2 experimental contract and metric standardization.
 - [x] Plan Phase 3 passenger choice model rebuild.
 - [x] Execute Phase 3 passenger choice model rebuild.
-- [ ] Plan Phase 4 baseline and algorithm implementation check.
+- [x] Plan Phase 4 baseline and algorithm implementation check.
+- [x] Plan Phase 5 pilot experiments.
+- [ ] Execute Phase 5 pilot experiments.
 
 ## Artifact Index
 
@@ -105,6 +107,12 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - `.planning/phases/03-passenger-choice-model-rebuild/03-02-SUMMARY.md`
 - `.planning/phases/03-passenger-choice-model-rebuild/03-03-SUMMARY.md`
 - `.planning/phases/03-passenger-choice-model-rebuild/03-VERIFICATION.md`
+- `.planning/phases/05-pilot-experiments/05-RESEARCH.md`
+- `.planning/phases/05-pilot-experiments/05-PATTERNS.md`
+- `.planning/phases/05-pilot-experiments/05-VALIDATION.md`
+- `.planning/phases/05-pilot-experiments/05-01-PLAN.md`
+- `.planning/phases/05-pilot-experiments/05-02-PLAN.md`
+- `.planning/phases/05-pilot-experiments/05-03-PLAN.md`
 
 ## Session Continuity
 
@@ -113,4 +121,4 @@ Stopped at: Phase 5 context gathered
 Resume file: .planning/phases/05-pilot-experiments/05-CONTEXT.md
 
 ---
-*State updated: 2026-06-15 after Phase 3 completion*
+*State updated: 2026-06-15 after Phase 5 planning*
