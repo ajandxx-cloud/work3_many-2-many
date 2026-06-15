@@ -5,9 +5,9 @@ milestone_name: milestone
 current_phase: 04
 current_phase_name: baseline-and-algorithm-implementation-check
 current_plan: 1
-status: verifying
-stopped_at: Completed Phase 04 execution plans
-last_updated: "2026-06-15T13:00:10.692Z"
+status: ready_to_plan
+stopped_at: Phase 04 complete (4/4) — ready to discuss Phase 5
+last_updated: 2026-06-15T13:02:11.108Z
 last_activity: 2026-06-15
 progress:
   total_phases: 11
@@ -19,10 +19,10 @@ progress:
 
 # State: TR_E_Bidirectional_MeetingPoint_DRT_Experiment_Rebuild
 
-**Current Phase:** 04
+**Current Phase:** 5
 **Current Phase Name:** baseline-and-algorithm-implementation-check
-**Status:** Phase complete — ready for verification
-**Current Plan:** 1
+**Status:** Ready to plan
+**Current Plan:** Not started
 **Progress:** [██████████] 100%
 **Last Activity:** 2026-06-15
 
@@ -31,7 +31,7 @@ progress:
 See: `.planning/PROJECT.md`
 
 **Core value:** Produce reproducible, reviewer-resistant evidence for defensible conditional claims about bidirectional meeting-point DRT.
-**Current focus:** Phase 04 — baseline-and-algorithm-implementation-check
+**Current focus:** Phase 5 — pilot experiments
 
 ## Current Position
 

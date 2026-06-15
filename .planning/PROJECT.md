@@ -25,13 +25,14 @@ Produce reproducible, reviewer-resistant evidence that supports only defensible 
 - Phase 2 defined the fair-comparison contract separating service design, passenger response, routing algorithm, and diagnostic role.
 - Phase 2 standardized metric denominators and row-level status vocabulary so served share, behavioral acceptance, feasibility rejection, choice rejection, inserted share, and vehicle-km denominators cannot be mixed.
 - Phase 2 locked coverage-confounding controls through unconstrained behavioral, matched-coverage, and fixed accepted-set designs before any new formal runs.
+- Phase 4 implemented and validated the behavioral baseline family: DoorToDoor, SingleSidedPickup, SingleSidedDropoff, and BidirectionalMeetingPoint under shared actual-offer choice semantics.
+- Phase 4 standardized runner outputs with method metadata, durable failure/timeout rows, explicit vehicle-km denominator fields, and provenance/count fields.
+- Phase 4 validated greedy, no-rolling-horizon, ALNS trace, and MILP static-snapshot diagnostics as algorithm evidence only, including a no-Gurobi path.
 
 ### Active
 
 - [ ] Use the Phase 2 experiment contract when rebuilding choice, baseline, runner, metric, pilot, and formal experiment code.
-- [ ] Rebuild baseline taxonomy around DoorToDoor, SingleSidedPickup, SingleSidedDropoff, BidirectionalMeetingPoint, no-rolling-horizon, greedy insertion, ALNSFullModel, and exact/MILP diagnostics.
 - [ ] Add credible passenger-choice calibration logic, including service ASC, outside-option sensitivity, type shares, and literature-based or explicitly simulated ranges.
-- [ ] Validate ALNS and MILP diagnostic scope honestly, including feasibility checks, convergence diagnostics, greedy/exact comparisons, and runtime-quality trade-offs.
 - [ ] Run pilot experiments before formal experiments, and keep pilot/tuning results separate from final evidence.
 - [ ] Run formal paired-seed experiments with at least 20 seeds for synthetic results, preferably 30 if runtime permits.
 - [ ] Gate all final manuscript claims through a claim-evidence matrix before writing TR-E-level conclusions.
@@ -71,6 +72,7 @@ The current README says the target journal is Transportation Research Part A, wh
 | Use TR-E-level contribution framing | Phase 1 approved the integrated choice-aware dynamic service-design framework as the safe contribution center | Complete |
 | Forbid broad first/only novelty language | Phase 1 found prior work already narrows bidirectional walking and meeting-point novelty | Complete |
 | Treat Phase 0 current results as exploratory provenance inputs, not final evidence | Main table, matched coverage, gamma, weight sensitivity, and policy outputs all have caveats | Complete |
+| Keep algorithm diagnostics separate from behavioral evidence | Phase 4 validated greedy, no-RH, ALNS, and MILP diagnostics as algorithm evidence only | Complete |
 
 ## Evolution
 
@@ -90,4 +92,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state.
 
 ---
-*Last updated: 2026-06-15 after Phase 2 completion*
+*Last updated: 2026-06-15 after Phase 4 completion*
