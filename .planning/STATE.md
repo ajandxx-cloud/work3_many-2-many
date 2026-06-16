@@ -4,10 +4,10 @@ milestone: v1.0 Evidence-chain rebuild
 milestone_name: milestone
 current_phase: 06
 current_phase_name: formal-synthetic-experiments
-current_plan: 1
-status: blocked
-stopped_at: Phase 6 Plan 06-01 completed; Plan 06-02 blocked by BidirectionalMP_Choice_RH_ALNS label/implementation gate
-last_updated: "2026-06-16T06:16:00.000Z"
+current_plan: 2
+status: executing
+stopped_at: Phase 6 Plan 06-01 completed and gate resolved; ready to execute Plan 06-02 formal main matrix
+last_updated: "2026-06-16T06:58:00.000Z"
 last_activity: 2026-06-16
 progress:
   total_phases: 11
@@ -21,8 +21,8 @@ progress:
 
 **Current Phase:** 06
 **Current Phase Name:** formal-synthetic-experiments
-**Status:** Blocked: evidence-label gate before formal main matrix
-**Current Plan:** 1
+**Status:** Executing: ready for formal main matrix
+**Current Plan:** 2
 **Progress:** 86%
 **Last Activity:** 2026-06-16
 
@@ -36,7 +36,7 @@ See: `.planning/PROJECT.md`
 ## Current Position
 
 Phase: 06 (formal-synthetic-experiments) — EXECUTING
-Plan: 1 of 5 completed with a blocking gate before Plan 06-02
+Plan: 1 of 5 completed; Plan 06-02 is ready
 Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is complete and verified, Phase 3 is complete and verified, Phase 4 is complete and verified, and Phase 5 pilot experiments are complete and verified. Phase 9 is complete and verified with five claim-gated manuscript-restructuring artifacts; final manuscript claims remain blocked on the absent Phase 6 formal report and absent Phase 8 claim-gate artifacts. Phase 10 created reproducibility artifacts but correctly blocked on those prerequisites, so execution has returned to Phase 6.
 
 ## Decisions
@@ -61,7 +61,7 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - Phase 5 gap closure uses per-seed integer matched-coverage targets; seed 42 target is adjusted to the attainable capped count and remains readiness-only evidence.
 - Phase 5 fixed accepted-set smoke uses `common_candidate_serviceable` for seed 42 because the stricter served and actual-offer serviceable intersections are empty; this is a pilot routing diagnostic repair, not formal evidence.
 - Phase 10 reproducibility artifacts are created, but final verification is blocked because the Phase 6 formal report and three Phase 8 claim-gate files are missing.
-- Phase 6 Plan 06-01 harness and validators are created, but the formal main matrix is blocked because `BidirectionalMP_Choice_RH_ALNS` currently claims rolling-horizon/ALNS while `FullModel._solve()` delegates to the common sequential actual-offer path.
+- Phase 6 Plan 06-01 harness and validators are created. The `BidirectionalMP_Choice_RH_ALNS` label/implementation gate is resolved by routing accepted `FullModel` requests through `RollingHorizon` while preserving actual-offer choice logs.
 
 ## Pending Todos
 
@@ -78,7 +78,7 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - [x] Resolve Phase 5 pilot blockers before Phase 6 planning.
 - [x] Plan Phase 6 formal synthetic experiments.
 - [x] Execute Phase 6 Plan 06-01 formal harness, manifests, and validators.
-- [ ] Resolve the `BidirectionalMP_Choice_RH_ALNS` label/implementation gate before running the 20-seed formal main matrix.
+- [x] Resolve the `BidirectionalMP_Choice_RH_ALNS` label/implementation gate before running the 20-seed formal main matrix.
 - [ ] Execute Phase 6 formal main matrix and supplementary packages.
 - [ ] Generate Phase 6 formal synthetic results report.
 - [ ] Execute Phase 8 claim-evidence gate.
@@ -146,9 +146,9 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 
 ## Session Continuity
 
-Last session: 2026-06-16T06:16:00.000Z
-Stopped at: Phase 6 Plan 06-01 completed; Plan 06-02 blocked by BidirectionalMP_Choice_RH_ALNS label/implementation gate
+Last session: 2026-06-16T06:58:00.000Z
+Stopped at: Phase 6 Plan 06-01 completed and gate resolved; ready to execute Plan 06-02 formal main matrix
 Resume file: None
 
 ---
-*State updated: 2026-06-16 after returning from Phase 10 blocker to Phase 6*
+*State updated: 2026-06-16 after resolving the Phase 6 label/implementation gate*

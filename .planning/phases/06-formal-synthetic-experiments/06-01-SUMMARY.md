@@ -38,12 +38,12 @@ patterns-established:
 requirements-completed: []
 duration: 1 session
 completed: 2026-06-16
-status: completed_with_blocking_gate
+status: completed_gate_resolved
 ---
 
 # Phase 06 Plan 01: Formal Harness, Manifests, and Validators Summary
 
-**Formal execution harness created; full main matrix is blocked by an evidence-label gate**
+**Formal execution harness created; evidence-label gate resolved**
 
 ## Accomplishments
 
@@ -54,7 +54,8 @@ status: completed_with_blocking_gate
 
 ## Task Commit
 
-- This commit - `feat(06-01): add formal experiment harness gate`
+- `7843bb2` - `feat(06-01): add formal experiment harness gate`
+- `0d2a11c` - `fix(06): align FullModel with RH ALNS label`
 
 ## Gate Result
 
@@ -66,7 +67,9 @@ The smoke matrix itself is structurally complete:
 - Failed rows: 0.
 - Timeout rows: 0.
 
-The validator correctly returns `passed: false` because `FullModel` is still labeled as `BidirectionalMP_Choice_RH_ALNS` while `FullModel._solve()` delegates to the common sequential actual-offer path rather than a rolling-horizon/ALNS implementation. This blocks the full 20-seed formal main matrix until the project either implements the labeled behavior or explicitly downgrades the paper-facing method label and downstream claim scope.
+The initial validator correctly returned `passed: false` because `FullModel` was labeled as `BidirectionalMP_Choice_RH_ALNS` while `FullModel._solve()` delegated to the common sequential actual-offer path rather than a rolling-horizon/ALNS implementation.
+
+The follow-up fix implements the chosen path: `FullModel` now evaluates actual feasible offers for passenger choice, routes the accepted request set through `RollingHorizon`, preserves utility logs, and records any RH-unassigned accepted requests as non-served feasibility outcomes rather than false served rows. The regenerated smoke validator now returns `passed: true`.
 
 ## Verification
 
@@ -75,13 +78,8 @@ The validator correctly returns `passed: false` because `FullModel` is still lab
 - `$env:PYTHONPATH='src'; pytest tests/test_phase06_formal.py tests/test_runner.py tests/test_metrics.py -q` -> 65 passed.
 - `$env:PYTHONPATH='src'; pytest tests/test_phase06_formal.py tests/test_runner.py tests/test_metrics.py tests/test_variants.py -q` -> 88 passed.
 - `$env:PYTHONPATH='src'; python -m experiments.phase06_formal --family main --scales 100 --seeds 1 --results-dir results/formal/phase06/smoke` -> generated 4 formal smoke rows and utility logs.
-- `$env:PYTHONPATH='src'; python -m experiments.phase06_formal --validate --scales 100 --seeds 1 --results-dir results/formal/phase06/smoke` -> expected failure on the label/implementation gate.
+- `$env:PYTHONPATH='src'; python -m experiments.phase06_formal --validate --scales 100 --seeds 1 --results-dir results/formal/phase06/smoke` -> passed after the RH/ALNS implementation fix.
 
 ## Next Action
 
-Do not start Plan 06-02's 320-row formal main matrix yet. First resolve the `BidirectionalMP_Choice_RH_ALNS` gate by either:
-
-1. implementing actual rolling-horizon/ALNS behavior for the behavioral `FullModel` path while preserving actual-offer choice and utility logging, or
-2. downgrading the method metadata, Phase 6 method manifest, Phase 8 claim scope, and manuscript language so the paper-facing label no longer claims rolling-horizon/ALNS.
-
-Path 1 preserves the current Phase 2/Phase 9 contract. Path 2 is more conservative but requires replanning downstream claims.
+Proceed to Plan 06-02: run, validate, and close the required 20-seed formal main behavioral matrix. Keep the same artifact discipline: no pilot/formal mixing, durable failed/timeout rows, same-cell reruns, and no replacement seeds.
