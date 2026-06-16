@@ -1,0 +1,25 @@
+{
+  "settings": [
+    {
+      "demand_scale": 100,
+      "n_requests": 100,
+      "n_vehicles": 15,
+      "parameter_setting_id": "stress_low_demand",
+      "stress_level": "low"
+    },
+    {
+      "demand_scale": 200,
+      "n_requests": 200,
+      "n_vehicles": 15,
+      "parameter_setting_id": "stress_base",
+      "stress_level": "medium"
+    },
+    {
+      "demand_scale": 300,
+      "n_requests": 300,
+      "n_vehicles": 15,
+      "parameter_setting_id": "stress_high_demand",
+      "stress_level": "high"
+    }
+  ]
+}

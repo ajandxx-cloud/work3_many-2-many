@@ -1,0 +1,28 @@
+{
+  "settings": [
+    {
+      "description": "tight walking radius with thinned meeting-point candidates",
+      "mp_density_profile": "sparse",
+      "parameter_setting_id": "low_radius_sparse_density",
+      "radius_tier": "low",
+      "rho_d": 800.0,
+      "rho_p": 800.0
+    },
+    {
+      "description": "Phase 6 default walking radius and meeting-point grid",
+      "mp_density_profile": "default",
+      "parameter_setting_id": "default_radius_default_density",
+      "radius_tier": "medium",
+      "rho_d": 1500.0,
+      "rho_p": 1500.0
+    },
+    {
+      "description": "expanded walking radius with denser candidate grid",
+      "mp_density_profile": "dense",
+      "parameter_setting_id": "high_radius_dense_density",
+      "radius_tier": "high",
+      "rho_d": 2500.0,
+      "rho_p": 2500.0
+    }
+  ]
+}

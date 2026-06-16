@@ -1,0 +1,29 @@
+{
+  "checked_files": [
+    "results\\formal\\phase06\\robustness\\mp_density_walking_radius\\raw_results.csv",
+    "results\\formal\\phase06\\robustness\\mp_density_walking_radius\\processed_results.csv",
+    "results\\formal\\phase06\\robustness\\mp_density_walking_radius\\config_manifest.json"
+  ],
+  "denominator_checks": {
+    "behavioral_acceptance_rate": "passed",
+    "rejection_partition": "passed",
+    "served_share": "passed",
+    "vkm_per_original_request": "passed",
+    "vkm_per_served_trip": "passed"
+  },
+  "errors": [],
+  "package_id": "mp_density_walking_radius",
+  "passed": true,
+  "row_counts": {
+    "actual_rows": 180,
+    "blocked_rows": 0,
+    "completed_rows": 180,
+    "expected_rows": 180,
+    "extra_rows": 0,
+    "failed_rows": 0,
+    "missing_rows": 0,
+    "timeout_rows": 0
+  },
+  "schema_drift": false,
+  "warnings": []
+}

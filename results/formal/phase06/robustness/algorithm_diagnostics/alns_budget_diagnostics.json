@@ -1,0 +1,70 @@
+{
+  "rows": [
+    {
+      "best_objective": 0.0,
+      "budget_iterations": 5,
+      "diagnostic_role": "alns_budget_smoke",
+      "evidence_family": "algorithm_diagnostic",
+      "improvement_counts": {
+        "greedy_insertion": 3,
+        "related_removal": 3
+      },
+      "n_accepted": 1,
+      "n_unassigned": 5,
+      "operator_selection_counts": {
+        "greedy_insertion": 96,
+        "random_removal": 59,
+        "regret_insertion": 64,
+        "related_removal": 61,
+        "worst_removal": 40
+      },
+      "runtime_s": 0.03433549962937832,
+      "trace_length": 160
+    },
+    {
+      "best_objective": 0.0,
+      "budget_iterations": 20,
+      "diagnostic_role": "alns_budget_smoke",
+      "evidence_family": "algorithm_diagnostic",
+      "improvement_counts": {
+        "greedy_insertion": 3,
+        "random_removal": 1,
+        "related_removal": 2
+      },
+      "n_accepted": 1,
+      "n_unassigned": 5,
+      "operator_selection_counts": {
+        "greedy_insertion": 320,
+        "random_removal": 215,
+        "regret_insertion": 320,
+        "related_removal": 207,
+        "worst_removal": 218
+      },
+      "runtime_s": 0.13748000003397465,
+      "trace_length": 640
+    },
+    {
+      "best_objective": 0.0,
+      "budget_iterations": 50,
+      "diagnostic_role": "alns_budget_smoke",
+      "evidence_family": "algorithm_diagnostic",
+      "improvement_counts": {
+        "greedy_insertion": 3,
+        "random_removal": 1,
+        "related_removal": 1,
+        "worst_removal": 1
+      },
+      "n_accepted": 1,
+      "n_unassigned": 5,
+      "operator_selection_counts": {
+        "greedy_insertion": 800,
+        "random_removal": 524,
+        "regret_insertion": 800,
+        "related_removal": 539,
+        "worst_removal": 537
+      },
+      "runtime_s": 0.34108539996668696,
+      "trace_length": 1600
+    }
+  ]
+}

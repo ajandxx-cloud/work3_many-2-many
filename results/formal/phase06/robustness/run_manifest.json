@@ -1,0 +1,89 @@
+{
+  "command": "python -m experiments.phase06_robustness --package all --results-root results/formal/phase06/robustness --write-summary",
+  "diagnostic_design": "reduced formal diagnostic, not main headline evidence",
+  "finished_at_utc": "2026-06-16T09:01:30.411248+00:00",
+  "git_commit_before_run": "d1a157b",
+  "method_list": [
+    "DoorToDoor_Choice_CommonRouting",
+    "BidirectionalMP_Choice_RH_ALNS"
+  ],
+  "package_row_counts": {
+    "algorithm_diagnostics": {
+      "actual_rows": 8,
+      "alns_budget_diagnostics.json": 3,
+      "blocked_rows": 0,
+      "completed_rows": 8,
+      "expected_rows": 8,
+      "failed_rows": 0,
+      "milp_gap_diagnostics.json": 4,
+      "timeout_rows": 0
+    },
+    "equity_type_outcomes": {
+      "actual_type_rows": 180,
+      "completed": 180,
+      "expected_type_rows": 180,
+      "individual_rows": 12000
+    },
+    "fleet_demand_stress": {
+      "actual_rows": 60,
+      "blocked_rows": 0,
+      "completed_rows": 60,
+      "expected_rows": 60,
+      "extra_rows": 0,
+      "failed_rows": 0,
+      "missing_rows": 0,
+      "timeout_rows": 0
+    },
+    "mp_density_walking_radius": {
+      "actual_rows": 180,
+      "blocked_rows": 0,
+      "completed_rows": 180,
+      "expected_rows": 180,
+      "extra_rows": 0,
+      "failed_rows": 0,
+      "missing_rows": 0,
+      "timeout_rows": 0
+    },
+    "utility_sensitivity": {
+      "actual_rows": 420,
+      "blocked_rows": 0,
+      "completed_rows": 420,
+      "expected_rows": 420,
+      "extra_rows": 0,
+      "failed_rows": 0,
+      "missing_rows": 0,
+      "timeout_rows": 0
+    }
+  },
+  "packages": [
+    "utility_sensitivity",
+    "mp_density_walking_radius",
+    "fleet_demand_stress",
+    "equity_type_outcomes",
+    "algorithm_diagnostics"
+  ],
+  "phase": "06",
+  "plan": "06-04",
+  "results_root": "results\\formal\\phase06\\robustness",
+  "run_type": "formal_robustness_diagnostics",
+  "scale_list": [
+    100,
+    200,
+    300
+  ],
+  "seed_list": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "seeds_are_paired": true,
+  "started_at_utc": "2026-06-16T08:17:43.833751+00:00",
+  "validation_report_path": "results\\formal\\phase06\\robustness\\validation_report.json"
+}

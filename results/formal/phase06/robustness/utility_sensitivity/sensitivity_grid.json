@@ -1,0 +1,102 @@
+{
+  "settings": [
+    {
+      "beta_ivt_multiplier": 1.0,
+      "beta_wait_multiplier": 1.0,
+      "beta_walk_multiplier": 1.0,
+      "description": "default simulation-range choice parameters",
+      "outside_option_constant": 0.0,
+      "parameter_setting_id": "baseline_default",
+      "service_asc": 0.0,
+      "type_shares": {
+        "price_sensitive": 0.34,
+        "time_sensitive": 0.33,
+        "walk_sensitive": 0.33
+      }
+    },
+    {
+      "beta_ivt_multiplier": 1.0,
+      "beta_wait_multiplier": 1.0,
+      "beta_walk_multiplier": 1.5,
+      "description": "higher walking disutility",
+      "outside_option_constant": 0.0,
+      "parameter_setting_id": "walk_disutility_high",
+      "service_asc": 0.0,
+      "type_shares": {
+        "price_sensitive": 0.34,
+        "time_sensitive": 0.33,
+        "walk_sensitive": 0.33
+      }
+    },
+    {
+      "beta_ivt_multiplier": 1.0,
+      "beta_wait_multiplier": 1.5,
+      "beta_walk_multiplier": 1.0,
+      "description": "higher waiting/access-time disutility",
+      "outside_option_constant": 0.0,
+      "parameter_setting_id": "wait_disutility_high",
+      "service_asc": 0.0,
+      "type_shares": {
+        "price_sensitive": 0.34,
+        "time_sensitive": 0.33,
+        "walk_sensitive": 0.33
+      }
+    },
+    {
+      "beta_ivt_multiplier": 1.5,
+      "beta_wait_multiplier": 1.0,
+      "beta_walk_multiplier": 1.0,
+      "description": "higher in-vehicle-time disutility",
+      "outside_option_constant": 0.0,
+      "parameter_setting_id": "ivt_disutility_high",
+      "service_asc": 0.0,
+      "type_shares": {
+        "price_sensitive": 0.34,
+        "time_sensitive": 0.33,
+        "walk_sensitive": 0.33
+      }
+    },
+    {
+      "beta_ivt_multiplier": 1.0,
+      "beta_wait_multiplier": 1.0,
+      "beta_walk_multiplier": 1.0,
+      "description": "lower DRT service attractiveness constant",
+      "outside_option_constant": 0.0,
+      "parameter_setting_id": "service_asc_low",
+      "service_asc": -1.0,
+      "type_shares": {
+        "price_sensitive": 0.34,
+        "time_sensitive": 0.33,
+        "walk_sensitive": 0.33
+      }
+    },
+    {
+      "beta_ivt_multiplier": 1.0,
+      "beta_wait_multiplier": 1.0,
+      "beta_walk_multiplier": 1.0,
+      "description": "more attractive outside option",
+      "outside_option_constant": 1.0,
+      "parameter_setting_id": "outside_option_high",
+      "service_asc": 0.0,
+      "type_shares": {
+        "price_sensitive": 0.34,
+        "time_sensitive": 0.33,
+        "walk_sensitive": 0.33
+      }
+    },
+    {
+      "beta_ivt_multiplier": 1.0,
+      "beta_wait_multiplier": 1.0,
+      "beta_walk_multiplier": 1.0,
+      "description": "passenger-type shares tilted toward walk-sensitive riders",
+      "outside_option_constant": 0.0,
+      "parameter_setting_id": "walk_sensitive_majority",
+      "service_asc": 0.0,
+      "type_shares": {
+        "price_sensitive": 0.2,
+        "time_sensitive": 0.2,
+        "walk_sensitive": 0.6
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+package_id,status,passed,role,output_path,blocks_phase8,evidence_family,summary
+utility_sensitivity,passed,True,formal_diagnostic,results\formal\phase06\robustness\utility_sensitivity,False,formal_robustness_diagnostic,structural validation passed
+mp_density_walking_radius,passed,True,formal_diagnostic,results\formal\phase06\robustness\mp_density_walking_radius,False,formal_robustness_diagnostic,structural validation passed
+fleet_demand_stress,passed,True,formal_diagnostic,results\formal\phase06\robustness\fleet_demand_stress,False,formal_robustness_diagnostic,structural validation passed
+equity_type_outcomes,passed,True,formal_diagnostic,results\formal\phase06\robustness\equity_type_outcomes,False,formal_robustness_diagnostic,structural validation passed
+algorithm_diagnostics,passed,True,formal_diagnostic,results\formal\phase06\robustness\algorithm_diagnostics,False,algorithm_diagnostic,structural validation passed

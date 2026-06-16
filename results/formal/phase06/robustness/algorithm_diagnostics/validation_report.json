@@ -1,0 +1,26 @@
+{
+  "checked_files": [
+    "results\\formal\\phase06\\robustness\\algorithm_diagnostics\\rolling_horizon_diagnostics.csv",
+    "results\\formal\\phase06\\robustness\\algorithm_diagnostics\\alns_budget_diagnostics.json",
+    "results\\formal\\phase06\\robustness\\algorithm_diagnostics\\milp_gap_diagnostics.json",
+    "results\\formal\\phase06\\robustness\\algorithm_diagnostics\\config_manifest.json"
+  ],
+  "denominator_checks": {
+    "status": "not_applicable_algorithm_diagnostic"
+  },
+  "errors": [],
+  "package_id": "algorithm_diagnostics",
+  "passed": true,
+  "row_counts": {
+    "actual_rows": 8,
+    "alns_budget_diagnostics.json": 3,
+    "blocked_rows": 0,
+    "completed_rows": 8,
+    "expected_rows": 8,
+    "failed_rows": 0,
+    "milp_gap_diagnostics.json": 4,
+    "timeout_rows": 0
+  },
+  "schema_drift": false,
+  "warnings": []
+}

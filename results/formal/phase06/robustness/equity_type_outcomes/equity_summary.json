@@ -1,0 +1,20 @@
+{
+  "claim_limit": "equity claims remain exploratory until Phase 8 claim grading",
+  "individual_burden_summary": {
+    "generalized_cost": {
+      "mean": 0.1456309681171488,
+      "median": 0.0,
+      "p90": 0.6563714009172735,
+      "p95": 0.9289480078032121
+    },
+    "walking_burden": {
+      "mean": 6.333263768355033,
+      "median": 0.0,
+      "p90": 0.0,
+      "p95": 0.0
+    }
+  },
+  "individual_level_burden_available": true,
+  "package_id": "equity_type_outcomes",
+  "passenger_type_parameters": "simulation_range_constructs"
+}

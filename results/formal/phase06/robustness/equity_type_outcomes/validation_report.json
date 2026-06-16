@@ -1,0 +1,24 @@
+{
+  "checked_files": [
+    "results\\formal\\phase06\\robustness\\equity_type_outcomes\\type_level_outcomes.csv",
+    "results\\formal\\phase06\\robustness\\equity_type_outcomes\\individual_burden_distribution.csv",
+    "results\\formal\\phase06\\robustness\\equity_type_outcomes\\equity_summary.json",
+    "results\\formal\\phase06\\robustness\\equity_type_outcomes\\config_manifest.json"
+  ],
+  "denominator_checks": {
+    "rejection_partition": "passed",
+    "served_share": "passed",
+    "type_level_acceptance_rate": "passed"
+  },
+  "errors": [],
+  "package_id": "equity_type_outcomes",
+  "passed": true,
+  "row_counts": {
+    "actual_type_rows": 180,
+    "completed": 180,
+    "expected_type_rows": 180,
+    "individual_rows": 12000
+  },
+  "schema_drift": false,
+  "warnings": []
+}

@@ -1,0 +1,178 @@
+{
+  "denominator_checks": {
+    "algorithm_diagnostics": {
+      "status": "not_applicable_algorithm_diagnostic"
+    },
+    "equity_type_outcomes": {
+      "rejection_partition": "passed",
+      "served_share": "passed",
+      "type_level_acceptance_rate": "passed"
+    },
+    "fleet_demand_stress": {
+      "behavioral_acceptance_rate": "passed",
+      "rejection_partition": "passed",
+      "served_share": "passed",
+      "vkm_per_original_request": "passed",
+      "vkm_per_served_trip": "passed"
+    },
+    "mp_density_walking_radius": {
+      "behavioral_acceptance_rate": "passed",
+      "rejection_partition": "passed",
+      "served_share": "passed",
+      "vkm_per_original_request": "passed",
+      "vkm_per_served_trip": "passed"
+    },
+    "utility_sensitivity": {
+      "behavioral_acceptance_rate": "passed",
+      "rejection_partition": "passed",
+      "served_share": "passed",
+      "vkm_per_original_request": "passed",
+      "vkm_per_served_trip": "passed"
+    }
+  },
+  "errors": [],
+  "package_reports": {
+    "algorithm_diagnostics": {
+      "checked_files": [
+        "results\\formal\\phase06\\robustness\\algorithm_diagnostics\\rolling_horizon_diagnostics.csv",
+        "results\\formal\\phase06\\robustness\\algorithm_diagnostics\\alns_budget_diagnostics.json",
+        "results\\formal\\phase06\\robustness\\algorithm_diagnostics\\milp_gap_diagnostics.json",
+        "results\\formal\\phase06\\robustness\\algorithm_diagnostics\\config_manifest.json"
+      ],
+      "denominator_checks": {
+        "status": "not_applicable_algorithm_diagnostic"
+      },
+      "errors": [],
+      "package_id": "algorithm_diagnostics",
+      "passed": true,
+      "row_counts": {
+        "actual_rows": 8,
+        "alns_budget_diagnostics.json": 3,
+        "blocked_rows": 0,
+        "completed_rows": 8,
+        "expected_rows": 8,
+        "failed_rows": 0,
+        "milp_gap_diagnostics.json": 4,
+        "timeout_rows": 0
+      },
+      "schema_drift": false,
+      "warnings": []
+    },
+    "equity_type_outcomes": {
+      "checked_files": [
+        "results\\formal\\phase06\\robustness\\equity_type_outcomes\\type_level_outcomes.csv",
+        "results\\formal\\phase06\\robustness\\equity_type_outcomes\\individual_burden_distribution.csv",
+        "results\\formal\\phase06\\robustness\\equity_type_outcomes\\equity_summary.json",
+        "results\\formal\\phase06\\robustness\\equity_type_outcomes\\config_manifest.json"
+      ],
+      "denominator_checks": {
+        "rejection_partition": "passed",
+        "served_share": "passed",
+        "type_level_acceptance_rate": "passed"
+      },
+      "errors": [],
+      "package_id": "equity_type_outcomes",
+      "passed": true,
+      "row_counts": {
+        "actual_type_rows": 180,
+        "completed": 180,
+        "expected_type_rows": 180,
+        "individual_rows": 12000
+      },
+      "schema_drift": false,
+      "warnings": []
+    },
+    "fleet_demand_stress": {
+      "checked_files": [
+        "results\\formal\\phase06\\robustness\\fleet_demand_stress\\raw_results.csv",
+        "results\\formal\\phase06\\robustness\\fleet_demand_stress\\processed_results.csv",
+        "results\\formal\\phase06\\robustness\\fleet_demand_stress\\config_manifest.json"
+      ],
+      "denominator_checks": {
+        "behavioral_acceptance_rate": "passed",
+        "rejection_partition": "passed",
+        "served_share": "passed",
+        "vkm_per_original_request": "passed",
+        "vkm_per_served_trip": "passed"
+      },
+      "errors": [],
+      "package_id": "fleet_demand_stress",
+      "passed": true,
+      "row_counts": {
+        "actual_rows": 60,
+        "blocked_rows": 0,
+        "completed_rows": 60,
+        "expected_rows": 60,
+        "extra_rows": 0,
+        "failed_rows": 0,
+        "missing_rows": 0,
+        "timeout_rows": 0
+      },
+      "schema_drift": false,
+      "warnings": []
+    },
+    "mp_density_walking_radius": {
+      "checked_files": [
+        "results\\formal\\phase06\\robustness\\mp_density_walking_radius\\raw_results.csv",
+        "results\\formal\\phase06\\robustness\\mp_density_walking_radius\\processed_results.csv",
+        "results\\formal\\phase06\\robustness\\mp_density_walking_radius\\config_manifest.json"
+      ],
+      "denominator_checks": {
+        "behavioral_acceptance_rate": "passed",
+        "rejection_partition": "passed",
+        "served_share": "passed",
+        "vkm_per_original_request": "passed",
+        "vkm_per_served_trip": "passed"
+      },
+      "errors": [],
+      "package_id": "mp_density_walking_radius",
+      "passed": true,
+      "row_counts": {
+        "actual_rows": 180,
+        "blocked_rows": 0,
+        "completed_rows": 180,
+        "expected_rows": 180,
+        "extra_rows": 0,
+        "failed_rows": 0,
+        "missing_rows": 0,
+        "timeout_rows": 0
+      },
+      "schema_drift": false,
+      "warnings": []
+    },
+    "utility_sensitivity": {
+      "checked_files": [
+        "results\\formal\\phase06\\robustness\\utility_sensitivity\\raw_results.csv",
+        "results\\formal\\phase06\\robustness\\utility_sensitivity\\processed_results.csv",
+        "results\\formal\\phase06\\robustness\\utility_sensitivity\\config_manifest.json"
+      ],
+      "denominator_checks": {
+        "behavioral_acceptance_rate": "passed",
+        "rejection_partition": "passed",
+        "served_share": "passed",
+        "vkm_per_original_request": "passed",
+        "vkm_per_served_trip": "passed"
+      },
+      "errors": [],
+      "package_id": "utility_sensitivity",
+      "passed": true,
+      "row_counts": {
+        "actual_rows": 420,
+        "blocked_rows": 0,
+        "completed_rows": 420,
+        "expected_rows": 420,
+        "extra_rows": 0,
+        "failed_rows": 0,
+        "missing_rows": 0,
+        "timeout_rows": 0
+      },
+      "schema_drift": false,
+      "warnings": []
+    }
+  },
+  "passed": true,
+  "phase": "06",
+  "plan": "06-04",
+  "schema_drift": false,
+  "warnings": []
+}

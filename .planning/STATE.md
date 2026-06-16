@@ -4,26 +4,26 @@ milestone: v1.0 Evidence-chain rebuild
 milestone_name: milestone
 current_phase: 06
 current_phase_name: formal-synthetic-experiments
-current_plan: 4
+current_plan: 5
 status: executing
-stopped_at: Phase 6 Plan 06-03 coverage-confounding controls passed; ready for Plan 06-04
-last_updated: "2026-06-16T07:56:42.000Z"
+stopped_at: Phase 6 Plan 06-04 robustness diagnostics passed; ready for Plan 06-05
+last_updated: "2026-06-16T08:57:33.000Z"
 last_activity: 2026-06-16
 progress:
   total_phases: 11
   completed_phases: 7
   total_plans: 29
-  completed_plans: 27
-  percent: 93
+  completed_plans: 28
+  percent: 97
 ---
 
 # State: TR_E_Bidirectional_MeetingPoint_DRT_Experiment_Rebuild
 
 **Current Phase:** 06
 **Current Phase Name:** formal-synthetic-experiments
-**Status:** Executing: Plan 06-04 ready after coverage-confounding controls passed
-**Current Plan:** 4
-**Progress:** 93%
+**Status:** Executing: Plan 06-05 ready after robustness diagnostics passed
+**Current Plan:** 5
+**Progress:** 97%
 **Last Activity:** 2026-06-16
 
 ## Project Reference
@@ -36,7 +36,7 @@ See: `.planning/PROJECT.md`
 ## Current Position
 
 Phase: 06 (formal-synthetic-experiments) — EXECUTING
-Plan: 3 of 5 completed; Plan 06-04 is ready
+Plan: 4 of 5 completed; Plan 06-05 is ready
 Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is complete and verified, Phase 3 is complete and verified, Phase 4 is complete and verified, and Phase 5 pilot experiments are complete and verified. Phase 9 is complete and verified with five claim-gated manuscript-restructuring artifacts; final manuscript claims remain blocked on the absent Phase 6 formal report and absent Phase 8 claim-gate artifacts. Phase 10 created reproducibility artifacts but correctly blocked on those prerequisites, so execution has returned to Phase 6.
 
 ## Decisions
@@ -64,6 +64,7 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - Phase 6 Plan 06-01 harness and validators are created. The `BidirectionalMP_Choice_RH_ALNS` label/implementation gate is resolved by routing accepted `FullModel` requests through `RollingHorizon` while preserving actual-offer choice logs.
 - Phase 6 Plan 06-02 formal main behavioral matrix passed: 320/320 required `seed x scale x method` rows completed under `results/formal/phase06/main_behavioral`, validator passed, schema drift is false, failed/timeout rows are 0, and utility logs have 88,000 linkable rows. This is formal main evidence input only; do not write final manuscript claims before the Phase 6 report and Phase 8 claim gate.
 - Phase 6 Plan 06-03 coverage-confounding controls passed as a formal control package: matched coverage wrote 320/320 rows with 305 completed and 15 durable failed rows, fixed accepted-set wrote 320/320 completed rows, both validators passed with schema_drift=false and denominator checks passed. Fixed accepted-set remains diagnostic-only. Matched coverage supports a FullModel vkm/served and vkm/original advantage on completed pairs; fixed accepted-set supports vkm/served but not vkm/original as an unconditional advantage.
+- Phase 6 Plan 06-04 robustness diagnostics passed as a reduced formal diagnostic package: utility sensitivity wrote 420/420 completed rows, walking-radius / meeting-point-density wrote 180/180 completed rows, fleet-demand stress wrote 60/60 completed rows, equity type-level outcomes wrote 180/180 completed rows plus 12,000 individual burden rows, and algorithm diagnostics wrote rolling-horizon, ALNS budget, and MILP diagnostic artifacts. Overall validation passed with schema_drift=false and denominator checks passed. These diagnostics support conditional robustness screening only; they are not final manuscript claims.
 
 ## Pending Todos
 
@@ -83,7 +84,8 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - [x] Resolve the `BidirectionalMP_Choice_RH_ALNS` label/implementation gate before running the 20-seed formal main matrix.
 - [x] Execute Phase 6 Plan 06-02 formal main behavioral matrix.
 - [x] Execute Phase 6 Plan 06-03 coverage-confounding controls.
-- [ ] Execute Phase 6 remaining supplementary packages.
+- [x] Execute Phase 6 remaining supplementary packages.
+- [x] Execute Phase 6 Plan 06-04 robustness, sensitivity, and equity diagnostics.
 - [ ] Generate Phase 6 formal synthetic results report.
 - [ ] Execute Phase 8 claim-evidence gate.
 - [ ] Rerun Phase 10 final verification after Phase 6 and Phase 8 artifacts exist.
@@ -156,6 +158,7 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - `results/formal/phase06/main_behavioral/run_manifest.json`
 - `results/formal/phase06/main_behavioral/validation_report.json`
 - `.planning/phases/06-formal-synthetic-experiments/06-03-SUMMARY.md`
+- `.planning/phases/06-formal-synthetic-experiments/06-04-SUMMARY.md`
 - `results/formal/phase06/coverage_controls/matched_coverage/raw_results.csv`
 - `results/formal/phase06/coverage_controls/matched_coverage/processed_results.csv`
 - `results/formal/phase06/coverage_controls/matched_coverage/config_manifest.json`
@@ -166,12 +169,18 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - `results/formal/phase06/coverage_controls/fixed_accepted_set/config_manifest.json`
 - `results/formal/phase06/coverage_controls/fixed_accepted_set/seed_manifest.json`
 - `results/formal/phase06/coverage_controls/fixed_accepted_set/validation_report.json`
+- `results/formal/phase06/robustness/run_manifest.json`
+- `results/formal/phase06/robustness/validation_report.json`
+- `results/formal/phase06/robustness/utility_sensitivity/raw_results.csv`
+- `results/formal/phase06/robustness/mp_density_walking_radius/raw_results.csv`
+- `results/formal/phase06/robustness/fleet_demand_stress/raw_results.csv`
+- `results/formal/phase06/robustness/equity_type_outcomes/type_level_outcomes.csv`
 
 ## Session Continuity
 
-Last session: 2026-06-16T07:56:42.000Z
-Stopped at: Phase 6 Plan 06-03 coverage-confounding controls passed; ready for Plan 06-04
+Last session: 2026-06-16T08:57:33.000Z
+Stopped at: Phase 6 Plan 06-04 robustness diagnostics passed; ready for Plan 06-05
 Resume file: None
 
 ---
-*State updated: 2026-06-16 after Phase 6 Plan 06-03 coverage-confounding controls passed*
+*State updated: 2026-06-16 after Phase 6 Plan 06-04 robustness diagnostics passed*

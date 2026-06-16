@@ -1,0 +1,141 @@
+{
+  "command": "python -m experiments.phase06_robustness --package all --results-root results/formal/phase06/robustness --write-summary",
+  "created_at_utc": "2026-06-16T08:35:32.596247+00:00",
+  "diagnostic_design": "preregistered reduced formal diagnostic; not main headline evidence",
+  "dimensions": [
+    "beta_walk",
+    "beta_wait_or_access_time",
+    "beta_ivt",
+    "service_asc",
+    "outside_option_constant",
+    "passenger_type_shares"
+  ],
+  "expected_raw_rows": 420,
+  "git_commit_before_run": "d1a157b",
+  "method_list": [
+    "DoorToDoor_Choice_CommonRouting",
+    "BidirectionalMP_Choice_RH_ALNS"
+  ],
+  "package_id": "utility_sensitivity",
+  "parameter_grid": [
+    {
+      "beta_ivt_multiplier": 1.0,
+      "beta_wait_multiplier": 1.0,
+      "beta_walk_multiplier": 1.0,
+      "description": "default simulation-range choice parameters",
+      "outside_option_constant": 0.0,
+      "parameter_setting_id": "baseline_default",
+      "service_asc": 0.0,
+      "type_shares": {
+        "price_sensitive": 0.34,
+        "time_sensitive": 0.33,
+        "walk_sensitive": 0.33
+      }
+    },
+    {
+      "beta_ivt_multiplier": 1.0,
+      "beta_wait_multiplier": 1.0,
+      "beta_walk_multiplier": 1.5,
+      "description": "higher walking disutility",
+      "outside_option_constant": 0.0,
+      "parameter_setting_id": "walk_disutility_high",
+      "service_asc": 0.0,
+      "type_shares": {
+        "price_sensitive": 0.34,
+        "time_sensitive": 0.33,
+        "walk_sensitive": 0.33
+      }
+    },
+    {
+      "beta_ivt_multiplier": 1.0,
+      "beta_wait_multiplier": 1.5,
+      "beta_walk_multiplier": 1.0,
+      "description": "higher waiting/access-time disutility",
+      "outside_option_constant": 0.0,
+      "parameter_setting_id": "wait_disutility_high",
+      "service_asc": 0.0,
+      "type_shares": {
+        "price_sensitive": 0.34,
+        "time_sensitive": 0.33,
+        "walk_sensitive": 0.33
+      }
+    },
+    {
+      "beta_ivt_multiplier": 1.5,
+      "beta_wait_multiplier": 1.0,
+      "beta_walk_multiplier": 1.0,
+      "description": "higher in-vehicle-time disutility",
+      "outside_option_constant": 0.0,
+      "parameter_setting_id": "ivt_disutility_high",
+      "service_asc": 0.0,
+      "type_shares": {
+        "price_sensitive": 0.34,
+        "time_sensitive": 0.33,
+        "walk_sensitive": 0.33
+      }
+    },
+    {
+      "beta_ivt_multiplier": 1.0,
+      "beta_wait_multiplier": 1.0,
+      "beta_walk_multiplier": 1.0,
+      "description": "lower DRT service attractiveness constant",
+      "outside_option_constant": 0.0,
+      "parameter_setting_id": "service_asc_low",
+      "service_asc": -1.0,
+      "type_shares": {
+        "price_sensitive": 0.34,
+        "time_sensitive": 0.33,
+        "walk_sensitive": 0.33
+      }
+    },
+    {
+      "beta_ivt_multiplier": 1.0,
+      "beta_wait_multiplier": 1.0,
+      "beta_walk_multiplier": 1.0,
+      "description": "more attractive outside option",
+      "outside_option_constant": 1.0,
+      "parameter_setting_id": "outside_option_high",
+      "service_asc": 0.0,
+      "type_shares": {
+        "price_sensitive": 0.34,
+        "time_sensitive": 0.33,
+        "walk_sensitive": 0.33
+      }
+    },
+    {
+      "beta_ivt_multiplier": 1.0,
+      "beta_wait_multiplier": 1.0,
+      "beta_walk_multiplier": 1.0,
+      "description": "passenger-type shares tilted toward walk-sensitive riders",
+      "outside_option_constant": 0.0,
+      "parameter_setting_id": "walk_sensitive_majority",
+      "service_asc": 0.0,
+      "type_shares": {
+        "price_sensitive": 0.2,
+        "time_sensitive": 0.2,
+        "walk_sensitive": 0.6
+      }
+    }
+  ],
+  "phase": "06",
+  "plan": "06-04",
+  "results_dir": "results\\formal\\phase06\\robustness\\utility_sensitivity",
+  "scale_list": [
+    100,
+    200,
+    300
+  ],
+  "seed_list": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "seeds_are_paired": true
+}

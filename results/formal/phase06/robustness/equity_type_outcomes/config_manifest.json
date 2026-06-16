@@ -1,0 +1,40 @@
+{
+  "command": "python -m experiments.phase06_robustness --package all --results-root results/formal/phase06/robustness --write-summary",
+  "created_at_utc": "2026-06-16T08:57:32.460204+00:00",
+  "diagnostic_design": "preregistered reduced formal diagnostic; not main headline evidence",
+  "expected_raw_rows": 60,
+  "expected_type_rows": 180,
+  "git_commit_before_run": "d1a157b",
+  "method_list": [
+    "DoorToDoor_Choice_CommonRouting",
+    "BidirectionalMP_Choice_RH_ALNS"
+  ],
+  "package_id": "equity_type_outcomes",
+  "parameter_grid": [
+    {
+      "parameter_setting_id": "equity_default_choice_parameters"
+    }
+  ],
+  "passenger_type_parameters": "simulation_range_constructs",
+  "phase": "06",
+  "plan": "06-04",
+  "results_dir": "results\\formal\\phase06\\robustness\\equity_type_outcomes",
+  "scale_list": [
+    100,
+    200,
+    300
+  ],
+  "seed_list": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "seeds_are_paired": true
+}
