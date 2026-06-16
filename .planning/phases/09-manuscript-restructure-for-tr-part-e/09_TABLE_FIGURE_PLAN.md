@@ -127,3 +127,51 @@ must pass this checklist:
   rejection, wait, walk, or IVT values appear.
 - State Phase 8 support status for any caption that implies a substantive
   finding.
+
+## Limitations Before Insights
+
+Rename the current policy section to `Managerial Insights and Boundary
+Conditions`. The revised section must open with limitations before it offers
+applied interpretation, because the manuscript is built on simulation evidence
+and a still-pending Phase 8 claim gate.
+
+Minimum boundary conditions:
+
+| Boundary condition | Required manuscript treatment |
+|---|---|
+| Synthetic scenario | State that the current evidence is based on stylized or Beijing-inspired synthetic scenario designs, not observed operational deployment. |
+| Choice-parameter calibration | State that passenger utility and type parameters require survey, stated-preference, revealed-preference, or local operational calibration before transfer. |
+| Real/semi-real case evidence | State that real or semi-real case evidence is missing unless Phase 7 or later supplies it and Phase 8 supports it. |
+| Algorithm diagnostics | State that ALNS, greedy, no-rolling-horizon, no-choice, MILP, gamma, and weight-sensitivity outputs are diagnostic unless Phase 8 promotes a limited summary. |
+| Phase 8 claim gate | State that all substantive numerical, policy, equity, and case-transfer claims remain placeholders until Phase 8 grades them as supported. |
+| External validity | State that city-density, walking-radius, fleet-supply, and passenger-type interpretations are scenario-specific and should not be converted into universal thresholds. |
+
+The conclusion must mirror these boundaries. Any unsupported Phase 8 claims are
+removed, downgraded, or moved to limitations/future work.
+
+## Managerial Insight Rewrite Template
+
+Replace the current R1-R5 recommendation subsections with conditional insight
+rows. The section should answer when bidirectional meeting-point design is worth
+considering, not prescribe universal parameter values.
+
+| Current recommendation | Experiment condition | Supported insight placeholder | Applicability boundary | Limitation | Phase 8 support status |
+|---|---|---|---|---|---|
+| R1: Walking-radius threshold | Synthetic walking-tolerance sensitivity under the approved formal setup | `[Phase 8-supported statement about when walking tolerance makes bidirectional offers viable]` | Applies only to the tested meeting-point spacing, utility parameters, and demand distribution. | Choice-parameter calibration and pedestrian-network realism remain unresolved. | `[supported / bounded / downgraded / unsupported]` |
+| R2: Fleet-ratio insight | Formal fleet-supply sensitivity under paired synthetic scenarios | `[Phase 8-supported statement about fleet scarcity and service quality]` | Applies only to the tested request horizon, vehicle capacity, scale grid, and demand pattern. | Not a budgeting rule for real operators without local demand and fleet calibration. | `[supported / bounded / downgraded / unsupported]` |
+| R3: Passenger-type equity monitoring | Formal or supplementary type-level acceptance and burden evidence | `[Phase 8-supported statement about observed trade-offs across passenger types]` | Applies only to modeled passenger types and utility parameters. | Equity is a trade-off summary, not a universal policy claim or demographic finding. | `[supported / bounded / downgraded / unsupported]` |
+| R4: Service-mode selection by density | Synthetic demand-density and service-design comparison | `[Phase 8-supported statement about conditions where bidirectional, single-sided, or door-to-door designs merit consideration]` | Applies only within the tested synthetic scenario and formal method set. | No real-city density tier or deployment map is supported without case evidence. | `[supported / bounded / downgraded / unsupported]` |
+| R5: Rolling-horizon re-optimization | Diagnostic comparison of rolling-horizon and static/greedy operation | `[Phase 8-supported statement about the operational value or limits of re-optimization]` | Applies only to the implemented dispatch cadence, solver budget, and diagnostic setup. | Algorithm diagnostics support mechanism interpretation, not standalone service-design superiority. | `[supported / bounded / downgraded / unsupported]` |
+
+Rewrite rules for applied prose:
+
+- Begin each insight with the experiment condition, not the recommendation.
+- Use "suggests", "is consistent with", or "is worth considering under..." for
+  bounded findings.
+- Avoid "should", "must", and universal planning thresholds unless Phase 8
+  explicitly supports the wording.
+- Place unapproved prescription, city-transfer, and parameter-threshold claims
+  in limitations or future work.
+- Keep `Managerial Insights and Boundary Conditions` connected to the
+  experiment-section display roles so figures and tables do not imply stronger
+  evidence than the prose allows.
