@@ -96,3 +96,33 @@ Allowed placeholder forms include `[SUPPORTED_CLAIM_FROM_08]`,
 `[MANAGERIAL_INSIGHT_IF_SUPPORTED]`. Unsupported or unresolved Phase 8 claims
 must be removed, downgraded, or moved to limitations/future work rather than
 smuggled into manuscript prose.
+
+## Evidence Family Placement Rules
+
+| Evidence family | Manuscript placement | Claim boundary |
+|---|---|---|
+| Behavioral Main Comparison | `Formal Main Evidence` | May support main conditional service-design claims only after Phase 6 formal paired evidence and Phase 8 claim grading. Must report coverage, acceptance, rejection, and operating efficiency together. |
+| Core Supplementary Controls | `Robustness, Equity, and Diagnostic Evidence` | Matched coverage and fixed accepted-set controls support interpretation. They do not replace unconstrained behavioral evidence or create standalone superiority claims. |
+| Deterministic Diagnostics | Appendix/supplement or short scoped diagnostic text | deterministic diagnostics cannot support headline behavioral claims because they do not represent passenger response or natural served share. |
+| Algorithm Diagnostics | Appendix/supplement by default; limited main-text summary only if Phase 8 approves | ALNS, greedy, no-rolling-horizon, and MILP/static diagnostics support algorithm credibility, not behavioral service-design superiority. |
+
+Paper-facing method labels must use the Phase 2/6 conceptual vocabulary:
+`DoorToDoor + Choice`, `SingleSidedPickup + Choice`,
+`SingleSidedDropoff + Choice`, and
+`BidirectionalMP + Choice + RollingHorizon/ALNS`. Legacy labels such as
+`FullModel` belong only in provenance or code-mapping notes.
+
+## Direct LaTeX Edit Boundary
+
+This phase creates planning Markdown outputs first. Later direct edits to
+`manuscript/sections/*.tex`, `manuscript/main.tex`, captions, tables, or
+figures must either:
+
+1. cite `.planning/phases/08-evidence-synthesis-and-claim-gate/08_SUPPORTED_CLAIMS.md`
+   for the exact claim being written; or
+2. remain placeholder/comment-only text that explicitly waits for Phase 8.
+
+No direct LaTeX edit may introduce final effect sizes, superiority language,
+real-Beijing claims, policy prescriptions, or `vkm_per_trip` vocabulary unless
+the relevant upstream evidence and Phase 8 claim status authorize the exact
+wording.
