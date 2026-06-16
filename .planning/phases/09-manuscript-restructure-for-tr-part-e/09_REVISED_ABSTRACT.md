@@ -77,3 +77,43 @@ managerial insight that Phase 8 explicitly supports.
 | "Pareto frontier" for gamma | "post-hoc welfare sensitivity" unless Phase 8 approves more |
 | `vkm_per_trip` | `vkm_per_served_trip` or `vkm_per_original_request` |
 
+## Candidate Title Direction
+
+Use a conditional, descriptive title rather than a broad novelty or superiority
+claim. Candidate direction:
+
+> Choice-aware dynamic service-design evidence for bidirectional meeting points
+> in demand-responsive transit
+
+Title rules:
+
+- Include `choice-aware`, `dynamic service-design`, and `bidirectional meeting
+  points` as descriptive framing, not as proof of novelty.
+- Avoid broad first/only language.
+- Avoid result claims in the title unless Phase 8 approves the exact claim.
+- Keep the logistics/service-design focus visible for Transportation Research
+  Part E.
+
+## Keyword Plan
+
+Candidate keywords:
+
+- demand-responsive transit
+- meeting points
+- passenger choice
+- dynamic service design
+- rolling-horizon dispatch
+- fair comparison
+- simulation evidence
+- service equity
+
+## Highlights Plan
+
+Elsevier highlights should be 3 to 5 bullets, each no more than 85 characters.
+Final result highlights require Phase 8 support.
+
+- Evidence-chain framework for choice-aware DRT.
+- Fair baselines separate service design from response.
+- Claim-gated metrics report coverage and efficiency.
+- [requires Phase 8 support] Conditional efficiency result.
+- [requires Phase 8 support] Equity and boundary-condition insight.
