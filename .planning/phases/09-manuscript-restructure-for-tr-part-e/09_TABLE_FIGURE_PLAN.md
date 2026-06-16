@@ -63,3 +63,67 @@ reproducibility without crowding the main argument:
 | Weight sensitivity | move appendix/supplement | Full grid, provenance, metrics, and Phase 8 support status. |
 | Beijing-inspired synthetic scenario tables | move appendix/supplement | Scenario definition, synthetic boundary, and formal claim status. |
 | Value-of-time mapping and calibration caveats | move appendix/supplement | Parameter source, interpretation, and calibration limitation. |
+
+## Main Table Contract
+
+The primary table must contain only the formal main-evidence matrix and must be
+generated after Phase 6 formal outputs and Phase 8 claim support are available.
+It must not contain diagnostic methods, pilot values, or legacy manuscript
+numbers.
+
+Required columns:
+
+| Column | Requirement |
+|---|---|
+| `method` | One of the four approved behavioral method labels. |
+| `scenario_key` or `scale` | Paired scenario or request-scale key. |
+| `n_pairs` | Number of valid paired comparisons after failed/timeout rows are accounted for. |
+| `total_vehicle_km` | Total vehicle distance for the method/scenario. |
+| `vkm_per_served_trip` | Distance normalized by served requests. |
+| `vkm_per_original_request` | Distance normalized by original requests. |
+| `served_share` | Served requests divided by original requests. |
+| paired difference | Within-pair method difference against the declared reference method. |
+| confidence interval | 95% confidence interval for the paired difference, with method documented. |
+| Phase 8 support status | Supported, bounded, downgraded, or unsupported claim status. |
+
+Any table note must state the pairing unit, confidence-interval method,
+handling of missing/failed/timeout rows, and the relationship between coverage
+and efficiency.
+
+## Main Figure Contract
+
+Main-text figures must be generated from reproducible scripts/data rather than
+AI-created artwork. Schematic figures are allowed only when their source script
+or editable source is committed and their caption identifies the figure as a
+conceptual schematic rather than empirical evidence.
+
+Rules for main figures:
+
+- Use Phase 6/8-supported data files for empirical displays.
+- Keep script paths, data paths, and output filenames documented.
+- Remove hard-coded legacy numerical annotations before final manuscript use.
+- Do not present diagnostics as formal evidence by color, title, ordering, or
+  caption phrasing.
+- Regenerate figures after any Phase 8 claim downgrade.
+
+## Caption and Vocabulary Checklist
+
+Before a table or figure enters the revised manuscript, its caption and notes
+must pass this checklist:
+
+- Forbid `vkm_per_trip`; use `vkm_per_served_trip` or
+  `vkm_per_original_request`.
+- Forbid unsupported `Pareto frontier` language for the post-hoc gamma sweep.
+  Use gamma sensitivity or welfare-accounting diagnostic unless gamma affects
+  decisions in the model and Phase 8 supports the claim.
+- Forbid real-Beijing wording unless Phase 7 supplies real or semi-real case
+  evidence and Phase 8 supports the case claim.
+- Use `Beijing-inspired synthetic scenario` for current Beijing-related
+  displays.
+- State whether each display is formal evidence, robustness evidence,
+  diagnostic evidence, synthetic-boundary evidence, or appendix/supplement
+  detail.
+- Include denominator definitions whenever vehicle-km, served share, acceptance,
+  rejection, wait, walk, or IVT values appear.
+- State Phase 8 support status for any caption that implies a substantive
+  finding.
