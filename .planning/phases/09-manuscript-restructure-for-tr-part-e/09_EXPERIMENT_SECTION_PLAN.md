@@ -112,3 +112,59 @@ visible in provenance outputs and cannot be silently dropped.
 - Do not use "acceptance rate" for deterministic insertion diagnostics. Use
   served share, inserted share, or the specific status vocabulary required by
   the experiment family.
+
+## Robustness and Diagnostic Allocation
+
+| Material | Main-text role | Appendix/supplement role |
+|---|---|---|
+| Matched coverage | Main-text robustness summary that asks whether efficiency patterns persist near a common served-share target. | Full target definition, tolerance, achieved shares, failure rows, and paired metrics. |
+| Fixed accepted-set controls | Main-text robustness summary that asks whether routing/service-design distance differences persist on a common passenger set. | Construction rule, retained set size/composition, per-method failures, and full metric rows. |
+| Equity and passenger-type evidence | Main-text trade-off summary only. | Type-level acceptance, wait, walk, IVT, generalized-cost distributions, and inequality metrics. |
+| ALNS diagnostics | Brief credibility note only if needed. | Runtime, convergence, budget, quality, and sensitivity detail. |
+| Greedy diagnostics | Diagnostic comparison only. | Full static or greedy insertion comparison and failure cases. |
+| No-rolling-horizon diagnostics | Mechanism summary only if Phase 8 supports it. | Full dynamic/static comparison and waiting-time mechanism evidence. |
+| No-choice diagnostics | Mechanism summary only. | Deterministic insertion rows and non-behavioral status interpretation. |
+| MILP diagnostics | Scoped exact-comparison caveat only. | Small-instance exact model, assumptions, solve status, no-Gurobi path, and comparable-gap rows. |
+| Gamma diagnostic | Welfare-accounting limitation only. | Full gamma sweep, with explicit note that gamma is post-hoc unless it affects decisions. |
+| Weight-sensitivity diagnostic | Optional bounded robustness note only if Phase 8 promotes a limited summary. | Complete weight grid, metrics, provenance, and sensitivity limits. |
+
+Matched coverage and fixed accepted-set controls belong in the main text as
+robustness summaries because they directly test coverage confounding and
+same-passenger routing interpretations. Their detailed designs and full tables
+belong in appendix or supplement so the main experiment section remains focused
+on the formal behavioral comparison.
+
+ALNS, greedy, no-rolling-horizon, no-choice, MILP, gamma, and
+weight-sensitivity material are diagnostics unless Phase 8 explicitly promotes
+a limited summary. Even then, the promoted text must remain subordinate to the
+formal behavioral evidence and must state its diagnostic scope.
+
+Equity can appear in the main text only as a trade-off summary, not a universal
+policy claim. Type-level and distributional details belong in appendix or
+supplement unless Phase 8 grades a specific equity statement as supported.
+
+## Synthetic Case Boundary
+
+Any current Beijing wording must use the exact phrase `Beijing-inspired
+synthetic scenario`. The phrase signals that the current material is a
+structured synthetic stress test, not an observed Beijing case study and not a
+real-data validation.
+
+Recommended wording:
+
+> We evaluate a Beijing-inspired synthetic scenario with a denser meeting-point
+> grid and peak-period demand pattern to test whether the formal synthetic
+> findings remain directionally consistent under a different synthetic spatial
+> design.
+
+Do not write:
+
+- "Beijing case study" unless Phase 7 or later supplies real or semi-real
+  evidence and Phase 8 approves the claim.
+- "Calibrated to Beijing" unless the calibration source, data fields, and
+  validation level are documented.
+- "Chinese city policy recommendation" unless the statement is bounded as a
+  scenario-specific managerial insight.
+
+The synthetic case can support a transfer-boundary discussion. It cannot by
+itself support a universal policy claim or a real-world deployment claim.
