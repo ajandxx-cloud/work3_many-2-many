@@ -1,177 +1,171 @@
-# Phase 09 Table, Figure, Limitations, and Managerial Insights Plan
+﻿# Phase 9 Table and Figure Plan Refresh
 
-**Artifact:** `09_TABLE_FIGURE_PLAN.md`  
-**Purpose:** Assign manuscript displays to evidence roles and convert the
-current policy section into bounded, limitations-first managerial insight.
+**Phase:** 09 - Manuscript Restructure for TR Part E
+**Refresh date:** 2026-06-16
+**Status:** claim-gated table/figure plan complete
 
-## Current Display Inventory
+## Display Boundary
 
-Current experiment and policy display labels visible in `experiments.tex` and
-`policy.tex` are assigned below. Each target role uses one of: `keep main`,
-`revise main`, `move appendix/supplement`, or `remove/replace`.
+Tables and figures must make evidence roles visible. No display may show
+vehicle-km intensity alone without served share and acceptance/rejection
+context. Diagnostics must not be titled, ordered, colored, or captioned as
+headline superiority evidence.
 
-| Label | Current display | Evidence family | Target role | Required revision |
-|---|---|---|---|---|
-| `tab:variants` | Legacy six-variant definition table | Design/context | revise main | Replace legacy variant names with the approved four-method behavioral taxonomy plus clearly separated diagnostics. |
-| `tab:main-results` | Legacy main results table | Formal behavioral evidence | remove/replace | Replace with Phase 6/8-supported formal main-evidence table; no legacy values. |
-| `tab:milp-gap` | MILP vs ALNS optimality gap | Algorithm diagnostic | move appendix/supplement | Keep only scoped diagnostic summary in main text if Phase 8 permits. |
-| `fig:baseline-comparison` | Baseline comparison bar chart | Legacy formal/diagnostic mix | remove/replace | Replace from reproducible Phase 6 data and approved method/metric contract. |
-| `tab:matched-coverage` | Exploratory matched-coverage diagnostic | Robustness control | revise main | Convert to compact robustness summary with full design/table in appendix or supplement. |
-| `tab:result-provenance` | Provenance of legacy efficiency numbers | Provenance | revise main | Replace with Phase 6/8 provenance and claim-support status. |
-| `tab:beijing-results` | Beijing-inspired synthetic grid results | Synthetic boundary/case stress test | move appendix/supplement | Summarize in main text only as `Beijing-inspired synthetic scenario` if Phase 8 supports. |
-| `fig:sensitivity` | Walking tolerance and fleet-size sensitivity | Robustness/managerial boundary | revise main | Rebuild with supported axes, captions, and boundary language. |
-| `tab:pareto` | Gamma welfare sensitivity table | Diagnostic welfare accounting | move appendix/supplement | Do not call this a Pareto frontier unless gamma affects decisions. |
-| `fig:pareto` | Gamma welfare figure | Diagnostic welfare accounting | move appendix/supplement | Retitle as gamma sensitivity or remove if Phase 8 does not support. |
-| `tab:weight-sensitivity` | Weight sensitivity table | Diagnostic/robustness | move appendix/supplement | Main text may contain only a bounded summary if Phase 8 promotes it. |
-| `fig:policy-map` | Policy deployment map | Managerial insight/decision aid | remove/replace | Replace prescriptive tier map with bounded insight template or appendix-only scenario visualization. |
-| `tab:vot-mapping` | Value-of-time mapping table | Calibration limitation | move appendix/supplement | Keep as parameter interpretation and calibration caveat, not policy evidence. |
+## Required Main and Supplement Displays
 
-Figure scripts under `manuscript/figures/scripts/` are reproducible script
-assets, but several current scripts encode legacy titles, labels, or numeric
-annotations. They must be regenerated after Phase 6 formal outputs and Phase 8
-claim support are available.
+### 1. Table: Method Taxonomy and Evidence Role
 
-## Target Main-Text Displays
-
-The revised manuscript should keep the main text lean and evidence ordered.
-
-| Proposed display | Target role | Evidence gate |
-|---|---|---|
-| Design and method taxonomy table | keep main | Must use approved method labels and diagnostic separation. |
-| Formal main-evidence table | revise main | Requires complete Phase 6 formal matrix and Phase 8 supported claim status. |
-| Paired-difference summary table or compact panel | revise main | Requires paired differences, confidence intervals, and `n_pairs`. |
-| Robustness summary table | revise main | Covers matched coverage and fixed accepted-set controls at summary level only. |
-| Equity trade-off summary | revise main | Reports bounded type-level trade-offs without universal policy claims. |
-| Managerial insight table | revise main | Uses condition, insight placeholder, boundary, limitation, and Phase 8 support status. |
-
-Main-text figures should be limited to displays that directly support the
-evidence chain. Candidate main figures are a system/design schematic, a formal
-paired-evidence figure if Phase 6/8 support exists, and a sensitivity or
-managerial-boundary figure only if it is clearly bounded.
-
-## Appendix and Supplement Displays
-
-Appendix or supplement material should carry the detail needed for
-reproducibility without crowding the main argument:
-
-| Display family | Target role | Required detail |
-|---|---|---|
-| Full matched-coverage tables | move appendix/supplement | Target served-share cap, tolerance, achieved shares, failure rows, and paired metrics. |
-| Full fixed accepted-set diagnostics | move appendix/supplement | Construction rule, retained set, retained share, failures, and routing metrics. |
-| Algorithm diagnostics | move appendix/supplement | ALNS, greedy, no-rolling-horizon, no-choice, and MILP assumptions/statuses. |
-| Gamma welfare accounting | move appendix/supplement | Full sweep and statement that gamma is post-hoc unless implementation changes. |
-| Weight sensitivity | move appendix/supplement | Full grid, provenance, metrics, and Phase 8 support status. |
-| Beijing-inspired synthetic scenario tables | move appendix/supplement | Scenario definition, synthetic boundary, and formal claim status. |
-| Value-of-time mapping and calibration caveats | move appendix/supplement | Parameter source, interpretation, and calibration limitation. |
-
-## Main Table Contract
-
-The primary table must contain only the formal main-evidence matrix and must be
-generated after Phase 6 formal outputs and Phase 8 claim support are available.
-It must not contain diagnostic methods, pilot values, or legacy manuscript
-numbers.
-
-Required columns:
-
-| Column | Requirement |
+| Field | Plan |
 |---|---|
-| `method` | One of the four approved behavioral method labels. |
-| `scenario_key` or `scale` | Paired scenario or request-scale key. |
-| `n_pairs` | Number of valid paired comparisons after failed/timeout rows are accounted for. |
-| `total_vehicle_km` | Total vehicle distance for the method/scenario. |
-| `vkm_per_served_trip` | Distance normalized by served requests. |
-| `vkm_per_original_request` | Distance normalized by original requests. |
-| `served_share` | Served requests divided by original requests. |
-| paired difference | Within-pair method difference against the declared reference method. |
-| confidence interval | 95% confidence interval for the paired difference, with method documented. |
-| Phase 8 support status | Supported, bounded, downgraded, or unsupported claim status. |
+| Purpose | Separate behavioral service designs from diagnostics and legacy material. |
+| Source artifact | Phase 2 taxonomy; Phase 6 method taxonomy; Phase 8 C-FWK-01. |
+| Required columns | Paper-facing method label, code label, service design, passenger response, routing/diagnostic role, evidence family, claim grade. |
+| Allowed claim | The study evaluates an integrated choice-aware dynamic service-design framework. |
+| Forbidden overclaim | First bidirectional meeting-point DRT paper; individually novel components. |
+| Placement | Main text, Method or Experimental Design. |
 
-Any table note must state the pairing unit, confidence-interval method,
-handling of missing/failed/timeout rows, and the relationship between coverage
-and efficiency.
+### 2. Table: Metric Definitions and Denominators
 
-## Main Figure Contract
-
-Main-text figures must be generated from reproducible scripts/data rather than
-AI-created artwork. Schematic figures are allowed only when their source script
-or editable source is committed and their caption identifies the figure as a
-conceptual schematic rather than empirical evidence.
-
-Rules for main figures:
-
-- Use Phase 6/8-supported data files for empirical displays.
-- Keep script paths, data paths, and output filenames documented.
-- Remove hard-coded legacy numerical annotations before final manuscript use.
-- Do not present diagnostics as formal evidence by color, title, ordering, or
-  caption phrasing.
-- Regenerate figures after any Phase 8 claim downgrade.
-
-## Caption and Vocabulary Checklist
-
-Before a table or figure enters the revised manuscript, its caption and notes
-must pass this checklist:
-
-- Forbid `vkm_per_trip`; use `vkm_per_served_trip` or
-  `vkm_per_original_request`.
-- Forbid unsupported `Pareto frontier` language for the post-hoc gamma sweep.
-  Use gamma sensitivity or welfare-accounting diagnostic unless gamma affects
-  decisions in the model and Phase 8 supports the claim.
-- Forbid real-Beijing wording unless Phase 7 supplies real or semi-real case
-  evidence and Phase 8 supports the case claim.
-- Use `Beijing-inspired synthetic scenario` for current Beijing-related
-  displays.
-- State whether each display is formal evidence, robustness evidence,
-  diagnostic evidence, synthetic-boundary evidence, or appendix/supplement
-  detail.
-- Include denominator definitions whenever vehicle-km, served share, acceptance,
-  rejection, wait, walk, or IVT values appear.
-- State Phase 8 support status for any caption that implies a substantive
-  finding.
-
-## Limitations Before Insights
-
-Rename the current policy section to `Managerial Insights and Boundary
-Conditions`. The revised section must open with limitations before it offers
-applied interpretation, because the manuscript is built on simulation evidence
-and a still-pending Phase 8 claim gate.
-
-Minimum boundary conditions:
-
-| Boundary condition | Required manuscript treatment |
+| Field | Plan |
 |---|---|
-| Synthetic scenario | State that the current evidence is based on stylized or Beijing-inspired synthetic scenario designs, not observed operational deployment. |
-| Choice-parameter calibration | State that passenger utility and type parameters require survey, stated-preference, revealed-preference, or local operational calibration before transfer. |
-| Real/semi-real case evidence | State that real or semi-real case evidence is missing unless Phase 7 or later supplies it and Phase 8 supports it. |
-| Algorithm diagnostics | State that ALNS, greedy, no-rolling-horizon, no-choice, MILP, gamma, and weight-sensitivity outputs are diagnostic unless Phase 8 promotes a limited summary. |
-| Phase 8 claim gate | State that all substantive numerical, policy, equity, and case-transfer claims remain placeholders until Phase 8 grades them as supported. |
-| External validity | State that city-density, walking-radius, fleet-supply, and passenger-type interpretations are scenario-specific and should not be converted into universal thresholds. |
+| Purpose | Prevent denominator mixing and ambiguous vkm/trip wording. |
+| Source artifact | Phase 2 metric definitions; Phase 6 statistical summary; Phase 8 C-COV-01. |
+| Required columns | Metric, formula, numerator, denominator, unit, valid range, evidence family, interpretation warning. |
+| Allowed claim | Vehicle-km, served share, acceptance, and rejection are denominator-disciplined. |
+| Forbidden overclaim | Efficiency displayed without coverage or rejection context. |
+| Placement | Main text, before results. |
 
-The conclusion must mirror these boundaries. Any unsupported Phase 8 claims are
-removed, downgraded, or moved to limitations/future work.
+### 3. Table: Main Behavioral Results With Served Share and Rejection Rates
 
-## Managerial Insight Rewrite Template
+| Field | Plan |
+|---|---|
+| Purpose | Present the primary formal synthetic behavioral evidence. |
+| Source artifact | 06-02 main behavioral matrix; `06_STATISTICAL_SUMMARY.md`; bootstrap CI outputs; Phase 8 C-EFF-01/C-COV-01. |
+| Required columns | Method, scale or aggregate key, n pairs, total vehicle-km, vkm per served trip, vkm per original request, served share, behavioral acceptance, choice rejection, feasibility rejection, paired difference, 95% bootstrap CI. |
+| Allowed claim | BidirectionalMP/FullModel shows lower vehicle-km intensity under tested synthetic paired conditions, with lower served share. |
+| Forbidden overclaim | Dominates all metrics; same-service-level superiority; pure routing superiority. |
+| Placement | Main text, Formal Main Evidence. |
 
-Replace the current R1-R5 recommendation subsections with conditional insight
-rows. The section should answer when bidirectional meeting-point design is worth
-considering, not prescribe universal parameter values.
+### 4. Table: Matched-Coverage Comparison
 
-| Current recommendation | Experiment condition | Supported insight placeholder | Applicability boundary | Limitation | Phase 8 support status |
-|---|---|---|---|---|---|
-| R1: Walking-radius threshold | Synthetic walking-tolerance sensitivity under the approved formal setup | `[Phase 8-supported statement about when walking tolerance makes bidirectional offers viable]` | Applies only to the tested meeting-point spacing, utility parameters, and demand distribution. | Choice-parameter calibration and pedestrian-network realism remain unresolved. | `[supported / bounded / downgraded / unsupported]` |
-| R2: Fleet-ratio insight | Formal fleet-supply sensitivity under paired synthetic scenarios | `[Phase 8-supported statement about fleet scarcity and service quality]` | Applies only to the tested request horizon, vehicle capacity, scale grid, and demand pattern. | Not a budgeting rule for real operators without local demand and fleet calibration. | `[supported / bounded / downgraded / unsupported]` |
-| R3: Passenger-type equity monitoring | Formal or supplementary type-level acceptance and burden evidence | `[Phase 8-supported statement about observed trade-offs across passenger types]` | Applies only to modeled passenger types and utility parameters. | Equity is a trade-off summary, not a universal policy claim or demographic finding. | `[supported / bounded / downgraded / unsupported]` |
-| R4: Service-mode selection by density | Synthetic demand-density and service-design comparison | `[Phase 8-supported statement about conditions where bidirectional, single-sided, or door-to-door designs merit consideration]` | Applies only within the tested synthetic scenario and formal method set. | No real-city density tier or deployment map is supported without case evidence. | `[supported / bounded / downgraded / unsupported]` |
-| R5: Rolling-horizon re-optimization | Diagnostic comparison of rolling-horizon and static/greedy operation | `[Phase 8-supported statement about the operational value or limits of re-optimization]` | Applies only to the implemented dispatch cadence, solver budget, and diagnostic setup. | Algorithm diagnostics support mechanism interpretation, not standalone service-design superiority. | `[supported / bounded / downgraded / unsupported]` |
+| Field | Plan |
+|---|---|
+| Purpose | Bound coverage confounding on completed matched pairs. |
+| Source artifact | 06-03 matched coverage; manifest; Phase 8 C-MC-01. |
+| Required columns | Baseline, target served count/share, valid pairs, durable failed rows, missing pairs, total vehicle-km, vkm per served trip, vkm per original request, served share difference, full-better share. |
+| Allowed claim | Completed matched-coverage pairs are consistent with the FullModel efficiency direction. |
+| Forbidden overclaim | Matched coverage fully proves equal-coverage superiority; all matched rows completed. |
+| Placement | Main-text robustness summary; full detail appendix/supplement. |
 
-Rewrite rules for applied prose:
+### 5. Table: Fixed Accepted-Set Routing Diagnostic
 
-- Begin each insight with the experiment condition, not the recommendation.
-- Use "suggests", "is consistent with", or "is worth considering under..." for
-  bounded findings.
-- Avoid "should", "must", and universal planning thresholds unless Phase 8
-  explicitly supports the wording.
-- Place unapproved prescription, city-transfer, and parameter-threshold claims
-  in limitations or future work.
-- Keep `Managerial Insights and Boundary Conditions` connected to the
-  experiment-section display roles so figures and tables do not imply stronger
-  evidence than the prose allows.
+| Field | Plan |
+|---|---|
+| Purpose | Show common accepted-set routing/service-design diagnostic results. |
+| Source artifact | 06-03 fixed accepted-set; Phase 8 C-FAS-01. |
+| Required columns | Baseline, n valid pairs, common accepted-set definition, vkm per served request, vkm per original request, deterministic inserted share, total vehicle-km, diagnostic status. |
+| Allowed claim | Supports a routing/service-design efficiency signal on vkm per served request. |
+| Forbidden overclaim | Unconditional vkm/original dominance; behavioral headline claim. |
+| Placement | Diagnostic subsection or appendix/supplement. |
+
+### 6. Table/Figure: Robustness Sensitivity Summary
+
+| Field | Plan |
+|---|---|
+| Purpose | Summarize utility, walking-radius / MP-density, and fleet-demand diagnostic consistency. |
+| Source artifact | 06-04 robustness packages; Phase 8 C-UTIL-01, C-MP-01, C-FLEET-01. |
+| Required columns | Package, setting ID, seeds/scales, n valid pairs, vkm per served trip difference, vkm per original request difference, served share difference, diagnostic limitation. |
+| Allowed claim | Reduced robustness diagnostics are consistent with the main direction within tested synthetic settings. |
+| Forbidden overclaim | Robust under all parameters; universal radius threshold; universal fleet-ratio rule. |
+| Placement | Compact main text summary plus appendix/supplement detail. |
+
+### 7. Table/Figure: Equity/Type-Level Outcomes and Burden Distribution
+
+| Field | Plan |
+|---|---|
+| Purpose | Report modeled type-level and individual burden diagnostics. |
+| Source artifact | 06-04 equity outputs; `08_EQUITY_GATE.md`; Phase 8 C-EQ-01. |
+| Required columns | Passenger type, request count or denominator, served share, acceptance, wait, walk, IVT, generalized cost, burden distribution metric, exploratory-status note. |
+| Allowed claim | Equity diagnostics report modeled type-level and individual burden patterns. |
+| Forbidden overclaim | Strong equity benefit; empirical demographic equity; regulatory prescription. |
+| Placement | Main text bounded summary; distribution detail appendix/supplement. |
+
+### 8. Table: Claim-Evidence Matrix Summary
+
+| Field | Plan |
+|---|---|
+| Purpose | Make claim grades transparent for the manuscript reader or supplement. |
+| Source artifact | `08_CLAIM_EVIDENCE_MATRIX.md`; `08_SUPPORTED_CLAIMS.md`; `08_UNSUPPORTED_OR_EXPLORATORY_CLAIMS.md`. |
+| Required columns | Claim ID, claim unit, evidence family, source artifact, grade, allowed manuscript location, required caveat, forbidden wording. |
+| Allowed claim | Manuscript claims are evidence-gated. |
+| Forbidden overclaim | Unsupported claims smuggled into supported wording. |
+| Placement | Appendix/supplement or concise main reproducibility/evidence note. |
+
+### 9. Figure: Experiment Evidence Pipeline
+
+| Field | Plan |
+|---|---|
+| Purpose | Show the flow from service-design variants to evidence families and claim gate. |
+| Source artifact | Phase 6 manifest; Phase 8 matrix; this Phase 9 refresh. |
+| Required columns/elements | Variants, main behavioral matrix, coverage controls, fixed accepted-set diagnostic, robustness diagnostics, equity diagnostics, Beijing-inspired illustration, claim gate, manuscript placement. |
+| Allowed claim | Evidence families have different claim strengths. |
+| Forbidden overclaim | Diagnostics visually promoted to headline validation. |
+| Placement | Main text, Experimental Design. |
+
+### 10. Figure: Service-Design Framework Diagram
+
+| Field | Plan |
+|---|---|
+| Purpose | Explain the framework: request generation, candidate meeting points, actual-offer choice, passenger response, rolling-horizon routing, and metric logging. |
+| Source artifact | Phase 2 contracts; Phase 3 choice model; Phase 4/6 implementation artifacts. |
+| Required columns/elements | Passenger request, pickup/dropoff MP candidates, offer construction, utility/outside option, accepted/rejected request, RH/ALNS dispatch, route output, denominator logging. |
+| Allowed claim | The framework integrates service design, passenger response, and routing. |
+| Forbidden overclaim | Framework is deployment-ready or first/only. |
+| Placement | Main text, Method. |
+
+## Additional Appendix/Supplement Displays
+
+| Display family | Source | Required boundary |
+|---|---|---|
+| Full matched-coverage detail | 06-03 matched coverage | Include 15 durable failed rows and target construction. |
+| Full fixed accepted-set detail | 06-03 fixed accepted-set | Diagnostic only; show vkm/original non-dominance. |
+| Algorithm diagnostics | 06-04 algorithm diagnostics | Scope disclosure, no ALNS optimality claim. |
+| Beijing-inspired synthetic table | Phase 7 artifacts; legacy rows | Illustrative only, not real/semi-real case evidence. |
+| Gamma sensitivity | Legacy diagnostic provenance | Post-hoc welfare accounting, not Pareto frontier. |
+| Weight sensitivity | Legacy diagnostic provenance | Remove from main claims unless rebuilt. |
+| VOT / calibration mapping | Phase 3 and old policy material | Parameter interpretation and calibration limitation only. |
+
+## Display Rules
+
+- Do not show vkm per served trip alone without served share.
+- Do not show efficiency without acceptance/rejection.
+- Do not label diagnostic tables as headline superiority evidence.
+- Do not use Beijing-inspired synthetic rows as real case validation.
+- Do not use `vkm_per_trip`.
+- Every caption must state evidence family and denominator.
+- Every caption implying a finding must map to a Phase 8 claim ID or be weaker
+  than the approved wording.
+
+## Caption Templates
+
+Main behavioral caption template:
+
+> Formal paired synthetic behavioral comparison. Vehicle-km denominators are
+> reported with served share and rejection outcomes; lower vehicle-km intensity
+> should be interpreted as a coverage-aware conditional result.
+
+Matched-coverage caption template:
+
+> Matched-coverage control on completed pairs. The table reports valid-pair
+> counts and durable failed FullModel rows; results bound, but do not eliminate,
+> coverage-confounding concerns.
+
+Fixed accepted-set caption template:
+
+> Fixed accepted-set routing diagnostic. Results describe a common-passenger-set
+> routing/service-design signal and do not support behavioral headline claims.
+
+Beijing-inspired caption template:
+
+> Beijing-inspired synthetic scenario. The display is illustrative and is not
+> evidence from real or semi-real Beijing operations.

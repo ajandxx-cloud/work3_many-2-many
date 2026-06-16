@@ -1,4 +1,4 @@
-# Roadmap: TR_E_Bidirectional_MeetingPoint_DRT_Experiment_Rebuild
+﻿# Roadmap: TR_E_Bidirectional_MeetingPoint_DRT_Experiment_Rebuild
 
 **Milestone:** v1.0 Evidence-chain rebuild
 **Mode:** standard
@@ -186,6 +186,8 @@
 
 ## Phase 9: Manuscript Restructure for TR Part E
 
+**Status:** Complete after Phase 8 claim-gated refresh - 2026-06-16
+
 **Goal:** Turn the experiment into a high-quality TR-E manuscript structure.
 
 **Requirements:** MS-01, MS-02
@@ -202,6 +204,10 @@
 - `09_REVISED_INTRODUCTION_PLAN.md`
 - `09_EXPERIMENT_SECTION_PLAN.md`
 - `09_TABLE_FIGURE_PLAN.md`
+- `09_CLAIM_GATE_AUDIT.md`
+- `09_MANAGERIAL_INSIGHT_AND_LIMITATION_PLAN.md`
+- `09-REFRESH-SUMMARY.md`
+- `09-VERIFICATION.md`
 
 ## Phase 10: Reproducibility Package and Final Verification
 

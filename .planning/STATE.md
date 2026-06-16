@@ -1,13 +1,13 @@
----
+﻿---
 gsd_state_version: 1.0
 milestone: v1.0 Evidence-chain rebuild
 milestone_name: milestone
-current_phase: 09
-current_phase_name: manuscript-restructure-for-tr-part-e
+current_phase: 10
+current_phase_name: reproducibility-package-and-final-verification
 current_plan: null
 status: ready
-stopped_at: Phase 8 evidence synthesis and claim gate passed; Phase 9 refresh ready, not entered
-last_updated: "2026-06-16T19:12:45+08:00"
+stopped_at: Phase 9 claim-gated manuscript refresh passed; Phase 10 ready, not entered
+last_updated: "2026-06-16T19:38:37+08:00"
 last_activity: 2026-06-16
 progress:
   total_phases: 11
@@ -19,9 +19,9 @@ progress:
 
 # State: TR_E_Bidirectional_MeetingPoint_DRT_Experiment_Rebuild
 
-**Current Phase:** 09
-**Current Phase Name:** manuscript-restructure-for-tr-part-e
-**Status:** Ready: Phase 8 evidence synthesis and claim gate passed; Phase 9 refresh is allowed next but not entered
+**Current Phase:** 10
+**Current Phase Name:** reproducibility-package-and-final-verification
+**Status:** Ready: Phase 9 claim-gated manuscript refresh passed; Phase 10 is allowed next but not entered
 **Current Plan:** None
 **Progress:** 91%
 **Last Activity:** 2026-06-16
@@ -31,13 +31,13 @@ progress:
 See: `.planning/PROJECT.md`
 
 **Core value:** Produce reproducible, reviewer-resistant evidence for defensible conditional claims about bidirectional meeting-point DRT.
-**Current focus:** Phase 9 refresh ready after Phase 8 claim gate closure
+**Current focus:** Phase 10 reproducibility rerun ready after Phase 9 claim-gated manuscript refresh
 
 ## Current Position
 
-Phase: 09 (manuscript-restructure-for-tr-part-e) - READY
+Phase: 10 (reproducibility-package-and-final-verification) - READY
 Plan: not started
-Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is complete and verified, Phase 3 is complete and verified, Phase 4 is complete and verified, Phase 5 pilot experiments are complete and verified, Phase 6 formal synthetic experiments are complete and verified, Phase 7 is complete as a bounded Beijing-inspired synthetic case closure, and Phase 8 is complete with a passed claim-evidence gate. Phase 9 has earlier structure-planning artifacts, but the next allowed work is a Phase 9 refresh that consumes Phase 8 supported/unsupported claim files before any final manuscript prose. Phase 10 created reproducibility artifacts earlier, but final verification still needs to be rerun after Phase 8.
+Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is complete and verified, Phase 3 is complete and verified, Phase 4 is complete and verified, Phase 5 pilot experiments are complete and verified, Phase 6 formal synthetic experiments are complete and verified, Phase 7 is complete as a bounded Beijing-inspired synthetic case closure, Phase 8 is complete with a passed claim-evidence gate, and Phase 9 refresh is complete with claim-gated manuscript-structure artifacts. Phase 10 created reproducibility artifacts earlier, but final verification still needs to be rerun after Phase 8 and Phase 9 refresh outputs.
 
 ## Decisions
 
@@ -50,6 +50,7 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - Phase 2 passes: fair-comparison families, baseline taxonomy, metric definitions, coverage controls, statistical reporting, and Phase 4/5 implementation handoff are now locked as contracts.
 - Phase 7 passes as bounded synthetic-case closure: no real/semi-real case data are available in the current repository, and existing Beijing-labeled rows are Beijing-inspired synthetic illustration only.
 - Phase 8 passes the claim gate: final manuscript claims must be drawn from `08_SUPPORTED_CLAIMS.md`; unsupported or downgraded claims must follow `08_UNSUPPORTED_OR_EXPLORATORY_CLAIMS.md`.
+- Phase 9 refresh passes after consuming the Phase 8 claim gate: manuscript structure, abstract, introduction, experiment, table/figure, managerial insight, limitation, and verification artifacts now use supported or weaker claim language.
 
 ## Blockers / Concerns
 
@@ -70,6 +71,7 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - Phase 6 Plan 06-05 closeout passed: the formal synthetic report, result manifest, statistical summary, evidence boundary, verification report, and closeout summary were generated. EXP-05 is complete. Phase 6 evidence may be handed to Phase 8 later, but Phase 6 does not approve final manuscript claims.
 - Phase 7 found no real or semi-real OD, road-network, transit-stop/POI, request-time, passenger-preference, or fleet data. The existing Beijing generator uses generated OD, generated meeting points, simulated morning-peak times, and an experimental fleet setting. Phase 7 may enter Phase 8 only as limitation-level or exploratory scenario-transfer evidence.
 - Phase 8 claim gate supports only bounded manuscript claims: formal synthetic FullModel/BidirectionalMP vkm-intensity advantages must be paired with lower served-share context; matched coverage has 15 durable failed rows; fixed accepted-set, robustness, equity, algorithm, and Beijing-inspired case outputs remain diagnostic/exploratory or limitation-level.
+- Phase 10 remains pending: REP-01 and REP-02 are not complete until the reproducibility package records commands/dependencies/configs/seeds/revision/manifests and main tables/figures can be regenerated from saved artifacts.
 
 ## Pending Todos
 
@@ -94,6 +96,7 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - [x] Generate Phase 6 formal synthetic results report.
 - [x] Execute Phase 7 semi-real or Beijing-inspired case-study audit and bounded closure.
 - [x] Execute Phase 8 claim-evidence gate.
+- [x] Execute Phase 9 claim-gated manuscript refresh.
 - [ ] Rerun Phase 10 final verification after Phase 6 and Phase 8 artifacts exist.
 
 ## Artifact Index
@@ -201,12 +204,21 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - `.planning/phases/08-evidence-synthesis-and-claim-gate/08_REVISED_CONCLUSION_BULLETS.md`
 - `.planning/phases/08-evidence-synthesis-and-claim-gate/08_EQUITY_GATE.md`
 - `.planning/phases/08-evidence-synthesis-and-claim-gate/08-VERIFICATION.md`
+- `.planning/phases/09-manuscript-restructure-for-tr-part-e/09_CLAIM_GATE_AUDIT.md`
+- `.planning/phases/09-manuscript-restructure-for-tr-part-e/09_TR_E_MANUSCRIPT_STRUCTURE.md`
+- `.planning/phases/09-manuscript-restructure-for-tr-part-e/09_REVISED_ABSTRACT.md`
+- `.planning/phases/09-manuscript-restructure-for-tr-part-e/09_REVISED_INTRODUCTION_PLAN.md`
+- `.planning/phases/09-manuscript-restructure-for-tr-part-e/09_EXPERIMENT_SECTION_PLAN.md`
+- `.planning/phases/09-manuscript-restructure-for-tr-part-e/09_TABLE_FIGURE_PLAN.md`
+- `.planning/phases/09-manuscript-restructure-for-tr-part-e/09_MANAGERIAL_INSIGHT_AND_LIMITATION_PLAN.md`
+- `.planning/phases/09-manuscript-restructure-for-tr-part-e/09-REFRESH-SUMMARY.md`
+- `.planning/phases/09-manuscript-restructure-for-tr-part-e/09-VERIFICATION.md`
 
 ## Session Continuity
 
-Last session: 2026-06-16T19:12:45+08:00
-Stopped at: Phase 8 evidence synthesis and claim gate passed; Phase 9 refresh ready, not entered
+Last session: 2026-06-16T19:38:37+08:00
+Stopped at: Phase 9 claim-gated manuscript refresh passed; Phase 10 ready, not entered
 Resume file: None
 
 ---
-*State updated: 2026-06-16 after Phase 8 evidence synthesis and claim gate*
+*State updated: 2026-06-16 after Phase 9 claim-gated manuscript refresh*

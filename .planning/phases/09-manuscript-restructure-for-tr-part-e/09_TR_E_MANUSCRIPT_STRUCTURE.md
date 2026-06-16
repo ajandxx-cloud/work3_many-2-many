@@ -1,128 +1,222 @@
-# Phase 9 TR-E Manuscript Structure
+﻿# Phase 9 TR-E Manuscript Structure Refresh
 
-**Purpose:** Source-of-truth manuscript architecture for restructuring the
-current draft into a Transportation Research Part E evidence-chain manuscript.
+**Phase:** 09 - Manuscript Restructure for TR Part E
+**Refresh date:** 2026-06-16
+**Status:** claim-gated refresh complete
+**Source of truth:** Phase 8 claim gate
 
-## Current Manuscript Diagnosis
+## Refresh Purpose
 
-The current manuscript is organized around a method-and-policy story: the master
-file targets Transportation Research Part A, then proceeds from introduction and
-literature to separate model, algorithm, experiments, policy, and conclusion
-sections. That order keeps useful technical material, but it lets old numerical
-claims, diagnostic results, and policy-style language appear before the rebuilt
-claim gate has approved them.
+The earlier Phase 9 manuscript structure was created before the Phase 8
+claim-evidence gate existed. It correctly kept final claim language blocked, but
+it is now stale. This refresh replaces placeholder-driven planning with a
+Phase-8-gated manuscript structure.
 
-Primary diagnosis:
+This file remains a planning artifact. It does not edit manuscript `.tex` files
+and does not enter Phase 10.
 
-- The dominant story is still "the method wins" rather than evidence-chain
-  reconstruction.
-- `manuscript/main.tex` currently targets Transportation Research Part A and
-  must be updated later if the paper is finalized for Transportation Research
-  Part E.
-- The current experiment section mixes behavioral comparisons, matched-coverage
-  diagnostics, MILP/ALNS diagnostics, Beijing-inspired synthetic results,
-  sensitivity, equity, gamma/welfare, and weight sensitivity.
-- The current policy section should become `Managerial Insights and Boundary
-  Conditions`, with limitations stated before applied implications.
-- The current Beijing/city language must remain `Beijing-inspired synthetic
-  scenario` unless later case-study evidence supports stronger wording.
+## Claim-Gated Storyline
 
-## TR-E Evidence-Chain Architecture
+The manuscript should not argue that bidirectional meeting points are always
+best. The defensible story is:
 
-The target manuscript structure should make the evidence chain visible before
-the reader reaches any result or managerial implication:
+The paper develops and evaluates an integrated choice-aware dynamic
+service-design simulation framework for many-to-many DRT. The framework jointly
+models pickup and dropoff meeting-point design, passenger response, and
+rolling-horizon routing. Formal paired synthetic experiments show that the
+BidirectionalMP/FullModel design can reduce vehicle-km intensity relative to
+door-to-door and single-sided choice baselines under the tested conditions, but
+this result must be interpreted together with served share, acceptance/rejection
+outcomes, matched-coverage controls, diagnostic boundaries, and synthetic-data
+limitations. The Beijing-labeled material is a Beijing-inspired synthetic
+scenario, not real Beijing validation.
 
-1. **Introduction** - evidence gap, research questions, contribution order, and
-   claim discipline.
-2. **Literature and Positioning** - prior DARP, meeting-point, ridepooling,
-   passenger-choice, and rolling-horizon work, with no broad first/only claims.
-3. **Framework and Solution Approach** - choice-aware service-design framework,
-   passenger response, route-then-sample operation, rolling-horizon ALNS, and
-   clearly labeled diagnostics.
-4. **Experimental Design and Evidence Families** - service-design variants,
-   response assumptions, metrics, paired design, and evidence-family roles.
-5. **Formal Main Evidence** - claim-gated behavioral comparisons only.
-6. **Robustness, Equity, and Diagnostic Evidence** - matched coverage, fixed
-   accepted-set controls, utility sensitivity, equity summaries, and scoped
-   algorithm diagnostics.
-7. **Limitations and Boundary Conditions** - synthetic-data, calibration,
-   case-study, algorithm-diagnostic, and claim-gate limits before implications.
-8. **Managerial Insights and Boundary Conditions** - conditional insights, not
-   universal city-policy prescriptions or parameter rules.
-9. **Conclusion** - evidence-graded takeaways, unresolved limits, and future
-   work.
+## Allowed Claim Center
 
-## Old-to-New Section Map
+The strongest allowed main claim is the Phase 8 C-EFF-01 plus C-COV-01 pair:
 
-| Current source | Current role | Target section role |
+- Under the tested formal synthetic paired design, BidirectionalMP/FullModel
+  shows lower vehicle-km intensity than DoorToDoor and single-sided choice
+  baselines.
+- The same result is accompanied by lower served share, so operating efficiency,
+  coverage, acceptance, and rejection must be read jointly.
+
+The manuscript may also use the Phase 8 moderate and exploratory claims only at
+their approved strength:
+
+- Integrated framework contribution: moderate, no first/only language.
+- Passenger response and rejection mechanisms affect interpretation: moderate.
+- Matched-coverage completed pairs remain consistent with the efficiency
+  direction, but 15 durable failed FullModel rows limit the claim: moderate.
+- Fixed accepted-set supports only a routing/service-design diagnostic on vkm
+  per served request: moderate diagnostic.
+- Utility, meeting-point density/walking radius, fleet-demand, equity,
+  algorithm, Beijing-inspired case, and managerial insights are diagnostic,
+  exploratory, or limitation-level.
+
+## Forbidden Manuscript Storylines
+
+Do not organize the paper around any of the following claims:
+
+- FullModel is unconditionally superior.
+- Bidirectional meeting points dominate all baselines under all metrics.
+- FullModel wins on every denominator.
+- Fixed accepted-set proves unconditional vkm/original dominance.
+- Equity benefits are strongly established.
+- The Beijing case validates real-world Beijing operations.
+- The paper provides direct citywide policy recommendations for Beijing.
+- The method is deployment-ready.
+- This is the first bidirectional meeting-point DRT paper.
+- No prior work considers dropoff walking.
+- Existing work only assigns pickup-side meeting points.
+- Gamma sweep is a Pareto frontier.
+- Legacy 29.1% vkm/trip improvement is final superiority evidence.
+
+## Refreshed Manuscript Architecture
+
+### 1. Introduction
+
+Purpose: motivate the fair-evidence problem before presenting the framework.
+
+Required content:
+
+- Problem motivation for meeting-point DRT as a service-design problem.
+- Why pickup and dropoff meeting-point design matter for route consolidation
+  and passenger burden.
+- Why passenger response and service coverage must be modeled together.
+- Why fair comparison requires matched evidence, explicit denominators, paired
+  seeds, and failure-row accounting.
+- Contribution framed as an integrated choice-aware dynamic service-design
+  simulation framework.
+- No broad first/only or universal-superiority language.
+
+### 2. Literature Review
+
+Purpose: position the contribution against overlapping literatures without
+overclaiming novelty.
+
+Required content:
+
+- DRT / DARP with meeting points.
+- Pickup and dropoff walking-location literature, including overlapping
+  ridepooling and DARPmp work.
+- Passenger choice, service acceptance, and outside-option modeling.
+- Dynamic routing, rolling-horizon heuristics, and ALNS diagnostics.
+- Simulation-based service design and evidence-gated evaluation.
+
+The gap should be framed as an integrated fair-evidence framework, not as a
+claim that nobody studied dropoff walking or that existing work is pickup-only.
+
+### 3. Method
+
+Purpose: define the framework and operational mechanisms before results.
+
+Required content:
+
+- Service-design alternatives: DoorToDoor + Choice, SingleSidedPickup + Choice,
+  SingleSidedDropoff + Choice, and BidirectionalMP + Choice +
+  RollingHorizon/ALNS.
+- Actual-offer choice and outside-option passenger response.
+- Rejection mechanisms: choice rejection, feasibility rejection, and service
+  coverage.
+- Rolling-horizon routing and ALNS for the FullModel implementation.
+- Baseline taxonomy separating behavioral comparisons from diagnostics.
+- Metric and denominator discipline: total vehicle-km, vkm per served trip, vkm
+  per original request, served share, acceptance, and rejection.
+
+### 4. Experimental Design
+
+Purpose: define evidence families before reporting results.
+
+Required content:
+
+- Main behavioral formal matrix: 20 seeds x 4 scales x 4 methods, 320 completed
+  rows, main evidence.
+- Coverage-confounding controls: matched coverage as main/control evidence with
+  305 completed rows and 15 durable failed FullModel rows.
+- Fixed accepted-set routing diagnostic: 320 completed rows, diagnostic only.
+- Robustness diagnostics: utility sensitivity, walking-radius / meeting-point
+  density, and fleet-demand stress, reduced diagnostic grids.
+- Equity/type-level diagnostics: modeled passenger-type and individual-burden
+  outputs, exploratory.
+- Beijing-inspired synthetic scenario boundary: illustrative only.
+- Reproducibility and failure-row policy: raw/processed outputs, manifests,
+  validators, denominator checks, and durable failure rows.
+
+### 5. Results
+
+Purpose: present evidence from strongest to most bounded.
+
+Required content:
+
+- Main behavioral results with served share and rejection context shown next to
+  vehicle-km intensity.
+- Matched-coverage results with 65 valid aggregate pairs per baseline and 15
+  durable failed FullModel rows carried as a limitation.
+- Fixed accepted-set diagnostic results, limited to routing/service-design
+  interpretation and vkm per served request.
+- Robustness diagnostics as consistency screens, not universal parameter rules.
+- Equity diagnostics as modeled type-level and individual-burden patterns.
+- Bounded Beijing-inspired synthetic discussion as an illustration, not
+  validation.
+
+### 6. Discussion
+
+Purpose: interpret what the evidence can and cannot support.
+
+Required content:
+
+- Conditional efficiency advantage under the tested synthetic paired design.
+- Role of passenger response in changing coverage, acceptance, and rejection.
+- Trade-off between operating efficiency and served share.
+- Managerial implications as simulation-based boundary conditions.
+- Why real/semi-real validation, empirical passenger calibration, and final
+  reproducibility reruns are still needed.
+
+### 7. Conclusion
+
+Purpose: close with claim-gated takeaways only.
+
+Required content:
+
+- Integrated framework contribution without first/only wording.
+- Conditional synthetic efficiency finding with coverage caveat.
+- Matched-coverage and fixed accepted-set boundaries.
+- No universal superiority.
+- No real Beijing validation.
+- No deployment-ready or citywide policy prescription.
+- Limitations and future work focused on real/semi-real OD, road-network,
+  meeting-point, request-time, preference, fleet, and reproducibility evidence.
+
+## Old-To-New Section Map
+
+| Current source | Target role after refresh | Required Phase 8 boundary |
 |---|---|---|
-| `manuscript/main.tex` | Journal target, title, front matter, include order, appendix, bibliography | Update target-journal metadata from Transportation Research Part A to Transportation Research Part E during later manuscript-edit execution; revise include order to match the TR-E evidence-chain architecture. |
-| `manuscript/sections/abstract.tex` | Old abstract, keywords, legacy numerical claims | Rebuild via `Introduction` framing plus claim-gated front matter; final wording waits for Phase 8 supported claims. |
-| `manuscript/sections/intro.tex` | Motivation, broad gap, contribution list, organization | `Introduction`, with evidence-confounding problem first and conditional research questions before claims. |
-| `manuscript/sections/literature.tex` | DARP, meeting points, passenger choice, dynamic scheduling, positioning | `Literature and Positioning`, with precise overlap language and no unverified first/only statements. |
-| `manuscript/sections/model.tex` | Problem formulation, passenger choice, three-layer model | `Framework and Solution Approach`, especially framework, utility, response, feasibility, and model architecture material. |
-| `manuscript/sections/algorithm.tex` | MILP diagnostic, rolling-horizon ALNS, complexity | `Framework and Solution Approach` for operational mechanism; diagnostic solver details may be scoped or moved to appendix/supplement. |
-| `manuscript/sections/experiments.tex` | Mixed setup, main results, diagnostics, case, sensitivity, equity, welfare, weight sensitivity | Split across `Experimental Design and Evidence Families`, `Formal Main Evidence`, and `Robustness, Equity, and Diagnostic Evidence`. |
-| `manuscript/sections/policy.tex` | R1-R5 policy recommendations, VOT interpretation, deployment map | `Limitations and Boundary Conditions` plus `Managerial Insights and Boundary Conditions`, using conditional insight templates. |
-| `manuscript/sections/conclusion.tex` | Old result recap, contributions, policy implications, limitations | `Conclusion`, with Phase 8-supported claims only and unsupported/exploratory items moved to limitations or future work. |
+| `manuscript/main.tex` | Later venue/front-matter and include-order update | No direct edit in this refresh. |
+| `manuscript/sections/abstract.tex` | Rebuild from `09_REVISED_ABSTRACT.md` | Use C-FWK-01, C-EFF-01, C-COV-01, C-LIM-01; no legacy numbers. |
+| `manuscript/sections/intro.tex` | Evidence-confounding introduction | No first/only, no pickup-only prior-work claim, no unsupported effect size. |
+| `manuscript/sections/literature.tex` | Conservative literature positioning | Prior work is overlapping; novelty is integrated evidence-chain framing. |
+| `manuscript/sections/model.tex` | Framework and method | Framework description, choice semantics, denominators, baseline taxonomy. |
+| `manuscript/sections/algorithm.tex` | Operational mechanism and diagnostics | ALNS/MILP are scoped diagnostics, not optimality or deployment proof. |
+| `manuscript/sections/experiments.tex` | Experimental design, main evidence, controls, diagnostics | Separate main, control, diagnostic, exploratory, and illustrative evidence. |
+| `manuscript/sections/policy.tex` | Managerial insights and boundary conditions | Simulation-based insights only; limitations before implications. |
+| `manuscript/sections/conclusion.tex` | Claim-gated conclusion | No universal superiority, no real-Beijing validation, no deployment claim. |
 
-## Phase 8 Blocking Inputs
+## Evidence-Family Placement Rules
 
-Final manuscript claim wording is blocked until these Phase 8 artifacts exist
-and have been read:
-
-- `.planning/phases/08-evidence-synthesis-and-claim-gate/08_CLAIM_EVIDENCE_MATRIX.md`
-- `.planning/phases/08-evidence-synthesis-and-claim-gate/08_SUPPORTED_CLAIMS.md`
-- `.planning/phases/08-evidence-synthesis-and-claim-gate/08_UNSUPPORTED_OR_EXPLORATORY_CLAIMS.md`
-
-Because those inputs are absent in this workspace, this Phase 9 artifact may
-define structure, templates, and placeholders, but it must not lock final
-claim wording or final numerical effect statements.
-
-### Claim Placeholder Policy
-
-The following manuscript components must remain placeholders until all three
-Phase 8 files exist and are read:
-
-- Abstract result and contribution wording.
-- Introduction contribution wording and any result-preview sentence.
-- Table captions, including any statement about direction, magnitude,
-  confidence interval, robustness, or equity trade-off.
-- Conclusion claims and final takeaways.
-- Managerial insights, including R1-R5 rewrites and any applied guidance.
-
-Allowed placeholder forms include `[SUPPORTED_CLAIM_FROM_08]`,
-`[MAIN_EFFECT_SIZE_IF_SUPPORTED]`, `[ROBUSTNESS_STATUS_FROM_08]`, and
-`[MANAGERIAL_INSIGHT_IF_SUPPORTED]`. Unsupported or unresolved Phase 8 claims
-must be removed, downgraded, or moved to limitations/future work rather than
-smuggled into manuscript prose.
-
-## Evidence Family Placement Rules
-
-| Evidence family | Manuscript placement | Claim boundary |
-|---|---|---|
-| Behavioral Main Comparison | `Formal Main Evidence` | May support main conditional service-design claims only after Phase 6 formal paired evidence and Phase 8 claim grading. Must report coverage, acceptance, rejection, and operating efficiency together. |
-| Core Supplementary Controls | `Robustness, Equity, and Diagnostic Evidence` | Matched coverage and fixed accepted-set controls support interpretation. They do not replace unconstrained behavioral evidence or create standalone superiority claims. |
-| Deterministic Diagnostics | Appendix/supplement or short scoped diagnostic text | deterministic diagnostics cannot support headline behavioral claims because they do not represent passenger response or natural served share. |
-| Algorithm Diagnostics | Appendix/supplement by default; limited main-text summary only if Phase 8 approves | ALNS, greedy, no-rolling-horizon, and MILP/static diagnostics support algorithm credibility, not behavioral service-design superiority. |
-
-Paper-facing method labels must use the Phase 2/6 conceptual vocabulary:
-`DoorToDoor + Choice`, `SingleSidedPickup + Choice`,
-`SingleSidedDropoff + Choice`, and
-`BidirectionalMP + Choice + RollingHorizon/ALNS`. Legacy labels such as
-`FullModel` belong only in provenance or code-mapping notes.
+| Evidence family | Manuscript placement | Allowed role | Forbidden role |
+|---|---|---|---|
+| 06-02 main behavioral matrix | Main results | Headline synthetic evidence when paired with coverage/rejection context | Universal superiority proof |
+| 06-03 matched coverage | Robustness/control results | Completed-pair efficiency consistency with 15 failed-row limitation | Equal-coverage proof with no caveat |
+| 06-03 fixed accepted-set | Diagnostic results or appendix | Routing/service-design diagnostic on common accepted set | Behavioral headline or vkm/original dominance proof |
+| 06-04 robustness | Robustness diagnostics | Reduced-grid consistency screens | Universal parameter rules |
+| 06-04 equity | Discussion/limitations and appendix | Modeled type-level and burden diagnostics | Strong equity or demographic conclusion |
+| 06-04 algorithm diagnostics | Method diagnostics or supplement | Implementation behavior and scoped exact/static checks | ALNS optimality or real-time deployment proof |
+| Phase 7 Beijing-inspired synthetic | Discussion, limitations, appendix | Illustrative scenario-transfer boundary | Real/semi-real Beijing validation |
 
 ## Direct LaTeX Edit Boundary
 
-This phase creates planning Markdown outputs first. Later direct edits to
-`manuscript/sections/*.tex`, `manuscript/main.tex`, captions, tables, or
-figures must either:
-
-1. cite `.planning/phases/08-evidence-synthesis-and-claim-gate/08_SUPPORTED_CLAIMS.md`
-   for the exact claim being written; or
-2. remain placeholder/comment-only text that explicitly waits for Phase 8.
-
-No direct LaTeX edit may introduce final effect sizes, superiority language,
-real-Beijing claims, policy prescriptions, or `vkm_per_trip` vocabulary unless
-the relevant upstream evidence and Phase 8 claim status authorize the exact
-wording.
+This refresh does not modify `manuscript/**/*.tex`. Later manuscript edits may
+only introduce wording that is explicitly supported by Phase 8 or weaker than
+the allowed wording. Any future direct manuscript edit must keep REP-01 and
+REP-02 pending until Phase 10 reproducibility rerun passes.

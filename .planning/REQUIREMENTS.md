@@ -1,4 +1,4 @@
-# Requirements: TR_E_Bidirectional_MeetingPoint_DRT_Experiment_Rebuild
+﻿# Requirements: TR_E_Bidirectional_MeetingPoint_DRT_Experiment_Rebuild
 
 **Defined:** 2026-06-15
 **Core Value:** Produce reproducible, reviewer-resistant evidence for defensible conditional claims about bidirectional meeting-point DRT.
@@ -74,8 +74,12 @@ Completed by Phase 8 gate artifacts. Unsupported and downgraded claims are liste
 
 ### Manuscript
 
-- **MS-01**: Rewrite manuscript sections after formal evidence synthesis.
-- **MS-02**: Redesign tables and figures after metrics and claims stabilize.
+- [x] **MS-01**: Rewrite manuscript sections after formal evidence synthesis.
+Completed by Phase 9 refresh as claim-gated manuscript-structure artifacts,
+not direct `.tex` rewriting.
+- [x] **MS-02**: Redesign tables and figures after metrics and claims stabilize.
+Completed by Phase 9 refresh as claim-gated table/figure and
+managerial-limitation planning artifacts.
 
 ## Out of Scope
 
@@ -116,6 +120,8 @@ Completed by Phase 8 gate artifacts. Unsupported and downgraded claims are liste
 | CLM-01 | Phase 8 | Complete - every supported claim linked to evidence or limitation source |
 | CLM-02 | Phase 8 | Complete - claims graded strong/moderate/exploratory/unsupported |
 | CLM-03 | Phase 8 | Complete - unsupported claims assigned delete/rewrite/limitations actions |
+| MS-01 | Phase 9 | Complete - claim-gated manuscript structure refreshed after Phase 8 |
+| MS-02 | Phase 9 | Complete - claim-gated table/figure and managerial boundaries refreshed after Phase 8 |
 | REP-01 | Phase 10 | Pending |
 | REP-02 | Phase 10 | Pending |
 | REP-03 | Phase 5 | Complete |

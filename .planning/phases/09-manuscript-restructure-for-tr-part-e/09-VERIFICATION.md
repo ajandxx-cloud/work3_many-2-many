@@ -1,139 +1,88 @@
----
+﻿---
 phase: 09-manuscript-restructure-for-tr-part-e
 status: passed
 verified: 2026-06-16
 requirements: [MS-01, MS-02]
-plans_verified: [09-01, 09-02, 09-03, 09-04, 09-05]
+refresh_after_phase_8: true
+next_allowed_step: phase-10-ready-not-entered
 ---
 
-# Phase 09 Verification: Manuscript Restructure for TR Part E
+# Phase 09 Refresh Verification
 
 ## Verdict
 
 Status: `passed`
 
-Phase 09 achieved its roadmap goal: all five manuscript-restructuring artifacts
-exist, all five plan summaries exist, and the artifacts convert the current
-manuscript into a TR-E evidence-chain structure without approving unsupported
-final claims.
+Phase 9 refresh consumed the Phase 8 claim gate and updated the manuscript
+structure artifacts so they use supported or weaker claim language. The refresh
+did not edit manuscript `.tex` files, did not enter Phase 10, and did not mark
+REP-01 or REP-02 complete.
 
-Phase 09 remains a planning and manuscript-architecture phase. It does not
-approve final numerical claims because the Phase 8 claim-gate artifacts are not
-present in this workspace.
+## Fail-Closed Checks
 
-## Roadmap Success Criteria
-
-| Criterion | Status | Evidence |
+| Check | Result | Evidence |
 |---|---|---|
-| TR-E manuscript architecture exists | passed | `09_TR_E_MANUSCRIPT_STRUCTURE.md` created and verified. |
-| Revised abstract/front-matter plan exists | passed | `09_REVISED_ABSTRACT.md` created with claim-gated placeholders. |
-| Revised introduction plan exists | passed | `09_REVISED_INTRODUCTION_PLAN.md` created with evidence-gap flow and three approved research questions. |
-| Experiment-section plan exists | passed | `09_EXPERIMENT_SECTION_PLAN.md` separates design, formal evidence, robustness, equity, diagnostics, and synthetic boundaries. |
-| Table/figure/managerial-insight plan exists | passed | `09_TABLE_FIGURE_PLAN.md` inventories displays, assigns target roles, and converts R1-R5 into bounded insight rows. |
-| Final claims remain gated | passed | Phase 8 input files are absent and all Phase 9 outputs keep final claims as placeholders or dependencies. |
+| 1. Phase 8 claim gate exists | passed | `08_CLAIM_EVIDENCE_MATRIX.md`, `08_SUPPORTED_CLAIMS.md`, `08_UNSUPPORTED_OR_EXPLORATORY_CLAIMS.md`, and `08-VERIFICATION.md` exist and were read. |
+| 2. All Phase 9 refreshed artifacts exist | passed | Structure, abstract, introduction, experiment, table/figure, audit, managerial/limitation, summary, and verification artifacts exist. |
+| 3. No unsupported Phase 8 claim appears as supported manuscript wording | passed | Unsupported claims appear only as forbidden language, audit items, or delete/rewrite/move actions. |
+| 4. Abstract uses only allowed Phase 8 claims | passed | `09_REVISED_ABSTRACT.md` uses C-FWK-01, C-EFF-01, C-COV-01, C-MC-01 caveat, diagnostic boundaries, and C-LIM-01. |
+| 5. Introduction contributions avoid first/only overclaims | passed | `09_REVISED_INTRODUCTION_PLAN.md` frames novelty as integrated evidence-chain contribution and forbids first/only wording. |
+| 6. Experiment plan separates evidence families | passed | `09_EXPERIMENT_SECTION_PLAN.md` separates main, control, diagnostic, exploratory, illustrative, and reproducibility evidence. |
+| 7. Table/figure plan reports served share and rejection with efficiency | passed | `09_TABLE_FIGURE_PLAN.md` requires served share, acceptance, choice rejection, and feasibility rejection in main evidence displays. |
+| 8. Managerial insights remain simulation-based | passed | `09_MANAGERIAL_INSIGHT_AND_LIMITATION_PLAN.md` allows only conditional simulation-based boundary insights. |
+| 9. Limitations include synthetic-only and no real/semi-real validation | passed | Required limitations list includes synthetic-only evidence and no real/semi-real Beijing validation. |
+| 10. No manuscript `.tex` files changed unless explicitly authorized | passed | Refresh scope is `.planning` artifacts only; git diff check shows no `manuscript/**/*.tex` edits in this refresh. |
+| 11. Phase 10 not entered | passed | STATE is updated to Phase 10 ready/not entered; no Phase 10 artifacts were modified. |
+| 12. STATE.md updated correctly | passed | `.planning/STATE.md` marks Phase 10 ready, with Phase 9 refresh passed and REP-01/REP-02 still pending. |
 
-## Requirement Trace
+## Refreshed Artifact Checklist
 
-| Requirement | Status | Evidence |
+| Artifact | Status |
+|---|---|
+| `09_CLAIM_GATE_AUDIT.md` | exists |
+| `09_TR_E_MANUSCRIPT_STRUCTURE.md` | refreshed |
+| `09_REVISED_ABSTRACT.md` | refreshed |
+| `09_REVISED_INTRODUCTION_PLAN.md` | refreshed |
+| `09_EXPERIMENT_SECTION_PLAN.md` | refreshed |
+| `09_TABLE_FIGURE_PLAN.md` | refreshed |
+| `09_MANAGERIAL_INSIGHT_AND_LIMITATION_PLAN.md` | exists |
+| `09-REFRESH-SUMMARY.md` | exists |
+| `09-VERIFICATION.md` | refreshed |
+
+## Claim Boundary Verification
+
+| Boundary | Result |
+|---|---|
+| Strong main claim paired with coverage caveat | passed |
+| Matched coverage includes 15 durable failed FullModel rows | passed |
+| Fixed accepted-set is diagnostic only | passed |
+| Robustness grids are diagnostic | passed |
+| Equity remains exploratory | passed |
+| Beijing-inspired scenario remains illustrative only | passed |
+| Legacy effect-size claims excluded from supported wording | passed |
+| Gamma and weight sensitivity not main evidence | passed |
+| REP-01 and REP-02 remain pending | passed |
+
+## Requirement Effects
+
+| Requirement | Status after refresh | Evidence |
 |---|---|---|
-| MS-01 | passed | Phase 09 artifacts define the TR-E manuscript architecture, abstract plan, introduction plan, experiment plan, and display plan. |
-| MS-02 | passed | The plans enforce claim-gated language, metric denominator rules, synthetic-case boundaries, and limitations-first managerial insights. |
-
-Note: `gsd-sdk query requirements.mark-complete MS-01/MS-02` returned
-`not_found`, so the requirements index was not mutated. Coverage is documented
-here and in the plan summaries.
-
-## Artifact Checks
-
-All required files exist:
-
-- `09_TR_E_MANUSCRIPT_STRUCTURE.md`
-- `09_REVISED_ABSTRACT.md`
-- `09_REVISED_INTRODUCTION_PLAN.md`
-- `09_EXPERIMENT_SECTION_PLAN.md`
-- `09_TABLE_FIGURE_PLAN.md`
-- `09-01-SUMMARY.md`
-- `09-02-SUMMARY.md`
-- `09-03-SUMMARY.md`
-- `09-04-SUMMARY.md`
-- `09-05-SUMMARY.md`
-
-Content checks passed:
-
-- Phase 8/claim-gate placeholders are present across the architecture,
-  abstract, introduction, experiment, and display plans.
-- `09_EXPERIMENT_SECTION_PLAN.md` contains `Target Experiment Section
-  Architecture`, `vkm_per_trip is forbidden`, and
-  `Beijing-inspired synthetic scenario`.
-- `09_TABLE_FIGURE_PLAN.md` contains `Current Display Inventory`,
-  `Main Table Contract`, `Caption and Vocabulary Checklist`,
-  `Limitations Before Insights`, and `Managerial Insight Rewrite Template`.
-- Search for legacy unplaceholdered effect-size phrases returned no matches in
-  Phase 09 output artifacts.
-- `git diff --name-only HEAD~20..HEAD -- manuscript` returned no manuscript
-  files, confirming this phase did not directly rewrite LaTeX source.
+| MS-01 | complete | Phase 9 refreshed manuscript structure, abstract, introduction, experiment, and conclusion boundaries after Phase 8. |
+| MS-02 | complete | Phase 9 refreshed table/figure plan and managerial/limitation boundaries after metrics and claims stabilized. |
+| REP-01 | pending | Phase 10 only. |
+| REP-02 | pending | Phase 10 only. |
 
 ## Automated Checks
 
-```powershell
-python -m compileall -q src experiments analysis tests
-```
-
-Result: passed.
+The required regression command was run after the refresh:
 
 ```powershell
-$env:PYTHONPATH='src'; python -m pytest tests/test_metrics.py tests/test_candidate.py tests/test_feasibility.py -q
+$env:PYTHONPATH='src;.'; pytest tests/test_phase06_formal.py tests/test_runner.py tests/test_metrics.py tests/test_variants.py tests/test_phase06_coverage_controls.py tests/test_phase06_robustness.py -q
 ```
 
-Result: 54 passed.
+Result: passed, `100 passed in 8.54s`.
 
-```powershell
-$env:PYTHONPATH='src'; python -m pytest tests -q
-```
+## Decision
 
-Result: 166 passed, 1 skipped.
-
-```powershell
-gsd-sdk query verify.schema-drift "09"
-```
-
-Result: `drift_detected=false`, `blocking=false`.
-
-## Code Review Gate
-
-Code review was enabled with depth `standard`, but the workflow review scope was
-empty after its `.planning/*` exclusions. Phase 09 changed planning artifacts
-only, so the source-code review gate was skipped by contract and no REVIEW file
-was created.
-
-## Codebase Drift Gate
-
-The non-blocking codebase drift gate returned `directive: warn` for pre-existing
-workspace churn under paths such as `.claude`, old debug scripts, and
-`paper_work3`. The warning does not block Phase 09 verification and was not
-introduced by the Phase 09 artifact scope.
-
-## Phase 8 Blocking Inputs
-
-These expected upstream files are absent:
-
-- `.planning/phases/08-evidence-synthesis-and-claim-gate/08_CLAIM_EVIDENCE_MATRIX.md`
-- `.planning/phases/08-evidence-synthesis-and-claim-gate/08_SUPPORTED_CLAIMS.md`
-- `.planning/phases/08-evidence-synthesis-and-claim-gate/08_UNSUPPORTED_OR_EXPLORATORY_CLAIMS.md`
-
-This is acceptable for Phase 09 planning because the artifacts explicitly keep
-final claim wording blocked on Phase 8. Manuscript drafting must not convert
-placeholders into final claims until those artifacts exist.
-
-## Gaps
-
-None blocking Phase 09 completion.
-
-## Carry-Forward Notes
-
-- Figure scripts contain legacy labels, titles, or numeric annotations and must
-  be regenerated after Phase 6 outputs and Phase 8 claim support are available.
-- The current manuscript conclusion still contains legacy numerical claims; the
-  Phase 09 plans require conclusion alignment during later manuscript rewriting.
-- All Beijing/case language remains bounded to `Beijing-inspired synthetic
-  scenario` unless later case evidence and Phase 8 support exist.
+Phase 9 refresh passed. Phase 10 is ready after this refresh but must not be
+treated as entered or complete.

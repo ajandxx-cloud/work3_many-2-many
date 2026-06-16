@@ -1,170 +1,149 @@
-# Phase 09 Experiment Section Plan
+﻿# Phase 9 Experiment Section Refresh
 
-**Artifact:** `09_EXPERIMENT_SECTION_PLAN.md`  
-**Purpose:** Restructure the experiment section for a Transportation Research
-Part E manuscript by separating design, formal evidence, robustness controls,
-equity evidence, algorithm diagnostics, and synthetic case boundaries.
+**Phase:** 09 - Manuscript Restructure for TR Part E
+**Refresh date:** 2026-06-16
+**Status:** claim-gated experiment plan complete
 
-## Current Experiment Section Risks
+## Experiment Section Boundary
 
-The current experiment section mixes exploratory manuscript evidence with
-diagnostics and implementation checks. It contains legacy six-variant tables,
-matched-coverage diagnostics, MILP/ALNS diagnostics, Beijing-inspired synthetic
-results, sensitivity analysis, equity analysis, gamma welfare accounting, and
-weight sensitivity in one narrative stream. That structure makes it too easy to
-read diagnostic or pilot-style values as formal headline evidence.
+The experiment section must separate main behavioral evidence, coverage-control
+evidence, diagnostics, exploratory equity outputs, illustrative scenario
+material, and reproducibility/failure-row reporting. It must not present all
+outputs as equal-strength evidence.
 
-The revision must address these risks:
+Every efficiency statement must name the denominator and report served share or
+rejection context. `vkm_per_trip` is forbidden for refreshed manuscript wording.
 
-- Legacy effect-size values are not final manuscript claims. Final numerical
-  results require Phase 6 formal synthetic artifacts and Phase 8 claim-gate
-  artifacts before they can appear as values in the revised experiment section.
-- Behavioral main evidence must not mix all-accept deterministic rows with
-  choice-consistent behavioral rows.
-- Vehicle-distance efficiency must be reported with coverage and rejection
-  context, not as an isolated distance-per-trip headline.
-- Diagnostic rows such as MILP, greedy insertion, no-choice, no-rolling-horizon,
-  gamma, and weight sensitivity must not leak into the formal main-evidence
-  table.
-- Beijing language must remain synthetic unless later case-study evidence
-  exists and passes the claim gate.
+## Evidence Families
 
-## Target Experiment Section Architecture
+### 1. Main Behavioral Evidence
 
-The revised experiment section should use the following order.
-
-| Order | Subsection | Manuscript role |
-|---:|---|---|
-| 1 | Experimental Design | Define synthetic scenario families, paired seeds, request scales, fleet settings, passenger-response assumptions, and output provenance before any results. |
-| 2 | Metrics and Paired Comparison Protocol | Define denominators, row statuses, paired-seed comparisons, confidence intervals, and rejection/coverage context. |
-| 3 | Formal Main Evidence | Present only the approved behavioral service-design comparison and paired differences after Phase 6 and Phase 8 artifacts support the claims. |
-| 4 | Robustness Controls | Summarize matched-coverage and fixed accepted-set controls as robustness checks, with detailed tables in appendix or supplement. |
-| 5 | Equity and Passenger-Type Trade-offs | Report type-level acceptance and burden as a bounded trade-off summary, with distributional detail in appendix or supplement. |
-| 6 | Algorithm and Implementation Diagnostics | Report ALNS, greedy, no-rolling-horizon, no-choice, MILP, gamma, and weight-sensitivity material as diagnostics unless Phase 8 promotes a limited summary. |
-| 7 | Case-Study or Beijing-Inspired Synthetic Boundary | State whether any case material is synthetic, semi-real, or real-data evidence, and keep current Beijing wording synthetic. |
-
-`Formal Main Evidence` must appear before `Robustness Controls`, because the
-reader should first see the predeclared behavioral comparison before seeing
-controls. `Algorithm and Implementation Diagnostics` must appear after `Equity
-and Passenger-Type Trade-offs`, because solver and implementation diagnostics
-explain mechanisms rather than serving as the user-facing behavioral result.
-
-## Evidence-Family Order
-
-The section should move from evidence that supports the core manuscript claim
-to evidence that bounds or diagnoses it:
-
-| Evidence family | Main-text placement | Claim strength before Phase 8 |
-|---|---|---|
-| Experimental design and metrics | Main text, before results | Defines validity conditions only. |
-| Formal behavioral main matrix | Main text | Placeholder until Phase 6 results and Phase 8 claim grading are available. |
-| Matched-coverage control | Main-text robustness summary plus appendix/supplement detail | Robustness evidence, not replacement for unconstrained behavioral evidence. |
-| Fixed accepted-set control | Main-text robustness summary plus appendix/supplement detail | Routing/service-design diagnostic under identical passenger set. |
-| Equity and passenger-type evidence | Main-text trade-off summary plus appendix/supplement detail | Trade-off evidence, not universal policy proof. |
-| Algorithm diagnostics | Mostly appendix/supplement; brief main-text summary only if needed | Implementation credibility and mechanism evidence. |
-| Synthetic case boundary | Main text plus limitations | Scenario-transfer boundary, not real-city validation. |
-
-This ordering keeps final numerical claims blocked until the formal evidence
-pipeline is complete. Phase 6 must supply the reproducible experiment artifacts,
-and Phase 8 must decide which manuscript claims survive the evidence gate.
-
-## Formal Main Evidence Table Contract
-
-The formal main-evidence table is restricted to the behavioral service-design
-comparison. It must include only these paper-facing method labels:
-
-- `DoorToDoor + Choice`
-- `SingleSidedPickup + Choice`
-- `SingleSidedDropoff + Choice`
-- `BidirectionalMP + Choice + RollingHorizon/ALNS`
-
-No deterministic diagnostic, solver diagnostic, no-choice ablation, gamma
-sweep, or weight-sensitivity row belongs in this table.
-
-Minimum table columns:
-
-| Column | Purpose |
+| Field | Refresh plan |
 |---|---|
-| `method` | One of the four approved paper-facing methods above. |
-| `scale` or scenario key | The predeclared request-scale or scenario pairing key. |
-| `n_pairs` | Number of valid paired seed comparisons after failure/timeout accounting. |
-| `total_vehicle_km` | Total vehicle distance; maps to the code metric `total_vkm` if that name appears in raw outputs. |
-| `vkm_per_served_trip` | Vehicle-km normalized by served requests. |
-| `vkm_per_original_request` | Vehicle-km normalized by original demand. |
-| `served_share` | Served requests divided by original requests. |
-| paired difference | Method difference against the declared reference comparison within the same seed/scenario pair. |
-| confidence interval | 95% confidence interval for the paired difference, with method named in table note. |
+| Purpose | Test the main behavioral service-design comparison under shared passenger-response assumptions. |
+| Methods | DoorToDoor + Choice, SingleSidedPickup + Choice, SingleSidedDropoff + Choice, BidirectionalMP + Choice + RollingHorizon/ALNS. |
+| Seed count / row count | 20 paired seeds x 4 request scales x 4 methods = 320 completed rows, no failed/timeout/blocked rows. |
+| Metrics | total vehicle-km, vkm per served trip, vkm per original request, served share, behavioral acceptance, choice rejection, feasibility rejection, paired differences, bootstrap CIs. |
+| Denominator | Served-trip and original-request vehicle-km denominators must both be shown; served share uses original requests; rejection rates use their defined request/opportunity denominators. |
+| Allowed interpretation | Under the tested formal synthetic paired design, BidirectionalMP/FullModel shows lower vehicle-km intensity than door-to-door and single-sided choice baselines. |
+| Forbidden interpretation | FullModel is unconditionally superior; bidirectional meeting points dominate all baselines under all metrics; lower vkm proves pure routing superiority. |
+| Manuscript placement | Main results section after experiment design and metric protocol. |
+| Supports abstract claim? | Yes, only when paired with coverage/acceptance/rejection context. |
 
-The table note must state that failed, timeout, or incomplete pairs remain
-visible in provenance outputs and cannot be silently dropped.
+### 2. Coverage-Control Evidence
+
+| Field | Refresh plan |
+|---|---|
+| Purpose | Bound coverage confounding by comparing completed pairs near matched served-share targets. |
+| Methods | 06-03 matched-coverage controls comparing FullModel with DoorToDoor, SingleSidedPickup, and SingleSidedDropoff controls. |
+| Seed count / row count | 320 durable rows: 305 completed and 15 durable failed FullModel matched rows; 65 aggregate valid pairs per baseline in summaries. |
+| Metrics | total vehicle-km, vkm per served trip, vkm per original request, served share, valid-pair count, missing/failed-pair count, full-better share. |
+| Denominator | Served and original-request denominators; matched served-share target must be documented. |
+| Allowed interpretation | Completed matched-coverage pairs remain consistent with the FullModel efficiency direction. |
+| Forbidden interpretation | Matched coverage fully proves equal-coverage superiority or resolves coverage confounding without limitation. |
+| Manuscript placement | Robustness/control subsection in main text with full details in appendix/supplement. |
+| Supports abstract claim? | Optional, only if the abstract also states the 15 durable failed rows or avoids mentioning matched coverage. |
+
+### 3. Fixed Accepted-Set Routing Diagnostic
+
+| Field | Refresh plan |
+|---|---|
+| Purpose | Diagnose routing/service-design distance on a common accepted passenger set. |
+| Methods | 06-03 fixed accepted-set diagnostic. |
+| Seed count / row count | 20 paired seeds x 4 scales x method comparisons = 320 completed rows, no failed rows. |
+| Metrics | vkm per served request, vkm per original request, deterministic inserted share, total vehicle-km. |
+| Denominator | Served-request denominator for the supported diagnostic; original-request denominator must be shown because it does not support unconditional dominance. |
+| Allowed interpretation | Supports a routing/service-design efficiency signal on vkm per served request. |
+| Forbidden interpretation | Proves behavioral superiority or unconditional vkm/original advantage. |
+| Manuscript placement | Diagnostic subsection or appendix, after main behavioral and matched-coverage evidence. |
+| Supports abstract claim? | No. It can support a conclusion caveat or diagnostic note only. |
+
+### 4. Robustness Diagnostics
+
+| Field | Refresh plan |
+|---|---|
+| Purpose | Screen whether the main vehicle-km direction is consistent across reduced synthetic diagnostic grids. |
+| Methods | 06-04 utility sensitivity, walking-radius / meeting-point-density, and fleet-demand stress packages. |
+| Seed count / row count | Utility sensitivity: 420 completed rows; walking-radius / MP-density: 180 completed rows; fleet-demand stress: 60 completed rows. |
+| Metrics | vkm per served trip, vkm per original request, served share, setting ID, valid-pair count, full-better share. |
+| Denominator | Served and original-request denominators must both be named; served share must accompany efficiency. |
+| Allowed interpretation | Diagnostics are consistent with the main direction within tested synthetic settings. |
+| Forbidden interpretation | Robust under all parameters; universal walking-radius threshold; universal fleet-ratio rule. |
+| Manuscript placement | Robustness diagnostics subsection, likely compact main-text summary plus appendix tables. |
+| Supports abstract claim? | No headline abstract claim. At most, the abstract may say robustness outputs are bounded diagnostics. |
+
+### 5. Equity / Type-Level Diagnostics
+
+| Field | Refresh plan |
+|---|---|
+| Purpose | Report modeled passenger-type outcomes and individual-burden distributions without converting them into empirical equity claims. |
+| Methods | 06-04 equity type-level outcomes and individual burden distribution. |
+| Seed count / row count | 180 type-level rows and 12,000 individual burden rows. |
+| Metrics | type-level served share, type-level acceptance, wait, walk, IVT, generalized cost, walking burden, individual burden distributions. |
+| Denominator | Type-level request denominators and individual-level distributions; composition effects must be acknowledged. |
+| Allowed interpretation | Equity metrics are produced and bounded; modeled type-level and individual-burden patterns can be reported diagnostically. |
+| Forbidden interpretation | Strong equity benefits, demographic equity conclusions, or regulator prescriptions. |
+| Manuscript placement | Robustness/equity diagnostics plus limitations; detailed burden distributions in appendix/supplement. |
+| Supports abstract claim? | No, except as a boundary sentence that equity outputs are diagnostic. |
+
+### 6. Beijing-Inspired Synthetic Illustration
+
+| Field | Refresh plan |
+|---|---|
+| Purpose | Provide an illustrative scenario-transfer boundary, not external validation. |
+| Methods | Phase 7 data audit and legacy `results/beijing_results.csv`; no new Phase 7 experiment. |
+| Seed count / row count | Legacy 21 rows, 3 seeds x 7 legacy variants; no Phase 7 formal validation package. |
+| Metrics | Legacy served share and vehicle-km denominators if mentioned, plus data-quality attributes. |
+| Denominator | Legacy denominators only; do not mix with Phase 6 formal evidence. |
+| Allowed interpretation | Beijing-labeled material is a Beijing-inspired synthetic scenario and illustrative transfer check. |
+| Forbidden interpretation | Real Beijing case, semi-real validation, direct Beijing policy evidence, deployment readiness. |
+| Manuscript placement | Discussion, limitations, appendix/supplement; not headline results. |
+| Supports abstract claim? | No strong abstract claim. If mentioned, only as "Beijing-inspired synthetic scenario; real-city validation remains future work." |
+
+### 7. Reproducibility and Failure-Row Reporting
+
+| Field | Refresh plan |
+|---|---|
+| Purpose | Show that formal Phase 6 evidence packages have durable provenance while preserving Phase 10 final rerun as pending. |
+| Methods | Phase 6 raw/processed outputs, manifests, seed/config manifests, validators, denominator checks, failure ledger. |
+| Seed count / row count | Phase 6 manifest lists 1,928 rows/artifacts plus 12,000 individual burden rows; 15 durable failed matched rows. |
+| Metrics | validator status, schema_drift=false, denominator_validation=passed, completion/failure/timeout/blocked counts. |
+| Denominator | Denominator checks must be reported for metric tables; failure-row denominators must not be silently dropped. |
+| Allowed interpretation | Phase 6 formal outputs are documented and validated for claim-gate use. |
+| Forbidden interpretation | Final reproducibility package is complete; all final manuscript tables and figures can already be regenerated. |
+| Manuscript placement | Experimental design/reproducibility note and limitations. |
+| Supports abstract claim? | Optional methodological claim only; REP-01 and REP-02 remain Phase 10 pending. |
+
+## Required Section Order
+
+1. Experimental design and service-design variants.
+2. Metrics, denominators, paired comparisons, uncertainty, and status rows.
+3. Formal main behavioral evidence.
+4. Coverage-control evidence.
+5. Fixed accepted-set diagnostic.
+6. Robustness diagnostics.
+7. Equity/type-level diagnostics.
+8. Beijing-inspired synthetic illustration.
+9. Reproducibility and failure-row reporting.
+
+## Special Required Notes
+
+- 06-02 main behavioral matrix is the primary evidence family.
+- 06-03 matched coverage is main/control evidence, but the 15 durable failed
+  FullModel rows must be a limitation.
+- 06-03 fixed accepted-set is a routing diagnostic and cannot support the
+  behavioral headline.
+- 06-04 robustness is diagnostic.
+- 06-04 equity is exploratory.
+- Phase 7 Beijing-inspired synthetic material is illustrative only.
 
 ## Metric Language Rules
 
-- `vkm_per_trip is forbidden` for new formal evidence.
-- Use `vkm_per_served_trip` when the denominator is served requests.
-- Use `vkm_per_original_request` when the denominator is original requests.
-- Every efficiency statement must include coverage and rejection context,
-  including `served_share` and the relevant choice/feasibility rejection
-  mechanisms.
-- Do not report a vehicle-km saving without explaining whether it comes from
-  shorter routing, lower served share, passenger rejection, feasibility
-  rejection, or some combination of these mechanisms.
-- Do not use "acceptance rate" for deterministic insertion diagnostics. Use
-  served share, inserted share, or the specific status vocabulary required by
-  the experiment family.
-
-## Robustness and Diagnostic Allocation
-
-| Material | Main-text role | Appendix/supplement role |
-|---|---|---|
-| Matched coverage | Main-text robustness summary that asks whether efficiency patterns persist near a common served-share target. | Full target definition, tolerance, achieved shares, failure rows, and paired metrics. |
-| Fixed accepted-set controls | Main-text robustness summary that asks whether routing/service-design distance differences persist on a common passenger set. | Construction rule, retained set size/composition, per-method failures, and full metric rows. |
-| Equity and passenger-type evidence | Main-text trade-off summary only. | Type-level acceptance, wait, walk, IVT, generalized-cost distributions, and inequality metrics. |
-| ALNS diagnostics | Brief credibility note only if needed. | Runtime, convergence, budget, quality, and sensitivity detail. |
-| Greedy diagnostics | Diagnostic comparison only. | Full static or greedy insertion comparison and failure cases. |
-| No-rolling-horizon diagnostics | Mechanism summary only if Phase 8 supports it. | Full dynamic/static comparison and waiting-time mechanism evidence. |
-| No-choice diagnostics | Mechanism summary only. | Deterministic insertion rows and non-behavioral status interpretation. |
-| MILP diagnostics | Scoped exact-comparison caveat only. | Small-instance exact model, assumptions, solve status, no-Gurobi path, and comparable-gap rows. |
-| Gamma diagnostic | Welfare-accounting limitation only. | Full gamma sweep, with explicit note that gamma is post-hoc unless it affects decisions. |
-| Weight-sensitivity diagnostic | Optional bounded robustness note only if Phase 8 promotes a limited summary. | Complete weight grid, metrics, provenance, and sensitivity limits. |
-
-Matched coverage and fixed accepted-set controls belong in the main text as
-robustness summaries because they directly test coverage confounding and
-same-passenger routing interpretations. Their detailed designs and full tables
-belong in appendix or supplement so the main experiment section remains focused
-on the formal behavioral comparison.
-
-ALNS, greedy, no-rolling-horizon, no-choice, MILP, gamma, and
-weight-sensitivity material are diagnostics unless Phase 8 explicitly promotes
-a limited summary. Even then, the promoted text must remain subordinate to the
-formal behavioral evidence and must state its diagnostic scope.
-
-Equity can appear in the main text only as a trade-off summary, not a universal
-policy claim. Type-level and distributional details belong in appendix or
-supplement unless Phase 8 grades a specific equity statement as supported.
-
-## Synthetic Case Boundary
-
-Any current Beijing wording must use the exact phrase `Beijing-inspired
-synthetic scenario`. The phrase signals that the current material is a
-structured synthetic stress test, not an observed Beijing case study and not a
-real-data validation.
-
-Recommended wording:
-
-> We evaluate a Beijing-inspired synthetic scenario with a denser meeting-point
-> grid and peak-period demand pattern to test whether the formal synthetic
-> findings remain directionally consistent under a different synthetic spatial
-> design.
-
-Do not write:
-
-- "Beijing case study" unless Phase 7 or later supplies real or semi-real
-  evidence and Phase 8 approves the claim.
-- "Calibrated to Beijing" unless the calibration source, data fields, and
-  validation level are documented.
-- "Chinese city policy recommendation" unless the statement is bounded as a
-  scenario-specific managerial insight.
-
-The synthetic case can support a transfer-boundary discussion. It cannot by
-itself support a universal policy claim or a real-world deployment claim.
+- Use `total_vehicle_km`, `vkm_per_served_trip`, and
+  `vkm_per_original_request`.
+- Do not use `vkm_per_trip`.
+- Do not report vehicle-km without served share and rejection context.
+- Do not collapse choice rejection and feasibility rejection into a generic
+  "non-served" bucket when interpreting passenger response.
+- Do not mix behavioral, deterministic, diagnostic, and legacy rows in a single
+  headline result table.

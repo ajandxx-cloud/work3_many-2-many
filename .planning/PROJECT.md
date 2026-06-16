@@ -1,4 +1,4 @@
-# TR_E_Bidirectional_MeetingPoint_DRT_Experiment_Rebuild
+﻿# TR_E_Bidirectional_MeetingPoint_DRT_Experiment_Rebuild
 
 ## What This Is
 
@@ -35,6 +35,7 @@ Produce reproducible, reviewer-resistant evidence that supports only defensible 
 - Phase 8 completed the claim-evidence gate. Every manuscript-facing claim is inventoried, linked to evidence or limitation sources, graded strong/moderate/exploratory/unsupported, and routed to supported wording or delete/rewrite/limitations actions.
 - Phase 9 produced and verified the TR-E manuscript architecture, revised abstract plan, revised introduction plan, experiment-section evidence-family plan, and table/figure/managerial-insight plan.
 - Phase 9 locked final manuscript wording behind Phase 8 claim-gate artifacts, kept Beijing language bounded to a synthetic scenario, and removed legacy effect-size values from the new planning artifacts.
+- Phase 9 refresh consumed the completed Phase 8 claim gate and replaced placeholder-driven manuscript planning with claim-gated structure, abstract, introduction, experiment, table/figure, managerial-insight, limitation, audit, and verification artifacts.
 
 ### Active
 
@@ -83,6 +84,7 @@ The current README says the target journal is Transportation Research Part A, wh
 | Treat Phase 9 manuscript restructuring as claim-gated planning, not direct LaTeX rewriting | Phase 8 supported/unsupported claim artifacts are absent, so final prose and captions must remain placeholders | Complete |
 | Keep Phase 7 as a Beijing-inspired synthetic boundary, not a real case study | The repository has generated OD, generated meeting points, simulated times, and no imported real/semi-real case data | Complete |
 | Treat Phase 8 as the source of truth for final manuscript claims | The claim gate maps formal Phase 6 evidence and Phase 7 case limitations to allowed, forbidden, and downgraded wording | Complete |
+| Refresh Phase 9 after Phase 8 before Phase 10 | The earlier Phase 9 artifacts were preliminary because Phase 8 did not exist yet | Complete |
 
 ## Evolution
 
@@ -102,4 +104,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state.
 
 ---
-*Last updated: 2026-06-16 after Phase 8 evidence synthesis and claim gate*
+*Last updated: 2026-06-16 after Phase 9 claim-gated manuscript refresh*
