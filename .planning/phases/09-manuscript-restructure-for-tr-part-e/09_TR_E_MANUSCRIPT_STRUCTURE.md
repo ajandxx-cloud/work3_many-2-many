@@ -66,3 +66,33 @@ the reader reaches any result or managerial implication:
 | `manuscript/sections/policy.tex` | R1-R5 policy recommendations, VOT interpretation, deployment map | `Limitations and Boundary Conditions` plus `Managerial Insights and Boundary Conditions`, using conditional insight templates. |
 | `manuscript/sections/conclusion.tex` | Old result recap, contributions, policy implications, limitations | `Conclusion`, with Phase 8-supported claims only and unsupported/exploratory items moved to limitations or future work. |
 
+## Phase 8 Blocking Inputs
+
+Final manuscript claim wording is blocked until these Phase 8 artifacts exist
+and have been read:
+
+- `.planning/phases/08-evidence-synthesis-and-claim-gate/08_CLAIM_EVIDENCE_MATRIX.md`
+- `.planning/phases/08-evidence-synthesis-and-claim-gate/08_SUPPORTED_CLAIMS.md`
+- `.planning/phases/08-evidence-synthesis-and-claim-gate/08_UNSUPPORTED_OR_EXPLORATORY_CLAIMS.md`
+
+Because those inputs are absent in this workspace, this Phase 9 artifact may
+define structure, templates, and placeholders, but it must not lock final
+claim wording or final numerical effect statements.
+
+### Claim Placeholder Policy
+
+The following manuscript components must remain placeholders until all three
+Phase 8 files exist and are read:
+
+- Abstract result and contribution wording.
+- Introduction contribution wording and any result-preview sentence.
+- Table captions, including any statement about direction, magnitude,
+  confidence interval, robustness, or equity trade-off.
+- Conclusion claims and final takeaways.
+- Managerial insights, including R1-R5 rewrites and any applied guidance.
+
+Allowed placeholder forms include `[SUPPORTED_CLAIM_FROM_08]`,
+`[MAIN_EFFECT_SIZE_IF_SUPPORTED]`, `[ROBUSTNESS_STATUS_FROM_08]`, and
+`[MANAGERIAL_INSIGHT_IF_SUPPORTED]`. Unsupported or unresolved Phase 8 claims
+must be removed, downgraded, or moved to limitations/future work rather than
+smuggled into manuscript prose.
