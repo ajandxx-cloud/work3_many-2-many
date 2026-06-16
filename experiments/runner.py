@@ -54,7 +54,7 @@ _RAW_COLS = [
     "status", "detailed_reason", "runtime_s", "error_message",
     "result_schema_version", "timestamp_utc", "artifact_dir",
     "git_commit_or_code_hash", "n_requests", "n_offered", "n_served",
-    "acceptance_rate", "vehicle_km",
+    "acceptance_rate", "vehicle_km", "total_vehicle_km",
     "served_share", "behavioral_acceptance_rate",
     "choice_rejection_rate", "feasibility_rejection_rate",
     "vkm_per_served_trip", "vkm_per_original_request",
@@ -64,7 +64,7 @@ _RAW_COLS = [
 ]
 
 _METRIC_COLS = [
-    "acceptance_rate", "vehicle_km",
+    "acceptance_rate", "vehicle_km", "total_vehicle_km",
     "served_share", "behavioral_acceptance_rate",
     "choice_rejection_rate", "feasibility_rejection_rate",
     "vkm_per_served_trip", "vkm_per_original_request",
@@ -266,6 +266,7 @@ def _make_row(variant, scenario, scale: int, seed: int, result, m, results_dir: 
     row.update({
         "acceptance_rate": m.acceptance_rate,
         "vehicle_km": m.vehicle_km,
+        "total_vehicle_km": m.vehicle_km,
         "served_share": m.served_share,
         "behavioral_acceptance_rate": m.behavioral_acceptance_rate,
         "choice_rejection_rate": m.choice_rejection_rate,
@@ -309,6 +310,7 @@ def _make_error_row(
     row.update({
         "acceptance_rate": 0.0,
         "vehicle_km": 0.0,
+        "total_vehicle_km": 0.0,
         "served_share": 0.0,
         "behavioral_acceptance_rate": 0.0,
         "choice_rejection_rate": 0.0,

@@ -43,6 +43,7 @@ REQUIRED_RAW_FIELDS = {
     "n_requests",
     "n_offered",
     "n_served",
+    "total_vehicle_km",
 }
 
 QUARTET_METRIC_FIELDS = {
@@ -69,6 +70,8 @@ RERUN_LEDGER_COLUMNS = [
 def _empty_result(results_dir: Path) -> dict:
     return {
         "passed": True,
+        "schema_drift": False,
+        "denominator_checks": {},
         "errors": [],
         "warnings": [],
         "row_counts": {},
@@ -89,6 +92,7 @@ def _read_csv(path: Path, result: dict) -> pd.DataFrame | None:
 def _check_columns(df: pd.DataFrame, required: Iterable[str], label: str, result: dict) -> None:
     missing = sorted(set(required) - set(df.columns))
     if missing:
+        result["schema_drift"] = True
         result["errors"].append(f"{label} missing required columns: {', '.join(missing)}")
 
 
@@ -112,6 +116,89 @@ def _validate_numeric_ranges(df: pd.DataFrame, result: dict) -> None:
         values = _check_numeric_field(df, field, result)
         if values is not None and (values < 0.0).any():
             result["errors"].append(f"{field} must be non-negative")
+
+
+def _series_close(left: pd.Series, right: pd.Series, tolerance: float = 1e-6) -> pd.Series:
+    return (left - right).abs() <= tolerance
+
+
+def _validate_denominators(main: pd.DataFrame, result: dict) -> None:
+    """Check Phase 2 metric-contract denominators on completed formal rows."""
+    completed = main[main["status"] == "completed"].copy()
+    if completed.empty:
+        result["denominator_checks"] = {
+            "served_share": "skipped_no_completed_rows",
+            "vkm_per_served_trip": "skipped_no_completed_rows",
+            "vkm_per_original_request": "skipped_no_completed_rows",
+            "behavioral_acceptance_rate": "skipped_no_completed_rows",
+        }
+        return
+
+    required = {
+        "n_requests",
+        "n_served",
+        "served_share",
+        "behavioral_acceptance_rate",
+        "choice_rejection_rate",
+        "feasibility_rejection_rate",
+        "vehicle_km",
+        "total_vehicle_km",
+        "vkm_per_served_trip",
+        "vkm_per_original_request",
+    }
+    if not required.issubset(completed.columns):
+        result["denominator_checks"] = {"status": "skipped_missing_columns"}
+        return
+
+    n_requests = pd.to_numeric(completed["n_requests"], errors="coerce")
+    n_served = pd.to_numeric(completed["n_served"], errors="coerce")
+    vehicle_km = pd.to_numeric(completed["vehicle_km"], errors="coerce")
+    total_vehicle_km = pd.to_numeric(completed["total_vehicle_km"], errors="coerce")
+    safe_requests = n_requests.where(n_requests > 0)
+    safe_served = n_served.where(n_served > 0)
+
+    expected_served_share = (n_served / safe_requests).fillna(0.0)
+    expected_vkm_original = (vehicle_km / safe_requests).fillna(0.0)
+    expected_vkm_served = (vehicle_km / safe_served).fillna(0.0)
+    expected_behavioral_acceptance = (
+        1.0 - pd.to_numeric(completed["choice_rejection_rate"], errors="coerce")
+    )
+    rejection_sum = (
+        pd.to_numeric(completed["served_share"], errors="coerce")
+        + pd.to_numeric(completed["choice_rejection_rate"], errors="coerce")
+        + pd.to_numeric(completed["feasibility_rejection_rate"], errors="coerce")
+    )
+
+    checks = {
+        "served_share": _series_close(
+            pd.to_numeric(completed["served_share"], errors="coerce"),
+            expected_served_share,
+        ),
+        "vkm_per_original_request": _series_close(
+            pd.to_numeric(completed["vkm_per_original_request"], errors="coerce"),
+            expected_vkm_original,
+        ),
+        "vkm_per_served_trip": _series_close(
+            pd.to_numeric(completed["vkm_per_served_trip"], errors="coerce"),
+            expected_vkm_served,
+        ),
+        "behavioral_acceptance_rate": _series_close(
+            pd.to_numeric(completed["behavioral_acceptance_rate"], errors="coerce"),
+            expected_behavioral_acceptance,
+        ),
+        "rejection_partition": _series_close(rejection_sum, pd.Series(1.0, index=completed.index)),
+        "total_vehicle_km_alias": _series_close(total_vehicle_km, vehicle_km),
+    }
+    result["denominator_checks"] = {
+        name: "passed" if bool(mask.all()) else "failed"
+        for name, mask in checks.items()
+    }
+    for name, mask in checks.items():
+        if not bool(mask.all()):
+            failures = int((~mask).sum())
+            result["errors"].append(
+                f"denominator check failed for {name}: {failures} completed rows"
+            )
 
 
 def ensure_rerun_ledger(path: str | Path) -> Path:
@@ -340,6 +427,7 @@ def validate_phase06_main_outputs(
         result=result,
     )
     _validate_statuses(main, result)
+    _validate_denominators(main, result)
     _validate_utility_joinability(main, utility, result)
 
     ledger = append_unresolved_failures_to_ledger(main, ledger_path)

@@ -4,26 +4,26 @@ milestone: v1.0 Evidence-chain rebuild
 milestone_name: milestone
 current_phase: 06
 current_phase_name: formal-synthetic-experiments
-current_plan: 2
+current_plan: 3
 status: executing
-stopped_at: Phase 6 Plan 06-01 completed and gate resolved; ready to execute Plan 06-02 formal main matrix
-last_updated: "2026-06-16T06:58:00.000Z"
+stopped_at: Phase 6 Plan 06-02 formal main behavioral matrix passed; ready for Plan 06-03
+last_updated: "2026-06-16T07:03:20.000Z"
 last_activity: 2026-06-16
 progress:
   total_phases: 11
   completed_phases: 7
   total_plans: 29
-  completed_plans: 25
-  percent: 86
+  completed_plans: 26
+  percent: 90
 ---
 
 # State: TR_E_Bidirectional_MeetingPoint_DRT_Experiment_Rebuild
 
 **Current Phase:** 06
 **Current Phase Name:** formal-synthetic-experiments
-**Status:** Executing: ready for formal main matrix
-**Current Plan:** 2
-**Progress:** 86%
+**Status:** Executing: Plan 06-03 ready after formal main matrix passed
+**Current Plan:** 3
+**Progress:** 90%
 **Last Activity:** 2026-06-16
 
 ## Project Reference
@@ -36,7 +36,7 @@ See: `.planning/PROJECT.md`
 ## Current Position
 
 Phase: 06 (formal-synthetic-experiments) — EXECUTING
-Plan: 1 of 5 completed; Plan 06-02 is ready
+Plan: 2 of 5 completed; Plan 06-03 is ready
 Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is complete and verified, Phase 3 is complete and verified, Phase 4 is complete and verified, and Phase 5 pilot experiments are complete and verified. Phase 9 is complete and verified with five claim-gated manuscript-restructuring artifacts; final manuscript claims remain blocked on the absent Phase 6 formal report and absent Phase 8 claim-gate artifacts. Phase 10 created reproducibility artifacts but correctly blocked on those prerequisites, so execution has returned to Phase 6.
 
 ## Decisions
@@ -62,6 +62,7 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - Phase 5 fixed accepted-set smoke uses `common_candidate_serviceable` for seed 42 because the stricter served and actual-offer serviceable intersections are empty; this is a pilot routing diagnostic repair, not formal evidence.
 - Phase 10 reproducibility artifacts are created, but final verification is blocked because the Phase 6 formal report and three Phase 8 claim-gate files are missing.
 - Phase 6 Plan 06-01 harness and validators are created. The `BidirectionalMP_Choice_RH_ALNS` label/implementation gate is resolved by routing accepted `FullModel` requests through `RollingHorizon` while preserving actual-offer choice logs.
+- Phase 6 Plan 06-02 formal main behavioral matrix passed: 320/320 required `seed x scale x method` rows completed under `results/formal/phase06/main_behavioral`, validator passed, schema drift is false, failed/timeout rows are 0, and utility logs have 88,000 linkable rows. This is formal main evidence input only; do not write final manuscript claims before the Phase 6 report and Phase 8 claim gate.
 
 ## Pending Todos
 
@@ -79,7 +80,8 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - [x] Plan Phase 6 formal synthetic experiments.
 - [x] Execute Phase 6 Plan 06-01 formal harness, manifests, and validators.
 - [x] Resolve the `BidirectionalMP_Choice_RH_ALNS` label/implementation gate before running the 20-seed formal main matrix.
-- [ ] Execute Phase 6 formal main matrix and supplementary packages.
+- [x] Execute Phase 6 Plan 06-02 formal main behavioral matrix.
+- [ ] Execute Phase 6 remaining supplementary packages.
 - [ ] Generate Phase 6 formal synthetic results report.
 - [ ] Execute Phase 8 claim-evidence gate.
 - [ ] Rerun Phase 10 final verification after Phase 6 and Phase 8 artifacts exist.
@@ -143,12 +145,20 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - `experiments/formal_validation.py`
 - `tests/test_phase06_formal.py`
 - `results/formal/phase06/smoke/main_matrix_validation.json`
+- `.planning/phases/06-formal-synthetic-experiments/06-02-SUMMARY.md`
+- `results/formal/phase06/main_behavioral/raw_results.csv`
+- `results/formal/phase06/main_behavioral/processed_results.csv`
+- `results/formal/phase06/main_behavioral/utility_logs.csv`
+- `results/formal/phase06/main_behavioral/config_manifest.json`
+- `results/formal/phase06/main_behavioral/seed_manifest.json`
+- `results/formal/phase06/main_behavioral/run_manifest.json`
+- `results/formal/phase06/main_behavioral/validation_report.json`
 
 ## Session Continuity
 
-Last session: 2026-06-16T06:58:00.000Z
-Stopped at: Phase 6 Plan 06-01 completed and gate resolved; ready to execute Plan 06-02 formal main matrix
+Last session: 2026-06-16T07:03:20.000Z
+Stopped at: Phase 6 Plan 06-02 formal main behavioral matrix passed; ready for Plan 06-03
 Resume file: None
 
 ---
-*State updated: 2026-06-16 after resolving the Phase 6 label/implementation gate*
+*State updated: 2026-06-16 after Phase 6 Plan 06-02 formal main behavioral matrix passed*

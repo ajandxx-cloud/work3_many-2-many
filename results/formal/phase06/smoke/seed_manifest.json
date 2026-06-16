@@ -1,0 +1,44 @@
+{
+  "created_at_utc": "2026-06-16T06:16:41.888496+00:00",
+  "include_optional_extension": false,
+  "minimum_completion_rule": "required seeds 1-20 must complete as paired cells",
+  "optional_extension_rule": "seeds 21-30 upgrade evidence only if every optional paired cell completes",
+  "optional_extension_seeds": [
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "replacement_seed_policy": "replacement seeds are forbidden",
+  "required_seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+  ],
+  "selected_seeds": [
+    1
+  ]
+}

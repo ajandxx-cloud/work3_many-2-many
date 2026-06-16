@@ -1,0 +1,50 @@
+{
+  "actual_raw_row_count": 4,
+  "alias_artifacts": {
+    "formal_config_manifest.json": "config_manifest.json",
+    "formal_run_manifest.json": "run_manifest.json",
+    "formal_seed_manifest.json": "seed_manifest.json",
+    "main_matrix_validation.json": "validation_report.json",
+    "metrics_table.csv": "processed_results.csv",
+    "synthetic_results.csv": "raw_results.csv",
+    "utility_components.csv": "utility_logs.csv"
+  },
+  "command": "python -m experiments.phase06_formal --family main --scales 100 --seeds 1 --results-dir results/formal/phase06/smoke",
+  "config_manifest_path": "results\\formal\\phase06\\smoke\\formal_config_manifest.json",
+  "expected_row_count": 4,
+  "finished_at_utc": "2026-06-16T06:16:49.268900+00:00",
+  "git_commit_before_run": "d7798a1",
+  "method_list": [
+    "BidirectionalMP_Choice_RH_ALNS",
+    "DoorToDoor_Choice_CommonRouting",
+    "SingleSidedDropoff_Choice_CommonRouting",
+    "SingleSidedPickup_Choice_CommonRouting"
+  ],
+  "phase": "06",
+  "plan": "06-02",
+  "results_dir": "results\\formal\\phase06\\smoke",
+  "run_type": "formal_main_behavioral",
+  "scale_list": [
+    100
+  ],
+  "seed_list": [
+    1
+  ],
+  "seed_manifest_path": "results\\formal\\phase06\\smoke\\formal_seed_manifest.json",
+  "started_at_utc": "2026-06-16T06:16:41.888496+00:00",
+  "status": "validated_passed",
+  "status_counts": {},
+  "utility_log_count": 400,
+  "validation_report_path": "results\\formal\\phase06\\smoke\\main_matrix_validation.json",
+  "validator_errors": [],
+  "validator_passed": true,
+  "validator_row_counts": {
+    "failed_rows": 0,
+    "main_behavioral_rows": 4,
+    "metrics_table": 4,
+    "synthetic_results": 4,
+    "timeout_rows": 0,
+    "utility_components": 400
+  },
+  "validator_warnings": []
+}

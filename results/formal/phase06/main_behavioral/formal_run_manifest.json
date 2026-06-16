@@ -1,0 +1,77 @@
+{
+  "actual_raw_row_count": 320,
+  "alias_artifacts": {
+    "formal_config_manifest.json": "config_manifest.json",
+    "formal_run_manifest.json": "run_manifest.json",
+    "formal_seed_manifest.json": "seed_manifest.json",
+    "main_matrix_validation.json": "validation_report.json",
+    "metrics_table.csv": "processed_results.csv",
+    "synthetic_results.csv": "raw_results.csv",
+    "utility_components.csv": "utility_logs.csv"
+  },
+  "command": "python -m experiments.phase06_formal --family main --scales 100 200 300 500 --seeds 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 --results-dir results/formal/phase06/main_behavioral",
+  "config_manifest_path": "results\\formal\\phase06\\main_behavioral\\formal_config_manifest.json",
+  "expected_row_count": 320,
+  "finished_at_utc": "2026-06-16T07:02:40.851369+00:00",
+  "formal_seed_count": 20,
+  "git_commit_before_run": "d7798a1",
+  "method_list": [
+    "BidirectionalMP_Choice_RH_ALNS",
+    "DoorToDoor_Choice_CommonRouting",
+    "SingleSidedDropoff_Choice_CommonRouting",
+    "SingleSidedPickup_Choice_CommonRouting"
+  ],
+  "optional_extension_attempted": false,
+  "optional_extension_status": "not_attempted",
+  "phase": "06",
+  "plan": "06-02",
+  "results_dir": "results\\formal\\phase06\\main_behavioral",
+  "run_type": "formal_main_behavioral",
+  "scale_list": [
+    100,
+    200,
+    300,
+    500
+  ],
+  "seed_list": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+  ],
+  "seed_manifest_path": "results\\formal\\phase06\\main_behavioral\\formal_seed_manifest.json",
+  "started_at_utc": "2026-06-16T06:18:38.380037+00:00",
+  "status": "validated_passed",
+  "status_counts": {
+    "completed": 320
+  },
+  "utility_log_count": 88000,
+  "validation_report_path": "results\\formal\\phase06\\main_behavioral\\main_matrix_validation.json",
+  "validator_errors": [],
+  "validator_passed": true,
+  "validator_row_counts": {
+    "failed_rows": 0,
+    "main_behavioral_rows": 320,
+    "metrics_table": 4,
+    "synthetic_results": 320,
+    "timeout_rows": 0,
+    "utility_components": 88000
+  },
+  "validator_warnings": []
+}

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import json
 import os
 import sys
 from pathlib import Path
@@ -53,16 +54,17 @@ def _raw_row(tmp_path: Path, seed: int, scale: int, label: str, status: str = "c
         "timestamp_utc": "2026-06-15T00:00:00+00:00",
         "artifact_dir": str(tmp_path),
         "git_commit_or_code_hash": "abc123",
-        "n_requests": scale,
+        "n_requests": 8,
         "n_offered": 4,
         "n_served": 3,
         "acceptance_rate": 0.375,
         "vehicle_km": 1.0,
+        "total_vehicle_km": 1.0,
         "served_share": 0.375,
         "behavioral_acceptance_rate": 0.75,
         "choice_rejection_rate": 0.25,
         "feasibility_rejection_rate": 0.375,
-        "vkm_per_served_trip": 0.333,
+        "vkm_per_served_trip": 1.0 / 3.0,
         "vkm_per_original_request": 0.125,
         "avg_wait": 1.0,
         "p95_wait": 1.0,
@@ -166,6 +168,16 @@ def test_run_phase06_main_scopes_runner_and_writes_to_supplied_directory(tmp_pat
     assert (tmp_path / "synthetic_results.csv").exists()
     assert (tmp_path / "metrics_table.csv").exists()
     assert (tmp_path / "utility_components.csv").exists()
+    assert (tmp_path / "raw_results.csv").exists()
+    assert (tmp_path / "processed_results.csv").exists()
+    assert (tmp_path / "utility_logs.csv").exists()
+    assert (tmp_path / "run_manifest.json").exists()
+    manifest = json.loads((tmp_path / "run_manifest.json").read_text(encoding="utf-8"))
+    assert manifest["expected_row_count"] == 4
+    assert manifest["actual_raw_row_count"] == 4
+    assert manifest["formal_seed_count"] == 1
+    assert manifest["optional_extension_status"] == "not_attempted"
+    assert manifest["status_counts"] == {"completed": 4}
     assert len(pd.read_csv(tmp_path / "synthetic_results.csv")) == 4
 
 
@@ -182,8 +194,29 @@ def test_validate_phase06_main_outputs_accepts_complete_matrix_without_label_gat
     )
 
     assert result["passed"] is True
+    assert result["schema_drift"] is False
+    assert set(result["denominator_checks"].values()) == {"passed"}
     assert (tmp_path / "main_matrix_validation.json").exists()
     assert result["ledger_path"].endswith("ledger.csv")
+
+
+def test_validate_phase06_main_outputs_blocks_denominator_drift(tmp_path):
+    raw = _write_valid_outputs(tmp_path, seeds=[1], scales=[100])
+    raw.loc[0, "served_share"] = 0.99
+    raw.to_csv(tmp_path / "synthetic_results.csv", index=False)
+
+    result = validate_phase06_main_outputs(
+        tmp_path,
+        expected_seeds=[1],
+        expected_scales=[100],
+        expected_method_labels=phase06.FORMAL_MAIN_METHOD_LABELS,
+        ledger_path=tmp_path / "ledger.csv",
+        require_label_gate=False,
+    )
+
+    assert result["passed"] is False
+    assert result["denominator_checks"]["served_share"] == "failed"
+    assert any("denominator check failed for served_share" in error for error in result["errors"])
 
 
 def test_validate_phase06_main_outputs_blocks_missing_cells(tmp_path):

@@ -7,6 +7,14 @@
     "results\\formal\\phase06\\smoke\\formal_config_manifest.json",
     "results\\formal\\phase06\\smoke\\main_matrix_validation.json"
   ],
+  "denominator_checks": {
+    "behavioral_acceptance_rate": "passed",
+    "rejection_partition": "passed",
+    "served_share": "passed",
+    "total_vehicle_km_alias": "passed",
+    "vkm_per_original_request": "passed",
+    "vkm_per_served_trip": "passed"
+  },
   "errors": [],
   "label_implementation_gate": {
     "errors": [],
@@ -24,5 +32,6 @@
     "timeout_rows": 0,
     "utility_components": 400
   },
+  "schema_drift": false,
   "warnings": []
 }

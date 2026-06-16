@@ -1,0 +1,33 @@
+{
+  "beijing": false,
+  "created_at_utc": "2026-06-16T06:18:38.380037+00:00",
+  "expected_completed_rows": 320,
+  "family": "main_behavioral_synthetic",
+  "formal_scales": [
+    100,
+    200,
+    300,
+    500
+  ],
+  "legacy_result_paths_forbidden": [
+    "results/synthetic_results.csv",
+    "results/metrics_table.csv",
+    "results/pilot/phase05"
+  ],
+  "method_labels": [
+    "BidirectionalMP_Choice_RH_ALNS",
+    "DoorToDoor_Choice_CommonRouting",
+    "SingleSidedDropoff_Choice_CommonRouting",
+    "SingleSidedPickup_Choice_CommonRouting"
+  ],
+  "phase": "06",
+  "pilot_scale_excluded": 20,
+  "results_dir": "results\\formal\\phase06\\main_behavioral",
+  "runner": "experiments.runner.run_all_experiments",
+  "variant_names": [
+    "FullModel",
+    "DoorToDoor",
+    "SingleSidedDropoff",
+    "SingleSidedPickup"
+  ]
+}
