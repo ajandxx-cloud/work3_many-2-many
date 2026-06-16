@@ -2,28 +2,28 @@
 gsd_state_version: 1.0
 milestone: v1.0 Evidence-chain rebuild
 milestone_name: milestone
-current_phase: 6
-current_phase_name: formal-synthetic-experiments
-current_plan: Not started
+current_phase: 09
+current_phase_name: manuscript-restructure-for-tr-part-e
+current_plan: 1
 status: executing
-stopped_at: Phase 9 context gathered
-last_updated: "2026-06-16T02:28:04.554Z"
+stopped_at: Completed 09-01-PLAN.md
+last_updated: "2026-06-16T02:38:05.327Z"
 last_activity: 2026-06-16
 progress:
   total_phases: 11
   completed_phases: 6
   total_plans: 26
-  completed_plans: 16
+  completed_plans: 17
   percent: 55
 ---
 
 # State: TR_E_Bidirectional_MeetingPoint_DRT_Experiment_Rebuild
 
-**Current Phase:** 6
-**Current Phase Name:** formal-synthetic-experiments
+**Current Phase:** 09
+**Current Phase Name:** manuscript-restructure-for-tr-part-e
 **Status:** Ready to execute
-**Current Plan:** Not started
-**Progress:** [██████████] 100%
+**Current Plan:** 1
+**Progress:** [███████░░░] 65%
 **Last Activity:** 2026-06-16
 
 ## Project Reference
@@ -31,12 +31,12 @@ progress:
 See: `.planning/PROJECT.md`
 
 **Core value:** Produce reproducible, reviewer-resistant evidence for defensible conditional claims about bidirectional meeting-point DRT.
-**Current focus:** Phase 6 — formal synthetic experiments
+**Current focus:** Phase 09 — manuscript-restructure-for-tr-part-e
 
 ## Current Position
 
-Phase: 06 (formal-synthetic-experiments) - READY TO EXECUTE
-Plan: 0 of 5
+Phase: 09 (manuscript-restructure-for-tr-part-e) — EXECUTING
+Plan: 2 of 5
 Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is complete and verified, Phase 3 is complete and verified, and Phase 4 is complete and verified. Phase 5 pilot experiments ran and produced `05_PILOT_RESULTS.md`; Phase 5 gap closure fixed `BUG-05-001`, `BUG-05-002`, and `BUG-05-003` in the ledger without starting formal experiments. Phase 6 formal synthetic experiments are now planned as five executable waves.
 
 ## Decisions
@@ -132,9 +132,9 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 
 ## Session Continuity
 
-Last session: 2026-06-16T02:16:32.546Z
-Stopped at: Phase 9 context gathered
-Resume file: .planning/phases/09-manuscript-restructure-for-tr-part-e/09-CONTEXT.md
+Last session: 2026-06-16T02:38:05.319Z
+Stopped at: Completed 09-01-PLAN.md
+Resume file: None
 
 ---
 *State updated: 2026-06-15 after Phase 6 planning*
