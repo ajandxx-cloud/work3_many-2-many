@@ -1,0 +1,152 @@
+# Requirements: Work 3 TR-E Claim-Ready Manuscript Package
+
+**Defined:** 2026-06-16
+**Core Value:** Produce a defensible TR Part E manuscript package in which every claim, table, figure, and positioning statement is traceable to the formal Phase 6 evidence or is clearly labeled as diagnostic, exploratory, or a limitation.
+
+## v1 Requirements
+
+Requirements for the current initialization roadmap. Each requirement must map to exactly one roadmap phase.
+
+### Planning And Audit
+
+- [ ] **PLAN-01**: Project has a milestone folder at `.planning/milestones/tr_e_claim_ready/` containing the required milestone artifacts.
+- [ ] **PLAN-02**: Project has `00_MILESTONE_PLAN.md` defining execution order, evidence boundaries, manuscript touchpoints, and verification gates.
+- [ ] **PLAN-03**: Project has `01_REPO_AND_EVIDENCE_AUDIT.md` documenting canonical source files, canonical evidence packages, non-canonical archives/smoke outputs, and current repository risks.
+- [ ] **PLAN-04**: Project has `05_BLOCKERS_AND_SAFE_CLAIMS.md` identifying claim-critical blockers, safe claims, downgraded claims, and prohibited wording.
+
+### TR-E Positioning
+
+- [ ] **POSE-01**: README, manuscript metadata, and project-facing documentation touched by this milestone consistently target Transportation Research Part E: Logistics and Transportation Review.
+- [ ] **POSE-02**: Manuscript title, abstract, introduction, and contribution framing present the work as a logistics/operations contribution rather than a TR Part A policy-first contribution.
+- [ ] **POSE-03**: Literature review connects the paper to DARP, meeting-point DRT, dynamic DRT routing, on-demand mobility logistics, service consolidation, passenger choice, and rolling-horizon operations.
+- [ ] **POSE-04**: The policy section is reframed as managerial and operational implications for service design, fleet deployment, consolidation, coverage-efficiency trade-offs, and passenger-segment monitoring.
+
+### Claims And Evidence
+
+- [ ] **CLAI-01**: Project has `02_TR_E_POSITIONING_LOCK.md` stating the allowed paper framing, prohibited framing, core contribution, and journal-fit rationale.
+- [ ] **CLAI-02**: Project has `03_CLAIM_LEDGER.md` mapping each manuscript claim to manuscript location, source result file, metric, comparison, reported number, evidence role, safe wording, and prohibited wording.
+- [ ] **CLAI-03**: Every numerical claim in abstract, introduction, experiments, managerial/operational implications, and conclusion appears in the claim ledger.
+- [ ] **CLAI-04**: Claims distinguish primary behavioral evidence, matched-coverage diagnostic evidence, fixed-accepted-set diagnostic evidence, robustness/sensitivity evidence, equity/type heterogeneity evidence, algorithm diagnostics, and limitations.
+- [ ] **CLAI-05**: Manuscript does not state or imply that FullModel universally dominates DoorToDoor or all baselines.
+- [ ] **CLAI-06**: Manuscript describes Gamma only as post-hoc welfare accounting unless endogenous Gamma behavior is implemented and tested in a separate future milestone.
+- [ ] **CLAI-07**: Manuscript describes the Beijing scenario as Beijing-inspired or semi-realistic synthetic grid unless real public data ingestion is implemented.
+- [ ] **CLAI-08**: Manuscript describes the MILP only as a simplified ex-post routing diagnostic for fixed accepted sets, not a full exact dynamic routing benchmark or ALNS near-optimality proof.
+
+### Manuscript Revision
+
+- [ ] **MANU-01**: `manuscript/main.tex` journal field is updated from Transportation Research Part A to Transportation Research Part E: Logistics and Transportation Review.
+- [ ] **MANU-02**: Abstract is rewritten to emphasize logistics, service consolidation, dynamic routing, operational efficiency, passenger-response-aware offer design, evidence provenance, and conditional findings.
+- [ ] **MANU-03**: Introduction contribution list is rewritten as concise, defensible, evidence-consistent TR-E contributions.
+- [ ] **MANU-04**: Model and algorithm sections are revised only as needed to keep offer generation, passenger response, rolling horizon routing, Gamma semantics, and MILP scope clear and claim-consistent.
+- [ ] **MANU-05**: Experiments section separates main formal evidence, diagnostics, robustness/sensitivity, equity/type heterogeneity, and algorithm diagnostics.
+- [ ] **MANU-06**: Managerial and operational implications replace policy-first framing while retaining clearly labeled public-service implications where supported.
+- [ ] **MANU-07**: Conclusion states conditional contributions, formal evidence boundaries, limitations, and future work without overclaiming.
+- [ ] **MANU-08**: Elsevier-style prose is polished, and bullet-style contribution lists are converted to acceptable academic prose or concise list form when needed.
+
+### Tables Figures And Provenance
+
+- [ ] **TFIG-01**: Manuscript-ready tables are generated or refreshed from formal Phase 6 processed outputs only.
+- [ ] **TFIG-02**: Manuscript-ready figures are generated or refreshed from validated formal Phase 6 processed outputs only.
+- [ ] **TFIG-03**: Any old manuscript table using 3-seed results is replaced with formal Phase 6 evidence or clearly removed from the main paper.
+- [ ] **TFIG-04**: Existing old values such as 18.3%, 29.1%, 35.0%, and 0.1216 are checked against current formal evidence and either updated, retained with provenance, or removed.
+- [ ] **TFIG-05**: Denominators are consistent and labeled for vkm per served trip, vkm per original request, served share, behavioral acceptance rate, choice rejection rate, and feasibility rejection rate.
+- [ ] **TFIG-06**: Weight sensitivity calculations use the shared metric helper and are not inflated by acceptance-rate-only denominators.
+
+### Verification And Readiness
+
+- [ ] **VERI-01**: Project has `04_MANUSCRIPT_ACTION_PLAN.md` sequencing manuscript edits, evidence checks, table/figure refresh, and verification tasks.
+- [ ] **VERI-02**: Formal statistics validation command is run when available, or its unavailability is documented with manuscript impact.
+- [ ] **VERI-03**: Targeted pytest checks run for metrics, variants, runner, scenarios, coverage controls, robustness, and formal statistics, or any failures are documented with exact reason and manuscript impact.
+- [ ] **VERI-04**: Manuscript compilation is run from `manuscript/` using a pdflatex/bibtex/pdflatex/pdflatex sequence, or any failure is documented with exact reason and manuscript impact.
+- [ ] **VERI-05**: Project has `99_MILESTONE_VERIFICATION.md` recording verification commands, outputs, pass/fail status, remaining blockers, and readiness classification.
+- [ ] **VERI-06**: Final readiness status is one of: TR-E submission-ready, TR-E near-ready with minor blockers, or not ready due to specific blockers.
+
+## v2 Requirements
+
+Deferred to future milestones. Tracked but not in the current roadmap.
+
+### Empirical Data
+
+- **DATA-01**: Implement reproducible public-data ingestion for a real Beijing case study.
+- **DATA-02**: Validate passenger choice parameters against stated-preference or revealed-preference data.
+- **DATA-03**: Add environment/dependency provenance for formal runs, including Python, package versions, OS, CPU, and solver status.
+
+### Model Extensions
+
+- **MODL-01**: Implement endogenous Gamma behavior in offer generation, routing, or acceptance decisions if Pareto-frontier claims are desired.
+- **MODL-02**: Replace the simplified ex-post MILP diagnostic with a fuller exact dynamic routing benchmark if exactness claims are desired.
+- **MODL-03**: Add richer passenger choice sets beyond a single-offer binary logit mechanism.
+- **MODL-04**: Improve rolling-horizon service ledger bookkeeping for exact completed-trip walking and in-vehicle time reconstruction.
+
+### Reproducibility Hardening
+
+- **REPR-01**: Make bare `pytest` from the repository root green by configuring `testpaths`, `pythonpath`, and archive exclusions.
+- **REPR-02**: Add dependency metadata or extras for pandas and matplotlib.
+- **REPR-03**: Add a lockfile or constraints file for paper reproduction.
+
+## Out of Scope
+
+Explicitly excluded from the current initialization roadmap.
+
+| Feature | Reason |
+|---------|--------|
+| Broad algorithm redesign | Current goal is manuscript readiness and claim integrity, not a new optimization method. |
+| Full formal experiment rerun by default | Phase 6 formal evidence has passed validation; rerun only if verification fails or a claim-critical formula bug is found. |
+| Manual editing of numerical results | Violates evidence integrity and user constraints. |
+| Hidden parameter tuning for stronger narrative | Violates evidence integrity and would make claims indefensible. |
+| Real Beijing validation claim | No reproducible real public-data ingestion pipeline is currently established. |
+| Endogenous Pareto frontier claim | Gamma is currently post-hoc welfare accounting only. |
+| Full exact dynamic routing benchmark claim | Current MILP is a simplified ex-post diagnostic. |
+| Archive/smoke/ad hoc outputs as formal evidence | Non-canonical unless explicitly audited and labeled historical or diagnostic. |
+
+## Traceability
+
+Which phases cover which requirements. Updated during roadmap creation.
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| PLAN-01 | TBD | Pending |
+| PLAN-02 | TBD | Pending |
+| PLAN-03 | TBD | Pending |
+| PLAN-04 | TBD | Pending |
+| POSE-01 | TBD | Pending |
+| POSE-02 | TBD | Pending |
+| POSE-03 | TBD | Pending |
+| POSE-04 | TBD | Pending |
+| CLAI-01 | TBD | Pending |
+| CLAI-02 | TBD | Pending |
+| CLAI-03 | TBD | Pending |
+| CLAI-04 | TBD | Pending |
+| CLAI-05 | TBD | Pending |
+| CLAI-06 | TBD | Pending |
+| CLAI-07 | TBD | Pending |
+| CLAI-08 | TBD | Pending |
+| MANU-01 | TBD | Pending |
+| MANU-02 | TBD | Pending |
+| MANU-03 | TBD | Pending |
+| MANU-04 | TBD | Pending |
+| MANU-05 | TBD | Pending |
+| MANU-06 | TBD | Pending |
+| MANU-07 | TBD | Pending |
+| MANU-08 | TBD | Pending |
+| TFIG-01 | TBD | Pending |
+| TFIG-02 | TBD | Pending |
+| TFIG-03 | TBD | Pending |
+| TFIG-04 | TBD | Pending |
+| TFIG-05 | TBD | Pending |
+| TFIG-06 | TBD | Pending |
+| VERI-01 | TBD | Pending |
+| VERI-02 | TBD | Pending |
+| VERI-03 | TBD | Pending |
+| VERI-04 | TBD | Pending |
+| VERI-05 | TBD | Pending |
+| VERI-06 | TBD | Pending |
+
+**Coverage:**
+- v1 requirements: 36 total
+- Mapped to phases: 0
+- Unmapped: 36
+
+---
+*Requirements defined: 2026-06-16*
+*Last updated: 2026-06-16 after initial definition*
