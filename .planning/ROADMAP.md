@@ -144,6 +144,8 @@
 
 ## Phase 7: Semi-Real or Beijing-Inspired Case Study
 
+**Status:** Complete - 2026-06-16
+
 **Goal:** Provide external validity beyond controlled synthetic tests, without mislabeling synthetic data as real.
 
 **Requirements:** CASE-01, CASE-02
@@ -155,10 +157,11 @@
 4. Qualitative patterns are compared against synthetic findings.
 
 **Outputs:**
-- `07_CASE_STUDY_RESULTS.md`
-- case data description
-- case tables and figures
-- limitation notes
+- `.planning/phases/07-semi-real-or-beijing-inspired-case-study/07_DATA_AUDIT.md`
+- `.planning/phases/07-semi-real-or-beijing-inspired-case-study/07_CASE_STUDY_RESULTS.md`
+- `.planning/phases/07-semi-real-or-beijing-inspired-case-study/07_CASE_CLAIM_BOUNDARY.md`
+- `.planning/phases/07-semi-real-or-beijing-inspired-case-study/07-VERIFICATION.md`
+- Bounded limitation notes: current case material is Beijing-inspired synthetic, not real or semi-real Beijing evidence.
 
 ## Phase 8: Evidence Synthesis and Claim Gate
 

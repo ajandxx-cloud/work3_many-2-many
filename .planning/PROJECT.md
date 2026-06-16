@@ -31,6 +31,7 @@ Produce reproducible, reviewer-resistant evidence that supports only defensible 
 - Phase 5 ran readiness-only pilot experiments over seeds 42/43/44 at scale 20 for the behavioral method family, with durable raw outputs, status rows, and provenance.
 - Phase 5 closed the matched-coverage pilot blockers with per-seed integer target counts based on the minimum serviceable count across FullModel and uncapped DoorToDoorCapped controls.
 - Phase 5 closed the fixed accepted-set smoke blocker with an explicit `common_candidate_serviceable` fallback, recorded as pilot readiness evidence only and not as a formal-results construction rule.
+- Phase 7 audited case-study data availability and closed as a bounded Beijing-inspired synthetic case. No real or semi-real OD, road-network, transit-stop/POI, request-time, passenger-preference, or fleet data are present in the current repository.
 - Phase 9 produced and verified the TR-E manuscript architecture, revised abstract plan, revised introduction plan, experiment-section evidence-family plan, and table/figure/managerial-insight plan.
 - Phase 9 locked final manuscript wording behind Phase 8 claim-gate artifacts, kept Beijing language bounded to a synthetic scenario, and removed legacy effect-size values from the new planning artifacts.
 
@@ -80,6 +81,7 @@ The current README says the target journal is Transportation Research Part A, wh
 | Keep algorithm diagnostics separate from behavioral evidence | Phase 4 validated greedy, no-RH, ALNS, and MILP diagnostics as algorithm evidence only | Complete |
 | Treat Phase 5 pilot closure as readiness evidence only | Gap closure fixed pilot blockers without creating formal experiment evidence or manuscript claims | Complete |
 | Treat Phase 9 manuscript restructuring as claim-gated planning, not direct LaTeX rewriting | Phase 8 supported/unsupported claim artifacts are absent, so final prose and captions must remain placeholders | Complete |
+| Keep Phase 7 as a Beijing-inspired synthetic boundary, not a real case study | The repository has generated OD, generated meeting points, simulated times, and no imported real/semi-real case data | Complete |
 
 ## Evolution
 
@@ -99,4 +101,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state.
 
 ---
-*Last updated: 2026-06-16 after Phase 9 completion*
+*Last updated: 2026-06-16 after Phase 7 bounded synthetic case closure*

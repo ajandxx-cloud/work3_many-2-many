@@ -65,8 +65,8 @@ Completed by Phase 6 Plan 06-05: 06-02 main behavioral matrix, 06-03 coverage co
 
 ### Case Study
 
-- **CASE-01**: If data are available, add a semi-real case study with real or semi-real OD, road network, and meeting-point data.
-- **CASE-02**: If real/semi-real data are unavailable, keep the case as Beijing-inspired synthetic and write limitations accordingly.
+- [x] **CASE-01**: Decide whether real or semi-real case-study data are available. Phase 7 found no real/semi-real OD, road network, meeting-point, request-time, passenger-preference, or fleet data in the current repository; therefore no semi-real case was added.
+- [x] **CASE-02**: If real/semi-real data are unavailable, keep the case as Beijing-inspired synthetic and write limitations accordingly. Completed by Phase 7 with `07_DATA_AUDIT.md`, `07_CASE_STUDY_RESULTS.md`, `07_CASE_CLAIM_BOUNDARY.md`, and `07-VERIFICATION.md`.
 
 ### Manuscript
 
@@ -115,6 +115,8 @@ Completed by Phase 6 Plan 06-05: 06-02 main behavioral matrix, 06-03 coverage co
 | REP-01 | Phase 10 | Pending |
 | REP-02 | Phase 10 | Pending |
 | REP-03 | Phase 5 | Complete |
+| CASE-01 | Phase 7 | Complete - data availability decided; no real/semi-real data present |
+| CASE-02 | Phase 7 | Complete - Beijing-inspired synthetic limitation boundary written |
 
 **Coverage:**
 - v1 requirements: 27 total
@@ -123,4 +125,4 @@ Completed by Phase 6 Plan 06-05: 06-02 main behavioral matrix, 06-03 coverage co
 
 ---
 *Requirements defined: 2026-06-15*
-*Last updated: 2026-06-16 after Phase 6 Plan 06-05 closeout*
+*Last updated: 2026-06-16 after Phase 7 bounded synthetic case closure*

@@ -60,6 +60,31 @@
 
 Use TR-E-level rigor as the planning bar. The manuscript should emphasize operational evidence, fair behavioral comparisons, metric denominator discipline, reproducibility, and conditional claims. TR-A-style policy language should remain secondary and simulation-based unless Phase 7 supplies stronger case-study evidence.
 
+## Phase 7 Case-Study Boundary
+
+**Status:** Complete - 2026-06-16
+
+Phase 7 found no real or semi-real case-study data in the current repository.
+The available Beijing-labeled material is a Beijing-inspired synthetic scenario:
+generated OD, generated regular-grid meeting points, simulated morning-peak
+request times, simulation-range passenger preferences, and an experimental fleet
+setting.
+
+Allowed claim scope:
+
+- Bounded illustrative scenario.
+- Scenario-transfer discussion.
+- Limitation-level or exploratory external-validity note for Phase 8.
+
+Forbidden claim scope:
+
+- Real Beijing validation.
+- Semi-real Beijing case-study evidence.
+- Direct city policy recommendations.
+- Deployment readiness or universal superiority claims.
+
+Phase 8 must treat Phase 7 as limitation-level or exploratory evidence only.
+
 ### Requirement status and residual risk
 
 | Requirement | Phase 1 status | Residual risk |
@@ -69,4 +94,4 @@ Use TR-E-level rigor as the planning bar. The manuscript should emphasize operat
 | POS-03 | Complete for planning | TR-E-level planning bar is resolved; final venue choice remains a manuscript strategy decision. |
 
 ---
-*Last updated: 2026-06-15 after Phase 0 initialization*
+*Last updated: 2026-06-16 after Phase 7 bounded synthetic case closure*
