@@ -27,15 +27,16 @@ Produce a defensible TR Part E manuscript package in which every claim, table, f
 
 - [ ] Reposition README, manuscript metadata, abstract, introduction, literature review, experiment narrative, implications, and conclusion from a Part A policy-first framing to a TR Part E logistics-and-operations framing.
 - [ ] Create the milestone planning and audit folder `.planning/milestones/tr_e_claim_ready/` with a milestone plan, repository/evidence audit, TR-E positioning lock, claim ledger, manuscript action plan, blockers/safe claims table, and verification report.
-- [ ] Build a claim ledger that maps every numerical and qualitative manuscript claim to an exact evidence source, metric, method comparison, evidence role, safe wording, and prohibited wording.
+- [ ] Build a claim ledger that maps every numerical and qualitative manuscript claim to source path, generation script, generation command, metric formula, numerator, denominator, evidence role, allowed sentence, and prohibited sentence.
 - [ ] Replace or relabel any old 3-seed, smoke, archived, or ad hoc manuscript claims that conflict with the formal Phase 6 evidence package.
 - [ ] Keep the main claim conditional: FullModel can lower vehicle-km per served trip relative to DoorToDoor under the tested synthetic service-design conditions, but it has lower served share and passenger-response trade-offs.
 - [ ] Clearly separate primary behavioral evidence, matched-coverage diagnostics, fixed-accepted-set diagnostics, robustness/sensitivity evidence, equity/type heterogeneity evidence, and algorithm diagnostics.
 - [ ] Ensure Gamma is described only as post-hoc welfare accounting unless future work implements endogenous Gamma behavior.
 - [ ] Ensure Beijing wording is "Beijing-inspired synthetic grid" or equivalent unless a real public data ingestion pipeline and reproducible dataset are implemented.
 - [ ] Ensure the MILP is described as a simplified ex-post routing diagnostic for fixed accepted sets, not as a full exact dynamic routing benchmark or proof of ALNS near-optimality.
+- [ ] Keep Phase 3 manuscript edits structural and non-numeric where final values depend on refreshed evidence; inject final percentages, uplift values, confidence intervals, and table/figure references only after Phase 4 provenance checks.
 - [ ] Regenerate or refresh manuscript-ready tables and figures only from validated processed formal Phase 6 outputs.
-- [ ] Verify manuscript compilation and targeted tests, and record exact commands and outcomes in the milestone verification report.
+- [ ] Mark the paper TR-E submission-ready only if hard readiness gates pass: manuscript compiles, validation and tests pass or documented failures have no submission impact, claim ledger covers 100% numerical claims, all tables/figures trace to `results/formal/phase06/`, and no prohibited wording remains.
 
 ### Out of Scope
 
@@ -77,6 +78,9 @@ Key current evidence signals from formal Phase 6 include:
 - **Gamma semantics**: Gamma is post-hoc welfare accounting only unless a future milestone implements endogenous behavior.
 - **Scenario semantics**: Beijing evidence is Beijing-inspired or semi-realistic synthetic grid unless real public-data ingestion exists.
 - **MILP semantics**: MILP is a simplified ex-post routing diagnostic for fixed accepted sets, not a complete dynamic benchmark.
+- **Numerical injection order**: Phase 3 may revise structure, positioning, and non-numeric wording, but final concrete percentages, improvement values, confidence intervals, significance language, and table/figure numbers must wait until Phase 4 verifies provenance.
+- **Claim ledger schema**: Claim ledger rows must include `source_path`, `script_path`, `generation_command`, `metric_formula`, `numerator`, `denominator`, `evidence_role`, `allowed_sentence`, and `prohibited_sentence`.
+- **Readiness standard**: The final report may say "TR-E submission-ready" only when manuscript compilation passes, formal validation passes or non-impacting failures are documented, targeted tests pass or non-impacting failures are documented, numerical-claim ledger coverage is 100%, all tables and figures trace to `results/formal/phase06/`, and prohibited wording scans clean.
 - **Code scope**: Fix only manuscript-critical reproducibility issues in this milestone unless a claim-critical bug is discovered.
 - **Generated files**: Keep generated results, figures, caches, and archive artifacts separate from source and planning artifacts.
 - **Verification**: Minimum verification should include formal statistics validation when available, targeted pytest checks, and manuscript compilation.
@@ -91,6 +95,8 @@ Key current evidence signals from formal Phase 6 include:
 | Use conditional logistics/operations claim wording | Formal evidence supports efficiency-consolidation under tested conditions, not universal superiority. | Pending |
 | Classify matched coverage, fixed accepted set, MILP, Gamma, and algorithm checks as diagnostics unless stronger evidence exists | Prevents diagnostic evidence from being promoted into primary claims. | Pending |
 | Do not rerun full formal experiments by default | Current formal evidence package passed; reruns are reserved for failed verification or claim-critical formula bugs. | Pending |
+| Defer final numerical injection until Phase 4 | Prevents Phase 3 prose from baking in numbers before table/figure provenance is refreshed. | Pending |
+| Require hard claim-ledger columns and readiness gates | Keeps claim control operational rather than merely narrative. | Pending |
 
 ## Evolution
 
@@ -110,4 +116,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state.
 
 ---
-*Last updated: 2026-06-16 after initialization*
+*Last updated: 2026-06-16 after planning constraint revision*

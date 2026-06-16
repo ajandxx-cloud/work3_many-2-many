@@ -12,7 +12,7 @@ See: .planning/PROJECT.md (updated 2026-06-16)
 Phase: 1 of 5 (Evidence Foundation and Milestone Setup)
 Plan: 0 of 3 in current phase
 Status: Ready to plan
-Last activity: 2026-06-16 - Project initialized, config created, requirements defined, and roadmap drafted.
+Last activity: 2026-06-16 - Planning constraints revised to defer final numerical injection, harden claim ledger provenance, and define submission-ready gates.
 
 Progress: 0%
 
@@ -44,6 +44,9 @@ Recent decisions affecting current work:
 - Initialization: `manuscript/` is canonical paper source.
 - Initialization: `results/formal/phase06/` is canonical formal evidence.
 - Initialization: Matched coverage, fixed accepted set, MILP, Gamma, and algorithm diagnostics are not headline evidence unless explicitly labeled.
+- Planning revision: Phase 3 is structural/non-numeric for evidence-dependent claims; Phase 4 injects verified final numbers.
+- Planning revision: Claim ledger must include source/script/command/formula/numerator/denominator and allowed/prohibited sentence fields.
+- Planning revision: Submission-ready status requires hard verification and provenance gates.
 
 ### Pending Todos
 
@@ -53,6 +56,7 @@ None yet.
 
 - README and manuscript metadata still contain TR Part A framing and must be revised during Phase 3.
 - Existing codebase concerns note default `pytest` collection and dependency metadata risks that may affect verification.
+- Phase 3 must not lock final numerical values before Phase 4 table/figure provenance checks.
 
 ## Deferred Items
 
@@ -64,5 +68,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-06-16
-Stopped at: Roadmap created; ready to run `$gsd-discuss-phase 1` or `$gsd-plan-phase 1`.
+Stopped at: Roadmap constraints revised; ready to run `$gsd-discuss-phase 1` or `$gsd-plan-phase 1`.
 Resume file: None

@@ -24,7 +24,7 @@ Requirements for the current initialization roadmap. Each requirement must map t
 ### Claims And Evidence
 
 - [ ] **CLAI-01**: Project has `02_TR_E_POSITIONING_LOCK.md` stating the allowed paper framing, prohibited framing, core contribution, and journal-fit rationale.
-- [ ] **CLAI-02**: Project has `03_CLAIM_LEDGER.md` mapping each manuscript claim to manuscript location, source result file, metric, comparison, reported number, evidence role, safe wording, and prohibited wording.
+- [ ] **CLAI-02**: Project has `03_CLAIM_LEDGER.md` mapping each manuscript claim with mandatory columns: `source_path`, `script_path`, `generation_command`, `metric_formula`, `numerator`, `denominator`, `evidence_role`, `allowed_sentence`, and `prohibited_sentence`, plus manuscript location, comparison, metric, and reported number where applicable.
 - [ ] **CLAI-03**: Every numerical claim in abstract, introduction, experiments, managerial/operational implications, and conclusion appears in the claim ledger.
 - [ ] **CLAI-04**: Claims distinguish primary behavioral evidence, matched-coverage diagnostic evidence, fixed-accepted-set diagnostic evidence, robustness/sensitivity evidence, equity/type heterogeneity evidence, algorithm diagnostics, and limitations.
 - [ ] **CLAI-05**: Manuscript does not state or imply that FullModel universally dominates DoorToDoor or all baselines.
@@ -35,12 +35,12 @@ Requirements for the current initialization roadmap. Each requirement must map t
 ### Manuscript Revision
 
 - [ ] **MANU-01**: `manuscript/main.tex` journal field is updated from Transportation Research Part A to Transportation Research Part E: Logistics and Transportation Review.
-- [ ] **MANU-02**: Abstract is rewritten to emphasize logistics, service consolidation, dynamic routing, operational efficiency, passenger-response-aware offer design, evidence provenance, and conditional findings.
-- [ ] **MANU-03**: Introduction contribution list is rewritten as concise, defensible, evidence-consistent TR-E contributions.
+- [ ] **MANU-02**: Abstract is rewritten to emphasize logistics, service consolidation, dynamic routing, operational efficiency, passenger-response-aware offer design, evidence provenance, and conditional findings, but final concrete percentages, uplift values, confidence intervals, and table/figure references are not injected until Phase 4 verifies provenance.
+- [ ] **MANU-03**: Introduction contribution list is rewritten as concise, defensible, evidence-consistent TR-E contributions, with final numerical claims deferred until Phase 4 provenance checks.
 - [ ] **MANU-04**: Model and algorithm sections are revised only as needed to keep offer generation, passenger response, rolling horizon routing, Gamma semantics, and MILP scope clear and claim-consistent.
 - [ ] **MANU-05**: Experiments section separates main formal evidence, diagnostics, robustness/sensitivity, equity/type heterogeneity, and algorithm diagnostics.
 - [ ] **MANU-06**: Managerial and operational implications replace policy-first framing while retaining clearly labeled public-service implications where supported.
-- [ ] **MANU-07**: Conclusion states conditional contributions, formal evidence boundaries, limitations, and future work without overclaiming.
+- [ ] **MANU-07**: Conclusion states conditional contributions, formal evidence boundaries, limitations, and future work without overclaiming, with final concrete numerical claims deferred until Phase 4 provenance checks.
 - [ ] **MANU-08**: Elsevier-style prose is polished, and bullet-style contribution lists are converted to acceptable academic prose or concise list form when needed.
 
 ### Tables Figures And Provenance
@@ -48,7 +48,7 @@ Requirements for the current initialization roadmap. Each requirement must map t
 - [ ] **TFIG-01**: Manuscript-ready tables are generated or refreshed from formal Phase 6 processed outputs only.
 - [ ] **TFIG-02**: Manuscript-ready figures are generated or refreshed from validated formal Phase 6 processed outputs only.
 - [ ] **TFIG-03**: Any old manuscript table using 3-seed results is replaced with formal Phase 6 evidence or clearly removed from the main paper.
-- [ ] **TFIG-04**: Existing old values such as 18.3%, 29.1%, 35.0%, and 0.1216 are checked against current formal evidence and either updated, retained with provenance, or removed.
+- [ ] **TFIG-04**: Existing old values such as 18.3%, 29.1%, 35.0%, and 0.1216 are checked against current formal evidence and either updated, retained with provenance, or removed; only after this check may verified final numbers be injected into abstract, introduction, experiments, managerial/operational implications, and conclusion.
 - [ ] **TFIG-05**: Denominators are consistent and labeled for vkm per served trip, vkm per original request, served share, behavioral acceptance rate, choice rejection rate, and feasibility rejection rate.
 - [ ] **TFIG-06**: Weight sensitivity calculations use the shared metric helper and are not inflated by acceptance-rate-only denominators.
 
@@ -59,7 +59,7 @@ Requirements for the current initialization roadmap. Each requirement must map t
 - [ ] **VERI-03**: Targeted pytest checks run for metrics, variants, runner, scenarios, coverage controls, robustness, and formal statistics, or any failures are documented with exact reason and manuscript impact.
 - [ ] **VERI-04**: Manuscript compilation is run from `manuscript/` using a pdflatex/bibtex/pdflatex/pdflatex sequence, or any failure is documented with exact reason and manuscript impact.
 - [ ] **VERI-05**: Project has `99_MILESTONE_VERIFICATION.md` recording verification commands, outputs, pass/fail status, remaining blockers, and readiness classification.
-- [ ] **VERI-06**: Final readiness status is one of: TR-E submission-ready, TR-E near-ready with minor blockers, or not ready due to specific blockers.
+- [ ] **VERI-06**: Final readiness status is one of: TR-E submission-ready, TR-E near-ready with minor blockers, or not ready due to specific blockers; `TR-E submission-ready` is allowed only when manuscript compilation passes, formal statistics validation passes or documented failures have no submission impact, targeted pytest checks pass or documented failures have no manuscript impact, claim ledger covers 100% of numerical claims, all manuscript tables/figures trace to `results/formal/phase06/`, and prohibited wording is absent.
 
 ## v2 Requirements
 

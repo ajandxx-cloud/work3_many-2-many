@@ -12,8 +12,8 @@ This roadmap converts the current Work 3 experimental repository into a TR Part 
 
 - [ ] **Phase 1: Evidence Foundation and Milestone Setup** - Create the milestone scaffold, repo/evidence audit, and manuscript action plan.
 - [ ] **Phase 2: TR-E Positioning Lock and Claim Ledger** - Lock the allowed framing and map claims to evidence before manuscript edits.
-- [ ] **Phase 3: TR-E Manuscript Repositioning** - Rewrite the manuscript into an operations/logistics paper while enforcing claim boundaries.
-- [ ] **Phase 4: Tables, Figures, and Numerical Provenance** - Refresh formal-evidence tables/figures and reconcile all reported numbers.
+- [ ] **Phase 3: TR-E Manuscript Repositioning** - Rewrite the manuscript structure and TR-E framing while deferring final numerical injection.
+- [ ] **Phase 4: Tables, Figures, and Numerical Provenance** - Refresh formal-evidence tables/figures, reconcile all reported numbers, and inject verified final numerical claims.
 - [ ] **Phase 5: Verification and Readiness Closeout** - Run targeted verification, compile the manuscript, and classify readiness.
 
 ## Phase Details
@@ -40,36 +40,37 @@ Plans:
 **Requirements**: [PLAN-04, CLAI-01, CLAI-02, CLAI-03, CLAI-04]
 **Success Criteria** (what must be TRUE):
   1. `02_TR_E_POSITIONING_LOCK.md` states the allowed TR-E framing and prohibited framing.
-  2. `03_CLAIM_LEDGER.md` maps every current and planned manuscript claim to an evidence role and source.
+  2. `03_CLAIM_LEDGER.md` maps every current and planned manuscript claim to source path, script path, generation command, metric formula, numerator, denominator, evidence role, allowed sentence, and prohibited sentence.
   3. `05_BLOCKERS_AND_SAFE_CLAIMS.md` distinguishes safe claims, downgraded claims, blockers, and prohibited wording.
   4. Primary evidence, diagnostics, robustness, equity, algorithm diagnostics, and limitations are separated.
 **Plans**: 3 plans
 
 Plans:
 - [ ] 02-01: Write TR-E positioning lock and journal-fit rationale.
-- [ ] 02-02: Build claim ledger from manuscript claims and Phase 6 formal evidence.
+- [ ] 02-02: Build claim ledger from manuscript claims and Phase 6 formal evidence with hard provenance and denominator columns.
 - [ ] 02-03: Create blockers and safe-claims table with prohibited wording.
 
 ### Phase 3: TR-E Manuscript Repositioning
-**Goal**: Rewrite the manuscript as a logistics/operations contribution while applying the claim ledger.
+**Goal**: Rewrite the manuscript as a logistics/operations contribution while applying the claim ledger, but do not finalize evidence-dependent numerical claims.
 **Depends on**: Phase 2
 **Requirements**: [POSE-01, POSE-02, POSE-03, POSE-04, CLAI-05, CLAI-06, CLAI-07, CLAI-08, MANU-01, MANU-02, MANU-03, MANU-04, MANU-05, MANU-06, MANU-07, MANU-08]
 **Success Criteria** (what must be TRUE):
   1. Main manuscript metadata and touched project docs consistently target Transportation Research Part E.
-  2. Abstract, introduction, contributions, literature review, and conclusion use TR-E logistics/operations framing.
+  2. Abstract, introduction, contributions, literature review, and conclusion use TR-E logistics/operations framing with placeholders or non-numeric wording where final values depend on Phase 4 provenance checks.
   3. Experiments separate primary evidence from diagnostics, robustness, equity, and algorithm checks.
   4. Gamma, Beijing, MILP, and FullModel/DoorToDoor claims obey the safe wording from the ledger.
   5. The policy section is reframed as managerial and operational implications.
+  6. No final percentages, uplift values, confidence intervals, significance wording, or table/figure numbers are newly locked into abstract, introduction, or conclusion before Phase 4.
 **Plans**: 4 plans
 
 Plans:
-- [ ] 03-01: Revise metadata, title, abstract, introduction, and contributions.
+- [ ] 03-01: Revise metadata, title, abstract, introduction, and contributions without final numerical injection.
 - [ ] 03-02: Revise literature review, model, and algorithm sections for TR-E positioning and scope clarity.
 - [ ] 03-03: Revise experiments narrative to separate evidence roles and denominators.
-- [ ] 03-04: Revise managerial implications and conclusion with conditional claims and limitations.
+- [ ] 03-04: Revise managerial implications and conclusion with conditional non-overclaiming structure while deferring final numerical values.
 
 ### Phase 4: Tables, Figures, and Numerical Provenance
-**Goal**: Ensure all manuscript numbers, tables, and figures are generated from validated formal Phase 6 evidence.
+**Goal**: Ensure all manuscript numbers, tables, and figures are generated from validated formal Phase 6 evidence, then inject verified final values into the manuscript.
 **Depends on**: Phase 3
 **Requirements**: [TFIG-01, TFIG-02, TFIG-03, TFIG-04, TFIG-05, TFIG-06]
 **Success Criteria** (what must be TRUE):
@@ -77,11 +78,12 @@ Plans:
   2. Old 3-seed, smoke, archived, or root legacy numbers are replaced, removed, or explicitly labeled as superseded.
   3. Values such as 18.3%, 29.1%, 35.0%, and 0.1216 are retained only with current formal provenance or updated.
   4. Denominators and weight sensitivity formulas are verified and documented.
+  5. Abstract, introduction, experiments, managerial/operational implications, and conclusion receive only verified final numbers after provenance is confirmed.
 **Plans**: 3 plans
 
 Plans:
 - [ ] 04-01: Refresh tables and figures from validated formal Phase 6 outputs.
-- [ ] 04-02: Reconcile all reported numerical claims against the claim ledger.
+- [ ] 04-02: Reconcile all reported numerical claims against the claim ledger and inject verified final values into manuscript sections.
 - [ ] 04-03: Verify denominators, weight sensitivity, Gamma invariance, and source provenance.
 
 ### Phase 5: Verification and Readiness Closeout
@@ -93,6 +95,7 @@ Plans:
   2. Targeted pytest checks pass, or failures are documented with manuscript impact.
   3. Manuscript compilation is run from `manuscript/` or failures are documented.
   4. `99_MILESTONE_VERIFICATION.md` records commands, outputs, pass/fail status, blockers, and readiness classification.
+  5. `TR-E submission-ready` is used only if all hard readiness gates pass: manuscript compilation, validation/test status or no-impact explanations, 100% numerical claim-ledger coverage, formal Phase 6 table/figure provenance, and no prohibited wording.
 **Plans**: 3 plans
 
 Plans:

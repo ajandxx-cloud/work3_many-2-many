@@ -19,6 +19,9 @@ The paper studies passenger-response-aware bidirectional meeting-point consolida
 - **Gamma semantics**: Gamma is post-hoc welfare accounting only unless a future milestone implements endogenous behavior.
 - **Scenario semantics**: Beijing evidence is Beijing-inspired or semi-realistic synthetic grid unless real public-data ingestion exists.
 - **MILP semantics**: MILP is a simplified ex-post routing diagnostic for fixed accepted sets, not a complete dynamic benchmark.
+- **Numerical injection order**: Phase 3 may revise structure, positioning, and non-numeric wording, but final concrete percentages, improvement values, confidence intervals, significance language, and table/figure numbers must wait until Phase 4 verifies provenance.
+- **Claim ledger schema**: Claim ledger rows must include `source_path`, `script_path`, `generation_command`, `metric_formula`, `numerator`, `denominator`, `evidence_role`, `allowed_sentence`, and `prohibited_sentence`.
+- **Readiness standard**: The final report may say "TR-E submission-ready" only when manuscript compilation passes, formal validation passes or non-impacting failures are documented, targeted tests pass or non-impacting failures are documented, numerical-claim ledger coverage is 100%, all tables and figures trace to `results/formal/phase06/`, and prohibited wording scans clean.
 - **Code scope**: Fix only manuscript-critical reproducibility issues in this milestone unless a claim-critical bug is discovered.
 - **Generated files**: Keep generated results, figures, caches, and archive artifacts separate from source and planning artifacts.
 - **Verification**: Minimum verification should include formal statistics validation when available, targeted pytest checks, and manuscript compilation.
