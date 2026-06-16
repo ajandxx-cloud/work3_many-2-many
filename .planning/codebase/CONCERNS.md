@@ -1,250 +1,247 @@
 # Codebase Concerns
 
-**Analysis Date:** 2026-06-14
+**Analysis Date:** 2026-06-16
 
 ## Tech Debt
 
-**Mixed import roots make execution environment fragile:**
-- Issue: Core library modules import `drt.*` from the editable package path, while experiment modules import `src.drt.*` from the repository root. Tests patch `sys.path` inconsistently, and direct `pytest` collection fails when `drt` is not installed editable.
-- Files: `src/drt/alns.py:19`, `src/drt/insertion.py:21`, `src/drt/feasibility.py:22`, `src/drt/milp.py:20`, `experiments/variants.py:38`, `experiments/scenarios.py:21`, `tests/test_alns.py:17`, `tests/test_scenarios.py:15`
-- Impact: Running from a clean checkout without `pip install -e .` produces `ModuleNotFoundError: No module named 'drt'`. Running from an installed package context can also expose `src.drt` imports as repository-only assumptions.
-- Fix approach: Standardize imports on the installed package namespace `drt.*` for library code and experiment code. Add one test bootstrap mechanism, preferably `pyproject.toml` pytest config with `pythonpath = ["src", "."]` or a root `conftest.py`, rather than per-test `sys.path.insert`.
+**Mixed import roots make execution sensitive to invocation style:**
+- Issue: Core modules import the installed package namespace `drt.*`, while experiment modules import repository-root paths such as `src.drt.*`.
+- Files: `src/drt/alns.py:19`, `src/drt/insertion.py:21`, `src/drt/feasibility.py:22`, `src/drt/milp.py:26`, `experiments/variants.py:43`, `experiments/scenarios.py:21`
+- Impact: `PYTHONPATH=src pytest tests` passes, but root-level archive collection imports `experiments.variants`, then `src.drt.alns`, then `drt.candidate`, which fails when `drt` is not installed or `PYTHONPATH` is not set.
+- Fix approach: Standardize all first-party imports on `drt.*` for package code and experiment code. Add a single pytest/package bootstrap in `pyproject.toml` or `tests/conftest.py` instead of relying on command-specific `PYTHONPATH`.
 
-**Dependency metadata omits runtime imports:**
-- Issue: `pyproject.toml` declares only `gurobipy` and `numpy`, but runtime experiment and figure scripts import `pandas` and `matplotlib`.
-- Files: `pyproject.toml:8`, `experiments/runner.py:27`, `run_experiments.py:8`, `tests/test_runner.py:16`, `manuscript/figures/scripts/fig04_baseline_comparison.py:8`, `manuscript/figures/scripts/fig07_pareto.py:14`
-- Impact: Fresh environment installs can pass package installation but fail when running `python run_experiments.py`, `python -m experiments.runner`, runner tests, or figure generation.
-- Fix approach: Add runtime dependencies used by the main experiment path to `[project].dependencies` and separate manuscript/figure dependencies into an optional extra such as `figures = ["matplotlib", "pandas"]`. Keep `pytest` and benchmarking tools in the existing `dev` extra.
+**Dependency metadata omits active runtime imports:**
+- Issue: `pyproject.toml` declares only `gurobipy` and `numpy`, but active experiment, validation, and figure paths import `pandas` and `matplotlib`.
+- Files: `pyproject.toml:8`, `pyproject.toml:11`, `pyproject.toml:12`, `experiments/runner.py:29`, `experiments/formal_validation.py:12`, `experiments/formal_statistics.py:16`, `run_experiments.py:8`, `manuscript/figures/scripts/fig07_pareto.py:14`
+- Impact: A clean install can satisfy package metadata while `python run_experiments.py`, formal validation, or figure generation fails on undeclared packages.
+- Fix approach: Add explicit dependencies or extras such as `experiments = ["pandas"]`, `figures = ["matplotlib", "pandas"]`, and keep `pytest`/`pytest-benchmark` in the existing dev extra.
 
-**Route stop representation is implicit and inconsistent:**
-- Issue: `Route.stops` is typed as an unstructured `list`; code alternates between plain `(MeetingPoint, time)` stops and tagged `(MeetingPoint, time, request_id, role)` stops. Helpers depend on tuple length checks and conversions.
-- Files: `src/drt/types.py:97`, `src/drt/alns.py:73`, `src/drt/alns.py:102`, `src/drt/alns.py:347`, `experiments/variants.py:211`, `experiments/variants.py:295`, `src/drt/feasibility.py:93`
-- Impact: New code can silently drop request metadata through `_to_plain_routes`, fail tuple unpacking if a tagged stop reaches `check_feasibility`, or produce incomplete passenger metrics when completed stops are pruned.
-- Fix approach: Introduce a `RouteStop` dataclass with explicit `meeting_point`, `time`, `request_id`, and `role` fields. Convert feasibility/insertion code to operate on this type or a narrow adapter, and add tests for both in-route and completed/pruned requests.
+**Route stop representation is implicit and overloaded:**
+- Issue: `Route.stops` is an untyped `list`; code uses both plain `(MeetingPoint, time)` tuples and tagged `(MeetingPoint, time, request_id, role)` tuples.
+- Files: `src/drt/types.py:202`, `src/drt/types.py:208`, `src/drt/alns.py:73`, `src/drt/alns.py:102`, `src/drt/alns.py:347`, `experiments/variants.py:395`, `src/drt/feasibility.py:93`
+- Impact: Tuple-length checks and adapters make it easy to drop request metadata, mis-handle completed trips, or pass a tagged stop into code that expects exactly two tuple fields.
+- Fix approach: Introduce a `RouteStop` dataclass with explicit `meeting_point`, `time`, `request_id`, and `role`. Keep any plain-stop adapter narrow and localized at insertion/feasibility boundaries.
 
-**Core algorithm module is oversized and mixes responsibilities:**
-- Issue: `src/drt/alns.py` contains state containers, route-cost helpers, destroy operators, repair operators, rolling-horizon simulation, and benchmark generation in one large module.
+**Core ALNS module mixes several responsibilities:**
+- Issue: `src/drt/alns.py` contains state containers, cost helpers, destroy operators, repair operators, rolling-horizon simulation, diagnostics, and benchmark generation in one 723-line module.
 - Files: `src/drt/alns.py`
-- Impact: Small changes to rolling-horizon state can affect operator behavior, benchmarking, and metric reconstruction. The module is harder to test in isolation, and local helper assumptions are easy to miss.
-- Fix approach: Split into `src/drt/alns_state.py`, `src/drt/operators.py`, `src/drt/rolling_horizon.py`, and `src/drt/benchmark.py` while preserving public imports during migration.
+- Impact: A small change to rolling-horizon state can affect operators, diagnostics, and benchmark behavior. The local tuple conventions are hard to audit.
+- Fix approach: Split into focused modules such as `src/drt/alns_state.py`, `src/drt/operators.py`, `src/drt/rolling_horizon.py`, and `src/drt/benchmark.py` while preserving public imports during migration.
 
-**Version-control state is heavily drifted from the working tree:**
-- Issue: `git status --short` reports many deleted tracked paths such as `.planning/PROJECT.md`, `paper/`, `paper_work3/`, `figures/`, and root debug scripts, while current trees such as `README.md`, `archive/`, `docs/`, and `manuscript/` are untracked. `.gitignore` ignores `__pycache__/`, but tracked pycache paths still appear in git status.
-- Files: `.gitignore:1`, `README.md:96`, `manuscript/main.tex`, `archive/`, `.planning/config.json`
-- Impact: Commits and diffs are noisy, generated files can remain tracked, and phase/state files under `.planning/` appear deleted from git even though current `.planning/codebase/` exists.
-- Fix approach: Reconcile the rename/reorganization in one repository-maintenance commit: remove tracked generated artifacts, add current canonical source/manuscript paths, restore or intentionally remove `.planning` state files, and keep `.planning/codebase/*.md` tracked if GSD maps are part of project state.
+**Stale operational notes conflict with current repository state:**
+- Issue: `README.md` contains a "Known Issues" section claiming the git repository is broken and `.planning/` has duplicate `_v2` files, while `git status --short` currently reports only untracked `.planning/phases/`.
+- Files: `README.md:98`, `README.md:100`, `README.md:106`, `.planning/codebase/CONCERNS.md`
+- Impact: Operators may avoid normal git workflows or spend time investigating already-resolved repository issues.
+- Fix approach: Refresh `README.md` known issues from current `git status`, `.planning/`, and test behavior. Move historical cleanup notes into `archive/` if they still matter.
 
-**README and source text show mojibake encoding damage:**
-- Issue: Several comments and README sections contain garbled sequences such as `鈥?`, `鈫?`, and `脳`, especially in mathematical notation and directory descriptions.
-- Files: `README.md:1`, `README.md:96`, `src/drt/types.py:4`, `src/drt/milp.py:30`, `experiments/config.py:14`
-- Impact: Mathematical notation, paper workflow instructions, and project descriptions are harder to review and may propagate into generated documentation.
-- Fix approach: Normalize all text files to UTF-8, repair affected prose from manuscript/source context, and add an editorconfig or encoding check for Markdown, Python, and LaTeX sources.
+**Unused helper code remains in the algorithm path:**
+- Issue: `_assigned_requests` contains a `pass` branch and always returns an empty list.
+- Files: `src/drt/alns.py:152`, `src/drt/alns.py:161`, `src/drt/alns.py:163`
+- Impact: Future callers can assume it returns assigned `Request` objects and silently receive no assignments.
+- Fix approach: Remove the helper if unused, or implement it against an explicit request registry and add tests before using it.
 
 ## Known Bugs
 
 **Bare `pytest` fails by collecting archived ad hoc tests:**
-- Symptoms: `pytest -q` collects `archive/adhoc_tests/*.py` and fails with `ModuleNotFoundError: No module named 'drt'` before the normal test suite runs.
+- Symptoms: Running `pytest` from the repository root collects `archive/adhoc_tests/*.py` and stops during collection with `ModuleNotFoundError: No module named 'drt'`.
 - Files: `archive/adhoc_tests/smoke_test.py`, `archive/adhoc_tests/test_fix.py`, `archive/adhoc_tests/test_scale100.py`, `archive/adhoc_tests/test_scale500.py`, `pyproject.toml`
-- Trigger: Run `pytest -q` from repository root without editable installation or pytest collection config.
-- Workaround: Run targeted tests with `PYTHONPATH=src pytest tests -q`, or run a small subset such as `PYTHONPATH=src pytest tests/test_metrics.py tests/test_candidate.py tests/test_feasibility.py -q`.
-- Fix approach: Add pytest config to restrict `testpaths = ["tests"]`, set the package path, and exclude `archive/`. Keep archived scripts named without the `test_*.py` pattern or move them outside pytest discovery.
+- Trigger: Run `pytest` from the repository root without restricting collection to `tests/`.
+- Workaround: Run `$env:PYTHONPATH='src'; pytest tests` on Windows PowerShell. This scan observed `189 passed, 1 skipped` for that command.
+- Fix approach: Add pytest config to `pyproject.toml` with `testpaths = ["tests"]` and `pythonpath = ["src"]`, and exclude or rename archived ad hoc scripts so they are not test-discovery targets.
 
-**Runner timeout does not actually bound variant execution:**
-- Symptoms: `_run_variant_with_timeout` returns an error row on `TimeoutError`, but the surrounding `with ThreadPoolExecutor(...)` exits by calling `shutdown(wait=True)`, which waits for the still-running task.
-- Files: `experiments/runner.py:29`, `experiments/runner.py:186`, `experiments/runner.py:193`, `experiments/runner.py:202`
-- Trigger: Any variant run exceeding `_VARIANT_TIMEOUT_S = 120` seconds.
-- Workaround: None reliable in the current code; interrupting the parent Python process is required if the worker keeps running.
-- Fix approach: Use a process-based timeout for experiment isolation, or explicitly call `executor.shutdown(wait=False, cancel_futures=True)` outside a `with` block. Prefer `ProcessPoolExecutor` for CPU-heavy or non-cooperative algorithms.
+**Documented test command is not the green test command:**
+- Symptoms: `README.md` documents `pytest`, but the passing command requires `PYTHONPATH=src` and `tests` scoping.
+- Files: `README.md:83`, `pyproject.toml`, `tests/`, `archive/adhoc_tests/`
+- Trigger: Follow the README test instructions from a clean shell.
+- Workaround: Use `$env:PYTHONPATH='src'; pytest tests`.
+- Fix approach: Make root `pytest` pass, then keep `README.md` aligned with the configured command.
 
-**`FullModel(gamma=...)` does not affect acceptance, routing, or offered bundle choice:**
-- Symptoms: `FullModel.__init__` stores `_gamma`, but `_gamma` is not referenced in `_solve` or `_mnl_filter_requests`. `experiments/pareto_sweep.py` varies gamma and only applies it after the run in `compute_social_welfare`.
-- Files: `experiments/variants.py:590`, `experiments/variants.py:595`, `experiments/variants.py:615`, `experiments/pareto_sweep.py:50`, `experiments/pareto_sweep.py:59`, `experiments/metrics.py:210`
-- Trigger: Run `python experiments/pareto_sweep.py`; `served_share` and `vkm_per_served_trip` are governed by the same FullModel behavior for every gamma value.
-- Workaround: Interpret the current Pareto sweep as a post-hoc welfare scoring sweep only, not as an endogenous policy or rejection-penalty experiment.
-- Fix approach: Pass gamma into the choice/routing decision where rejection penalty is supposed to alter acceptance or objective tradeoffs, then add tests asserting monotonic or at least non-identical behavior across gamma values.
+**`MetricsResult.social_welfare` defaults to zero and is not populated by `compute_metrics`:**
+- Symptoms: `MetricsResult` exposes `social_welfare`, but `compute_metrics()` returns `MetricsResult(...)` without passing it.
+- Files: `experiments/metrics.py:88`, `experiments/metrics.py:131`, `experiments/metrics.py:246`, `experiments/pareto_sweep.py:59`
+- Trigger: Any caller reads `compute_metrics(result).social_welfare`.
+- Workaround: Call `compute_social_welfare(result.records, gamma)` directly, as `experiments/pareto_sweep.py` does.
+- Fix approach: Either remove the field from `MetricsResult` or add a deliberate `gamma` parameter to `compute_metrics()` and populate the value.
 
-**Social-welfare field is declared but never populated by `compute_metrics`:**
-- Symptoms: `MetricsResult.social_welfare` defaults to `0.0`, and `compute_metrics` returns `MetricsResult(...)` without passing a social welfare value.
-- Files: `experiments/metrics.py:65`, `experiments/metrics.py:77`, `experiments/metrics.py:177`, `experiments/metrics.py:210`
-- Trigger: Any consumer reading `compute_metrics(result).social_welfare`.
-- Workaround: Call `compute_social_welfare(result.records, gamma)` directly.
-- Fix approach: Either remove `social_welfare` from `MetricsResult` or add an optional `gamma` parameter to `compute_metrics` and populate the field deliberately.
-
-**Weight sensitivity uses acceptance rate as the trip denominator instead of accepted trip count:**
-- Symptoms: `run_weight_sensitivity` computes `vehicle_km / acceptance_rate`, even though `experiments.metrics.vkm_per_trip` defines the denominator as `n_requests * acceptance_rate`.
-- Files: `experiments/weight_sensitivity.py:85`, `experiments/weight_sensitivity.py:87`, `experiments/metrics.py:190`
-- Trigger: Run `python experiments/weight_sensitivity.py`; reported `*_vkm_per_trip` values are inflated by a factor of `n_requests`.
-- Workaround: Recompute from output as `vehicle_km / (200 * acceptance_rate)` for the default `N = 200`.
-- Fix approach: Replace the local formula with `vkm_per_trip(fm_vkm, n_requests, fm_acc)` and `vkm_per_trip(dd_vkm, n_requests, dd_acc)`.
-
-**Policy recommendations can silently use hardcoded fallback values:**
-- Symptoms: `_extract_metrics_data` substitutes `2383.85` and `3662.33` if FullModel or DoorToDoor vehicle-km values are missing.
-- Files: `analysis/policy.py:149`, `analysis/policy.py:181`, `analysis/policy.py:183`, `analysis/policy.py:185`, `results/policy_recommendations.md`
-- Trigger: Missing or malformed `results/metrics_table.csv` rows for `FullModel` or `DoorToDoor`.
-- Workaround: Inspect logs and generated recommendations for fallback usage; there is no explicit warning in the returned data.
-- Fix approach: Raise a clear exception or include an explicit "data missing" marker instead of substituting paper-specific constants.
+**Policy recommendation metrics can silently fall back to hardcoded values:**
+- Symptoms: `_extract_metrics_data()` substitutes `2383.85` and `3662.33` when FullModel or DoorToDoor vehicle-km values are missing.
+- Files: `analysis/policy.py:149`, `analysis/policy.py:183`, `analysis/policy.py:185`, `analysis/policy.py:203`
+- Trigger: Missing or malformed rows in the metrics CSV consumed by `generate_policy_recommendations()`.
+- Workaround: Manually inspect generated `results/policy_recommendations.md` and source CSVs before using policy text in the manuscript.
+- Fix approach: Raise a validation error or emit an explicit missing-data status instead of substituting constants.
 
 ## Security Considerations
 
-**No secret-reading path detected in active code:**
-- Risk: Not detected for external API keys, credential files, or `.env` reads.
+**No external secret-reading path detected in active code:**
+- Risk: Not detected for `.env` reads, API keys, credential files, or networked external services.
 - Files: `src/drt/`, `experiments/`, `analysis/`, `pyproject.toml`
-- Current mitigation: Active code uses generated scenarios, local CSV/JSON files, and optional local Gurobi licensing through `gurobipy`.
-- Recommendations: Keep `.env*`, `*.key`, `*.pem`, and credential files ignored. Do not write license or solver credential details into result logs.
+- Current mitigation: Active code uses local generated scenarios, local CSV/JSON outputs, and optional local Gurobi access through `gurobipy`.
+- Recommendations: Keep `.env*`, key files, certificates, and solver license details out of outputs. Do not log local license paths or credentials in benchmark artifacts.
 
-**CSV/Markdown output paths are local but overwrite without confirmation:**
-- Risk: Experiment and analysis scripts overwrite committed outputs under `results/` without atomic writes or backup checks.
-- Files: `experiments/runner.py:129`, `experiments/runner.py:218`, `experiments/pareto_sweep.py:74`, `experiments/weight_sensitivity.py:117`, `analysis/policy.py:203`
-- Current mitigation: Paths are hardcoded under `results/`; there is no user-provided path injection in the default scripts.
-- Recommendations: Write to a timestamped run directory or temporary file plus atomic replace. Keep canonical paper tables generated from a manifest that records code version, seeds, and config.
+**CSV and Markdown outputs overwrite local result files directly:**
+- Risk: Experiment and analysis scripts write into `results/` paths without atomic replacement, run isolation, or overwrite confirmation.
+- Files: `experiments/runner.py:112`, `experiments/runner.py:409`, `experiments/runner.py:428`, `analysis/policy.py:354`, `analysis/policy.py:355`, `src/drt/milp.py:445`
+- Current mitigation: Default paths are hardcoded under the repo rather than user-controlled remote paths.
+- Recommendations: Write run outputs to a timestamped or manifest-named directory, then promote canonical artifacts through an explicit copy/alias step.
 
-**Gurobi execution can consume licensed solver resources without central gating:**
-- Risk: `DRTModel.solve()` runs the optimizer directly when `gurobipy` is available; experiment gap scripts can launch multiple 300-second solves.
-- Files: `src/drt/milp.py:56`, `src/drt/milp.py:122`, `src/drt/milp.py:380`, `experiments/milp_gap.py:127`
-- Current mitigation: MILP defaults include `time_limit=300.0`, `mip_gap=0.05`, and solver output is suppressed.
-- Recommendations: Add a documented config flag for MILP runs, lower default time limits for tests, and log solver status without exposing license/environment details.
+**Gurobi execution consumes licensed solver resources when available:**
+- Risk: `DRTModel.solve()` runs the optimizer with a 300-second default time limit; gap scripts can launch multiple solver runs.
+- Files: `src/drt/milp.py:50`, `src/drt/milp.py:63`, `src/drt/milp.py:130`, `src/drt/milp.py:376`, `experiments/milp_gap.py:176`
+- Current mitigation: Solver output is disabled with `OutputFlag = 0`, `TimeLimit` is set, and tests skip when Gurobi or a license is unavailable.
+- Recommendations: Gate MILP experiments behind an explicit config/CLI flag, record solver status only, and avoid writing license/environment details to result artifacts.
 
 ## Performance Bottlenecks
 
-**Insertion and regret repair are combinatorial over vehicles, candidates, and positions:**
-- Problem: `_all_insertion_costs` and `evaluate_insertion` enumerate every vehicle, pickup candidate, dropoff candidate, pickup insertion index, and dropoff insertion index.
-- Files: `src/drt/insertion.py:76`, `src/drt/insertion.py:83`, `src/drt/insertion.py:85`, `src/drt/alns.py:385`, `src/drt/alns.py:391`, `src/drt/alns.py:393`
-- Cause: Complexity grows roughly with `vehicles * pickup_candidates * dropoff_candidates * route_length^2` per request, and ALNS repeats this inside multiple iterations.
-- Improvement path: Cache candidate sets, cap route positions by time-window feasibility, maintain incremental route schedules, and short-circuit candidates using lower-bound cost filters.
+**Insertion evaluation is combinatorial in vehicles, candidates, and route positions:**
+- Problem: `evaluate_insertion()` enumerates every vehicle, pickup candidate, dropoff candidate, pickup position, and dropoff position.
+- Files: `src/drt/insertion.py:76`, `src/drt/insertion.py:83`, `src/drt/insertion.py:85`, `src/drt/insertion.py:86`, `src/drt/alns.py:391`, `src/drt/alns.py:393`
+- Cause: Complexity grows roughly with `vehicles * pickup_candidates * dropoff_candidates * route_length^2` per request, and ALNS repeats similar enumeration in repair operators.
+- Improvement path: Cache candidate sets, maintain incremental route schedules/distances, prefilter positions by time-window bounds, and add lower-bound pruning before calling full feasibility checks.
 
-**Deep-copy heavy ALNS operators add avoidable memory and CPU overhead:**
-- Problem: Destroy/repair operators repeatedly call `deepcopy(state)` and rebuild plain route dictionaries.
-- Files: `src/drt/alns.py:182`, `src/drt/alns.py:199`, `src/drt/alns.py:232`, `src/drt/alns.py:272`, `src/drt/alns.py:305`, `src/drt/alns.py:547`
-- Cause: Mutable shared `ALNSState` objects and untyped `Route.stops` make copy boundaries broad.
-- Improvement path: Make route states structurally immutable or implement targeted copy-on-write for the changed vehicle routes only.
+**ALNS operators perform broad deep copies and route conversion:**
+- Problem: Destroy and repair operators repeatedly copy the full `ALNSState` and rebuild plain route dictionaries.
+- Files: `src/drt/alns.py:182`, `src/drt/alns.py:199`, `src/drt/alns.py:232`, `src/drt/alns.py:272`, `src/drt/alns.py:305`, `src/drt/alns.py:347`
+- Cause: Mutable shared route state and untyped stop tuples force defensive full-state copying.
+- Improvement path: Use copy-on-write per changed vehicle route, typed immutable route snapshots, or a small state-diff structure for candidate ALNS moves.
 
-**Full test suite can exceed practical command time:**
-- Problem: `PYTHONPATH=src pytest tests -q` exceeded the 120-second command limit during mapping, while a fast subset (`tests/test_metrics.py`, `tests/test_candidate.py`, `tests/test_feasibility.py`) completed with 48 passing tests in 0.10s.
-- Files: `tests/test_alns.py:168`, `tests/test_runner.py:28`, `tests/test_runner.py:32`, `experiments/runner.py:69`
-- Cause: Benchmark and runner smoke tests execute real algorithm runs, including `benchmark(n_requests=200, n_vehicles=15, ...)` and all variants at smoke scale.
-- Improvement path: Mark long tests with `@pytest.mark.slow`, lower default benchmark sizes in unit tests, and keep full experiment smoke tests opt-in for CI nightly or release validation.
+**MILP variable construction scales as request x vehicle x pickup-candidate x dropoff-candidate:**
+- Problem: `DRTModel.build()` creates binary assignment variables and multiple constraint families over nested request, vehicle, pickup, and dropoff loops.
+- Files: `src/drt/milp.py:144`, `src/drt/milp.py:145`, `src/drt/milp.py:146`, `src/drt/milp.py:147`, `src/drt/milp.py:260`, `src/drt/milp.py:275`
+- Cause: Candidate sets are expanded into explicit binary variables for every request-vehicle-candidate combination.
+- Improvement path: Keep MILP use limited to small diagnostic instances, persist skipped/no-Gurobi status, and add size guards before model construction.
 
 ## Fragile Areas
 
-**Rolling-horizon completed-request accounting affects metrics:**
-- Files: `src/drt/alns.py:498`, `src/drt/alns.py:506`, `src/drt/alns.py:609`, `src/drt/alns.py:613`, `experiments/variants.py:211`, `experiments/variants.py:229`, `experiments/variants.py:247`
-- Why fragile: `completed_request_ids` is populated both when stops are pruned by time and when requests are merely accepted into current routes. Completed/pruned requests lose pickup/dropoff meeting point details, and metrics substitute zero walking distance plus Euclidean fallback IVT.
-- Safe modification: Preserve a per-request assignment ledger with pickup/dropoff MPs, scheduled pickup/dropoff times, accepted/rejected status, and completion status. Build `PassengerRecord` from that ledger instead of reconstructing from final route stops.
-- Test coverage: Current variant tests assert result types and metric ranges, but do not assert exact accepted sets, walk distances, or scheduled times for completed requests.
+**Feasibility checker approximates existing stop roles by alternating pickup/dropoff:**
+- Files: `src/drt/feasibility.py:113`, `src/drt/feasibility.py:121`, `src/drt/feasibility.py:128`, `src/drt/feasibility.py:129`, `src/drt/feasibility.py:131`
+- Why fragile: Existing stops without role metadata are assumed to alternate pickup and dropoff. Non-alternating route sequences can produce incorrect capacity decisions.
+- Safe modification: Require explicit role metadata or pass an occupancy trace into `check_feasibility()`.
+- Test coverage: `tests/test_feasibility.py` covers basic constraints, but it does not cover non-alternating existing routes or tagged route stops.
 
-**Feasibility checker approximates existing occupancy by alternating pickup/dropoff roles:**
-- Files: `src/drt/feasibility.py:113`, `src/drt/feasibility.py:120`, `src/drt/feasibility.py:123`, `src/drt/feasibility.py:129`
-- Why fragile: Existing stops without labels are assumed to alternate pickup/dropoff starting with pickup. This can reject feasible insertions or accept infeasible ones when route order is not alternating.
-- Safe modification: Require role metadata on every stop before feasibility checks, or pass an explicit occupancy trace with the route.
-- Test coverage: `tests/test_feasibility.py` covers basic capacity and time-window cases, but it does not cover mixed existing routes with non-alternating pickup/dropoff roles or tagged route stops.
+**Completed rolling-horizon trips lose assignment details used by metrics:**
+- Files: `src/drt/alns.py:476`, `src/drt/alns.py:511`, `src/drt/alns.py:655`, `experiments/variants.py:410`, `experiments/variants.py:454`, `experiments/variants.py:455`, `experiments/variants.py:460`
+- Why fragile: Completed/pruned requests are tracked by id and pickup time, but pickup/dropoff meeting points are no longer available; metric reconstruction uses zero walking distance and fallback IVT behavior.
+- Safe modification: Maintain a per-request service ledger containing pickup/dropoff meeting points, scheduled times, status, and vehicle id. Build `PassengerRecord` from that ledger instead of reconstructing from final route stops.
+- Test coverage: `tests/test_alns.py` checks completion bookkeeping, and `tests/test_variants.py` checks ranges/types, but exact walk/IVT reconstruction for completed requests is not asserted.
 
-**MILP model is a simplified assignment snapshot rather than a full route-sequencing model:**
-- Files: `src/drt/milp.py:178`, `src/drt/milp.py:234`, `src/drt/milp.py:282`, `src/drt/milp.py:304`, `experiments/milp_gap.py:165`
-- Why fragile: Capacity is bounded by total requests assigned to a vehicle, not time-varying occupancy; operational cost uses pickup-to-dropoff distances, not complete vehicle route sequence; time variables are per request/vehicle without route order variables.
-- Safe modification: Keep using the current MILP only as a static benchmark with clearly documented scope, or add sequence/order variables if exact route feasibility is required.
-- Test coverage: `tests/test_milp.py` smoke-tests status and accepted IDs, but does not compare MILP schedules against a hand-verified route-sequencing optimum.
+**MILP model is a static simplified diagnostic, not exact online route sequencing:**
+- Files: `src/drt/milp.py:13`, `src/drt/milp.py:15`, `src/drt/milp.py:185`, `src/drt/milp.py:186`, `src/drt/milp.py:312`, `manuscript/sections/experiments.tex:154`
+- Why fragile: Capacity is modeled as total requests assigned to a vehicle, operational cost uses pickup-to-dropoff terms, and the model does not include full vehicle route order.
+- Safe modification: Keep this MILP labeled as a small static benchmark, or introduce sequence/order variables before using it as a route-sequencing optimum.
+- Test coverage: `tests/test_milp.py` validates shapes/statuses and skips on missing Gurobi, but it does not compare against a hand-verified route-sequencing optimum.
 
-**MNL filtering uses nearest meeting points before routing rather than the actual offered route bundle:**
-- Files: `experiments/variants.py:78`, `experiments/variants.py:123`, `experiments/variants.py:139`, `experiments/variants.py:147`, `src/drt/choice.py:26`
-- Why fragile: Passenger acceptance is simulated from nearest pickup/dropoff proxies before insertion and scheduling. The final route can offer different meeting points, wait time, and IVT than the bundle used for acceptance.
-- Safe modification: Generate candidate route bundles first, compute acceptance probability for the actual best offered bundle, and only commit insertion when accepted.
-- Test coverage: No tests assert that MNL probability inputs match assigned pickup/dropoff MPs or scheduled pickup time.
+**Gamma and rejection penalty are post-hoc rather than behavioral controls:**
+- Files: `experiments/config.py:34`, `experiments/config.py:36`, `experiments/variants.py:74`, `experiments/pareto_sweep.py:59`, `experiments/metrics.py:246`
+- Why fragile: `ALPHA_WEIGHTS[4]` is explicitly not used in routing, and Pareto social welfare is computed after the run. Users may interpret gamma as changing assignment, acceptance, or routing decisions.
+- Safe modification: Keep the post-hoc interpretation explicit in output names and manuscript text, or wire gamma into the objective/choice path with tests showing changed behavior.
+- Test coverage: No test asserts that gamma is intentionally post-hoc or that behavior remains unchanged across gamma values.
+
+**Beijing scenario comments encode a model compromise in code:**
+- Files: `experiments/scenarios.py:152`, `experiments/scenarios.py:186`, `experiments/scenarios.py:187`, `experiments/scenarios.py:189`
+- Why fragile: The code uses an 80-point 9x9 grid with 1875 m spacing while comments note that a planned "~500m spacing" would require a different grid.
+- Safe modification: Move the compromise into a named scenario parameter or config manifest, and keep method labels clear that this is semi-realistic synthetic Beijing data.
+- Test coverage: `tests/test_scenarios.py` validates current counts/ranges, not empirical representativeness.
 
 ## Scaling Limits
 
-**Scenario generation hard-caps requests at 1000:**
-- Current capacity: Synthetic and Beijing scenario generators accept up to 1000 requests.
-- Limit: `generate_synthetic` and `generate_beijing` raise `ValueError` above `_MAX_REQUESTS = 1000`.
-- Scaling path: Keep the cap for developer safety, but expose it through config and add streaming/batched scenario generation before raising it.
-- Files: `experiments/scenarios.py:27`, `experiments/scenarios.py:65`, `experiments/scenarios.py:176`
+**Scenario generation hard-caps demand at 1000 requests:**
+- Current capacity: `generate_synthetic()` and `generate_beijing()` accept at most `_MAX_REQUESTS = 1000`.
+- Limit: Larger stress or city-scale simulations raise `ValueError`.
+- Scaling path: Keep the cap for default developer safety, but expose it through configuration and add chunked/stress-run profiles before increasing it.
+- Files: `experiments/scenarios.py:27`, `experiments/scenarios.py:46`, `experiments/scenarios.py:65`, `experiments/scenarios.py:152`, `experiments/scenarios.py:176`
 
-**Published full experiment grid is capped at 500 synthetic requests and 200 Beijing requests:**
-- Current capacity: `SCALES = [100, 200, 300, 500]`, `BEIJING_SCALE = 200`, with vehicle counts up to 30.
-- Limit: Full-grid experiments are not configured for 1000-request stress runs or dense urban meeting-point grids.
-- Scaling path: Add a separate stress profile with fewer variants/seeds, explicit timeout behavior, and recorded hardware/runtime metadata.
-- Files: `experiments/config.py:13`, `experiments/config.py:14`, `experiments/config.py:44`, `experiments/runner.py:93`
+**Formal synthetic grid is bounded to selected scales and methods:**
+- Current capacity: `FORMAL_SCALES = [100, 200, 300, 500]`, required seeds are `1..20`, and formal main methods are four behavioral variants.
+- Limit: No default formal run covers 1000-request stress, all diagnostic variants, or Beijing scenarios.
+- Scaling path: Add separate stress manifests with fewer methods/seeds, explicit hardware/runtime metadata, and opt-in timeouts.
+- Files: `experiments/phase06_formal.py:21`, `experiments/phase06_formal.py:23`, `experiments/phase06_formal.py:24`, `experiments/phase06_formal.py:33`
 
-**MILP benchmark scale remains small and solver-dependent:**
-- Current capacity: Gap experiments run only `n=20` and `n=30` with 300-second MILP time limits.
-- Limit: Gurobi availability and simplified MILP formulation constrain exact-comparison scope.
-- Scaling path: Keep MILP benchmarks separate from default tests, store solver status in outputs, and compare ALNS against smaller exact instances or deterministic baselines with known optima.
-- Files: `experiments/milp_gap.py:4`, `experiments/milp_gap.py:134`, `experiments/milp_gap.py:205`
+**Exact MILP comparisons are solver- and scale-limited:**
+- Current capacity: MILP defaults to a 300-second time limit and the gap experiment uses small instances.
+- Limit: Gurobi availability and the simplified formulation limit exact-comparison claims.
+- Scaling path: Treat MILP outputs as diagnostic only, store `no_gurobi`/timeout status in manifests, and compare large runs against deterministic heuristics or saved fixtures.
+- Files: `src/drt/milp.py:63`, `src/drt/milp.py:130`, `experiments/milp_gap.py:176`, `experiments/milp_gap.py:263`
 
 ## Dependencies at Risk
 
 **`gurobipy`:**
-- Risk: Required in `pyproject.toml` but license availability is environment-specific. Tests skip when unavailable, so MILP behavior can remain unverified on many machines.
-- Impact: `src/drt/milp.py` and `experiments/milp_gap.py` either fail, skip, or emit `no_gurobi`, leaving exact benchmark claims dependent on local solver setup.
-- Migration plan: Move `gurobipy` to an optional `milp` extra if the heuristic path is the default install, and add a small pure-Python fallback or saved fixture for CI assertions.
-- Files: `pyproject.toml:10`, `src/drt/milp.py:95`, `tests/test_milp.py:17`, `experiments/milp_gap.py:110`
+- Risk: Declared as a default dependency, but license availability is machine-specific and many tests skip when it is unavailable.
+- Impact: Exact-model tests and MILP gap outputs can be unverified on machines without a working Gurobi license.
+- Migration plan: Move `gurobipy` to an optional `milp` extra if heuristic/experiment workflows should install without a commercial solver, and keep saved fixture outputs for CI checks.
+- Files: `pyproject.toml:11`, `src/drt/milp.py:103`, `src/drt/milp.py:376`, `tests/test_milp.py:138`, `tests/test_milp.py:232`
 
 **`pandas` and `matplotlib`:**
-- Risk: Used by runner/tests/figures but absent from `pyproject.toml`.
-- Impact: Reproducibility depends on preinstalled packages outside project metadata.
-- Migration plan: Add explicit version-bounded dependencies or optional extras for `experiments` and `figures`.
-- Files: `experiments/runner.py:27`, `run_experiments.py:8`, `manuscript/figures/scripts/fig01_system_overview.py:1`, `manuscript/figures/scripts/fig05_sensitivity.py:8`, `pyproject.toml:8`
+- Risk: Used by active experiment, validation, statistics, and figure scripts but absent from project dependency metadata.
+- Impact: Reproducibility depends on globally installed packages outside `pyproject.toml`.
+- Migration plan: Add explicit dependency extras and document install commands for experiment reproduction and figure generation.
+- Files: `experiments/runner.py:29`, `experiments/formal_statistics.py:16`, `experiments/formal_statistics.py:808`, `run_experiments.py:8`, `manuscript/figures/scripts/fig05_sensitivity.py:8`, `pyproject.toml:8`
 
-**Git-tracked generated artifacts:**
-- Risk: `git status --short` shows tracked `__pycache__` and generated result files despite `.gitignore` rules.
-- Impact: Running tests and experiments modifies tracked generated files and makes source diffs noisy.
-- Migration plan: Remove generated artifacts from the index with `git rm --cached`, keep `.gitignore` coverage, and regenerate outputs through scripts.
-- Files: `.gitignore:1`, `results/synthetic_results.csv`, `results/metrics_table.csv`, `src/drt/__pycache__/alns.cpython-312.pyc`, `experiments/__pycache__/runner.cpython-312.pyc`
+**Unpinned dependency versions:**
+- Risk: `pyproject.toml` has no upper or lower bounds for `gurobipy` and `numpy` beyond build-system packages.
+- Impact: Solver APIs, NumPy percentile behavior, and pandas/matplotlib behavior can drift between environments.
+- Migration plan: Add a lockfile or constraints file for paper reproduction, and record dependency versions in formal run manifests.
+- Files: `pyproject.toml:8`, `pyproject.toml:11`, `pyproject.toml:12`, `experiments/phase06_formal.py:119`, `experiments/runner.py:199`
 
 ## Missing Critical Features
 
-**Endogenous rejection penalty is not implemented in FullModel behavior:**
-- Problem: Gamma exists as a constructor parameter but does not affect choice, assignment, routing objective, or accepted-set selection.
-- Blocks: Pareto frontier claims where `gamma` should trade off social welfare, served share, and vehicle-km per served trip.
-- Files: `experiments/variants.py:590`, `experiments/variants.py:595`, `experiments/pareto_sweep.py:50`
+**Root pytest configuration is missing:**
+- Problem: There is no `tool.pytest.ini_options` block configuring `testpaths`, `pythonpath`, or archive exclusions.
+- Blocks: The documented `pytest` command and common CI defaults.
+- Files: `pyproject.toml`, `README.md:83`, `tests/`, `archive/adhoc_tests/`
 
-**Experiment provenance is not captured in machine-readable outputs:**
-- Problem: CSV/JSON outputs store metrics but not code revision, dependency versions, config snapshot, command, hardware/runtime, or whether timeouts/errors occurred.
-- Blocks: Reproducible paper results and clean comparison of archive/current outputs.
-- Files: `experiments/runner.py:129`, `experiments/runner.py:151`, `experiments/weight_sensitivity.py:91`, `experiments/milp_gap.py:182`, `results/`
+**Machine-readable dependency and environment provenance is incomplete:**
+- Problem: Runner manifests record git hash/status counts, but not Python version, dependency versions, OS, CPU, or Gurobi version/license status.
+- Blocks: Exact reproduction of paper tables and timing claims across machines.
+- Files: `experiments/runner.py:199`, `experiments/runner.py:240`, `experiments/phase06_formal.py:119`, `experiments/phase06_formal.py:183`
 
-**Real Beijing data ingestion is not present:**
-- Problem: `generate_beijing` creates a semi-realistic synthetic grid; no input loader or schema for public Beijing trip/road/meeting-point data is present.
-- Blocks: Claims requiring reproducibility against public datasets instead of generated scenarios.
+**Real data ingestion is not implemented for the Beijing case:**
+- Problem: `generate_beijing()` creates a semi-realistic synthetic scenario rather than loading public trip, road, or meeting-point data.
+- Blocks: Claims that require reproducible empirical Beijing data rather than generated demand.
 - Files: `experiments/scenarios.py:152`, `docs/工作3公开数据集.txt`, `results/beijing_results.csv`
+
+**Endogenous policy control via gamma is not implemented:**
+- Problem: Gamma is available for post-hoc welfare scoring, but not for route choice, offer construction, or acceptance decisions.
+- Blocks: Interpreting Pareto outputs as behaviorally endogenous policy optimization.
+- Files: `experiments/config.py:34`, `experiments/pareto_sweep.py:59`, `experiments/metrics.py:246`, `experiments/variants.py:74`
 
 ## Test Coverage Gaps
 
-**No root-level test configuration:**
-- What's not tested: The default developer command `pytest` as documented in `README.md` is not kept green.
-- Files: `README.md:83`, `pyproject.toml`, `archive/adhoc_tests/`, `tests/`
-- Risk: New contributors and automation run the wrong test surface and hit archived failures before active tests.
+**Default test command coverage:**
+- What's not tested: Root `pytest` is not green because archived tests are collected and package path setup is missing.
+- Files: `pyproject.toml`, `README.md:83`, `archive/adhoc_tests/`, `tests/`
+- Risk: New contributors and automation hit collection errors before reaching the maintained suite.
 - Priority: High
 
-**Runner timeout and error rows are not behaviorally tested:**
-- What's not tested: A hanging variant should return in bounded wall time and produce an error row without blocking executor shutdown.
-- Files: `experiments/runner.py:186`, `tests/test_runner.py:28`
-- Risk: Full experiment runs can stall despite a visible timeout constant.
+**Route-stop and completed-trip metric exactness:**
+- What's not tested: Exact pickup/dropoff meeting points, walk distances, and IVT for completed rolling-horizon requests after route pruning.
+- Files: `src/drt/alns.py:511`, `experiments/variants.py:454`, `experiments/variants.py:455`, `tests/test_alns.py:269`, `tests/test_variants.py`
+- Risk: Reported fairness, walking, and detour metrics can diverge from assigned service details.
 - Priority: High
 
-**Gamma/Pareto semantics are not tested:**
-- What's not tested: `FullModel(gamma=0)` versus `FullModel(gamma=100)` should have a defined expected relationship or deliberately identical routing if the sweep is post-hoc only.
-- Files: `experiments/variants.py:590`, `experiments/pareto_sweep.py:37`, `tests/test_variants.py:130`
-- Risk: Pareto outputs can look meaningful while only social-welfare arithmetic changes.
+**Feasibility with non-alternating existing stops:**
+- What's not tested: Capacity correctness when an existing route has pickup/dropoff roles that do not alternate from index zero.
+- Files: `src/drt/feasibility.py:128`, `tests/test_feasibility.py:69`
+- Risk: Insertion feasibility can reject feasible moves or accept infeasible ones in realistic shared routes.
 - Priority: High
 
-**Metric exactness for completed/pruned trips is not tested:**
-- What's not tested: Passenger records after rolling-horizon pruning should preserve pickup/dropoff walk, wait, IVT, and accepted status.
-- Files: `src/drt/alns.py:498`, `experiments/variants.py:229`, `experiments/variants.py:247`, `tests/test_metrics.py`, `tests/test_variants.py`
-- Risk: Reported acceptance, walking, fairness, and detour results can diverge from actual scheduled route details.
-- Priority: High
-
-**Experiment formulas are not cross-checked against shared metric helpers:**
-- What's not tested: `experiments/weight_sensitivity.py` should match `experiments.metrics.vkm_per_trip`.
-- Files: `experiments/weight_sensitivity.py:87`, `experiments/metrics.py:190`, `tests/test_metrics.py`
-- Risk: Derived paper tables can use inconsistent formulas even when base metrics tests pass.
+**Gamma/Pareto semantics:**
+- What's not tested: Whether `FullModel(gamma=...)` should change behavior or remain a post-hoc welfare-only parameter.
+- Files: `experiments/config.py:34`, `experiments/pareto_sweep.py:59`, `tests/test_variants.py`, `tests/test_metrics.py`
+- Risk: Policy-sweep outputs can be misread as endogenous optimization results.
 - Priority: Medium
 
-**MILP exactness tests are smoke-level only:**
-- What's not tested: Known small instances with expected accepted set, route cost, feasibility, and objective value.
-- Files: `tests/test_milp.py:131`, `tests/test_milp.py:160`, `src/drt/milp.py`
-- Risk: Simplified or incorrect exact-model constraints can pass tests that only validate result shape.
+**Dependency/install smoke tests:**
+- What's not tested: A fresh `pip install -e .` plus `python run_experiments.py` in an environment containing only declared dependencies.
+- Files: `pyproject.toml:8`, `run_experiments.py:8`, `experiments/runner.py:29`
+- Risk: Missing `pandas`/`matplotlib` metadata remains invisible on developer machines that already have those packages installed.
+- Priority: Medium
+
+**MILP exactness beyond status smoke tests:**
+- What's not tested: Hand-verifiable tiny instances with expected objective value, accepted set, schedule, and route feasibility.
+- Files: `src/drt/milp.py`, `tests/test_milp.py:138`, `tests/test_milp.py:250`
+- Risk: Simplified exact-model constraints can pass status-oriented tests while supporting claims beyond their diagnostic scope.
 - Priority: Medium
 
 ---
 
-*Concerns audit: 2026-06-14*
+*Concerns audit: 2026-06-16*

@@ -1,102 +1,109 @@
 # Coding Conventions
 
-**Analysis Date:** 2026-06-14
+**Analysis Date:** 2026-06-16
 
 ## Naming Patterns
 
 **Files:**
-- Use lowercase `snake_case.py` for Python modules, as in `src/drt/candidate.py`, `src/drt/feasibility.py`, `experiments/weight_sensitivity.py`, and `analysis/test_sensitivity.py`.
-- Test files use pytest's `test_*.py` naming pattern, as in `tests/test_candidate.py`, `tests/test_runner.py`, and `analysis/test_sensitivity.py`.
-- Package initialization files are minimal `__init__.py` files, as in `src/drt/__init__.py`, `experiments/__init__.py`, and `analysis/__init__.py`.
+- Use lowercase `snake_case.py` for Python modules, as in `src/drt/candidate.py`, `src/drt/feasibility.py`, `experiments/phase06_formal.py`, `experiments/phase06_coverage_controls.py`, and `analysis/test_sensitivity.py`.
+- Test files use pytest's `test_*.py` naming pattern, as in `tests/test_candidate.py`, `tests/test_runner.py`, `tests/test_phase06_formal.py`, and `analysis/test_sensitivity.py`.
+- Package initialization files stay minimal, as in `src/drt/__init__.py`, `experiments/__init__.py`, and `analysis/__init__.py`.
+- Archived one-off scripts also use `test_*.py` names under `archive/adhoc_tests/`; do not copy this placement for active tests because default pytest discovery reaches those files.
 
 **Functions:**
 - Public functions use lowercase `snake_case` verbs or verb phrases, as in `generate_candidates()` in `src/drt/candidate.py`, `check_feasibility()` in `src/drt/feasibility.py`, `evaluate_insertion()` in `src/drt/insertion.py`, `compute_metrics()` in `experiments/metrics.py`, and `run_all_experiments()` in `experiments/runner.py`.
-- Internal helpers are prefixed with `_`, as in `_route_distance()` in `src/drt/insertion.py`, `_get_assigned_ids()` in `src/drt/alns.py`, `_make_error_row()` in `experiments/runner.py`, and `_normal_clamp()` in `experiments/scenarios.py`.
-- Test helper factories use short `make_*` or `_make_*` names, as in `make_request()` in `tests/test_insertion.py`, `make_vehicle()` in `tests/test_feasibility.py`, and `_make_small_instance()` in `tests/test_milp.py`.
+- Internal helpers use a leading underscore, as in `_binary_logit_probability()` in `src/drt/choice.py`, `_route_distance()` in `src/drt/insertion.py`, `_make_error_row()` in `experiments/runner.py`, `_validate_formal_scales()` in `experiments/phase06_formal.py`, and `_check_columns()` in `experiments/phase06_robustness.py`.
+- Test helper factories use `make_*` or `_make_*`, as in `make_offer()` in `tests/test_choice.py`, `make_record()` in `tests/test_metrics.py`, `_make_small_instance()` in `tests/test_milp.py`, and `_raw_row()` in `tests/test_phase06_formal.py`.
+- Script entry points use `main()` and `if __name__ == "__main__"` or `raise SystemExit(main())`, as in `experiments/runner.py`, `experiments/phase06_formal.py`, `experiments/phase06_robustness.py`, and `run_experiments.py`.
 
 **Variables:**
-- Use domain-specific identifiers that match DRT notation where helpful: `rho_p`, `rho_d`, `k_top`, `pos_p`, `pos_d`, `mp_p`, and `mp_d` appear in `src/drt/insertion.py`, `src/drt/feasibility.py`, and `experiments/config.py`.
-- Use `snake_case` for ordinary variables and records, as in `pickup_candidates` in `src/drt/insertion.py`, `acceptance_rate` in `experiments/metrics.py`, and `synthetic_rows` in `experiments/runner.py`.
-- Use all-caps constants for shared experiment parameters, as in `RANDOM_SEED`, `K_TOP`, `RHO_P`, `RHO_D`, `H_WINDOW`, and `ALPHA_WEIGHTS` in `experiments/config.py`.
-- Use leading underscores for module-level private constants, as in `_VARIANT_TIMEOUT_S`, `_RAW_COLS`, and `_METRIC_COLS` in `experiments/runner.py`, `_MAX_REQUESTS` in `experiments/scenarios.py`, and `_COST_WEIGHTS` in `experiments/variants.py`.
+- Use `snake_case` for ordinary variables and row dictionaries, as in `pickup_candidates` in `tests/test_milp.py`, `synthetic_rows` and `utility_rows` in `experiments/runner.py`, and `acceptance_probability` in `src/drt/choice.py`.
+- Use domain names that match DRT notation where helpful: `rho_p`, `rho_d`, `k_top`, `pos_p`, `pos_d`, `pickup_mp`, and `dropoff_mp` appear in `src/drt/candidate.py`, `src/drt/insertion.py`, `src/drt/feasibility.py`, and `src/drt/types.py`.
+- Use all-caps constants for shared experiment parameters and registries, as in `SCALES`, `SEEDS`, `VEHICLE_COUNTS`, `RHO_P`, `RHO_D`, and `ALPHA_WEIGHTS` in `experiments/config.py`.
+- Use leading underscores for module-private constants and column schemas, as in `_VARIANT_TIMEOUT_S`, `_RAW_COLS`, `_METRIC_COLS`, and `_UTILITY_COLS` in `experiments/runner.py`.
+- Use explicit status strings for lifecycle state: `served`, `choice_rejected`, `feasibility_rejected`, `completed`, `timeout`, `failed`, `passed`, and `no_gurobi` appear across `src/drt/choice.py`, `experiments/runner.py`, `experiments/milp_gap.py`, and tests in `tests/`.
 
 **Types:**
-- Data containers use PascalCase dataclasses, as in `Request`, `Vehicle`, `MeetingPoint`, `Bundle`, `Route`, and `PassengerType` in `src/drt/types.py`.
-- Result objects use `*Result` suffixes, as in `InsertionResult` in `src/drt/insertion.py`, `SimulationResult` and `MetricsResult` in `experiments/metrics.py`.
-- Variant classes use PascalCase names matching experiment labels, as in `DoorToDoor`, `FullModel`, and `AblationNoChoice` in `experiments/variants.py`.
+- Data containers use PascalCase dataclasses, as in `Request`, `Vehicle`, `MeetingPoint`, `Bundle`, `OfferAttributes`, `ChoiceParameters`, `ChoiceEvaluation`, and `PassengerType` in `src/drt/types.py`.
+- Result objects use the `*Result` suffix, as in `InsertionResult` in `src/drt/insertion.py`, `SimulationResult` and `MetricsResult` in `experiments/metrics.py`, and `ALNSState` in `src/drt/alns.py`.
+- Variant classes use PascalCase names that match experiment concepts, as in `DoorToDoor`, `SingleSidedPickup`, `SingleSidedDropoff`, `BidirectionalNoChoice`, `GreedyInsertionBaseline`, `FullModel`, `AblationNoRollingHorizon`, and `AblationNoChoice` in `experiments/variants.py`.
 
 ## Code Style
 
 **Formatting:**
-- No formatter configuration is detected in `pyproject.toml`; no `.prettierrc`, `ruff.toml`, `black`, or `isort` config files are present in the repository root.
-- Use 4-space indentation and conventional PEP 8 spacing, matching `src/drt/candidate.py`, `src/drt/insertion.py`, and `experiments/metrics.py`.
-- Prefer explicit line breaks for long function signatures and long expressions, as in `check_feasibility()` in `src/drt/feasibility.py`, `RollingHorizon.__init__()` in `src/drt/alns.py`, and `run_all_experiments()` in `experiments/runner.py`.
-- Use module docstrings at the top of active source and test modules to state purpose and algorithm phase, as in `src/drt/milp.py`, `src/drt/alns.py`, `tests/test_alns.py`, and `tests/test_runner.py`.
-- Most active modules include `from __future__ import annotations`; keep using it in new library, experiment, analysis, and test modules such as `src/drt/insertion.py`, `experiments/variants.py`, and `tests/test_insertion.py`.
+- No formatter configuration is detected. `pyproject.toml` has build and dependency metadata only; no `black`, `ruff`, `isort`, `mypy`, or pytest tool sections are present.
+- Use 4-space indentation and PEP 8 spacing, matching `src/drt/candidate.py`, `src/drt/choice.py`, `experiments/metrics.py`, and `tests/test_runner.py`.
+- Prefer type hints on public functions and dataclass fields, as in `src/drt/types.py`, `src/drt/choice.py`, `experiments/metrics.py`, `experiments/scenarios.py`, and `experiments/phase06_formal.py`.
+- Use `from __future__ import annotations` in new Python modules, matching most active files such as `src/drt/choice.py`, `src/drt/alns.py`, `experiments/runner.py`, `tests/test_choice.py`, and `tests/test_phase06_formal.py`.
+- Use explicit multi-line calls for dataclass construction and long function calls, as in `tests/test_choice.py`, `tests/test_milp.py`, `experiments/runner.py`, and `src/drt/choice.py`.
+- Module docstrings are common and should state purpose, phase, or algorithm role, as in `src/drt/milp.py`, `src/drt/alns.py`, `experiments/metrics.py`, `tests/test_runner.py`, and `analysis/test_sensitivity.py`.
+- Keep output file writes explicit about encoding when reading or writing text/CSV outside pandas, as in `experiments/runner.py`, `analysis/test_sensitivity.py`, and `experiments/formal_statistics.py`.
 
 **Linting:**
-- No linting configuration is detected in `pyproject.toml`; no `.eslintrc*`, `eslint.config.*`, `biome.json`, `ruff.toml`, `.ruff.toml`, `mypy.ini`, or `pyrightconfig.json` is present.
-- Follow the style already used in `src/drt/` and `experiments/`: type hints on public APIs, dataclasses for structured records, descriptive assertion messages in tests, and explicit helper functions for repeated setup.
+- No linting configuration is detected. No `.eslintrc*`, `eslint.config.*`, `biome.json`, `ruff.toml`, `.ruff.toml`, `mypy.ini`, `pyrightconfig.json`, or `setup.cfg` lint section is present at the repository root.
+- Follow the existing local style rather than introducing a new formatter style in isolated edits.
+- Existing tests sometimes use `# noqa: E402` after manual `sys.path` mutation, as in `tests/test_phase05_pilot.py` and `tests/test_phase06_formal.py`; prefer editable install imports for new tests, but keep `# noqa: E402` when modifying files that already use that pattern.
 
 ## Import Organization
 
 **Order:**
-1. Future imports first, as in `from __future__ import annotations` in `src/drt/alns.py`, `experiments/runner.py`, and `tests/test_runner.py`.
-2. Standard library imports next, as in `math`, `random`, `time`, `os`, `sys`, `csv`, and `concurrent.futures` in `src/drt/alns.py` and `experiments/runner.py`.
-3. Third-party imports after standard library imports, as in `numpy as np` in `experiments/metrics.py`, `pandas as pd` in `experiments/runner.py`, and `pytest` in `tests/test_runner.py`.
-4. Local imports last, as in `from drt.types import ...` in `src/drt/insertion.py` and `tests/test_candidate.py`, and `from experiments.metrics import ...` in `experiments/variants.py` and `tests/test_metrics.py`.
+1. Future imports first: `from __future__ import annotations`, as in `src/drt/choice.py`, `experiments/phase06_formal.py`, and `tests/test_runner.py`.
+2. Standard library imports next: `csv`, `json`, `math`, `os`, `random`, `subprocess`, `sys`, `time`, `traceback`, `dataclasses`, `datetime`, and `pathlib`, as in `experiments/runner.py`, `experiments/formal_statistics.py`, and `tests/test_milp.py`.
+3. Third-party imports after standard library imports: `numpy as np`, `pandas as pd`, `pytest`, and optional `gurobipy`, as in `experiments/metrics.py`, `experiments/runner.py`, `tests/test_milp.py`, and `tests/test_phase06_formal.py`.
+4. Local imports last: `from drt.types import ...`, `from experiments.metrics import ...`, and `from experiments.variants import ...`, as in `src/drt/choice.py`, `experiments/variants.py`, `tests/test_runner.py`, and `tests/test_variants.py`.
 
 **Path Aliases:**
-- The installed package root is `src/drt`, configured by `pyproject.toml`; imports from package code commonly use `drt.*`, as in `src/drt/insertion.py`, `src/drt/alns.py`, and `tests/test_insertion.py`.
-- Some experiment modules import through `src.drt.*`, as in `experiments/scenarios.py` and `experiments/variants.py`; match the surrounding file when editing those modules.
-- Some tests manually add paths with `sys.path.insert`, as in `tests/test_alns.py`, `tests/test_milp.py`, `tests/test_metrics.py`, and `tests/test_scenarios.py`; prefer relying on editable install (`pip install -e .`) for new tests unless a local file already uses this pattern.
+- The package is installed from `src/` by `pyproject.toml`; active library imports should use `drt.*` where possible, as in `src/drt/alns.py`, `src/drt/insertion.py`, `tests/test_candidate.py`, and `tests/test_choice.py`.
+- Some experiment modules import `src.drt.*`, as in `experiments/scenarios.py` and `experiments/variants.py`; match the surrounding file when editing existing modules.
+- Several tests mutate `sys.path`, including `tests/test_milp.py`, `tests/test_runner.py`, `tests/test_metrics.py`, `tests/test_variants.py`, and `tests/test_phase06_formal.py`. New tests should live under `tests/` and rely on `pip install -e .` unless the target file already follows the manual path pattern.
 
 ## Error Handling
 
 **Patterns:**
-- Use typed return values for expected business outcomes, as in `check_feasibility()` returning `(False, "capacity")` or `(True, "")` in `src/drt/feasibility.py`.
-- Use `None` for expected "no feasible solution" outcomes, as in `evaluate_insertion()` returning `InsertionResult | None` in `src/drt/insertion.py`.
-- Raise `ValueError` for invalid input constraints, as in the request-count cap in `generate_synthetic()` and `generate_beijing()` in `experiments/scenarios.py`.
-- Raise dependency-specific errors at the boundary where optional tools are required, as in deferred `gurobipy` imports raising `ImportError` in `src/drt/milp.py`.
-- Use explicit runtime errors for invalid call order, as in `DRTModel.write_benchmark()` raising `RuntimeError` when `solve()` has not been called in `src/drt/milp.py`.
-- Long-running experiment orchestration catches timeout and generic exceptions, prints diagnostics to stderr, and returns zero-filled result rows in `experiments/runner.py`.
-- Use warnings for recoverable data inconsistencies that should be visible to callers, as in `warnings.warn(..., RuntimeWarning)` in `experiments/variants.py`.
+- Use return values for expected domain outcomes: `check_feasibility()` returns `(bool, reason)` in `src/drt/feasibility.py`, and tests assert reason codes such as `capacity`, `tw_late`, `ride_time`, `precedence`, `route_duration`, and `tw_early` in `tests/test_feasibility.py`.
+- Use `None` for expected no-solution paths, as in `evaluate_insertion()` returning `InsertionResult | None` in `src/drt/insertion.py` and `tests/test_insertion.py`.
+- Raise `ValueError` for invalid inputs and configuration bounds, as in `assign_passenger_type()` in `src/drt/choice.py`, request-count caps in `experiments/scenarios.py`, formal-scale validation in `experiments/phase06_formal.py`, and control validation in `experiments/phase06_coverage_controls.py`.
+- Defer optional dependency failures to the boundary that needs them, as in `src/drt/milp.py` raising `ImportError` when `gurobipy` is unavailable and `tests/test_milp.py` using `pytest.importorskip()`.
+- Use `RuntimeError` for invalid execution state or planned test failures, as in `DRTModel.write_benchmark()` in `src/drt/milp.py` and `FailingVariant` in `tests/test_runner.py`.
+- Long-running experiment runners convert timeouts and exceptions into durable result rows rather than aborting the whole batch, as in `_run_variant_with_timeout()` and `_make_error_row()` in `experiments/runner.py`.
+- Validation packages return dictionaries with `passed`, `errors`, and check details, as in `experiments/pilot_validation.py`, `experiments/phase06_formal.py`, `experiments/phase06_coverage_controls.py`, and `experiments/phase06_robustness.py`.
 
 ## Logging
 
 **Framework:** `print` / `stderr`
 
 **Patterns:**
-- Experiment scripts report progress with `print()`, as in `experiments/runner.py` and `run_experiments.py`.
-- Error paths in experiment execution write to `sys.stderr`, as in `_run_variant_with_timeout()` in `experiments/runner.py`.
-- No structured logging framework is configured; keep new progress output concise and reserve verbose diagnostics for experiment runners or command-line scripts such as `run_experiments.py`.
+- Use `print()` for experiment progress and CLI summaries, as in `experiments/runner.py`, `experiments/matched_coverage.py`, `experiments/weight_sensitivity.py`, `analysis/sensitivity.py`, and `run_experiments.py`.
+- Use `file=sys.stderr` for runner failures and timeouts, as in `_run_variant_with_timeout()` in `experiments/runner.py`.
+- Use JSON output for machine-readable command results, as in `experiments/phase06_formal.py`, `experiments/phase06_coverage_controls.py`, `experiments/phase06_robustness.py`, and `experiments/formal_statistics.py`.
+- No structured logging framework is configured; keep new progress output concise and deterministic enough for tests.
 
 ## Comments
 
 **When to Comment:**
-- Use comments to connect implementation to algorithm labels, mathematical constraints, or threat mitigations, as in `src/drt/feasibility.py`, `src/drt/milp.py`, `experiments/scenarios.py`, and `experiments/variants.py`.
-- Use section dividers sparingly for large modules with clear phases, as in `src/drt/alns.py`, `src/drt/milp.py`, and `tests/test_feasibility.py`.
-- Avoid comments that repeat simple code. Prefer comments that explain model assumptions, units, complexity, or why a guard exists, as in `experiments/metrics.py` and `experiments/scenarios.py`.
+- Use comments to connect code to algorithm phases, model assumptions, units, or validation gates, as in `src/drt/types.py`, `src/drt/feasibility.py`, `src/drt/milp.py`, `experiments/metrics.py`, and `experiments/scenarios.py`.
+- Use section dividers in large modules and test files to separate coherent groups, as in `src/drt/alns.py`, `src/drt/milp.py`, `tests/test_metrics.py`, and `tests/test_runner.py`.
+- Preserve threat or validation comments when editing guarded paths, such as comments in `experiments/scenarios.py`, `experiments/runner.py`, and `experiments/variants.py`.
+- Avoid comments that restate simple assignments; prefer comments that explain units, denominators, status semantics, reproducibility, or why an archived/gated path exists.
 
 **JSDoc/TSDoc:**
-- Not applicable; this is a Python codebase.
-- Use Python docstrings instead. Module, class, and public-function docstrings are common in `src/drt/types.py`, `src/drt/choice.py`, `experiments/metrics.py`, and `tests/test_runner.py`.
-- Use NumPy-style sections for algorithm-facing public functions when parameters and returns need explanation, as in `src/drt/candidate.py`, `src/drt/feasibility.py`, `src/drt/milp.py`, and `experiments/scenarios.py`.
+- Not applicable. This repository is Python and LaTeX.
+- Python docstrings use a mix of plain prose, NumPy-style sections, and short one-line summaries. Match the surrounding file: `src/drt/choice.py` uses parameter/return sections, `experiments/metrics.py` documents formulas and units, and `tests/test_runner.py` uses short test-purpose docstrings.
 
 ## Function Design
 
-**Size:** Keep small mathematical helpers focused, as in `euclidean()` in `src/drt/candidate.py`, `_travel_time()` in `src/drt/feasibility.py`, and `_gini()` in `experiments/metrics.py`. Larger orchestration functions are present in `src/drt/alns.py`, `src/drt/milp.py`, and `experiments/runner.py`; when adding behavior there, prefer extracting private helpers rather than extending already large methods.
+**Size:** Keep core helpers focused and testable in `src/drt/` and use larger orchestration functions only for experiment workflows. Small functions such as `euclidean()` in `src/drt/candidate.py`, `vkm_per_trip()` in `experiments/metrics.py`, and `_stable_int()` in `src/drt/choice.py` are preferred for reusable calculations. Larger runners such as `run_all_experiments()` in `experiments/runner.py` and `run_all()` in `experiments/phase06_robustness.py` should coordinate existing helpers rather than embedding unrelated calculations.
 
-**Parameters:** Use explicit typed parameters for public APIs, as in `generate_synthetic(n_requests: int, n_vehicles: int, seed: int)` in `experiments/scenarios.py`, `evaluate_insertion(...)` in `src/drt/insertion.py`, and `DRTModel.__init__(...)` in `src/drt/milp.py`. Defaults are common for algorithm knobs such as `travel_speed`, `cost_weights`, `time_limit`, and `mip_gap`.
+**Parameters:** Use explicit typed parameters rather than generic dictionaries for core model APIs, as in `generate_candidates()` in `src/drt/candidate.py`, `check_feasibility()` in `src/drt/feasibility.py`, and `evaluate_single_offer()` in `src/drt/choice.py`. Dictionaries are acceptable for CSV rows, manifests, validation reports, and method metadata in `experiments/runner.py`, `experiments/variants.py`, and `experiments/formal_statistics.py`.
 
-**Return Values:** Return dataclasses for structured domain records, as in `Scenario` from `experiments/scenarios.py`, `MetricsResult` from `experiments/metrics.py`, and `InsertionResult` from `src/drt/insertion.py`. Return plain dictionaries for dynamic run summaries and benchmark outputs, as in `RollingHorizon.reoptimize()` and `benchmark()` in `src/drt/alns.py`, and `DRTModel.solve()` in `src/drt/milp.py`.
+**Return Values:** Prefer dataclasses for structured in-memory results (`ChoiceEvaluation`, `InsertionResult`, `SimulationResult`, `MetricsResult`) and dictionaries for serialized experiment rows or validation reports (`experiments/runner.py`, `experiments/milp_gap.py`, `experiments/phase06_formal.py`). Use `0.0` defaults instead of `None` for numeric metrics when denominators are empty, matching `compute_metrics()` in `experiments/metrics.py`.
 
 ## Module Design
 
-**Exports:** Public modules expose a small set of domain functions/classes, such as `generate_candidates()` in `src/drt/candidate.py`, `check_feasibility()` in `src/drt/feasibility.py`, `DRTModel` in `src/drt/milp.py`, `compute_metrics()` in `experiments/metrics.py`, and `run_all_experiments()` in `experiments/runner.py`.
+**Exports:** Keep `src/drt/__init__.py` as the public package surface for stable primitives such as `Request`, `Vehicle`, `Bundle`, `accept_probability`, `evaluate_single_offer`, and `assign_passenger_type`. Import from specific modules for implementation details, as in `experiments/variants.py` and `tests/test_variants.py`.
 
-**Barrel Files:** `src/drt/__init__.py` re-exports core dataclasses and choice functions from `src/drt/types.py` and `src/drt/choice.py`. No comparable barrel file is used for `experiments/` or `analysis/`.
+**Barrel Files:** `src/drt/__init__.py` is the only active barrel-style file. `experiments/__init__.py` and `analysis/__init__.py` are package markers only. Do not add broad re-export barrels unless a stable public API is needed.
 
 ---
 
-*Convention analysis: 2026-06-14*
+*Convention analysis: 2026-06-16*

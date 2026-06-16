@@ -1,285 +1,296 @@
 # Codebase Structure
 
-**Analysis Date:** 2026-06-14
+**Analysis Date:** 2026-06-16
 
 ## Directory Layout
 
 ```text
-3.工作3/
-├── README.md                         # Project overview, run instructions, known repository notes
-├── CLAUDE.md                         # Project instructions for coding agents
-├── pyproject.toml                    # Python package metadata for package `drt`
-├── run_experiments.py                # Root entry point for the full experiment suite
-├── src/
-│   ├── drt/                          # Core DRT package
-│   │   ├── __init__.py               # Public re-exports for common package API
-│   │   ├── types.py                  # Domain dataclasses and passenger type constants
-│   │   ├── candidate.py              # Top-k meeting point candidate generation
-│   │   ├── choice.py                 # MNL utility and acceptance probability
-│   │   ├── feasibility.py            # Route insertion feasibility constraints
-│   │   ├── insertion.py              # Best feasible insertion evaluator
-│   │   ├── alns.py                   # ALNS operators and rolling-horizon controller
-│   │   └── milp.py                   # Static Gurobi MILP baseline
-│   └── drt.egg-info/                 # Editable-install package metadata
-├── experiments/
-│   ├── __init__.py                   # Experiment package marker
-│   ├── config.py                     # Shared constants, scales, seeds, radii, weights
-│   ├── scenarios.py                  # Synthetic and Beijing scenario generation
-│   ├── variants.py                   # Baselines, ablations, FullModel, variant registry
-│   ├── metrics.py                    # Simulation output dataclasses and metric computation
-│   ├── runner.py                     # Main experiment matrix runner and CSV writers
-│   ├── weight_sensitivity.py         # Weight sensitivity experiment
-│   ├── pareto_sweep.py               # Social-welfare Pareto/gamma sweep
-│   ├── milp_gap.py                   # MILP-vs-heuristic gap experiment
-│   ├── matched_coverage.py           # Matched coverage experiment
-│   └── endogenous_matched_coverage.py # Endogenous matched coverage experiment
-├── analysis/
-│   ├── __init__.py                   # Analysis package marker
-│   ├── sensitivity.py                # Walking tolerance and fleet-size sweeps
-│   ├── equity.py                     # Passenger-type equity table generation
-│   ├── policy.py                     # Policy recommendation generation from result CSVs
-│   └── test_sensitivity.py           # Tests for analysis sensitivity outputs
-├── tests/                            # Pytest suite for core, experiments, and runner behavior
-├── results/                          # Generated CSV/JSON/Markdown experiment outputs
-├── manuscript/                       # LaTeX manuscript, compiled PDF, figures, and figure scripts
-├── docs/                             # Human-written notes and public dataset notes
-├── archive/                          # Historical drafts, old results, debug scripts, logs, adhoc tests
-└── .planning/
-    └── codebase/                     # GSD codebase maps
+3.working-root/
++-- README.md                 # Project overview, run instructions, known repository notes
++-- CLAUDE.md                 # GSD/project context and workflow constraints
++-- pyproject.toml            # Python package metadata for package `drt`
++-- run_experiments.py        # Root script for the generic full experiment run
++-- .planning/                # GSD planning state and codebase maps
++-- src/
+|   +-- drt/                  # Core reusable DRT package
+|       +-- __init__.py       # Public package re-exports
+|       +-- types.py          # Domain dataclasses
+|       +-- candidate.py      # Meeting-point candidate filtering
+|       +-- feasibility.py    # Insertion feasibility checks
+|       +-- insertion.py      # Greedy insertion evaluator
+|       +-- choice.py         # MNL/binary-logit choice model
+|       +-- alns.py           # ALNS operators and rolling horizon controller
+|       +-- milp.py           # Gurobi static snapshot diagnostic model
++-- experiments/              # Scenario, variant, runner, phase, and validation scripts
++-- analysis/                 # Post-hoc sensitivity, equity, and policy analysis
++-- tests/                    # Pytest coverage for algorithms, variants, runners, phases
++-- results/                  # Generated experiment outputs and formal artifacts
++-- manuscript/               # Current LaTeX paper, figures, figure scripts, sections
++-- docs/                     # Human-written notes and project documents
++-- archive/                  # Historical drafts, output logs, debug scripts, ad-hoc tests
 ```
 
 ## Directory Purposes
 
 **`src/drt/`:**
-- Purpose: Core reusable DRT algorithm library.
-- Contains: Domain dataclasses, candidate generation, MNL choice, feasibility checking, insertion evaluation, ALNS/rolling-horizon heuristic, and MILP baseline.
-- Key files: `src/drt/types.py`, `src/drt/candidate.py`, `src/drt/choice.py`, `src/drt/feasibility.py`, `src/drt/insertion.py`, `src/drt/alns.py`, `src/drt/milp.py`, `src/drt/__init__.py`.
-- Use this directory for algorithmic behavior that should be independent of a specific experiment or result table.
+- Purpose: Reusable many-to-many DRT algorithm package.
+- Contains: Dataclasses, candidate filtering, feasibility checks, insertion logic, choice model, ALNS/rolling horizon, exact MILP diagnostics.
+- Key files: `src/drt/types.py`, `src/drt/choice.py`, `src/drt/insertion.py`, `src/drt/alns.py`, `src/drt/milp.py`.
+- Add only source code that can be imported without depending on `results/`, `manuscript/`, or phase-specific planning files.
 
 **`experiments/`:**
-- Purpose: Compose core algorithms into repeatable research experiments.
-- Contains: Shared constants, scenario generators, model variant classes, metrics, full runner, and focused experiment scripts.
-- Key files: `experiments/config.py`, `experiments/scenarios.py`, `experiments/variants.py`, `experiments/metrics.py`, `experiments/runner.py`.
-- Use this directory for new simulation campaigns, new baselines/ablations, and new output-producing experiment scripts.
+- Purpose: Experiment orchestration and evidence generation.
+- Contains: Shared constants, scenario generators, variant definitions, generic runner, Phase 05/06 harnesses, controls, robustness diagnostics, formal validation/statistics, auxiliary experiments.
+- Key files: `experiments/config.py`, `experiments/scenarios.py`, `experiments/variants.py`, `experiments/runner.py`, `experiments/phase06_formal.py`, `experiments/formal_statistics.py`.
+- Add new runnable experiment behavior here, not in `run_experiments.py`.
 
 **`analysis/`:**
-- Purpose: Post-hoc analysis and policy synthesis over experiment outputs.
-- Contains: Sensitivity sweeps, equity analysis, policy recommendation generation, and analysis-specific tests.
+- Purpose: Post-hoc analysis that reads completed result artifacts.
+- Contains: Sensitivity sweeps, equity analysis, policy recommendation generation, and one local test module.
 - Key files: `analysis/sensitivity.py`, `analysis/equity.py`, `analysis/policy.py`, `analysis/test_sensitivity.py`.
-- Use this directory for code that reads generated outputs or runs narrowly scoped analysis variants.
+- Add analysis that consumes existing CSV/JSON outputs and writes derived reports.
 
 **`tests/`:**
-- Purpose: Pytest coverage for core algorithms, experiment composition, scenario generation, metrics, and runner output.
-- Contains: One test module per important source area.
-- Key files: `tests/test_candidate.py`, `tests/test_feasibility.py`, `tests/test_insertion.py`, `tests/test_alns.py`, `tests/test_milp.py`, `tests/test_scenarios.py`, `tests/test_variants.py`, `tests/test_metrics.py`, `tests/test_runner.py`.
-- Add tests here for production source under `src/drt/` and `experiments/`; analysis currently has a colocated test file at `analysis/test_sensitivity.py`.
+- Purpose: Pytest suite for core algorithms, scenario generators, variants, runner behavior, phase harnesses, controls, and robustness packages.
+- Contains: `test_*.py` files co-located in one top-level test directory.
+- Key files: `tests/test_insertion.py`, `tests/test_choice.py`, `tests/test_alns.py`, `tests/test_runner.py`, `tests/test_phase06_formal.py`.
+- Add tests for any behavior added under `src/drt/`, `experiments/`, or `analysis/`.
 
 **`results/`:**
-- Purpose: Generated experiment and analysis outputs.
-- Contains: CSV, JSON, TXT, and Markdown results such as `results/synthetic_results.csv`, `results/beijing_results.csv`, `results/metrics_table.csv`, `results/sensitivity_walk.csv`, `results/equity_table.csv`, `results/policy_recommendations.md`.
-- Key files: Result artifacts, not source-of-truth code.
-- Treat as generated data; source changes should happen in `experiments/` or `analysis/`.
+- Purpose: Generated experiment outputs and validation artifacts.
+- Contains: Root generic CSV/JSON outputs, pilot results under `results/pilot/phase05`, formal Phase 06 outputs under `results/formal/phase06`, plots, tables, manifests, validation reports.
+- Key files: `results/formal/phase06/main_behavioral/raw_results.csv`, `results/formal/phase06/tables/main_behavioral_table.csv`, `results/formal/phase06/phase06_result_manifest.json`.
+- Treat this directory as generated evidence/output, not application source.
 
 **`manuscript/`:**
-- Purpose: Current publication manuscript and generated figures.
-- Contains: LaTeX files, bibliography, response/cover letter, compiled PDF, section files, figures, and figure-generation scripts.
-- Key files: `manuscript/main.tex`, `manuscript/references.bib`, `manuscript/sections/`, `manuscript/figures/`, `manuscript/figures/scripts/`.
-- Add paper text under `manuscript/sections/`; add figure-only scripts under `manuscript/figures/scripts/`.
+- Purpose: Current publication source.
+- Contains: `main.tex`, section `.tex` files, bibliography, cover/response letters, compiled `main.pdf`, figures, and figure generation scripts.
+- Key files: `manuscript/main.tex`, `manuscript/sections/experiments.tex`, `manuscript/figures/scripts/fig01_system_overview.py`.
+- Add paper text in `manuscript/sections/` and plotting scripts in `manuscript/figures/scripts/`.
 
 **`docs/`:**
-- Purpose: Human-written project notes and dataset notes.
-- Contains: Markdown/TXT documentation, including Chinese-language notes.
+- Purpose: Human-written notes, proposal material, and dataset notes.
+- Contains: Markdown and text documents, including Chinese-language notes.
 - Key files: `docs/开题报告-3.30.md`, `docs/工作3讨论-6.14.md`, `docs/工作3公开数据集.txt`.
-- Use for explanatory documents that are not executable code or manuscript source.
+- Add explanatory project notes here when they are not active manuscript source or executable plans.
 
 **`archive/`:**
-- Purpose: Historical or superseded project material kept outside active workflows.
-- Contains: Old model draft LaTeX, prior result snapshots, debug scripts, adhoc tests, output logs, and old paper text.
-- Key files: `archive/model_draft/`, `archive/pre_revision_results/`, `archive/debug_scripts/`, `archive/adhoc_tests/`, `archive/output_logs/`, `archive/paper_full_v3.txt`.
-- Do not add new active code here; use it only for reference or intentionally archived material.
+- Purpose: Historical and superseded artifacts kept for reference.
+- Contains: Early model drafts, pre-revision results, debug scripts, ad-hoc tests, output logs, and old paper text.
+- Key files: `archive/model_draft/model.tex`, `archive/debug_scripts/debug_rh.py`, `archive/adhoc_tests/smoke_test.py`, `archive/output_logs/full_run_output.txt`.
+- Do not add active source here unless explicitly archiving old material.
 
-**`.planning/codebase/`:**
-- Purpose: GSD-generated architecture, structure, stack, testing, and concern maps.
-- Contains: Markdown documents consumed by planning/execution commands.
+**`.planning/`:**
+- Purpose: GSD workflow state, phase artifacts, and codebase documentation.
+- Contains: `codebase/` documents and phase/ledger artifacts.
 - Key files: `.planning/codebase/ARCHITECTURE.md`, `.planning/codebase/STRUCTURE.md`.
+- Add planning artifacts through GSD workflows; do not mix source code into this directory.
 
 ## Key File Locations
 
 **Entry Points:**
-- `run_experiments.py`: Root script for running the full experiment matrix and printing summary checks.
-- `experiments/runner.py`: Importable and executable experiment runner; owns `run_all_experiments()`.
-- `analysis/sensitivity.py`: Entry point for walking-tolerance and fleet-size sensitivity sweeps.
-- `analysis/equity.py`: Entry point for passenger-type equity analysis.
-- `analysis/policy.py`: Entry point for policy recommendation generation from result CSVs.
-- `experiments/weight_sensitivity.py`: Focused weight sensitivity runner.
-- `experiments/pareto_sweep.py`: Focused Pareto/social-welfare sweep runner.
-- `experiments/milp_gap.py`: Focused MILP benchmark/gap runner.
-- `experiments/matched_coverage.py`: Focused matched coverage runner.
-- `experiments/endogenous_matched_coverage.py`: Focused endogenous coverage runner.
+- `run_experiments.py`: Root convenience script for the generic full experiment run.
+- `experiments/runner.py`: Generic experiment matrix runner and CSV writer.
+- `experiments/phase05_pilot.py`: Phase 05 pilot-only behavioral run.
+- `experiments/phase06_formal.py`: Phase 06 formal main run, manifest, validation CLI.
+- `experiments/phase06_coverage_controls.py`: Phase 06 matched-coverage and fixed-accepted-set controls.
+- `experiments/phase06_robustness.py`: Phase 06 robustness, sensitivity, equity, and algorithm diagnostics.
+- `experiments/formal_statistics.py`: Phase 06 closeout tables, plots, manifests, and reports.
+- `analysis/sensitivity.py`: Post-hoc walking/fleet sensitivity analysis.
+- `analysis/equity.py`: Post-hoc equity summary generation.
+- `analysis/policy.py`: Policy recommendation report generation.
 
 **Configuration:**
-- `pyproject.toml`: Package configuration, Python requirement, dependencies, optional dev dependencies, and `src` package discovery.
-- `experiments/config.py`: Research experiment constants: `SEEDS`, `SCALES`, `VEHICLE_COUNTS`, `K_TOP`, `RHO_P`, `RHO_D`, `H_WINDOW`, `DELTA`, `ALNS_ITERATIONS`, `ALPHA_WEIGHTS`, `VEHICLE_CAPACITY`, `MAX_RIDE_TIME`, `MAX_ROUTE_DURATION`, `BEIJING_SCALE`.
-- `.gitignore`: Git ignore rules.
-- `CLAUDE.md`: Coding-agent project instructions.
+- `pyproject.toml`: Package name, Python version, dependencies, optional dev dependencies, `src` package discovery.
+- `experiments/config.py`: Shared experiment constants: seeds, scales, vehicle counts, walking radii, top-k, rolling-horizon window, ALNS iterations, cost weights, choice parameters.
+- `experiments/phase06_formal.py`: Formal scales, formal seed sets, output roots, artifact aliases, rerun ledger path.
+- `experiments/phase06_coverage_controls.py`: Coverage-control package names, schemas, timeout, method label mappings.
+- `experiments/phase06_robustness.py`: Robustness package names, default seeds/scales/methods, output schemas.
 
 **Core Logic:**
-- `src/drt/types.py`: Domain dataclasses and passenger type presets.
-- `src/drt/candidate.py`: `generate_candidates()` and Euclidean distance helper.
-- `src/drt/choice.py`: `mnl_utility()` and `accept_probability()`.
-- `src/drt/feasibility.py`: `check_feasibility()` route insertion constraint checker.
-- `src/drt/insertion.py`: `InsertionResult`, `_route_distance()`, and `evaluate_insertion()`.
-- `src/drt/alns.py`: `ALNSState`, destroy/repair operators, `RollingHorizon`, `benchmark()`.
-- `src/drt/milp.py`: `DRTModel` exact optimization baseline.
+- `src/drt/types.py`: Dataclasses and passenger-type constants.
+- `src/drt/candidate.py`: `euclidean()` and `generate_candidates()`.
+- `src/drt/feasibility.py`: `check_feasibility()`.
+- `src/drt/insertion.py`: `InsertionResult` and `evaluate_insertion()`.
+- `src/drt/choice.py`: `mnl_utility()`, `accept_probability()`, `evaluate_single_offer()`, `assign_passenger_type()`.
+- `src/drt/alns.py`: `ALNSState`, ALNS destroy/repair operators, `RollingHorizon`, benchmark helper.
+- `src/drt/milp.py`: `DRTModel` static snapshot exact solver.
 - `experiments/scenarios.py`: `Scenario`, `generate_synthetic()`, `generate_beijing()`.
-- `experiments/variants.py`: `BaseVariant`, concrete variants, and `ALL_VARIANTS`.
-- `experiments/metrics.py`: `PassengerRecord`, `SimulationResult`, `MetricsResult`, `compute_metrics()`, `compute_social_welfare()`.
+- `experiments/variants.py`: `BaseVariant`, all service-design variants, `ALL_VARIANTS`.
+- `experiments/metrics.py`: `PassengerRecord`, `SimulationResult`, `MetricsResult`, `compute_metrics()`.
 
-**Output Writers:**
-- `experiments/runner.py`: Writes `results/synthetic_results.csv`, `results/beijing_results.csv`, and `results/metrics_table.csv`.
-- `src/drt/milp.py`: `DRTModel.write_benchmark()` writes `results/milp_benchmark.json` by default.
-- `analysis/sensitivity.py`: Writes `results/sensitivity_walk.csv` and `results/sensitivity_fleet.csv`.
-- `analysis/equity.py`: Writes `results/equity_table.csv`.
-- `analysis/policy.py`: Writes `results/policy_recommendations.md`.
-- `experiments/weight_sensitivity.py`: Writes `results/weight_sensitivity.json`.
-- `experiments/pareto_sweep.py`: Writes `results/pareto_gamma_sweep.csv`.
-- `experiments/matched_coverage.py`: Writes `results/matched_coverage.csv`.
-- `experiments/endogenous_matched_coverage.py`: Writes `results/endogenous_matched_coverage.csv`.
-
-**Testing:**
-- `tests/test_candidate.py`: Candidate filtering, sorting, and boundary behavior.
-- `tests/test_feasibility.py`: Feasibility reason codes and constraint behavior.
-- `tests/test_insertion.py`: Best insertion, infeasible insertions, cost components, timing benchmark.
-- `tests/test_alns.py`: ALNS operators, rolling-horizon output keys, timing benchmark.
-- `tests/test_milp.py`: Gurobi-guarded MILP behavior and solve metadata.
-- `tests/test_scenarios.py`: Synthetic and Beijing scenario invariants.
-- `tests/test_variants.py`: Variant registry and variant output behavior.
-- `tests/test_metrics.py`: Metric dataclass fields and aggregate metric edge cases.
-- `tests/test_runner.py`: Runner smoke output and CSV schema checks.
-- `analysis/test_sensitivity.py`: Sensitivity sweep row counts, keys, metrics, and CSV writes.
+**Formal Evidence and Validation:**
+- `experiments/formal_validation.py`: Phase 06 main output validators and failure ledger helpers.
+- `experiments/phase06_formal.py`: Formal run wrapper, seed/config/run manifests, artifact aliases.
+- `experiments/phase06_coverage_controls.py`: Coverage-control runners, validators, summaries.
+- `experiments/phase06_robustness.py`: Robustness package runners, validators, summaries.
+- `experiments/formal_statistics.py`: Statistical tables, plots, result manifest, verification markdown.
 
 **Publication:**
-- `manuscript/main.tex`: Master LaTeX document.
-- `manuscript/sections/`: Paper sections.
-- `manuscript/figures/`: Generated PDF/PNG figures.
-- `manuscript/figures/scripts/`: Figure generation scripts.
+- `manuscript/main.tex`: Manuscript master document.
+- `manuscript/sections/`: Current paper section files.
 - `manuscript/references.bib`: Bibliography.
-- `manuscript/main.pdf`: Compiled output.
+- `manuscript/figures/`: Generated figure assets.
+- `manuscript/figures/scripts/`: Python scripts that create individual figures.
+
+**Testing:**
+- `tests/test_candidate.py`: Candidate generation behavior.
+- `tests/test_feasibility.py`: Feasibility constraint checks.
+- `tests/test_insertion.py`: Insertion result behavior.
+- `tests/test_choice.py`: Choice model and utility behavior.
+- `tests/test_alns.py`: ALNS and rolling-horizon behavior.
+- `tests/test_milp.py`: MILP import/build/diagnostic behavior.
+- `tests/test_runner.py`: Runner rows, timeout/error behavior, CSV writing.
+- `tests/test_variants.py`: Variant metadata and behavior.
+- `tests/test_scenarios.py`: Scenario generation constraints.
+- `tests/test_phase05_pilot.py`: Phase 05 pilot selection/output behavior.
+- `tests/test_phase06_formal.py`: Phase 06 formal run/manifest/validation behavior.
+- `tests/test_phase06_coverage_controls.py`: Coverage-control package behavior.
+- `tests/test_phase06_robustness.py`: Robustness package behavior.
 
 ## Naming Conventions
 
 **Files:**
-- Use lowercase snake_case for Python modules: `src/drt/feasibility.py`, `experiments/weight_sensitivity.py`, `analysis/policy.py`.
-- Use `test_*.py` for pytest modules: `tests/test_runner.py`, `analysis/test_sensitivity.py`.
-- Use descriptive result filenames keyed by experiment topic: `results/synthetic_results.csv`, `results/milp_gap.json`, `results/policy_recommendations.md`.
-- Use figure numbering for manuscript figures and scripts: `manuscript/figures/fig03_algorithm.pdf`, `manuscript/figures/scripts/fig03_algorithm.py`.
-- Use uppercase generated GSD map names: `.planning/codebase/ARCHITECTURE.md`, `.planning/codebase/STRUCTURE.md`.
+- Core package modules are lowercase single-purpose names: `src/drt/choice.py`, `src/drt/alns.py`, `src/drt/milp.py`.
+- Experiment modules are lowercase descriptive names with underscores: `experiments/phase06_coverage_controls.py`, `experiments/formal_statistics.py`.
+- Tests use `test_<subject>.py`: `tests/test_runner.py`, `tests/test_phase06_formal.py`.
+- Manuscript figure scripts use `figNN_subject.py`: `manuscript/figures/scripts/fig04_baseline_comparison.py`.
+- Generated formal artifacts use explicit evidence names: `raw_results.csv`, `processed_results.csv`, `utility_logs.csv`, `validation_report.json`, `run_manifest.json`.
 
 **Directories:**
-- Use top-level functional areas: `src/`, `experiments/`, `analysis/`, `tests/`, `results/`, `manuscript/`, `docs/`, `archive/`.
-- Keep the installable Python package under `src/drt/` because `pyproject.toml` uses `where = ["src"]`.
-- Keep active tests in `tests/` except analysis-specific sensitivity tests currently colocated as `analysis/test_sensitivity.py`.
+- Source package code lives under `src/drt/`.
+- Experiment code lives under `experiments/`.
+- Formal evidence is grouped by phase and package under `results/formal/phase06/`.
+- Active manuscript material lives under `manuscript/`.
+- Historical material lives under `archive/`.
 
 **Classes:**
-- Use PascalCase for dataclasses and model classes: `Request`, `Vehicle`, `MeetingPoint`, `Scenario`, `SimulationResult`, `FullModel`, `RollingHorizon`, `DRTModel`.
-- Use `Base*` for abstract variant bases: `BaseVariant`.
-- Use descriptive variant names matching output rows: `DoorToDoor`, `DoorToDoorCapped`, `SingleSidedPickup`, `BidirectionalNoChoice`, `FullModel`, `AblationNoRollingHorizon`, `AblationNoChoice`.
+- Domain dataclasses use PascalCase nouns: `Request`, `Vehicle`, `MeetingPoint`, `OfferAttributes`, `ChoiceEvaluation`.
+- Variant classes use PascalCase method names: `DoorToDoor`, `SingleSidedPickup`, `FullModel`, `AblationNoChoice`.
+- Internal control subclasses in Phase 06 coverage controls use leading underscores: `_MatchedDoorToDoor`, `_FixedBidirectionalRH`.
 
 **Functions:**
-- Use lowercase snake_case: `generate_candidates()`, `check_feasibility()`, `evaluate_insertion()`, `generate_synthetic()`, `run_all_experiments()`, `compute_metrics()`.
-- Prefix private helpers with `_`: `_route_distance()`, `_mnl_filter_requests()`, `_make_row()`, `_write_metrics_table()`.
-- Use direct verb phrases for script-level functions: `run_sweep()`, `run_equity_analysis()`, `generate_policy_recommendations()`.
+- Public functions use snake_case verbs/nouns: `generate_synthetic()`, `evaluate_insertion()`, `compute_metrics()`, `run_phase06_main()`.
+- Private helpers use leading underscores: `_write_json()`, `_run_variant_with_timeout()`, `_validate_scales()`.
+- CLI modules expose `main()` or `main(argv: list[str] | None = None)`.
 
 **Constants:**
-- Use uppercase snake_case for configuration and registries: `SEEDS`, `SCALES`, `VEHICLE_COUNTS`, `RHO_P`, `RHO_D`, `H_WINDOW`, `DELTA`, `ALL_VARIANTS`.
-- Keep experiment constants in `experiments/config.py`; do not duplicate them in runner or analysis files.
+- Configuration constants are uppercase: `RHO_P`, `RHO_D`, `K_TOP`, `H_WINDOW`, `FORMAL_SCALES`.
+- Package IDs and method-label sets are uppercase: `MATCHED_PACKAGE`, `PACKAGE_NAMES`, `FORMAL_MAIN_METHOD_LABELS`.
 
 ## Where to Add New Code
 
-**New Core Algorithm Feature:**
-- Primary code: `src/drt/`
-- Tests: `tests/`
-- Add shared data fields to `src/drt/types.py` first when the feature changes the domain contract.
-- Add reusable primitive logic to `src/drt/candidate.py`, `src/drt/choice.py`, `src/drt/feasibility.py`, or `src/drt/insertion.py`.
-- Add heuristic solver behavior to `src/drt/alns.py`.
-- Add exact optimization behavior to `src/drt/milp.py`.
+**New core algorithm primitive:**
+- Primary code: `src/drt/<primitive>.py`
+- Public exports: update `src/drt/__init__.py` only for stable public APIs.
+- Tests: `tests/test_<primitive>.py`
+- Use `src/drt/types.py` dataclasses instead of ad-hoc dicts for domain objects.
 
-**New Experiment Variant:**
-- Primary code: `experiments/variants.py`
-- Tests: `tests/test_variants.py`
-- Register the variant instance in `ALL_VARIANTS` in `experiments/variants.py`.
-- Ensure `variant.name` is unique because the module-level assertion checks uniqueness.
-- Reuse `BaseVariant.run()` and implement `_solve(self, scenario: Scenario) -> ALNSState`.
+**New service design or algorithm variant:**
+- Primary code: add a `BaseVariant` subclass in `experiments/variants.py`.
+- Registry: add an instance to `ALL_VARIANTS` in `experiments/variants.py` only if the generic runner should include it.
+- Tests: `tests/test_variants.py` and, when runner output changes, `tests/test_runner.py`.
+- Set `method_label`, `service_design`, `choice_model`, `reoptimization`, `routing_solver`, `evidence_family`, and `diagnostic_role`.
 
-**New Scenario Generator:**
-- Primary code: `experiments/scenarios.py`
-- Tests: `tests/test_scenarios.py`
-- Return the existing `Scenario` dataclass with `requests`, `vehicles`, `meeting_points`, `area_km`, and `name`.
-- Enforce practical request caps consistently with `_MAX_REQUESTS`.
+**New generic experiment matrix behavior:**
+- Primary code: `experiments/runner.py` for generic execution mechanics.
+- Configuration: `experiments/config.py` for shared constants.
+- Tests: `tests/test_runner.py`.
+- Do not hardcode Phase 05/06 evidence rules into the generic runner.
 
-**New Metric:**
-- Primary code: `experiments/metrics.py`
-- Runner schema: `experiments/runner.py`
-- Tests: `tests/test_metrics.py`, `tests/test_runner.py`
-- Add the field to `MetricsResult`, compute it in `compute_metrics()`, include it in `_RAW_COLS` and `_METRIC_COLS`, and update CSV row construction in `_make_row()`.
+**New scenario generator:**
+- Primary code: `experiments/scenarios.py`.
+- Tests: `tests/test_scenarios.py`.
+- Return the existing `Scenario` dataclass and preserve deterministic seeded generation.
 
-**New Full Experiment Script:**
-- Primary code: `experiments/`
-- Tests: `tests/` when output schema or behavior matters.
-- Use `experiments.config`, `experiments.scenarios`, `experiments.variants`, and `experiments.metrics` rather than reimplementing loops.
-- Write generated outputs under `results/` with stable CSV/JSON field names.
+**New metric:**
+- Primary code: `experiments/metrics.py`.
+- Runner schema: update `_METRIC_COLS` and row writing in `experiments/runner.py` if the metric is persisted.
+- Tests: `tests/test_metrics.py` and `tests/test_runner.py`.
 
-**New Post-Hoc Analysis:**
-- Primary code: `analysis/`
-- Tests: `analysis/test_*.py` or `tests/`, following the current sensitivity pattern.
-- Read source result files from `results/`.
-- Write derived outputs back to `results/`.
-- Keep hardcoded publication result readers in `analysis/`, not `src/drt/`.
+**New Phase 06 main evidence behavior:**
+- Primary code: `experiments/phase06_formal.py`.
+- Validation: `experiments/formal_validation.py`.
+- Closeout/reporting: `experiments/formal_statistics.py`.
+- Tests: `tests/test_phase06_formal.py`.
+- Output root: `results/formal/phase06/main_behavioral`.
 
-**New Figure Script:**
-- Implementation: `manuscript/figures/scripts/`
-- Outputs: `manuscript/figures/`
-- Inputs: Prefer stable files in `results/`.
-- Keep paper text changes in `manuscript/sections/`.
+**New Phase 06 coverage control:**
+- Primary code: `experiments/phase06_coverage_controls.py`.
+- Tests: `tests/test_phase06_coverage_controls.py`.
+- Output root: `results/formal/phase06/coverage_controls/<package_id>`.
+- Add schema columns and validation paths in the same file.
 
-**Utilities:**
-- Shared algorithm helpers: `src/drt/`
-- Experiment-only helpers: `experiments/`
-- Analysis-only helpers: `analysis/`
-- Do not add active helpers to `archive/`.
+**New Phase 06 robustness package:**
+- Primary code: `experiments/phase06_robustness.py`.
+- Tests: `tests/test_phase06_robustness.py`.
+- Output root: `results/formal/phase06/robustness/<package_id>`.
+- Add the package ID to `PACKAGE_NAMES` and provide run, validate, and summary paths.
+
+**New post-hoc analysis report:**
+- Primary code: `analysis/<topic>.py`.
+- Tests: `analysis/test_<topic>.py` or `tests/test_<topic>.py`.
+- Outputs: `results/<topic>.csv`, `results/<topic>.md`, or an isolated formal subdirectory when tied to Phase 06.
+
+**New manuscript figure:**
+- Primary script: `manuscript/figures/scripts/figNN_subject.py`.
+- Outputs: `manuscript/figures/figNN_subject.png` and/or `.pdf`.
+- Source data: read from `results/` or `results/formal/phase06/`; do not run simulations from figure scripts.
+
+**New manuscript text:**
+- Primary code: `manuscript/sections/<section>.tex`.
+- Master include: update `manuscript/main.tex`.
+- Bibliography: `manuscript/references.bib`.
+
+**New documentation or notes:**
+- Current project notes: `docs/`.
+- GSD planning artifacts: `.planning/`.
+- Do not place active implementation notes in `archive/`.
 
 ## Special Directories
 
-**`src/drt.egg-info/`:**
-- Purpose: Package metadata from editable install.
-- Generated: Yes.
-- Committed: Present in the workspace.
-- Avoid editing manually; regenerate through packaging tools when needed.
-
 **`results/`:**
-- Purpose: Generated experiment outputs consumed by analysis and publication workflows.
+- Purpose: Generated experiment outputs, validation reports, tables, and plots.
 - Generated: Yes.
-- Committed: Present in the workspace.
-- Treat contents as artifacts; update through scripts rather than manual editing when possible.
+- Committed: Some outputs are present in the repository.
+- Guidance: Prefer isolated subdirectories for new formal evidence. Avoid overwriting root result files for phase work.
+
+**`results/formal/phase06/`:**
+- Purpose: Current formal Phase 06 evidence tree.
+- Generated: Yes.
+- Committed: Present in repository.
+- Guidance: Keep main behavioral, coverage controls, robustness, tables, plots, and smoke outputs separated.
 
 **`manuscript/figures/`:**
-- Purpose: Generated publication figures in PDF/PNG form.
-- Generated: Yes.
-- Committed: Present in the workspace.
-- Update via scripts in `manuscript/figures/scripts/`.
+- Purpose: Publication-ready figure assets.
+- Generated: Yes for `.png`/`.pdf`; source scripts live in `manuscript/figures/scripts/`.
+- Committed: Present in repository.
+- Guidance: Regenerate assets from scripts when source data changes.
+
+**`manuscript/figures/scripts/`:**
+- Purpose: Figure source code.
+- Generated: No.
+- Committed: Yes.
+- Guidance: Keep scripts plotting-focused; place data processing in `experiments/formal_statistics.py` or `analysis/`.
 
 **`archive/`:**
-- Purpose: Historical material not in active workflows.
+- Purpose: Superseded model drafts, pre-revision results, debug scripts, ad-hoc tests, and output logs.
 - Generated: Mixed.
-- Committed: Present in the workspace.
-- Use for reference only; new active code belongs in `src/drt/`, `experiments/`, `analysis/`, or `tests/`.
+- Committed: Present in repository.
+- Guidance: Do not import from `archive/` in active code.
 
-**`.planning/`:**
-- Purpose: GSD workflow state and generated planning/codebase documents.
+**`.planning/codebase/`:**
+- Purpose: Machine-consumed codebase maps for GSD planning/execution.
 - Generated: Yes.
-- Committed: Workspace-managed.
-- Do not use for runtime application code.
+- Committed: Yes.
+- Guidance: Update via codebase mapping, not by hand during unrelated implementation phases.
+
+**`.pytest_cache/` and `__pycache__/`:**
+- Purpose: Runtime/test caches.
+- Generated: Yes.
+- Committed: No intended source value.
+- Guidance: Ignore for architecture and implementation decisions.
 
 ---
 
-*Structure analysis: 2026-06-14*
+*Structure analysis: 2026-06-16*
