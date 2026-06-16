@@ -48,3 +48,22 @@ The hard blockers are defined in `10_RESULT_MANIFEST.md` under `Prerequisite Gat
 | `.planning/phases/08-evidence-synthesis-and-claim-gate/08_CLAIM_EVIDENCE_MATRIX.md` | Blocked: prerequisites missing |
 | `.planning/phases/08-evidence-synthesis-and-claim-gate/08_SUPPORTED_CLAIMS.md` | Blocked: prerequisites missing |
 | `.planning/phases/08-evidence-synthesis-and-claim-gate/08_UNSUPPORTED_OR_EXPLORATORY_CLAIMS.md` | Blocked: prerequisites missing |
+
+## Reproduction Entry Points
+
+Reviewer-facing commands are grouped by evidence role. Commands that regenerate current outputs do not upgrade those outputs to final evidence; Phase 6 formal completion and Phase 8 claim support are still required.
+
+| purpose | evidence_role | command | inputs | outputs | status | blocker |
+|---|---|---|---|---|---|---|
+| Formal Phase 6 main evidence | final evidence | `python -m experiments.phase06_formal` or the final Phase 6 runner once implemented | Predeclared Phase 6 seeds, scales, method set, configs, and failure/rerun ledger | `results/formal/phase06/` and `06_FORMAL_SYNTHETIC_RESULTS.md` | Blocked | Blocked: prerequisites missing |
+| Phase 8 claim gate | final evidence | `$gsd-execute-phase 8` after Phase 8 plans exist | Formal Phase 6 report, result manifest, manuscript claim inventory | `08_CLAIM_EVIDENCE_MATRIX.md`, `08_SUPPORTED_CLAIMS.md`, `08_UNSUPPORTED_OR_EXPLORATORY_CLAIMS.md` | Blocked | Blocked: prerequisites missing |
+| Legacy root result regeneration | legacy diagnostic / provenance | `python run_experiments.py` | Current runner, variants, synthetic/Beijing scenario generators, existing config constants | `results/synthetic_results.csv`, `results/beijing_results.csv`, `results/metrics_table.csv`, `results/utility_components.csv` | Not final evidence | pending Phase 8; legacy outputs must be replaced by formal Phase 6 evidence before headline claims |
+| Importable full runner | legacy diagnostic / provenance | `python -m experiments.runner` | Same as root runner | Same root result CSVs | Not final evidence | pending Phase 8; runner timeout and dependency concerns remain documented |
+| Matched coverage diagnostic | critical robustness | `python -m experiments.matched_coverage` | Synthetic scenario seeds, FullModel baseline, DoorToDoor post-hoc rejection calibration | `results/matched_coverage.csv` | Pending | pending Phase 8; post-hoc control is diagnostic unless formalized |
+| Endogenous matched coverage diagnostic | critical robustness | `python -m experiments.endogenous_matched_coverage` | FullModel target share and DoorToDoorCapped served-share cap | `results/endogenous_matched_coverage.csv` | Pending | pending Phase 8 and formal design confirmation |
+| Sensitivity diagnostics | critical robustness | `python -m analysis.sensitivity` | Current scenario generator, FullModel, DoorToDoor, walking and fleet grids | `results/sensitivity_walk.csv`, `results/sensitivity_fleet.csv` | Pending | pending Phase 8; bounded robustness only |
+| Equity diagnostic | critical robustness | `python -m analysis.equity` | FullModel synthetic runs and passenger-type records | `results/equity_table.csv` | Pending | pending Phase 8; type-level trade-off only |
+| MILP/static-snapshot diagnostic | supplementary diagnostic | `python -m experiments.milp_gap` | Small fixed accepted-set instances, optional Gurobi solver | `results/milp_gap.json` | Not final evidence | solver/license dependent; algorithm diagnostic only |
+| Phase 5 pilot readiness package | pilot readiness | `python -m experiments.phase05_pilot` and `python -m experiments.phase05_coverage_smoke` | Seeds 42/43/44 at scale 20, pilot validation harness | `results/pilot/phase05/*` | Not final evidence | readiness/provenance only; not formal claim support |
+| Manuscript figure scripts | manuscript figures | `python manuscript/figures/scripts/<script>.py` from the supported working directory | Current result files and script-local inputs | `manuscript/figures/*.pdf`, `manuscript/figures/*.png` | Pending | generated displays require Phase 8 support before supporting final claims |
+| Manuscript build | manuscript build | `latexmk -pdf manuscript/main.tex` or locally supported `pdflatex`/`bibtex` sequence | `manuscript/main.tex`, `manuscript/sections/`, `manuscript/references.bib`, figures | `manuscript/main.pdf` | Pending | final claims remain blocked by Phase 8 |
