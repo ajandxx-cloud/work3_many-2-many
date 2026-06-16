@@ -22,6 +22,7 @@ Produce a defensible TR Part E manuscript package in which every claim, table, f
 - Coverage-control packages, robustness packages, equity type outcomes, and algorithm diagnostics have validator reports and durable rows where applicable.
 - `manuscript/` is the canonical current paper source; archive paths and root legacy results are non-canonical unless explicitly used for historical comparison.
 - Existing codebase concerns document known risks around default pytest collection, undeclared pandas/matplotlib dependencies, route-stop bookkeeping, Gamma semantics, Beijing scenario wording, and MILP diagnostic scope.
+- Phase 1 completed the evidence-foundation scaffold: `.planning/milestones/tr_e_claim_ready/00_MILESTONE_PLAN.md`, `.planning/milestones/tr_e_claim_ready/01_REPO_AND_EVIDENCE_AUDIT.md`, and `.planning/milestones/tr_e_claim_ready/04_MANUSCRIPT_ACTION_PLAN.md` exist, with verification passed in `.planning/phases/01-evidence-foundation-and-milestone-setup/01-VERIFICATION.md`.
 
 ### Active
 
@@ -116,4 +117,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state.
 
 ---
-*Last updated: 2026-06-16 after planning constraint revision*
+*Last updated: 2026-06-16 after Phase 1 completion*
