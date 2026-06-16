@@ -22,7 +22,7 @@ Created the TR-E milestone folder and wrote
 
 | Task | Commit | Description |
 |------|--------|-------------|
-| 01-01-01, 01-01-02 | pending | Create milestone directory and hard-gate milestone plan. |
+| 01-01-01, 01-01-02 | 5014486 | Create milestone directory and hard-gate milestone plan. |
 
 ## Deviations
 
@@ -39,4 +39,3 @@ PASSED:
   `$env:PYTHONPATH='src'; pytest tests`.
 - No manuscript, result, source, experiment, analysis, README, or dependency
   metadata files were edited by this plan.
-

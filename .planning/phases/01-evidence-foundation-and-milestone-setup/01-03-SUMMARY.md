@@ -23,7 +23,7 @@ injection gate, wording scan families, and phase handoff instructions.
 
 | Task | Commit | Description |
 |------|--------|-------------|
-| 01-03-01, 01-03-02 | pending | Write manuscript action plan and Phase 2-5 handoff. |
+| 01-03-01, 01-03-02 | 36471bb | Write manuscript action plan and Phase 2-5 handoff. |
 
 ## Deviations
 
@@ -39,4 +39,3 @@ PASSED:
 - It routes Phase 2 to `02_TR_E_POSITIONING_LOCK.md`,
   `03_CLAIM_LEDGER.md`, and `05_BLOCKERS_AND_SAFE_CLAIMS.md`.
 - It does not edit manuscript text or draft final replacement prose.
-

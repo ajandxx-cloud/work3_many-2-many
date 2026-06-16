@@ -24,7 +24,7 @@ appendix.
 
 | Task | Commit | Description |
 |------|--------|-------------|
-| 01-02-01, 01-02-02 | pending | Write canonical-first repository and evidence audit. |
+| 01-02-01, 01-02-02 | efbeb0a | Write canonical-first repository and evidence audit. |
 
 ## Deviations
 
@@ -41,4 +41,3 @@ PASSED:
   replacement values.
 - No manuscript, result, source, experiment, analysis, README, or dependency
   metadata files were edited by this plan.
-
