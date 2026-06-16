@@ -36,15 +36,15 @@ This roadmap converts the current Work 3 experimental repository into a TR Part 
 Plans:
 **Wave 1**
 
-- [ ] 01-01: Create milestone folder and initial milestone plan.
+- [x] 01-01: Create milestone folder and initial milestone plan.
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 01-02: Audit canonical manuscript, formal Phase 6 evidence, and non-canonical outputs.
+- [x] 01-02: Audit canonical manuscript, formal Phase 6 evidence, and non-canonical outputs.
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 01-03: Draft manuscript action plan and phase handoff notes.
+- [x] 01-03: Draft manuscript action plan and phase handoff notes.
 
 **Cross-cutting constraints:**
 
