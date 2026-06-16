@@ -1,0 +1,815 @@
+[runner] Starting synthetic experiments: 4 scales × 3 seeds × 7 variants = 84 runs
+[  1/84] synthetic variant=DoorToDoor                   scale=100 seed=42 accept=0.530 vkm=775.2
+[  2/84] synthetic variant=DoorToDoorCapped             scale=100 seed=42 accept=0.240 vkm=384.8
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_20: pickup_time (850.7) >= dropoff_time (850.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_59: pickup_time (1729.7) >= dropoff_time (1729.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_87: pickup_time (23587.5) >= dropoff_time (23587.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[  3/84] synthetic variant=SingleSidedPickup            scale=100 seed=42 accept=0.590 vkm=866.6
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_20: pickup_time (754.8) >= dropoff_time (754.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_87: pickup_time (21187.3) >= dropoff_time (21187.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[  4/84] synthetic variant=BidirectionalNoChoice        scale=100 seed=42 accept=0.610 vkm=798.3
+[  5/84] synthetic variant=FullModel                    scale=100 seed=42 accept=0.190 vkm=221.2
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_20: pickup_time (284.8) >= dropoff_time (284.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[  6/84] synthetic variant=AblationNoRollingHorizon     scale=100 seed=42 accept=0.230 vkm=308.7
+[  7/84] synthetic variant=AblationNoChoice             scale=100 seed=42 accept=0.530 vkm=630.0
+[  8/84] synthetic variant=DoorToDoor                   scale=100 seed=43 accept=0.590 vkm=871.7
+[  9/84] synthetic variant=DoorToDoorCapped             scale=100 seed=43 accept=0.240 vkm=354.5
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_24: pickup_time (1824.1) >= dropoff_time (1824.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 10/84] synthetic variant=SingleSidedPickup            scale=100 seed=43 accept=0.590 vkm=819.5
+[ 11/84] synthetic variant=BidirectionalNoChoice        scale=100 seed=43 accept=0.650 vkm=954.4
+[ 12/84] synthetic variant=FullModel                    scale=100 seed=43 accept=0.140 vkm=146.4
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_24: pickup_time (1076.6) >= dropoff_time (1076.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 13/84] synthetic variant=AblationNoRollingHorizon     scale=100 seed=43 accept=0.220 vkm=393.3
+[ 14/84] synthetic variant=AblationNoChoice             scale=100 seed=43 accept=0.510 vkm=564.7
+[ 15/84] synthetic variant=DoorToDoor                   scale=100 seed=44 accept=0.310 vkm=499.8
+[ 16/84] synthetic variant=DoorToDoorCapped             scale=100 seed=44 accept=0.240 vkm=370.2
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_56: pickup_time (2097.8) >= dropoff_time (2097.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 17/84] synthetic variant=SingleSidedPickup            scale=100 seed=44 accept=0.410 vkm=590.8
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_56: pickup_time (1379.1) >= dropoff_time (1379.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 18/84] synthetic variant=BidirectionalNoChoice        scale=100 seed=44 accept=0.320 vkm=415.6
+[ 19/84] synthetic variant=FullModel                    scale=100 seed=44 accept=0.170 vkm=222.5
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_56: pickup_time (1147.6) >= dropoff_time (1147.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 20/84] synthetic variant=AblationNoRollingHorizon     scale=100 seed=44 accept=0.040 vkm=58.3
+[ 21/84] synthetic variant=AblationNoChoice             scale=100 seed=44 accept=0.580 vkm=717.5
+[ 22/84] synthetic variant=DoorToDoor                   scale=200 seed=42 accept=0.580 vkm=1693.8
+[ 23/84] synthetic variant=DoorToDoorCapped             scale=200 seed=42 accept=0.235 vkm=741.6
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_20: pickup_time (88.1) >= dropoff_time (88.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_179: pickup_time (10700.6) >= dropoff_time (10700.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_185: pickup_time (2133.0) >= dropoff_time (2133.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 24/84] synthetic variant=SingleSidedPickup            scale=200 seed=42 accept=0.530 vkm=1465.4
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_20: pickup_time (66.7) >= dropoff_time (66.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_50: pickup_time (15796.9) >= dropoff_time (15796.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_87: pickup_time (14737.1) >= dropoff_time (14737.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_179: pickup_time (12021.8) >= dropoff_time (12021.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_185: pickup_time (1606.7) >= dropoff_time (1606.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 25/84] synthetic variant=BidirectionalNoChoice        scale=200 seed=42 accept=0.565 vkm=1491.7
+[ 26/84] synthetic variant=FullModel                    scale=200 seed=42 accept=0.175 vkm=407.6
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_185: pickup_time (3177.6) >= dropoff_time (3177.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 27/84] synthetic variant=AblationNoRollingHorizon     scale=200 seed=42 accept=0.245 vkm=536.0
+[ 28/84] synthetic TIMEOUT variant=AblationNoChoice scale=200 seed=42 (>120s)
+[ 29/84] synthetic variant=DoorToDoor                   scale=200 seed=43 accept=0.720 vkm=2152.5
+[ 30/84] synthetic variant=DoorToDoorCapped             scale=200 seed=43 accept=0.235 vkm=868.4
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_24: pickup_time (1208.3) >= dropoff_time (1208.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_106: pickup_time (11444.0) >= dropoff_time (11444.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 31/84] synthetic variant=SingleSidedPickup            scale=200 seed=43 accept=0.675 vkm=1789.3
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_24: pickup_time (1230.4) >= dropoff_time (1230.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_106: pickup_time (7407.8) >= dropoff_time (7407.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_111: pickup_time (17964.4) >= dropoff_time (17964.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_181: pickup_time (2455.9) >= dropoff_time (2455.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_193: pickup_time (9764.9) >= dropoff_time (9764.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_197: pickup_time (8481.1) >= dropoff_time (8481.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 32/84] synthetic variant=BidirectionalNoChoice        scale=200 seed=43 accept=0.700 vkm=1717.6
+[ 33/84] synthetic variant=FullModel                    scale=200 seed=43 accept=0.200 vkm=375.5
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_181: pickup_time (2379.3) >= dropoff_time (2379.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 34/84] synthetic variant=AblationNoRollingHorizon     scale=200 seed=43 accept=0.195 vkm=506.2
+[ 35/84] synthetic TIMEOUT variant=AblationNoChoice scale=200 seed=43 (>120s)
+[ 36/84] synthetic variant=DoorToDoor                   scale=200 seed=44 accept=0.550 vkm=1765.4
+[ 37/84] synthetic variant=DoorToDoorCapped             scale=200 seed=44 accept=0.235 vkm=792.5
+[ 38/84] synthetic variant=SingleSidedPickup            scale=200 seed=44 accept=0.565 vkm=1446.1
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_56: pickup_time (2319.8) >= dropoff_time (2319.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_174: pickup_time (12336.5) >= dropoff_time (12336.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 39/84] synthetic variant=BidirectionalNoChoice        scale=200 seed=44 accept=0.545 vkm=1396.5
+[ 40/84] synthetic variant=FullModel                    scale=200 seed=44 accept=0.180 vkm=367.2
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_56: pickup_time (1835.1) >= dropoff_time (1835.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 41/84] synthetic variant=AblationNoRollingHorizon     scale=200 seed=44 accept=0.200 vkm=524.7
+[ 42/84] synthetic TIMEOUT variant=AblationNoChoice scale=200 seed=44 (>120s)
+[ 43/84] synthetic variant=DoorToDoor                   scale=300 seed=42 accept=0.703 vkm=2957.1
+[ 44/84] synthetic variant=DoorToDoorCapped             scale=300 seed=42 accept=0.237 vkm=1083.6
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_20: pickup_time (634.8) >= dropoff_time (634.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_59: pickup_time (16782.1) >= dropoff_time (16782.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_87: pickup_time (14613.3) >= dropoff_time (14613.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_102: pickup_time (11715.6) >= dropoff_time (11715.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_179: pickup_time (26331.8) >= dropoff_time (26331.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_185: pickup_time (4881.2) >= dropoff_time (4881.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_212: pickup_time (5654.0) >= dropoff_time (5654.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_298: pickup_time (8542.6) >= dropoff_time (8542.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 45/84] synthetic variant=SingleSidedPickup            scale=300 seed=42 accept=0.640 vkm=2510.3
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_20: pickup_time (638.3) >= dropoff_time (638.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_87: pickup_time (28545.5) >= dropoff_time (28545.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_179: pickup_time (10771.3) >= dropoff_time (10771.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_185: pickup_time (2399.4) >= dropoff_time (2399.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 46/84] synthetic variant=BidirectionalNoChoice        scale=300 seed=42 accept=0.577 vkm=2192.2
+[ 47/84] synthetic variant=FullModel                    scale=300 seed=42 accept=0.177 vkm=467.9
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_20: pickup_time (195.9) >= dropoff_time (195.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_185: pickup_time (25820.5) >= dropoff_time (25820.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 48/84] synthetic variant=AblationNoRollingHorizon     scale=300 seed=42 accept=0.157 vkm=470.0
+[ 49/84] synthetic TIMEOUT variant=AblationNoChoice scale=300 seed=42 (>120s)
+[ 50/84] synthetic variant=DoorToDoor                   scale=300 seed=43 accept=0.627 vkm=2785.8
+[ 51/84] synthetic variant=DoorToDoorCapped             scale=300 seed=43 accept=0.237 vkm=1167.7
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_106: pickup_time (5670.4) >= dropoff_time (5670.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_197: pickup_time (11800.9) >= dropoff_time (11800.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_211: pickup_time (4167.5) >= dropoff_time (4167.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_293: pickup_time (2380.9) >= dropoff_time (2380.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 52/84] synthetic variant=SingleSidedPickup            scale=300 seed=43 accept=0.673 vkm=2658.4
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_24: pickup_time (1144.6) >= dropoff_time (1144.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_181: pickup_time (2901.0) >= dropoff_time (2901.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_193: pickup_time (22950.7) >= dropoff_time (22950.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_197: pickup_time (22545.0) >= dropoff_time (22545.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_206: pickup_time (19255.2) >= dropoff_time (19255.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_293: pickup_time (2275.9) >= dropoff_time (2275.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 53/84] synthetic variant=BidirectionalNoChoice        scale=300 seed=43 accept=0.650 vkm=2205.4
+[ 54/84] synthetic variant=FullModel                    scale=300 seed=43 accept=0.193 vkm=624.4
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_181: pickup_time (22889.0) >= dropoff_time (22889.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 55/84] synthetic variant=AblationNoRollingHorizon     scale=300 seed=43 accept=0.263 vkm=856.2
+[ 56/84] synthetic TIMEOUT variant=AblationNoChoice scale=300 seed=43 (>120s)
+[ 57/84] synthetic variant=DoorToDoor                   scale=300 seed=44 accept=0.593 vkm=2650.3
+[ 58/84] synthetic variant=DoorToDoorCapped             scale=300 seed=44 accept=0.237 vkm=1115.4
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_56: pickup_time (3008.5) >= dropoff_time (3008.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_174: pickup_time (17291.1) >= dropoff_time (17291.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_268: pickup_time (6679.4) >= dropoff_time (6679.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 59/84] synthetic variant=SingleSidedPickup            scale=300 seed=44 accept=0.610 vkm=2246.2
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_56: pickup_time (17302.5) >= dropoff_time (17302.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 60/84] synthetic variant=BidirectionalNoChoice        scale=300 seed=44 accept=0.533 vkm=2140.1
+[ 61/84] synthetic variant=FullModel                    scale=300 seed=44 accept=0.187 vkm=576.0
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_56: pickup_time (25448.0) >= dropoff_time (25448.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 62/84] synthetic variant=AblationNoRollingHorizon     scale=300 seed=44 accept=0.257 vkm=905.0
+[ 63/84] synthetic TIMEOUT variant=AblationNoChoice scale=300 seed=44 (>120s)
+[ 64/84] synthetic variant=DoorToDoor                   scale=500 seed=42 accept=0.730 vkm=5360.5
+[ 65/84] synthetic variant=DoorToDoorCapped             scale=500 seed=42 accept=0.236 vkm=1890.4
+[ 66/84] synthetic TIMEOUT variant=SingleSidedPickup scale=500 seed=42 (>120s)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_20: pickup_time (118.9) >= dropoff_time (118.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_59: pickup_time (14259.2) >= dropoff_time (14259.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_87: pickup_time (14995.6) >= dropoff_time (14995.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_130: pickup_time (4823.3) >= dropoff_time (4823.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_184: pickup_time (26351.2) >= dropoff_time (26351.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_212: pickup_time (5602.1) >= dropoff_time (5602.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_227: pickup_time (19464.2) >= dropoff_time (19464.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_298: pickup_time (8616.0) >= dropoff_time (8616.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_304: pickup_time (13485.2) >= dropoff_time (13485.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_311: pickup_time (11474.0) >= dropoff_time (11474.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_349: pickup_time (8026.9) >= dropoff_time (8026.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_20: pickup_time (1605.0) >= dropoff_time (1605.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_87: pickup_time (22345.6) >= dropoff_time (22345.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_179: pickup_time (15039.7) >= dropoff_time (15039.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_184: pickup_time (10376.3) >= dropoff_time (10376.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_185: pickup_time (2240.6) >= dropoff_time (2240.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_293: pickup_time (8963.1) >= dropoff_time (8963.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_304: pickup_time (19598.7) >= dropoff_time (19598.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_311: pickup_time (15639.7) >= dropoff_time (15639.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 67/84] synthetic variant=BidirectionalNoChoice        scale=500 seed=42 accept=0.640 vkm=3664.2
+[ 68/84] synthetic variant=FullModel                    scale=500 seed=42 accept=0.186 vkm=1019.9
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_6: pickup_time (16470.1) >= dropoff_time (16470.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_20: pickup_time (198.6) >= dropoff_time (198.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_184: pickup_time (12332.9) >= dropoff_time (12332.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_185: pickup_time (24797.7) >= dropoff_time (24797.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 69/84] synthetic variant=AblationNoRollingHorizon     scale=500 seed=42 accept=0.230 vkm=1175.2
+[ 70/84] synthetic TIMEOUT variant=AblationNoChoice scale=500 seed=42 (>120s)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_304: pickup_time (14426.5) >= dropoff_time (14426.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 71/84] synthetic variant=DoorToDoor                   scale=500 seed=43 accept=0.730 vkm=5012.9
+[ 72/84] synthetic variant=DoorToDoorCapped             scale=500 seed=43 accept=0.236 vkm=1679.5
+[ 73/84] synthetic TIMEOUT variant=SingleSidedPickup scale=500 seed=43 (>120s)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_24: pickup_time (1148.3) >= dropoff_time (1148.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_181: pickup_time (7090.1) >= dropoff_time (7090.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_193: pickup_time (10183.9) >= dropoff_time (10183.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_197: pickup_time (10005.6) >= dropoff_time (10005.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_206: pickup_time (6738.4) >= dropoff_time (6738.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_211: pickup_time (10792.2) >= dropoff_time (10792.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_342: pickup_time (16599.9) >= dropoff_time (16599.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_415: pickup_time (7745.6) >= dropoff_time (7745.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 74/84] synthetic TIMEOUT variant=BidirectionalNoChoice scale=500 seed=43 (>120s)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_24: pickup_time (1098.2) >= dropoff_time (1098.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_106: pickup_time (9149.1) >= dropoff_time (9149.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_111: pickup_time (9648.2) >= dropoff_time (9648.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_177: pickup_time (21768.4) >= dropoff_time (21768.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_181: pickup_time (2540.6) >= dropoff_time (2540.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_193: pickup_time (28672.0) >= dropoff_time (28672.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_197: pickup_time (9353.6) >= dropoff_time (9353.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_206: pickup_time (24638.7) >= dropoff_time (24638.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_243: pickup_time (4297.1) >= dropoff_time (4297.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_293: pickup_time (8824.0) >= dropoff_time (8824.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_342: pickup_time (6289.5) >= dropoff_time (6289.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_415: pickup_time (7728.0) >= dropoff_time (7728.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_462: pickup_time (13171.7) >= dropoff_time (13171.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_490: pickup_time (3576.8) >= dropoff_time (3576.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 75/84] synthetic variant=FullModel                    scale=500 seed=43 accept=0.212 vkm=1110.1
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_24: pickup_time (25464.6) >= dropoff_time (25464.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_106: pickup_time (5822.7) >= dropoff_time (5822.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_181: pickup_time (2658.6) >= dropoff_time (2658.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_462: pickup_time (9148.5) >= dropoff_time (9148.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_490: pickup_time (16998.7) >= dropoff_time (16998.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 76/84] synthetic variant=AblationNoRollingHorizon     scale=500 seed=43 accept=0.182 vkm=976.8
+[ 77/84] synthetic TIMEOUT variant=AblationNoChoice scale=500 seed=43 (>120s)
+[ 78/84] synthetic variant=DoorToDoor                   scale=500 seed=44 accept=0.652 vkm=4719.6
+[ 79/84] synthetic variant=DoorToDoorCapped             scale=500 seed=44 accept=0.236 vkm=1867.2
+[ 80/84] synthetic TIMEOUT variant=SingleSidedPickup scale=500 seed=44 (>120s)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_56: pickup_time (2174.6) >= dropoff_time (2174.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_174: pickup_time (19424.9) >= dropoff_time (19424.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_268: pickup_time (8908.7) >= dropoff_time (8908.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_356: pickup_time (10420.8) >= dropoff_time (10420.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_399: pickup_time (4026.8) >= dropoff_time (4026.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_473: pickup_time (13698.7) >= dropoff_time (13698.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_488: pickup_time (4224.6) >= dropoff_time (4224.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_56: pickup_time (1654.5) >= dropoff_time (1654.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_367: pickup_time (12246.3) >= dropoff_time (12246.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_399: pickup_time (1319.9) >= dropoff_time (1319.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_481: pickup_time (12720.2) >= dropoff_time (12720.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_488: pickup_time (4631.0) >= dropoff_time (4631.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 81/84] synthetic variant=BidirectionalNoChoice        scale=500 seed=44 accept=0.608 vkm=3683.1
+[ 82/84] synthetic variant=FullModel                    scale=500 seed=44 accept=0.188 vkm=1085.1
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_56: pickup_time (2147.4) >= dropoff_time (2147.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_174: pickup_time (12766.1) >= dropoff_time (12766.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_481: pickup_time (11869.9) >= dropoff_time (11869.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request req_488: pickup_time (3347.9) >= dropoff_time (3347.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 83/84] synthetic variant=AblationNoRollingHorizon     scale=500 seed=44 accept=0.258 vkm=1311.6
+[ 84/84] synthetic TIMEOUT variant=AblationNoChoice scale=500 seed=44 (>120s)
+
+[runner] Starting Beijing experiments: 3 seeds × 7 variants = 21 runs
+[  1/21] beijing  variant=DoorToDoor                   scale=200 seed=42 accept=0.690 vkm=1287.4
+[  2/21] beijing  variant=DoorToDoorCapped             scale=200 seed=42 accept=0.235 vkm=520.5
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_18: pickup_time (53921.9) >= dropoff_time (53921.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_24: pickup_time (25317.2) >= dropoff_time (25317.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_38: pickup_time (25371.9) >= dropoff_time (25371.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_42: pickup_time (44227.3) >= dropoff_time (44227.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_43: pickup_time (37417.9) >= dropoff_time (37417.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_45: pickup_time (34491.3) >= dropoff_time (34491.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_51: pickup_time (30278.8) >= dropoff_time (30278.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_52: pickup_time (28555.2) >= dropoff_time (28555.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_66: pickup_time (35553.4) >= dropoff_time (35553.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_70: pickup_time (26548.0) >= dropoff_time (26548.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_74: pickup_time (27044.1) >= dropoff_time (27044.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_76: pickup_time (44316.6) >= dropoff_time (44316.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_101: pickup_time (53564.8) >= dropoff_time (53564.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_126: pickup_time (27258.9) >= dropoff_time (27258.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_131: pickup_time (26479.7) >= dropoff_time (26479.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_140: pickup_time (27051.3) >= dropoff_time (27051.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_143: pickup_time (31130.2) >= dropoff_time (31130.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_146: pickup_time (40041.3) >= dropoff_time (40041.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_148: pickup_time (26940.3) >= dropoff_time (26940.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_157: pickup_time (28156.4) >= dropoff_time (28156.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_162: pickup_time (26407.6) >= dropoff_time (26407.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_167: pickup_time (30115.3) >= dropoff_time (30115.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_168: pickup_time (31804.7) >= dropoff_time (31804.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_169: pickup_time (26287.1) >= dropoff_time (26287.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_190: pickup_time (26390.1) >= dropoff_time (26390.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_191: pickup_time (30011.4) >= dropoff_time (30011.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_196: pickup_time (29213.6) >= dropoff_time (29213.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_197: pickup_time (28384.4) >= dropoff_time (28384.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_198: pickup_time (28226.6) >= dropoff_time (28226.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[  3/21] beijing  variant=SingleSidedPickup            scale=200 seed=42 accept=0.815 vkm=1286.9
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_19: pickup_time (49959.0) >= dropoff_time (49959.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_42: pickup_time (40213.7) >= dropoff_time (40213.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_45: pickup_time (41829.3) >= dropoff_time (41829.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_46: pickup_time (42279.5) >= dropoff_time (42279.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_51: pickup_time (35908.5) >= dropoff_time (35908.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_52: pickup_time (39869.2) >= dropoff_time (39869.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_66: pickup_time (39157.4) >= dropoff_time (39157.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_70: pickup_time (28516.1) >= dropoff_time (28516.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_71: pickup_time (36492.0) >= dropoff_time (36492.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_74: pickup_time (27789.0) >= dropoff_time (27789.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_75: pickup_time (29100.1) >= dropoff_time (29100.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_76: pickup_time (31252.9) >= dropoff_time (31252.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_82: pickup_time (27285.7) >= dropoff_time (27285.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_96: pickup_time (28464.2) >= dropoff_time (28464.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_101: pickup_time (43156.5) >= dropoff_time (43156.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_118: pickup_time (47737.2) >= dropoff_time (47737.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_126: pickup_time (34173.9) >= dropoff_time (34173.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_131: pickup_time (25726.1) >= dropoff_time (25726.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_140: pickup_time (26648.2) >= dropoff_time (26648.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_146: pickup_time (44064.6) >= dropoff_time (44064.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_148: pickup_time (26880.2) >= dropoff_time (26880.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_162: pickup_time (26741.7) >= dropoff_time (26741.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_168: pickup_time (30316.0) >= dropoff_time (30316.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_175: pickup_time (33498.6) >= dropoff_time (33498.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_177: pickup_time (33609.7) >= dropoff_time (33609.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_179: pickup_time (28321.5) >= dropoff_time (28321.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_188: pickup_time (29152.8) >= dropoff_time (29152.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_190: pickup_time (26999.1) >= dropoff_time (26999.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_191: pickup_time (30426.1) >= dropoff_time (30426.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_195: pickup_time (31529.3) >= dropoff_time (31529.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_196: pickup_time (28958.1) >= dropoff_time (28958.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_198: pickup_time (28272.4) >= dropoff_time (28272.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[  4/21] beijing  variant=BidirectionalNoChoice        scale=200 seed=42 accept=0.850 vkm=1265.9
+[  5/21] beijing  variant=FullModel                    scale=200 seed=42 accept=0.315 vkm=249.4
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_19: pickup_time (36392.5) >= dropoff_time (36392.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_21: pickup_time (46556.9) >= dropoff_time (46556.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_51: pickup_time (36895.8) >= dropoff_time (36895.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_66: pickup_time (30964.3) >= dropoff_time (30964.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_70: pickup_time (49141.6) >= dropoff_time (49141.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_71: pickup_time (30235.4) >= dropoff_time (30235.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_74: pickup_time (47285.3) >= dropoff_time (47285.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_126: pickup_time (44253.0) >= dropoff_time (44253.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_128: pickup_time (34320.5) >= dropoff_time (34320.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_137: pickup_time (31661.6) >= dropoff_time (31661.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_162: pickup_time (50903.7) >= dropoff_time (50903.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_168: pickup_time (34016.7) >= dropoff_time (34016.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_175: pickup_time (33195.1) >= dropoff_time (33195.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_196: pickup_time (38923.5) >= dropoff_time (38923.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_197: pickup_time (40209.5) >= dropoff_time (40209.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[  6/21] beijing  variant=AblationNoRollingHorizon     scale=200 seed=42 accept=0.360 vkm=489.2
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_146: pickup_time (32955.1) >= dropoff_time (32955.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[  7/21] beijing  variant=AblationNoChoice             scale=200 seed=42 accept=0.765 vkm=554.5
+[  8/21] beijing  variant=DoorToDoor                   scale=200 seed=43 accept=0.860 vkm=1359.5
+[  9/21] beijing  variant=DoorToDoorCapped             scale=200 seed=43 accept=0.235 vkm=412.1
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_15: pickup_time (27079.7) >= dropoff_time (27079.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_16: pickup_time (45454.9) >= dropoff_time (45454.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_24: pickup_time (53118.4) >= dropoff_time (53118.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_44: pickup_time (42188.4) >= dropoff_time (42188.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_57: pickup_time (52367.1) >= dropoff_time (52367.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_69: pickup_time (50177.0) >= dropoff_time (50177.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_74: pickup_time (41480.8) >= dropoff_time (41480.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_82: pickup_time (48582.7) >= dropoff_time (48582.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_93: pickup_time (34057.6) >= dropoff_time (34057.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_96: pickup_time (27544.3) >= dropoff_time (27544.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_97: pickup_time (25597.7) >= dropoff_time (25597.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_99: pickup_time (31453.5) >= dropoff_time (31453.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_100: pickup_time (25689.2) >= dropoff_time (25689.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_101: pickup_time (46964.3) >= dropoff_time (46964.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_106: pickup_time (32181.2) >= dropoff_time (32181.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_110: pickup_time (28786.5) >= dropoff_time (28786.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_118: pickup_time (25876.0) >= dropoff_time (25876.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_129: pickup_time (29559.9) >= dropoff_time (29559.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_141: pickup_time (28991.1) >= dropoff_time (28991.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_151: pickup_time (28029.3) >= dropoff_time (28029.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_156: pickup_time (33859.9) >= dropoff_time (33859.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_161: pickup_time (25994.7) >= dropoff_time (25994.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_169: pickup_time (25995.9) >= dropoff_time (25995.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_182: pickup_time (29869.5) >= dropoff_time (29869.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_187: pickup_time (34858.0) >= dropoff_time (34858.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_193: pickup_time (28743.9) >= dropoff_time (28743.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_196: pickup_time (30500.5) >= dropoff_time (30500.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_197: pickup_time (31811.3) >= dropoff_time (31811.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 10/21] beijing  variant=SingleSidedPickup            scale=200 seed=43 accept=0.830 vkm=1215.3
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_15: pickup_time (32001.9) >= dropoff_time (32001.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_16: pickup_time (49105.5) >= dropoff_time (49105.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_57: pickup_time (42661.8) >= dropoff_time (42661.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_68: pickup_time (52194.0) >= dropoff_time (52194.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_69: pickup_time (47065.2) >= dropoff_time (47065.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_74: pickup_time (38870.5) >= dropoff_time (38870.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_93: pickup_time (50657.0) >= dropoff_time (50657.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_97: pickup_time (25689.6) >= dropoff_time (25689.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_99: pickup_time (30619.2) >= dropoff_time (30619.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_101: pickup_time (32438.5) >= dropoff_time (32438.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_106: pickup_time (43015.7) >= dropoff_time (43015.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_110: pickup_time (45233.0) >= dropoff_time (45233.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_113: pickup_time (37533.4) >= dropoff_time (37533.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_118: pickup_time (27437.0) >= dropoff_time (27437.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_125: pickup_time (28207.4) >= dropoff_time (28207.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_127: pickup_time (39107.0) >= dropoff_time (39107.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_141: pickup_time (28988.3) >= dropoff_time (28988.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_151: pickup_time (27663.3) >= dropoff_time (27663.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_156: pickup_time (33572.7) >= dropoff_time (33572.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_161: pickup_time (26483.5) >= dropoff_time (26483.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_163: pickup_time (34301.1) >= dropoff_time (34301.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_169: pickup_time (25964.8) >= dropoff_time (25964.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_172: pickup_time (29839.8) >= dropoff_time (29839.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_176: pickup_time (27447.2) >= dropoff_time (27447.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_193: pickup_time (28391.6) >= dropoff_time (28391.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_199: pickup_time (27252.4) >= dropoff_time (27252.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 11/21] beijing  variant=BidirectionalNoChoice        scale=200 seed=43 accept=0.865 vkm=1209.1
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_74: pickup_time (31996.5) >= dropoff_time (31996.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 12/21] beijing  variant=FullModel                    scale=200 seed=43 accept=0.315 vkm=235.3
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_9: pickup_time (33882.9) >= dropoff_time (33882.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_10: pickup_time (36757.5) >= dropoff_time (36757.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_18: pickup_time (29790.7) >= dropoff_time (29790.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_68: pickup_time (29266.8) >= dropoff_time (29266.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_74: pickup_time (31871.2) >= dropoff_time (31871.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_99: pickup_time (32664.2) >= dropoff_time (32664.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_113: pickup_time (27922.4) >= dropoff_time (27922.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_125: pickup_time (27999.8) >= dropoff_time (27999.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_127: pickup_time (30881.7) >= dropoff_time (30881.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_141: pickup_time (39651.8) >= dropoff_time (39651.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_161: pickup_time (25815.0) >= dropoff_time (25815.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_196: pickup_time (30948.7) >= dropoff_time (30948.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_197: pickup_time (31425.1) >= dropoff_time (31425.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 13/21] beijing  variant=AblationNoRollingHorizon     scale=200 seed=43 accept=0.355 vkm=493.4
+[ 14/21] beijing  TIMEOUT variant=AblationNoChoice scale=200 seed=43 (>120s)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_24: pickup_time (32380.3) >= dropoff_time (32380.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 15/21] beijing  variant=DoorToDoor                   scale=200 seed=44 accept=0.775 vkm=1414.8
+[ 16/21] beijing  variant=DoorToDoorCapped             scale=200 seed=44 accept=0.235 vkm=508.1
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_23: pickup_time (48667.3) >= dropoff_time (48667.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_27: pickup_time (42158.3) >= dropoff_time (42158.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_29: pickup_time (26909.4) >= dropoff_time (26909.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_34: pickup_time (28728.4) >= dropoff_time (28728.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_35: pickup_time (35670.0) >= dropoff_time (35670.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_40: pickup_time (52564.0) >= dropoff_time (52564.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_51: pickup_time (26489.1) >= dropoff_time (26489.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_65: pickup_time (41619.9) >= dropoff_time (41619.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_83: pickup_time (51923.0) >= dropoff_time (51923.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_89: pickup_time (46681.9) >= dropoff_time (46681.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_98: pickup_time (39420.6) >= dropoff_time (39420.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_127: pickup_time (25812.4) >= dropoff_time (25812.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_128: pickup_time (28773.2) >= dropoff_time (28773.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_131: pickup_time (26524.2) >= dropoff_time (26524.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_133: pickup_time (27059.2) >= dropoff_time (27059.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_146: pickup_time (50346.1) >= dropoff_time (50346.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_155: pickup_time (43016.3) >= dropoff_time (43016.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_159: pickup_time (26569.8) >= dropoff_time (26569.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_166: pickup_time (33880.3) >= dropoff_time (33880.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_168: pickup_time (26518.4) >= dropoff_time (26518.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_171: pickup_time (26950.6) >= dropoff_time (26950.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_175: pickup_time (32971.7) >= dropoff_time (32971.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_176: pickup_time (28912.1) >= dropoff_time (28912.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_180: pickup_time (31633.7) >= dropoff_time (31633.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_183: pickup_time (33358.6) >= dropoff_time (33358.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_189: pickup_time (30360.9) >= dropoff_time (30360.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_190: pickup_time (29806.4) >= dropoff_time (29806.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_198: pickup_time (31367.4) >= dropoff_time (31367.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 17/21] beijing  variant=SingleSidedPickup            scale=200 seed=44 accept=0.695 vkm=1180.6
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_23: pickup_time (47816.8) >= dropoff_time (47816.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_27: pickup_time (42686.3) >= dropoff_time (42686.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_29: pickup_time (28056.2) >= dropoff_time (28056.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_34: pickup_time (33363.2) >= dropoff_time (33363.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_35: pickup_time (36226.0) >= dropoff_time (36226.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_40: pickup_time (47753.0) >= dropoff_time (47753.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_51: pickup_time (26453.1) >= dropoff_time (26453.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_65: pickup_time (30483.6) >= dropoff_time (30483.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_83: pickup_time (50829.6) >= dropoff_time (50829.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_89: pickup_time (46149.9) >= dropoff_time (46149.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_96: pickup_time (36974.4) >= dropoff_time (36974.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_98: pickup_time (37477.7) >= dropoff_time (37477.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_106: pickup_time (34989.3) >= dropoff_time (34989.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_128: pickup_time (28877.9) >= dropoff_time (28877.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_133: pickup_time (26956.4) >= dropoff_time (26956.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_148: pickup_time (25363.4) >= dropoff_time (25363.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_162: pickup_time (38464.3) >= dropoff_time (38464.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_166: pickup_time (30392.9) >= dropoff_time (30392.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_171: pickup_time (26204.4) >= dropoff_time (26204.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_173: pickup_time (33955.8) >= dropoff_time (33955.8); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_175: pickup_time (30842.5) >= dropoff_time (30842.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_176: pickup_time (28827.6) >= dropoff_time (28827.6); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_179: pickup_time (32652.7) >= dropoff_time (32652.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_189: pickup_time (29942.7) >= dropoff_time (29942.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_190: pickup_time (29596.1) >= dropoff_time (29596.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 18/21] beijing  variant=BidirectionalNoChoice        scale=200 seed=44 accept=0.725 vkm=1188.3
+[ 19/21] beijing  variant=FullModel                    scale=200 seed=44 accept=0.310 vkm=300.4
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_4: pickup_time (32138.0) >= dropoff_time (32138.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_32: pickup_time (33595.4) >= dropoff_time (33595.4); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_34: pickup_time (28062.5) >= dropoff_time (28062.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_35: pickup_time (30539.7) >= dropoff_time (30539.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_39: pickup_time (37491.2) >= dropoff_time (37491.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_40: pickup_time (36845.0) >= dropoff_time (36845.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_51: pickup_time (26974.7) >= dropoff_time (26974.7); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_61: pickup_time (28367.5) >= dropoff_time (28367.5); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_83: pickup_time (33708.1) >= dropoff_time (33708.1); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_127: pickup_time (25624.2) >= dropoff_time (25624.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_128: pickup_time (36023.3) >= dropoff_time (36023.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_162: pickup_time (31209.9) >= dropoff_time (31209.9); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_173: pickup_time (29771.2) >= dropoff_time (29771.2); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_175: pickup_time (35123.0) >= dropoff_time (35123.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_196: pickup_time (41932.0) >= dropoff_time (41932.0); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+[ 20/21] beijing  variant=AblationNoRollingHorizon     scale=200 seed=44 accept=0.365 vkm=537.7
+[ 21/21] beijing  TIMEOUT variant=AblationNoChoice scale=200 seed=44 (>120s)
+C:\Users\39583\Desktop\4_Publication\工作3\experiments\runner.py:189: RuntimeWarning: Request bj_req_179: pickup_time (32755.3) >= dropoff_time (32755.3); using Euclidean fallback for IVT.
+  result = variant.run(scenario)
+
+[runner] Wrote 84 rows → C:\Users\39583\Desktop\4_Publication\工作3\experiments\..\results\synthetic_results.csv
+[runner] Wrote 21 rows → C:\Users\39583\Desktop\4_Publication\工作3\experiments\..\results\beijing_results.csv
+[runner] Wrote metrics table → C:\Users\39583\Desktop\4_Publication\工作3\experiments\..\results\metrics_table.csv
+
+[runner] Total runtime: 11424.2s (190.4 min)
+
+--- metrics_table.csv ---
+                 variant  acceptance_rate_mean  acceptance_rate_std  vehicle_km_mean  vehicle_km_std  avg_wait_mean  avg_wait_std  p95_wait_mean  p95_wait_std  avg_walk_mean  avg_walk_std  avg_ivt_mean  avg_ivt_std  detour_ratio_mean  detour_ratio_std  fairness_index_mean  fairness_index_std  cpu_time_mean  cpu_time_std
+        AblationNoChoice              0.135000             0.244708       159.343350      290.110152     118.057791    217.766972     262.434350    479.122188      25.694152     54.025663    273.946764   495.686796           0.251077          0.454227             0.099275            0.179724       5.698418     10.334806
+AblationNoRollingHorizon              0.206389             0.061900       668.500398      373.924527    3114.455961   2024.346376   13803.291736   7653.344914    1803.825020    142.035275   5980.091820  2192.760678           6.139999          2.532765             0.500056            0.066552       3.461620      4.480058
+   BidirectionalNoChoice              0.533167             0.193250      1721.602403     1148.967225    4626.675405   1744.945498   14850.175134   5023.235258    1652.623045    523.774500   3740.107836  1305.843644           3.602907          1.258213             0.458725            0.145562      26.061582     34.419118
+              DoorToDoor              0.609611             0.118025      2603.709357     1666.392499    5003.530509    605.042307   16390.911484   1363.598578       0.000000      0.000000   3772.379306   294.190310           3.634698          0.592755             0.538522            0.015681      12.601456     15.173992
+        DoorToDoorCapped              0.236917             0.001960      1026.306877      553.134128    4440.749290    917.505987   16027.538524   3382.560942       0.000000      0.000000   3608.586904   404.746681           3.459280          0.443385             0.551603            0.028250       1.151453      1.279216
+               FullModel              0.183139             0.017746       551.981615      343.259894     454.156370     63.002580     982.354545    145.780068     109.047032     76.005739    987.713322    63.358131           1.002849          0.007394             0.411087            0.041946      10.485404     13.019530
+       SingleSidedPickup              0.440278             0.274523      1199.382833      970.637582    3847.077793   2360.819185   12702.382000   7790.257376    1025.253130    625.436473   2666.429675  1651.032818           2.418406          1.521908             0.394164            0.238242      19.491218     23.254280
+
+[NOTE] acceptance_rate: FullModel=0.183 < DoorToDoor=0.610 (difference=0.426)
+[PASS] vehicle_km: FullModel=552.0 <= DoorToDoor=2603.7

@@ -1,7 +1,11 @@
-DoorToDoor                     2.25s accept=0.990 vkm=677.0
-SingleSidedPickup              17.19s accept=0.960 vkm=586.4
-BidirectionalNoChoice          4.18s accept=0.880 vkm=508.4
-FullModel                      5345.01s accept=0.880 vkm=499.4
-AblationNoRollingHorizon       6.90s accept=0.880 vkm=508.4
-AblationNoChoice               4274.05s accept=0.880 vkm=499.4
-Done. Written to test_scale100_output.txt
+DoorToDoor                     0.24s accept=0.280 vkm=444.6
+DoorToDoorCapped               0.31s accept=0.240 vkm=384.8
+SingleSidedPickup              0.48s accept=0.250 vkm=438.4
+SingleSidedDropoff             0.68s accept=0.190 vkm=267.4
+BidirectionalNoChoice          3.46s accept=0.610 vkm=798.3
+GreedyInsertionBaseline        2.92s accept=0.610 vkm=798.3
+FullModel                      0.21s accept=0.190 vkm=324.5
+AblationNoRollingHorizon       0.21s accept=0.190 vkm=324.5
+AblationNoChoice               25.00s accept=0.530 vkm=630.0
+
+Total time: 33.5s

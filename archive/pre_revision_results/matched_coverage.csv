@@ -1,0 +1,7 @@
+variant,seed,served_share,vkm_per_trip,rejection_penalty
+FullModel,42,0.225,11.7348,0.0
+FullModel,43,0.255,11.1235,0.0
+FullModel,44,0.225,9.8273,0.0
+DoorToDoor_matched,42,0.235,36.0373,0.594828
+DoorToDoor_matched,43,0.23,46.7925,0.673611
+DoorToDoor_matched,44,0.2,44.136,0.572727

@@ -1,0 +1,36 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ---- LaTeX build artifacts (regenerate on compile; keep *.tex, *.bib, *.pdf) ----
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.spl
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.nav
+*.snm
+*.vrb
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- IDE / editors ----
+.vscode/
+.idea/
+*.swp
+*~
+
+# ---- Misc temp ----
+.tmp_*/
