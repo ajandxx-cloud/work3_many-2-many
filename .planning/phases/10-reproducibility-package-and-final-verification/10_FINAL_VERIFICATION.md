@@ -69,3 +69,44 @@ Rows below mirror the Phase 9 target main-text displays. They verify the display
 | Figure outputs | `manuscript/figures/` | Pending | Current PDF/PNG outputs are listed in the manifest and reproduction guide | Generated figures require Phase 8 support before supporting final claims |
 | Bibliography | `manuscript/references.bib` | Pending | Bibliography is included by `manuscript/main.tex` and documented in the guide | Metadata cleanup and final build snapshot still pending |
 | Build command documentation | `10_REPRODUCIBILITY.md#manuscript-build-chain` | Pass | Build commands, inputs, figure outputs, bibliography, and compiled PDF path are documented | Re-run and capture logs after Phase 6/8-supported manuscript edits |
+
+## Final Claim Verification Matrix
+
+Every final manuscript claim needs Phase 8 evidence, result artifacts, and table/figure links before it can pass. The current manuscript still contains legacy numerical, novelty, equity, and policy language, so the rows below are placeholders to be resolved after the Phase 8 claim gate.
+
+| claim_or_placeholder | manuscript_location | phase8_status | result_artifact | table_or_figure_link | verification_status | blocker |
+|---|---|---|---|---|---|---|
+| abstract claims: `[SUPPORTED_CLAIM_FROM_08]`, `[MAIN_EFFECT_SIZE_IF_SUPPORTED]`, `[BOUNDARY_CONDITIONS_FROM_08]` | `manuscript/sections/abstract.tex`; planned by `09_REVISED_ABSTRACT.md` | pending Phase 8 | Phase 6 formal report and Phase 8 supported claims | Abstract/front-matter summary; final main evidence table if approved | Blocked | Blocked: prerequisites missing |
+| introduction contribution claims and result preview | `manuscript/sections/intro.tex`; planned by `09_REVISED_INTRODUCTION_PLAN.md` | pending Phase 8 | Phase 1 novelty audit, Phase 6 formal report, Phase 8 supported claims | Contribution list and paper organization | Pending | Must remove broad first/only and legacy effect-size claims unless Phase 8 supports exact wording |
+| formal main-evidence claims | `manuscript/sections/experiments.tex`; Formal Main Evidence target section | pending Phase 8 | `.planning/phases/06-formal-synthetic-experiments/06_FORMAL_SYNTHETIC_RESULTS.md`; `results/formal/phase06/` | formal main-evidence table; paired-difference summary; formal paired-evidence figure | Blocked | Blocked: prerequisites missing |
+| robustness/equity claims | `manuscript/sections/experiments.tex`; robustness and equity target subsections | pending Phase 8 | `results/matched_coverage.csv`, `results/endogenous_matched_coverage.csv`, `results/equity_table.csv`, future formal robustness outputs | robustness summary; equity trade-off summary | Pending | Bounded interpretation only until Phase 8 grades robustness and equity statements |
+| managerial-insight claims | `manuscript/sections/policy.tex`; planned `Managerial Insights and Boundary Conditions` section | pending Phase 8 | Phase 8 supported/bounded claims plus sensitivity, equity, and scenario-boundary artifacts | managerial insight table; sensitivity or managerial-boundary figure | Pending | Current R1-R5 policy wording is prescriptive and must be rewritten as conditional insight |
+| conclusion claims and final takeaways | `manuscript/sections/conclusion.tex`; planned evidence-graded conclusion | pending Phase 8 | Phase 8 supported claims and unsupported/exploratory claim list | Conclusion takeaways mapped to approved tables/figures | Blocked | Cannot retain legacy 29.1 percent, matched-coverage, equity, or policy conclusions without Phase 8 approval |
+| Beijing-inspired synthetic boundary claim | `manuscript/sections/experiments.tex`; `manuscript/sections/policy.tex`; `manuscript/sections/conclusion.tex` | pending Phase 8 | Current `results/beijing_results.csv` and future Phase 7/8 case evidence if available | Beijing-inspired synthetic boundary table/appendix entry | Pending | Must not become a real Beijing case or universal city-transfer claim |
+| algorithm diagnostic claims | `manuscript/sections/algorithm.tex`; `manuscript/sections/experiments.tex` | pending Phase 8 | `results/milp_gap.json`, `results/milp_benchmark.json`, ALNS diagnostics when formalized | MILP/static-snapshot diagnostic table; appendix/supplement outputs | Not final evidence | Diagnostics support algorithm credibility only unless Phase 8 promotes a bounded claim |
+
+## Closeout Decision
+
+Phase 10 cannot mark final verification as passed while hard blockers remain. The package can close only as a blocked/pending reproducibility and verification framework with these facts:
+
+- `10_RESULT_MANIFEST.md` exists and records the prerequisite gate, artifact families, provenance commands, and non-final evidence roles.
+- `10_REPRODUCIBILITY.md` exists and records setup commands, reproduction entry points, manuscript build commands, table/figure provenance, and the final artifact index.
+- `10_FINAL_VERIFICATION.md` exists and verifies the blocked state, table/figure readiness, manuscript build readiness, and claim placeholder coverage.
+- Final claim verification cannot pass until Phase 6 formal evidence and all Phase 8 claim-gate artifacts exist and are read.
+
+## Next Evidence Needed
+
+To convert blocked rows to pass/fail rows, create or restore the following exact files and then rerun Phase 10 verification:
+
+1. `.planning/phases/06-formal-synthetic-experiments/06_FORMAL_SYNTHETIC_RESULTS.md`
+2. `.planning/phases/08-evidence-synthesis-and-claim-gate/08_CLAIM_EVIDENCE_MATRIX.md`
+3. `.planning/phases/08-evidence-synthesis-and-claim-gate/08_SUPPORTED_CLAIMS.md`
+4. `.planning/phases/08-evidence-synthesis-and-claim-gate/08_UNSUPPORTED_OR_EXPLORATORY_CLAIMS.md`
+
+After those files exist, rerun the final checks in this order:
+
+1. Refresh `10_RESULT_MANIFEST.md` claim links from `pending Phase 8` to supported, bounded, downgraded, unsupported, or not final evidence.
+2. Refresh `10_REPRODUCIBILITY.md` reproduction entry points and final artifact index with the final Phase 6/8 artifacts.
+3. Rebuild manuscript tables and figures from Phase 6/8-supported data only.
+4. Replace manuscript claim placeholders only with claims authorized by Phase 8.
+5. Capture final `git rev-parse HEAD`, `git status --short`, `python -m pip freeze`, test output, build logs, and checksums before reviewer release.
