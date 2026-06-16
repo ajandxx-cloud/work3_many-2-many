@@ -1,0 +1,32 @@
+{
+  "checked_files": [
+    "results\\formal\\phase06\\smoke\\synthetic_results.csv",
+    "results\\formal\\phase06\\smoke\\metrics_table.csv",
+    "results\\formal\\phase06\\smoke\\utility_components.csv",
+    "results\\formal\\phase06\\smoke\\formal_seed_manifest.json",
+    "results\\formal\\phase06\\smoke\\formal_config_manifest.json",
+    "results\\formal\\phase06\\smoke\\main_matrix_validation.json"
+  ],
+  "errors": [
+    "BidirectionalMP_Choice_RH_ALNS metadata claims rolling-horizon/ALNS, but FullModel._solve currently delegates to the common sequential actual-offer path. Correct implementation or metadata before formal runs."
+  ],
+  "label_implementation_gate": {
+    "errors": [
+      "BidirectionalMP_Choice_RH_ALNS metadata claims rolling-horizon/ALNS, but FullModel._solve currently delegates to the common sequential actual-offer path. Correct implementation or metadata before formal runs."
+    ],
+    "passed": false,
+    "warnings": []
+  },
+  "ledger_path": ".planning\\phases\\06-formal-synthetic-experiments\\06_FAILURE_RERUN_LEDGER.csv",
+  "passed": false,
+  "results_dir": "results\\formal\\phase06\\smoke",
+  "row_counts": {
+    "failed_rows": 0,
+    "main_behavioral_rows": 4,
+    "metrics_table": 4,
+    "synthetic_results": 4,
+    "timeout_rows": 0,
+    "utility_components": 400
+  },
+  "warnings": []
+}
