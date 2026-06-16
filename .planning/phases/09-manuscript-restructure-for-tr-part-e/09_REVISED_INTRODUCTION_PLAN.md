@@ -95,3 +95,19 @@ The introduction should present contributions in this exact order:
    and rejection context.
 4. **managerial implications** - conditional insights after limitations and
    boundary conditions.
+
+## Literature Positioning Rewrite Rules
+
+| Current risk | Allowed replacement | Required source | Phase 8 dependency |
+|---|---|---|---|
+| broad first/only language | "We study an integrated choice-aware dynamic service-design simulation framework..." | `01_NOVELTY_POSITIONING.md`; exact citation check before final text | Phase 8 must approve any precise novelty claim. |
+| pickup-side-only claim about prior work | "Prior work covers meeting points and walking locations in partially overlapping settings; this paper evaluates the integrated bidirectional service-design evidence chain." | `01_LITERATURE_AUDIT.md`; full-text check for Cortenbach et al. (2024); Fielbaum et al. (2021) | Unresolved scope remains a blocker for exact contrast wording. |
+| passenger-choice gap claims | "The framework combines passenger response with service-design comparison under shared assumptions." | Phase 3 choice model contract; Phase 2 fair-comparison contract | Phase 8 must approve any claim that passenger response changes final interpretation. |
+| rolling-horizon claims | "Rolling-horizon ALNS is the operational mechanism and algorithm diagnostic support." | `manuscript/sections/algorithm.tex`; Phase 4/6 algorithm diagnostic artifacts when available | Phase 8 must approve any result claim about rolling-horizon benefit. |
+| DARPmp/ridepooling overlap | "DARPmp and ridepooling studies motivate meeting-point/walking-location design; this paper tests a claim-gated DRT service-design evidence chain." | `01_LITERATURE_AUDIT.md`; Cortenbach et al. (2024); Fielbaum et al. (2021); DARP/DRT surveys | Phase 8 gates final wording if overlap affects claimed contribution strength. |
+
+Any exact novelty statement must cite Phase 1 audit evidence and the relevant
+local or external source. unresolved literature items are blockers, not safe
+claims. If an exact mechanism, citation, or bibliography record remains
+uncertain, the introduction should use a broader positioning statement or mark
+the wording as pending rather than asserting priority.
