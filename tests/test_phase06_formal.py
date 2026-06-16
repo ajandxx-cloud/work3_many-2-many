@@ -11,6 +11,7 @@ import pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import experiments.phase06_formal as phase06  # noqa: E402
+import experiments.formal_statistics as formal_statistics  # noqa: E402
 import experiments.runner as runner_module  # noqa: E402
 from experiments.formal_validation import (  # noqa: E402
     RERUN_LEDGER_COLUMNS,
@@ -312,3 +313,85 @@ def test_rerun_ledger_header_is_exact(tmp_path):
 
     assert header == RERUN_LEDGER_COLUMNS
     assert "replacement_seed" not in header
+
+
+def _stats_row(seed: int, scale: int, method: str, value: float) -> dict:
+    return {
+        "seed": seed,
+        "scale": scale,
+        "method_label": method,
+        "status": "completed",
+        "served_share": value / 100.0,
+        "behavioral_acceptance_rate": value / 100.0,
+        "choice_rejection_rate": 1.0 - value / 100.0,
+        "feasibility_rejection_rate": 0.0,
+        "total_vehicle_km": value,
+        "vkm_per_served_trip": value / 2.0,
+        "vkm_per_original_request": value / 10.0,
+        "avg_wait": value,
+        "avg_walk": value,
+        "avg_ivt": value,
+    }
+
+
+def test_paired_difference_frame_counts_complete_pairs():
+    rows = []
+    for seed in [1, 2]:
+        rows.append(_stats_row(seed, 100, formal_statistics.FULL_METHOD, 8.0))
+        rows.append(_stats_row(seed, 100, "DoorToDoor_Choice_CommonRouting", 10.0))
+    frame = formal_statistics.paired_difference_frame(
+        pd.DataFrame(rows),
+        metrics=["total_vehicle_km"],
+        baselines=["DoorToDoor_Choice_CommonRouting"],
+    )
+
+    all_scale = frame[frame["scale"].astype(str) == "all"].iloc[0]
+
+    assert all_scale["n_valid_pairs"] == 2
+    assert all_scale["mean_difference"] == -2.0
+    assert all_scale["full_better_share"] == 1.0
+
+
+def test_paired_difference_frame_reports_missing_pairs():
+    rows = [
+        _stats_row(1, 100, formal_statistics.FULL_METHOD, 8.0),
+        _stats_row(1, 100, "DoorToDoor_Choice_CommonRouting", 10.0),
+        _stats_row(2, 100, "DoorToDoor_Choice_CommonRouting", 10.0),
+    ]
+    frame = formal_statistics.paired_difference_frame(
+        pd.DataFrame(rows),
+        metrics=["total_vehicle_km"],
+        baselines=["DoorToDoor_Choice_CommonRouting"],
+    )
+
+    all_scale = frame[frame["scale"].astype(str) == "all"].iloc[0]
+
+    assert all_scale["expected_pairs"] == 2
+    assert all_scale["n_valid_pairs"] == 1
+    assert all_scale["missing_full_rows"] == 1
+    assert all_scale["missing_pair_count"] == 1
+
+
+def test_bootstrap_frame_is_deterministic():
+    rows = []
+    for seed, full, baseline in [(1, 8.0, 10.0), (2, 9.0, 12.0), (3, 7.0, 9.0)]:
+        rows.append(_stats_row(seed, 100, formal_statistics.FULL_METHOD, full))
+        rows.append(_stats_row(seed, 100, "DoorToDoor_Choice_CommonRouting", baseline))
+
+    first = formal_statistics._bootstrap_frame(
+        pd.DataFrame(rows),
+        metrics=["total_vehicle_km"],
+        baselines=["DoorToDoor_Choice_CommonRouting"],
+        seed=123,
+        n_resamples=100,
+    )
+    second = formal_statistics._bootstrap_frame(
+        pd.DataFrame(rows),
+        metrics=["total_vehicle_km"],
+        baselines=["DoorToDoor_Choice_CommonRouting"],
+        seed=123,
+        n_resamples=100,
+    )
+
+    pd.testing.assert_frame_equal(first, second)
+    assert set(first["ci_method"]) == {"paired_bootstrap_percentile"}

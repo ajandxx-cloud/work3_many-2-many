@@ -1,0 +1,11 @@
+{
+  "generated_at_utc": "2026-06-16T09:53:00.265324+00:00",
+  "plots": [
+    "results\\formal\\phase06\\plots\\phase06_main_efficiency_coverage.png",
+    "results\\formal\\phase06\\plots\\phase06_failure_ledger_status.png"
+  ],
+  "source_tables": [
+    "results\\formal\\phase06\\tables\\main_behavioral_table.csv",
+    ".planning\\phases\\06-formal-synthetic-experiments\\06_FAILURE_RERUN_LEDGER.csv"
+  ]
+}

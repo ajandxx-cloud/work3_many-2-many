@@ -1,0 +1,8 @@
+package_id,critical,status,blocks_phase8,output_path,evidence_role,reason
+matched_coverage,True,passed,False,results\formal\phase06\coverage_controls\matched_coverage,main_evidence_control_with_durable_failures,structural validation passed; 15 FullModel matched rows are durable failed rows
+fixed_accepted_set,False,passed,False,results\formal\phase06\coverage_controls\fixed_accepted_set,diagnostic_only,structural validation passed; fixed accepted-set routing is not behavioral evidence
+utility_sensitivity,True,passed,False,results\formal\phase06\robustness\utility_sensitivity,formal_robustness_diagnostic,structural validation passed
+mp_density_walking_radius,True,passed,False,results\formal\phase06\robustness\mp_density_walking_radius,formal_robustness_diagnostic,structural validation passed
+fleet_demand_stress,True,passed,False,results\formal\phase06\robustness\fleet_demand_stress,formal_robustness_diagnostic,structural validation passed
+equity_type_outcomes,False,passed,False,results\formal\phase06\robustness\equity_type_outcomes,exploratory_limited,structural validation passed
+algorithm_diagnostics,True,passed,False,results\formal\phase06\robustness\algorithm_diagnostics,algorithm_diagnostic,structural validation passed

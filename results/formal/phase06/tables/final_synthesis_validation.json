@@ -1,0 +1,9 @@
+{
+  "main_matrix_passed": true,
+  "missing_required_files": [],
+  "paired_ci_present": true,
+  "passed": true,
+  "phase8_blocked_by_conflicts": false,
+  "report_present": true,
+  "supplementary_gates_present": true
+}

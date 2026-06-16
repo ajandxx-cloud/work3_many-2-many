@@ -1,0 +1,87 @@
+{
+  "checks": [
+    {
+      "check_id": "06-02_exists_and_passed",
+      "evidence": "results\\formal\\phase06\\main_behavioral\\validation_report.json",
+      "passed": true
+    },
+    {
+      "check_id": "06-03_exists_and_passed",
+      "evidence": "matched and fixed validation reports passed",
+      "passed": true
+    },
+    {
+      "check_id": "06-04_exists_and_passed",
+      "evidence": "results\\formal\\phase06\\robustness\\validation_report.json",
+      "passed": true
+    },
+    {
+      "check_id": "main_behavioral_has_20_paired_seeds",
+      "evidence": "unique seeds=20",
+      "passed": true
+    },
+    {
+      "check_id": "main_expected_seed_scale_method_rows_exist",
+      "evidence": "missing=0 extra=0",
+      "passed": true
+    },
+    {
+      "check_id": "coverage_controls_have_durable_rows",
+      "evidence": "matched_missing=0 fixed_missing=0",
+      "passed": true
+    },
+    {
+      "check_id": "robustness_packages_have_complete_or_durable_rows",
+      "evidence": "algorithm_diagnostics: expected=8 actual=8 passed=True; equity_type_outcomes: expected=180 actual=180 passed=True; fleet_demand_stress: expected=60 actual=60 passed=True; mp_density_walking_radius: expected=180 actual=180 passed=True; utility_sensitivity: expected=420 actual=420 passed=True",
+      "passed": true
+    },
+    {
+      "check_id": "no_silent_missing_rows",
+      "evidence": "all expected grids have completed or durable status rows",
+      "passed": true
+    },
+    {
+      "check_id": "schema_drift_false_across_packages",
+      "evidence": "schema_drift false in main, coverage, and robustness validation reports",
+      "passed": true
+    },
+    {
+      "check_id": "denominator_checks_passed",
+      "evidence": "all non-algorithm denominator checks passed",
+      "passed": true
+    },
+    {
+      "check_id": "failure_ledger_records_known_failed_rows",
+      "evidence": "known_failed_rows=15 missing_from_ledger=0",
+      "passed": true
+    },
+    {
+      "check_id": "raw_to_processed_reproducibility_documented",
+      "evidence": "config manifests exist for all listed formal packages",
+      "passed": true
+    },
+    {
+      "check_id": "pilot_smoke_not_used_as_formal_evidence",
+      "evidence": "manifest excludes smoke package",
+      "passed": true
+    },
+    {
+      "check_id": "no_final_manuscript_claims_written",
+      "evidence": ".planning\\phases\\06-formal-synthetic-experiments\\06_FORMAL_SYNTHETIC_RESULTS.md",
+      "passed": true
+    },
+    {
+      "check_id": "exp05_complete_only_if_all_checks_pass",
+      "evidence": "EXP-05 may be marked complete only because all verification checks pass",
+      "passed": true
+    }
+  ],
+  "exp05_satisfied": true,
+  "generated_at_utc": "2026-06-16T09:53:00.476787+00:00",
+  "git_commit": "8e6c618",
+  "known_durable_failure_rows": 15,
+  "next_allowed_step": "Phase 7 ready",
+  "passed": true,
+  "phase": "06",
+  "plan": "06-05"
+}
