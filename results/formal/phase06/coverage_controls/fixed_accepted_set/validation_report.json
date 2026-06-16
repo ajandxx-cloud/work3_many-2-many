@@ -1,0 +1,30 @@
+{
+  "checked_files": [
+    "results\\formal\\phase06\\coverage_controls\\fixed_accepted_set\\raw_results.csv",
+    "results\\formal\\phase06\\coverage_controls\\fixed_accepted_set\\processed_results.csv",
+    "results\\formal\\phase06\\coverage_controls\\fixed_accepted_set\\config_manifest.json",
+    "results\\formal\\phase06\\coverage_controls\\fixed_accepted_set\\seed_manifest.json"
+  ],
+  "denominator_checks": {
+    "deterministic_inserted_share": "passed",
+    "unserved_accepted_count": "passed",
+    "vkm_per_original_request": "passed",
+    "vkm_per_served_request": "passed"
+  },
+  "errors": [],
+  "package_id": "fixed_accepted_set",
+  "passed": true,
+  "results_dir": "results\\formal\\phase06\\coverage_controls\\fixed_accepted_set",
+  "row_counts": {
+    "actual_rows": 320,
+    "blocked_rows": 0,
+    "completed_rows": 320,
+    "expected_rows": 320,
+    "failed_rows": 0,
+    "fallback_rows": 0,
+    "processed_rows": 4,
+    "timeout_rows": 0
+  },
+  "schema_drift": false,
+  "warnings": []
+}

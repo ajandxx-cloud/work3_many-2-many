@@ -1,0 +1,5 @@
+method_label,row_count,completed_rows,failed_rows,timeout_rows,blocked_rows,fallback_rows,mean_retained_request_count,mean_retained_share,mean_deterministic_inserted_share,mean_served_count,mean_unserved_accepted_count,mean_total_vehicle_km,mean_vkm_per_served_request,mean_vkm_per_original_request,mean_runtime_s
+BidirectionalMP_Choice_RH_ALNS,80,80,0,0,0,0,30.1875,0.10185,0.9183152199521476,27.225,2.9625,298.17325196887657,11.102268104683086,1.0235933453099444,0.7790320775180589
+DoorToDoor_Choice_CommonRouting,80,80,0,0,0,0,30.1875,0.10185,0.6003343410972273,19.3,10.8875,295.46157065277237,16.334741643282022,0.971248700120726,0.07453656123834662
+SingleSidedDropoff_Choice_CommonRouting,80,80,0,0,0,0,30.1875,0.10185,0.6171978054214119,19.9875,10.2,275.1906786414921,14.933353005939264,0.9085096527272232,0.4542530500155408
+SingleSidedPickup_Choice_CommonRouting,80,80,0,0,0,0,30.1875,0.10185,0.6087259738791504,19.6125,10.575,271.0046437433265,14.898149909337231,0.8968895994474417,0.42559966499102303

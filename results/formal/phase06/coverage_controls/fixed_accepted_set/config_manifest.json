@@ -1,0 +1,26 @@
+{
+  "command": "python -m experiments.phase06_coverage_controls --package all --results-root results/formal/phase06/coverage_controls",
+  "construction_rule": "common_served, then common_actual_offer_serviceable, then documented common_candidate_serviceable fallback",
+  "created_at_utc": "2026-06-16T07:52:10.218413+00:00",
+  "evidence_family": "algorithm_diagnostic",
+  "expected_rows": 320,
+  "git_commit_before_run": "98f0cb8",
+  "interpretation": "routing diagnostic only; not behavioral main evidence",
+  "main_results_dir": "results\\formal\\phase06\\main_behavioral",
+  "method_list": [
+    "BidirectionalMP_Choice_RH_ALNS",
+    "DoorToDoor_Choice_CommonRouting",
+    "SingleSidedDropoff_Choice_CommonRouting",
+    "SingleSidedPickup_Choice_CommonRouting"
+  ],
+  "package_id": "fixed_accepted_set",
+  "phase": "06",
+  "plan": "06-03",
+  "results_dir": "results\\formal\\phase06\\coverage_controls\\fixed_accepted_set",
+  "scale_list": [
+    100,
+    200,
+    300,
+    500
+  ]
+}

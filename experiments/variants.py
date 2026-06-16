@@ -267,6 +267,7 @@ class BaseVariant(ABC):
         rho_d: float,
         k_top: int,
         cost_weights: tuple,
+        max_served_count: int | None = None,
     ) -> ALNSState:
         """Sequential actual-offer acceptance path shared by behavioral variants."""
         vehicles_dict = self._vehicles_dict(scenario)
@@ -274,8 +275,25 @@ class BaseVariant(ABC):
         state.unassigned = []
         choice_evaluations = {}
         params = self._default_choice_params()
+        served_count = 0
 
         for request in sorted(scenario.requests, key=lambda r: r.earliest):
+            ptype = assign_passenger_type(
+                request.id,
+                PASSENGER_TYPES,
+                params.type_shares,
+                seed=params.choice_seed,
+            )
+            if max_served_count is not None and served_count >= max_served_count:
+                evaluation = feasibility_rejected_evaluation(
+                    request_id=request.id,
+                    detailed_reason="matched_coverage_cap_reached",
+                    passenger_type=ptype.name,
+                )
+                state.unassigned.append(request)
+                choice_evaluations[request.id] = evaluation
+                continue
+
             meeting_points = meeting_points_for_request(request)
             plain_routes = _to_plain_routes(state.routes)
             result = evaluate_insertion(
@@ -288,12 +306,6 @@ class BaseVariant(ABC):
                 k_top,
                 cost_weights,
                 TRAVEL_SPEED,
-            )
-            ptype = assign_passenger_type(
-                request.id,
-                PASSENGER_TYPES,
-                params.type_shares,
-                seed=params.choice_seed,
             )
             if result is None:
                 reason = self._feasibility_reason(request, meeting_points, rho_p, rho_d, k_top)
@@ -317,6 +329,7 @@ class BaseVariant(ABC):
             choice_evaluations[request.id] = evaluation
             if evaluation.accepted:
                 _apply_insertion(state, result, request, vehicles_dict, TRAVEL_SPEED)
+                served_count += 1
             else:
                 state.unassigned.append(request)
 
@@ -935,12 +948,14 @@ class FullModel(BaseVariant):
         gamma: float = 0.0,
         cost_weights: tuple | None = None,
         choice_params: ChoiceParameters | None = None,
+        max_served_count: int | None = None,
     ):
         self._rho_p = rho_p if rho_p is not None else RHO_P
         self._rho_d = rho_d if rho_d is not None else RHO_D
         self._gamma = gamma
         self._cost_weights = cost_weights if cost_weights is not None else _COST_WEIGHTS
         self._choice_config = choice_params or self._default_choice_params()
+        self._max_served_count = max_served_count
 
     def _solve(self, scenario: Scenario) -> ALNSState:
         vehicles_dict = self._vehicles_dict(scenario)
@@ -970,6 +985,19 @@ class FullModel(BaseVariant):
                 params.type_shares,
                 seed=params.choice_seed,
             )
+            if (
+                self._max_served_count is not None
+                and len(accepted_requests) >= self._max_served_count
+            ):
+                evaluation = feasibility_rejected_evaluation(
+                    request_id=request.id,
+                    detailed_reason="matched_coverage_cap_reached",
+                    passenger_type=ptype.name,
+                )
+                screening_state.unassigned.append(request)
+                choice_evaluations[request.id] = evaluation
+                continue
+
             if result is None:
                 reason = self._feasibility_reason(
                     request,
