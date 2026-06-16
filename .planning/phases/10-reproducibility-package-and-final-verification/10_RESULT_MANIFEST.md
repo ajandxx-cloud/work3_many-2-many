@@ -123,3 +123,32 @@ All rows in this group use `pilot_readiness` and the `readiness` or `provenance`
 |---|---|---|---|---|---|---|---|---|---|
 | `manuscript/main.tex` | manuscript build entry | `manuscript_build` | Pending | `latexmk -pdf manuscript/main.tex` or equivalent local LaTeX command | Manuscript sections, bibliography, figures | `manuscript/main.pdf` | pending task 10-01-03 revision capture | pending Phase 8 | Build reproducibility must be documented before final package. |
 | `manuscript/main.pdf` | compiled manuscript output | `manuscript_build` | Pending | LaTeX build command | `manuscript/main.tex` and dependencies | PDF manuscript | pending task 10-01-03 revision capture | pending Phase 8 | Output exists but final claims remain blocked by Phase 8. |
+
+## Revision and Dependency Provenance
+
+The current code revision and dependency commands are required manifest data. A reviewer or coauthor should capture the exact command outputs alongside any regenerated final result package.
+
+| field | required command | current Phase 10 note |
+|---|---|---|
+| Code revision | `git rev-parse HEAD` | Current captured HEAD before this provenance update: `0ac1b6c45fcfedc064e416217447739e975c7596`. Re-run after final Phase 10 commits before packaging. |
+| Working-tree state | `git status --short` | Required because the workspace is currently dirty, with many tracked deletions from old paths, untracked current `README.md`/`archive/`/`docs/`/`manuscript/` trees, modified generated outputs, and Phase 10 planning-state edits. |
+| Dependency snapshot | `python -m pip freeze` | Required output for reviewer package; save to a timestamped dependency snapshot before final reproduction. |
+| Editable install | `python -m pip install -e .` | Required setup command from `README.md` and `pyproject.toml`; current declared core dependencies are `gurobipy` and `numpy`. |
+| Test command | `$env:PYTHONPATH='src'; pytest tests -q` | PowerShell equivalent of the reproducibility smoke command. The codebase concern map notes that bare `pytest` may collect archived ad hoc tests, so the active-suite command should be recorded explicitly. |
+
+Environment notes to preserve with the final package:
+
+- `pyproject.toml` requires Python `>=3.10`.
+- `gurobipy` is solver/license dependent; MILP diagnostics must record solver status and no-Gurobi behavior.
+- Runtime imports used by experiments and figures include packages not declared in core dependencies, notably `pandas` and `matplotlib`; the dependency snapshot must therefore be captured from the actual reproduction environment.
+- Generated result files and manuscript display outputs should be tied to the exact post-Phase-10 commit hash, not just to the current dirty working tree.
+
+## Recommended Improvements
+
+These improve reproducibility but are not hard blockers for creating the blocked/pending Phase 10 manifest while Phase 6 and Phase 8 prerequisites are absent.
+
+- Add checksums for final CSV, JSON, Markdown, PDF, PNG, and LaTeX build outputs; non-blocking until the final evidence package exists.
+- Export a dependency snapshot file from `python -m pip freeze`; non-blocking for the current blocked manifest, required before reviewer release.
+- Record hardware/runtime notes for formal reruns, including CPU, memory, OS, Python version, solver availability, and approximate wall time.
+- Export this manifest to a machine-readable JSON or CSV companion once the Phase 6 formal outputs and Phase 8 claim-gate artifacts exist.
+- Reconcile the version-control reorganization in a separate maintenance commit so `git status --short` becomes small enough for clean archival.
