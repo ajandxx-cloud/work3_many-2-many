@@ -67,3 +67,48 @@ to evidence that bounds or diagnoses it:
 This ordering keeps final numerical claims blocked until the formal evidence
 pipeline is complete. Phase 6 must supply the reproducible experiment artifacts,
 and Phase 8 must decide which manuscript claims survive the evidence gate.
+
+## Formal Main Evidence Table Contract
+
+The formal main-evidence table is restricted to the behavioral service-design
+comparison. It must include only these paper-facing method labels:
+
+- `DoorToDoor + Choice`
+- `SingleSidedPickup + Choice`
+- `SingleSidedDropoff + Choice`
+- `BidirectionalMP + Choice + RollingHorizon/ALNS`
+
+No deterministic diagnostic, solver diagnostic, no-choice ablation, gamma
+sweep, or weight-sensitivity row belongs in this table.
+
+Minimum table columns:
+
+| Column | Purpose |
+|---|---|
+| `method` | One of the four approved paper-facing methods above. |
+| `scale` or scenario key | The predeclared request-scale or scenario pairing key. |
+| `n_pairs` | Number of valid paired seed comparisons after failure/timeout accounting. |
+| `total_vehicle_km` | Total vehicle distance; maps to the code metric `total_vkm` if that name appears in raw outputs. |
+| `vkm_per_served_trip` | Vehicle-km normalized by served requests. |
+| `vkm_per_original_request` | Vehicle-km normalized by original demand. |
+| `served_share` | Served requests divided by original requests. |
+| paired difference | Method difference against the declared reference comparison within the same seed/scenario pair. |
+| confidence interval | 95% confidence interval for the paired difference, with method named in table note. |
+
+The table note must state that failed, timeout, or incomplete pairs remain
+visible in provenance outputs and cannot be silently dropped.
+
+## Metric Language Rules
+
+- `vkm_per_trip is forbidden` for new formal evidence.
+- Use `vkm_per_served_trip` when the denominator is served requests.
+- Use `vkm_per_original_request` when the denominator is original requests.
+- Every efficiency statement must include coverage and rejection context,
+  including `served_share` and the relevant choice/feasibility rejection
+  mechanisms.
+- Do not report a vehicle-km saving without explaining whether it comes from
+  shorter routing, lower served share, passenger rejection, feasibility
+  rejection, or some combination of these mechanisms.
+- Do not use "acceptance rate" for deterministic insertion diagnostics. Use
+  served share, inserted share, or the specific status vocabulary required by
+  the experiment family.
