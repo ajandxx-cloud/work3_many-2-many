@@ -117,3 +117,18 @@ Final result highlights require Phase 8 support.
 - Claim-gated metrics report coverage and efficiency.
 - [requires Phase 8 support] Conditional efficiency result.
 - [requires Phase 8 support] Equity and boundary-condition insight.
+
+## Finalization Checklist
+
+Before this plan becomes final manuscript front matter:
+
+- Read `.planning/phases/08-evidence-synthesis-and-claim-gate/08_CLAIM_EVIDENCE_MATRIX.md`.
+- Read `.planning/phases/08-evidence-synthesis-and-claim-gate/08_SUPPORTED_CLAIMS.md`.
+- Read `.planning/phases/08-evidence-synthesis-and-claim-gate/08_UNSUPPORTED_OR_EXPLORATORY_CLAIMS.md`.
+- Replace placeholders only with supported claim text or weaker wording.
+- Keep the final abstract under 250 words.
+- Remove unsupported numerical effect sizes and unsupported policy language.
+- Update the journal target in `manuscript/main.tex` to Transportation Research Part E if the venue decision is confirmed.
+- Prepare double-anonymized front matter for review submission.
+- Decide whether a `Declaration of generative AI` section is needed before references at submission.
+- Re-check highlights for the 3 to 5 bullet and 85-character constraints.
