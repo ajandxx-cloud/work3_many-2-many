@@ -9,9 +9,9 @@ Requirements for the current initialization roadmap. Each requirement must map t
 
 ### Planning And Audit
 
-- [ ] **PLAN-01**: Project has a milestone folder at `.planning/milestones/tr_e_claim_ready/` containing the required milestone artifacts.
-- [ ] **PLAN-02**: Project has `00_MILESTONE_PLAN.md` defining execution order, evidence boundaries, manuscript touchpoints, and verification gates.
-- [ ] **PLAN-03**: Project has `01_REPO_AND_EVIDENCE_AUDIT.md` documenting canonical source files, canonical evidence packages, non-canonical archives/smoke outputs, and current repository risks.
+- [x] **PLAN-01**: Project has a milestone folder at `.planning/milestones/tr_e_claim_ready/` containing the required milestone artifacts.
+- [x] **PLAN-02**: Project has `00_MILESTONE_PLAN.md` defining execution order, evidence boundaries, manuscript touchpoints, and verification gates.
+- [x] **PLAN-03**: Project has `01_REPO_AND_EVIDENCE_AUDIT.md` documenting canonical source files, canonical evidence packages, non-canonical archives/smoke outputs, and current repository risks.
 - [ ] **PLAN-04**: Project has `05_BLOCKERS_AND_SAFE_CLAIMS.md` identifying claim-critical blockers, safe claims, downgraded claims, and prohibited wording.
 
 ### TR-E Positioning
@@ -54,7 +54,7 @@ Requirements for the current initialization roadmap. Each requirement must map t
 
 ### Verification And Readiness
 
-- [ ] **VERI-01**: Project has `04_MANUSCRIPT_ACTION_PLAN.md` sequencing manuscript edits, evidence checks, table/figure refresh, and verification tasks.
+- [x] **VERI-01**: Project has `04_MANUSCRIPT_ACTION_PLAN.md` sequencing manuscript edits, evidence checks, table/figure refresh, and verification tasks.
 - [ ] **VERI-02**: Formal statistics validation command is run when available, or its unavailability is documented with manuscript impact.
 - [ ] **VERI-03**: Targeted pytest checks run for metrics, variants, runner, scenarios, coverage controls, robustness, and formal statistics, or any failures are documented with exact reason and manuscript impact.
 - [ ] **VERI-04**: Manuscript compilation is run from `manuscript/` using a pdflatex/bibtex/pdflatex/pdflatex sequence, or any failure is documented with exact reason and manuscript impact.
@@ -105,9 +105,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PLAN-01 | Phase 1 | Pending |
-| PLAN-02 | Phase 1 | Pending |
-| PLAN-03 | Phase 1 | Pending |
+| PLAN-01 | Phase 1 | Complete |
+| PLAN-02 | Phase 1 | Complete |
+| PLAN-03 | Phase 1 | Complete |
 | PLAN-04 | Phase 2 | Pending |
 | POSE-01 | Phase 3 | Pending |
 | POSE-02 | Phase 3 | Pending |
@@ -135,7 +135,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TFIG-04 | Phase 4 | Pending |
 | TFIG-05 | Phase 4 | Pending |
 | TFIG-06 | Phase 4 | Pending |
-| VERI-01 | Phase 1 | Pending |
+| VERI-01 | Phase 1 | Complete |
 | VERI-02 | Phase 5 | Pending |
 | VERI-03 | Phase 5 | Pending |
 | VERI-04 | Phase 5 | Pending |

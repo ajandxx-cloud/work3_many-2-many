@@ -11,7 +11,7 @@ This roadmap converts the current Work 3 experimental repository into a TR Part 
 - Integer phases (1, 2, 3): Planned milestone work
 - Decimal phases (2.1, 2.2): Urgent insertions, if needed
 
-- [ ] **Phase 1: Evidence Foundation and Milestone Setup** - Create the milestone scaffold, repo/evidence audit, and manuscript action plan.
+- [x] **Phase 1: Evidence Foundation and Milestone Setup** - Create the milestone scaffold, repo/evidence audit, and manuscript action plan. *(Completed 2026-06-16)*
 - [ ] **Phase 2: TR-E Positioning Lock and Claim Ledger** - Lock the allowed framing and map claims to evidence before manuscript edits.
 - [ ] **Phase 3: TR-E Manuscript Repositioning** - Rewrite the manuscript structure and TR-E framing while deferring final numerical injection.
 - [ ] **Phase 4: Tables, Figures, and Numerical Provenance** - Refresh formal-evidence tables/figures, reconcile all reported numbers, and inject verified final numerical claims.
@@ -143,7 +143,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Evidence Foundation and Milestone Setup | 0/3 | Not started | - |
+| 1. Evidence Foundation and Milestone Setup | 3/3 | Complete | 2026-06-16 |
 | 2. TR-E Positioning Lock and Claim Ledger | 0/3 | Not started | - |
 | 3. TR-E Manuscript Repositioning | 0/4 | Not started | - |
 | 4. Tables, Figures, and Numerical Provenance | 0/3 | Not started | - |
