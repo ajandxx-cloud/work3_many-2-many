@@ -165,6 +165,8 @@
 
 ## Phase 8: Evidence Synthesis and Claim Gate
 
+**Status:** Complete - 2026-06-16
+
 **Goal:** Decide what the paper can honestly claim.
 
 **Requirements:** CLM-01, CLM-02, CLM-03, MET-04

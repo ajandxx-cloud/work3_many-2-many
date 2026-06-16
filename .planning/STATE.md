@@ -2,28 +2,28 @@
 gsd_state_version: 1.0
 milestone: v1.0 Evidence-chain rebuild
 milestone_name: milestone
-current_phase: 08
-current_phase_name: evidence-synthesis-and-claim-gate
+current_phase: 09
+current_phase_name: manuscript-restructure-for-tr-part-e
 current_plan: null
 status: ready
-stopped_at: Phase 7 bounded synthetic case closure passed; Phase 8 ready, not entered
-last_updated: "2026-06-16T18:46:04+08:00"
+stopped_at: Phase 8 evidence synthesis and claim gate passed; Phase 9 refresh ready, not entered
+last_updated: "2026-06-16T19:12:45+08:00"
 last_activity: 2026-06-16
 progress:
   total_phases: 11
-  completed_phases: 9
+  completed_phases: 10
   total_plans: 29
   completed_plans: 29
-  percent: 82
+  percent: 91
 ---
 
 # State: TR_E_Bidirectional_MeetingPoint_DRT_Experiment_Rebuild
 
-**Current Phase:** 08
-**Current Phase Name:** evidence-synthesis-and-claim-gate
-**Status:** Ready: Phase 7 bounded synthetic case closure passed; Phase 8 is allowed next but not entered
+**Current Phase:** 09
+**Current Phase Name:** manuscript-restructure-for-tr-part-e
+**Status:** Ready: Phase 8 evidence synthesis and claim gate passed; Phase 9 refresh is allowed next but not entered
 **Current Plan:** None
-**Progress:** 82%
+**Progress:** 91%
 **Last Activity:** 2026-06-16
 
 ## Project Reference
@@ -31,13 +31,13 @@ progress:
 See: `.planning/PROJECT.md`
 
 **Core value:** Produce reproducible, reviewer-resistant evidence for defensible conditional claims about bidirectional meeting-point DRT.
-**Current focus:** Phase 8 ready after Phase 7 case-study boundary closure
+**Current focus:** Phase 9 refresh ready after Phase 8 claim gate closure
 
 ## Current Position
 
-Phase: 08 (evidence-synthesis-and-claim-gate) - READY
+Phase: 09 (manuscript-restructure-for-tr-part-e) - READY
 Plan: not started
-Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is complete and verified, Phase 3 is complete and verified, Phase 4 is complete and verified, Phase 5 pilot experiments are complete and verified, Phase 6 formal synthetic experiments are complete and verified, and Phase 7 is complete as a bounded Beijing-inspired synthetic case closure. Phase 9 is complete and verified with five claim-gated manuscript-restructuring artifacts; final manuscript claims remain blocked on absent Phase 8 claim-gate artifacts. Phase 10 created reproducibility artifacts but correctly remains blocked until Phase 8 claim-gate files exist.
+Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is complete and verified, Phase 3 is complete and verified, Phase 4 is complete and verified, Phase 5 pilot experiments are complete and verified, Phase 6 formal synthetic experiments are complete and verified, Phase 7 is complete as a bounded Beijing-inspired synthetic case closure, and Phase 8 is complete with a passed claim-evidence gate. Phase 9 has earlier structure-planning artifacts, but the next allowed work is a Phase 9 refresh that consumes Phase 8 supported/unsupported claim files before any final manuscript prose. Phase 10 created reproducibility artifacts earlier, but final verification still needs to be rerun after Phase 8.
 
 ## Decisions
 
@@ -49,6 +49,7 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - Phase 1 passes: broad first/only novelty wording is not approved; the safe contribution center is an integrated choice-aware dynamic service-design simulation framework under TR-E-level evidence standards.
 - Phase 2 passes: fair-comparison families, baseline taxonomy, metric definitions, coverage controls, statistical reporting, and Phase 4/5 implementation handoff are now locked as contracts.
 - Phase 7 passes as bounded synthetic-case closure: no real/semi-real case data are available in the current repository, and existing Beijing-labeled rows are Beijing-inspired synthetic illustration only.
+- Phase 8 passes the claim gate: final manuscript claims must be drawn from `08_SUPPORTED_CLAIMS.md`; unsupported or downgraded claims must follow `08_UNSUPPORTED_OR_EXPLORATORY_CLAIMS.md`.
 
 ## Blockers / Concerns
 
@@ -61,13 +62,14 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - Cortenbach et al. (2024) and Wu et al. (2025) bibliography metadata should be cleaned during manuscript restructuring.
 - Phase 5 gap closure uses per-seed integer matched-coverage targets; seed 42 target is adjusted to the attainable capped count and remains readiness-only evidence.
 - Phase 5 fixed accepted-set smoke uses `common_candidate_serviceable` for seed 42 because the stricter served and actual-offer serviceable intersections are empty; this is a pilot routing diagnostic repair, not formal evidence.
-- Phase 10 reproducibility artifacts are created, but final verification is blocked because three Phase 8 claim-gate files are missing.
+- Phase 10 reproducibility artifacts are created, but final verification must be rerun after Phase 8 and the Phase 9 refresh consume the claim gate.
 - Phase 6 Plan 06-01 harness and validators are created. The `BidirectionalMP_Choice_RH_ALNS` label/implementation gate is resolved by routing accepted `FullModel` requests through `RollingHorizon` while preserving actual-offer choice logs.
 - Phase 6 Plan 06-02 formal main behavioral matrix passed: 320/320 required `seed x scale x method` rows completed under `results/formal/phase06/main_behavioral`, validator passed, schema drift is false, failed/timeout rows are 0, and utility logs have 88,000 linkable rows. This is formal main evidence input only; do not write final manuscript claims before the Phase 6 report and Phase 8 claim gate.
 - Phase 6 Plan 06-03 coverage-confounding controls passed as a formal control package: matched coverage wrote 320/320 rows with 305 completed and 15 durable failed rows, fixed accepted-set wrote 320/320 completed rows, both validators passed with schema_drift=false and denominator checks passed. Fixed accepted-set remains diagnostic-only. Matched coverage supports a FullModel vkm/served and vkm/original advantage on completed pairs; fixed accepted-set supports vkm/served but not vkm/original as an unconditional advantage.
 - Phase 6 Plan 06-04 robustness diagnostics passed as a reduced formal diagnostic package: utility sensitivity wrote 420/420 completed rows, walking-radius / meeting-point-density wrote 180/180 completed rows, fleet-demand stress wrote 60/60 completed rows, equity type-level outcomes wrote 180/180 completed rows plus 12,000 individual burden rows, and algorithm diagnostics wrote rolling-horizon, ALNS budget, and MILP diagnostic artifacts. Overall validation passed with schema_drift=false and denominator checks passed. These diagnostics support conditional robustness screening only; they are not final manuscript claims.
 - Phase 6 Plan 06-05 closeout passed: the formal synthetic report, result manifest, statistical summary, evidence boundary, verification report, and closeout summary were generated. EXP-05 is complete. Phase 6 evidence may be handed to Phase 8 later, but Phase 6 does not approve final manuscript claims.
 - Phase 7 found no real or semi-real OD, road-network, transit-stop/POI, request-time, passenger-preference, or fleet data. The existing Beijing generator uses generated OD, generated meeting points, simulated morning-peak times, and an experimental fleet setting. Phase 7 may enter Phase 8 only as limitation-level or exploratory scenario-transfer evidence.
+- Phase 8 claim gate supports only bounded manuscript claims: formal synthetic FullModel/BidirectionalMP vkm-intensity advantages must be paired with lower served-share context; matched coverage has 15 durable failed rows; fixed accepted-set, robustness, equity, algorithm, and Beijing-inspired case outputs remain diagnostic/exploratory or limitation-level.
 
 ## Pending Todos
 
@@ -91,7 +93,7 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - [x] Execute Phase 6 Plan 06-04 robustness, sensitivity, and equity diagnostics.
 - [x] Generate Phase 6 formal synthetic results report.
 - [x] Execute Phase 7 semi-real or Beijing-inspired case-study audit and bounded closure.
-- [ ] Execute Phase 8 claim-evidence gate.
+- [x] Execute Phase 8 claim-evidence gate.
 - [ ] Rerun Phase 10 final verification after Phase 6 and Phase 8 artifacts exist.
 
 ## Artifact Index
@@ -191,12 +193,20 @@ Phase 0 is complete with caveats, Phase 1 is complete and verified, Phase 2 is c
 - `.planning/phases/07-semi-real-or-beijing-inspired-case-study/07_CASE_STUDY_RESULTS.md`
 - `.planning/phases/07-semi-real-or-beijing-inspired-case-study/07_CASE_CLAIM_BOUNDARY.md`
 - `.planning/phases/07-semi-real-or-beijing-inspired-case-study/07-VERIFICATION.md`
+- `.planning/phases/08-evidence-synthesis-and-claim-gate/08_CLAIM_INVENTORY.md`
+- `.planning/phases/08-evidence-synthesis-and-claim-gate/08_CLAIM_EVIDENCE_MATRIX.md`
+- `.planning/phases/08-evidence-synthesis-and-claim-gate/08_SUPPORTED_CLAIMS.md`
+- `.planning/phases/08-evidence-synthesis-and-claim-gate/08_UNSUPPORTED_OR_EXPLORATORY_CLAIMS.md`
+- `.planning/phases/08-evidence-synthesis-and-claim-gate/08_REVISED_ABSTRACT_BULLETS.md`
+- `.planning/phases/08-evidence-synthesis-and-claim-gate/08_REVISED_CONCLUSION_BULLETS.md`
+- `.planning/phases/08-evidence-synthesis-and-claim-gate/08_EQUITY_GATE.md`
+- `.planning/phases/08-evidence-synthesis-and-claim-gate/08-VERIFICATION.md`
 
 ## Session Continuity
 
-Last session: 2026-06-16T18:46:04+08:00
-Stopped at: Phase 7 bounded synthetic case closure passed; Phase 8 ready, not entered
+Last session: 2026-06-16T19:12:45+08:00
+Stopped at: Phase 8 evidence synthesis and claim gate passed; Phase 9 refresh ready, not entered
 Resume file: None
 
 ---
-*State updated: 2026-06-16 after Phase 7 bounded synthetic case closure*
+*State updated: 2026-06-16 after Phase 8 evidence synthesis and claim gate*

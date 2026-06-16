@@ -33,7 +33,8 @@ Completed by Phase 6 Plan 06-05: 06-02 main behavioral matrix, 06-03 coverage co
 - [x] **MET-01**: Metric definitions include formulas, units, denominators, and valid value ranges.
 - [x] **MET-02**: Served share, behavioral acceptance rate, feasibility rejection rate, choice rejection rate, and deterministic inserted share are distinct.
 - [x] **MET-03**: Main tables report total vkm, vkm per served trip, vkm per original request, and served share together.
-- [ ] **MET-04**: Equity metrics include type-level outcomes and, where possible, individual-level burden distributions.
+- [x] **MET-04**: Equity metrics include type-level outcomes and, where possible, individual-level burden distributions.
+Completed by Phase 8 as "metrics produced and bounded": Phase 6 equity outputs include 180 type-level rows and 12,000 individual burden rows, with passenger types explicitly bounded as simulation-range constructs. Equity claims remain exploratory, not strong.
 
 ### Choice
 
@@ -51,9 +52,12 @@ Completed by Phase 6 Plan 06-05: 06-02 main behavioral matrix, 06-03 coverage co
 
 ### Claims
 
-- [ ] **CLM-01**: Every final manuscript claim links to formal evidence.
-- [ ] **CLM-02**: Claims are graded strong, moderate, exploratory, or unsupported.
-- [ ] **CLM-03**: Unsupported claims are removed or rewritten before manuscript restructuring.
+- [x] **CLM-01**: Every final manuscript claim links to formal evidence.
+Completed by Phase 8 claim inventory and claim-evidence matrix. Supported claims are linked to Phase 6 formal evidence, Phase 7 case boundary evidence, or explicit limitation evidence.
+- [x] **CLM-02**: Claims are graded strong, moderate, exploratory, or unsupported.
+Completed by Phase 8: 4 strong, 4 moderate, 7 exploratory, and 5 unsupported claims are graded in `08_CLAIM_EVIDENCE_MATRIX.md`.
+- [x] **CLM-03**: Unsupported claims are removed or rewritten before manuscript restructuring.
+Completed by Phase 8 gate artifacts. Unsupported and downgraded claims are listed with required manuscript actions in `08_UNSUPPORTED_OR_EXPLORATORY_CLAIMS.md`; Phase 9 refresh must use those actions before any final prose.
 
 ### Reproducibility
 
@@ -100,7 +104,7 @@ Completed by Phase 6 Plan 06-05: 06-02 main behavioral matrix, 06-03 coverage co
 | MET-01 | Phase 2 | Complete |
 | MET-02 | Phase 2 | Complete |
 | MET-03 | Phase 2 | Complete |
-| MET-04 | Phase 8 | Pending |
+| MET-04 | Phase 8 | Complete - metrics produced and bounded; equity claims exploratory |
 | CHO-01 | Phase 3 | Complete |
 | CHO-02 | Phase 3 | Complete |
 | CHO-03 | Phase 3 | Complete |
@@ -109,9 +113,9 @@ Completed by Phase 6 Plan 06-05: 06-02 main behavioral matrix, 06-03 coverage co
 | ALG-02 | Phase 4 | Complete |
 | ALG-03 | Phase 4 | Complete |
 | ALG-04 | Phase 4 | Complete |
-| CLM-01 | Phase 8 | Pending |
-| CLM-02 | Phase 8 | Pending |
-| CLM-03 | Phase 8 | Pending |
+| CLM-01 | Phase 8 | Complete - every supported claim linked to evidence or limitation source |
+| CLM-02 | Phase 8 | Complete - claims graded strong/moderate/exploratory/unsupported |
+| CLM-03 | Phase 8 | Complete - unsupported claims assigned delete/rewrite/limitations actions |
 | REP-01 | Phase 10 | Pending |
 | REP-02 | Phase 10 | Pending |
 | REP-03 | Phase 5 | Complete |
@@ -125,4 +129,4 @@ Completed by Phase 6 Plan 06-05: 06-02 main behavioral matrix, 06-03 coverage co
 
 ---
 *Requirements defined: 2026-06-15*
-*Last updated: 2026-06-16 after Phase 7 bounded synthetic case closure*
+*Last updated: 2026-06-16 after Phase 8 evidence synthesis and claim gate*
