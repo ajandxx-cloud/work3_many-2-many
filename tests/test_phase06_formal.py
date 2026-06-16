@@ -266,10 +266,8 @@ def test_validate_phase06_main_outputs_blocks_forbidden_scale_20(tmp_path):
 def test_label_implementation_gate_reports_current_bidirectional_status():
     gate = check_label_implementation_gate()
 
-    assert "passed" in gate
-    assert "errors" in gate
-    if not gate["passed"]:
-        assert any("BidirectionalMP_Choice_RH_ALNS" in error for error in gate["errors"])
+    assert gate["passed"] is True
+    assert gate["errors"] == []
 
 
 def test_rerun_ledger_header_is_exact(tmp_path):

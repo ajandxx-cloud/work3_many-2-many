@@ -24,6 +24,7 @@ import time
 import warnings
 from abc import ABC, abstractmethod
 from copy import deepcopy
+from dataclasses import replace
 
 from experiments.config import (
     ALPHA_WEIGHTS,
@@ -942,15 +943,123 @@ class FullModel(BaseVariant):
         self._choice_config = choice_params or self._default_choice_params()
 
     def _solve(self, scenario: Scenario) -> ALNSState:
-        return self._run_actual_offer_sequence(
-            scenario=scenario,
-            service_design="BidirectionalMeetingPoint",
-            meeting_points_for_request=lambda request: scenario.meeting_points,
-            rho_p=self._rho_p,
-            rho_d=self._rho_d,
-            k_top=K_TOP,
-            cost_weights=self._cost_weights,
+        vehicles_dict = self._vehicles_dict(scenario)
+        screening_state = self._initial_state(scenario)
+        screening_state.unassigned = []
+        choice_evaluations = {}
+        accepted_requests = []
+        params = self._default_choice_params()
+
+        for request in sorted(scenario.requests, key=lambda r: r.earliest):
+            meeting_points = list(scenario.meeting_points)
+            plain_routes = _to_plain_routes(screening_state.routes)
+            result = evaluate_insertion(
+                request,
+                plain_routes,
+                vehicles_dict,
+                meeting_points,
+                self._rho_p,
+                self._rho_d,
+                K_TOP,
+                self._cost_weights,
+                TRAVEL_SPEED,
+            )
+            ptype = assign_passenger_type(
+                request.id,
+                PASSENGER_TYPES,
+                params.type_shares,
+                seed=params.choice_seed,
+            )
+            if result is None:
+                reason = self._feasibility_reason(
+                    request,
+                    meeting_points,
+                    self._rho_p,
+                    self._rho_d,
+                    K_TOP,
+                )
+                evaluation = feasibility_rejected_evaluation(
+                    request_id=request.id,
+                    detailed_reason=reason,
+                    passenger_type=ptype.name,
+                )
+                screening_state.unassigned.append(request)
+                choice_evaluations[request.id] = evaluation
+                continue
+
+            offer = self._offer_from_insertion(
+                request,
+                result,
+                plain_routes,
+                vehicles_dict,
+                "BidirectionalMeetingPoint",
+            )
+            evaluation = evaluate_single_offer(offer, ptype, params)
+            choice_evaluations[request.id] = evaluation
+            if evaluation.accepted:
+                accepted_requests.append(request)
+                _apply_insertion(screening_state, result, request, vehicles_dict, TRAVEL_SPEED)
+            else:
+                screening_state.unassigned.append(request)
+
+        if accepted_requests:
+            rh = RollingHorizon(
+                vehicles=vehicles_dict,
+                meeting_points=scenario.meeting_points,
+                rho_p=self._rho_p,
+                rho_d=self._rho_d,
+                k_top=K_TOP,
+                H=H_WINDOW,
+                delta=DELTA,
+                cost_weights=self._cost_weights,
+                travel_speed=TRAVEL_SPEED,
+                alns_iterations=50,
+                seed=params.choice_seed,
+            )
+            sorted_accepted = sorted(accepted_requests, key=lambda r: r.earliest)
+            rh.run_simulation(sorted_accepted, [r.earliest for r in sorted_accepted])
+            routes = rh.routes
+            completed_ids = set(rh.completed_request_ids)
+            extra_vehicle_km = rh.accumulated_vehicle_km
+            pickup_times = dict(rh.pickup_times)
+        else:
+            routes = {v.id: Route(vehicle_id=v.id, stops=[]) for v in scenario.vehicles}
+            completed_ids = set()
+            extra_vehicle_km = 0.0
+            pickup_times = {}
+
+        assigned_ids = set(completed_ids)
+        for route in routes.values():
+            for stop in route.stops:
+                if len(stop) >= 3:
+                    assigned_ids.add(stop[2])
+
+        for request in accepted_requests:
+            if request.id in assigned_ids:
+                continue
+            evaluation = choice_evaluations[request.id]
+            choice_evaluations[request.id] = replace(
+                evaluation,
+                status="feasibility_rejected",
+                detailed_reason="rolling_horizon_unassigned",
+                offer=None,
+                components=None,
+                acceptance_probability=None,
+                random_draw=None,
+                accepted=False,
+            )
+
+        unassigned = [request for request in scenario.requests if request.id not in assigned_ids]
+        state = ALNSState(
+            routes=routes,
+            unassigned=unassigned,
+            cost=0.0,
+            completed_ids=completed_ids,
+            extra_vehicle_km=extra_vehicle_km,
+            pickup_times=pickup_times,
         )
+        state.choice_evaluations = choice_evaluations
+        return state
 
 
 # ---------------------------------------------------------------------------
