@@ -61,8 +61,10 @@ Completed by Phase 8 gate artifacts. Unsupported and downgraded claims are liste
 
 ### Reproducibility
 
-- [ ] **REP-01**: Reproducibility package records commands, dependencies, configs, seeds, code revision, and result manifests.
-- [ ] **REP-02**: Main tables and figures can be regenerated from saved artifacts.
+- [x] **REP-01**: Reproducibility package records commands, dependencies, configs, seeds, code revision, and result manifests.
+Completed by Phase 10 final reproducibility verification. `10_RESULT_MANIFEST.md` and `10_REPRODUCIBILITY.md` record setup, PYTHONPATH, dependency, command, seed/config/run-manifest, code-revision, worktree-dirtiness, and reviewer/coauthor artifact requirements.
+- [x] **REP-02**: Main tables and figures can be regenerated from saved artifacts.
+Completed by Phase 10 for the evidence package: Phase 6 main tables and plots regenerate from saved artifacts through `experiments.formal_statistics`, with final manuscript table/figure implementation deferred to a separate manuscript-writing step under Phase 8/9 boundaries.
 - [x] **REP-03**: Failed, timeout, and infeasible runs are durable rows with status, error message, runtime, config ID, seed, method, and scenario.
 
 ## v2 Requirements
@@ -122,8 +124,8 @@ managerial-limitation planning artifacts.
 | CLM-03 | Phase 8 | Complete - unsupported claims assigned delete/rewrite/limitations actions |
 | MS-01 | Phase 9 | Complete - claim-gated manuscript structure refreshed after Phase 8 |
 | MS-02 | Phase 9 | Complete - claim-gated table/figure and managerial boundaries refreshed after Phase 8 |
-| REP-01 | Phase 10 | Pending |
-| REP-02 | Phase 10 | Pending |
+| REP-01 | Phase 10 | Complete - reproducibility commands, dependencies, configs, seeds, revisions, manifests, and artifact package recorded |
+| REP-02 | Phase 10 | Complete - Phase 6 main tables/plots regenerate from saved artifacts; manuscript implementation remains a later writing task |
 | REP-03 | Phase 5 | Complete |
 | CASE-01 | Phase 7 | Complete - data availability decided; no real/semi-real data present |
 | CASE-02 | Phase 7 | Complete - Beijing-inspired synthetic limitation boundary written |
@@ -135,4 +137,4 @@ managerial-limitation planning artifacts.
 
 ---
 *Requirements defined: 2026-06-15*
-*Last updated: 2026-06-16 after Phase 8 evidence synthesis and claim gate*
+*Last updated: 2026-06-16 after Phase 10 final reproducibility verification*

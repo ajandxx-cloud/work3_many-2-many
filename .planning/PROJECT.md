@@ -36,6 +36,7 @@ Produce reproducible, reviewer-resistant evidence that supports only defensible 
 - Phase 9 produced and verified the TR-E manuscript architecture, revised abstract plan, revised introduction plan, experiment-section evidence-family plan, and table/figure/managerial-insight plan.
 - Phase 9 locked final manuscript wording behind Phase 8 claim-gate artifacts, kept Beijing language bounded to a synthetic scenario, and removed legacy effect-size values from the new planning artifacts.
 - Phase 9 refresh consumed the completed Phase 8 claim gate and replaced placeholder-driven manuscript planning with claim-gated structure, abstract, introduction, experiment, table/figure, managerial-insight, limitation, audit, and verification artifacts.
+- Phase 10 completed the reproducibility package and final verification. REP-01 and REP-02 are complete for the evidence package: commands, dependencies, configs, seeds, revision references, result manifests, validation checks, main Phase 6 tables/plots, and reviewer/coauthor artifact requirements are recorded.
 
 ### Active
 
@@ -85,6 +86,7 @@ The current README says the target journal is Transportation Research Part A, wh
 | Keep Phase 7 as a Beijing-inspired synthetic boundary, not a real case study | The repository has generated OD, generated meeting points, simulated times, and no imported real/semi-real case data | Complete |
 | Treat Phase 8 as the source of truth for final manuscript claims | The claim gate maps formal Phase 6 evidence and Phase 7 case limitations to allowed, forbidden, and downgraded wording | Complete |
 | Refresh Phase 9 after Phase 8 before Phase 10 | The earlier Phase 9 artifacts were preliminary because Phase 8 did not exist yet | Complete |
+| Treat Phase 10 as evidence-package closeout, not manuscript prose writing | Final `.tex` wording and publication-ready table/figure implementation should happen only under Phase 8/9 boundaries | Complete |
 
 ## Evolution
 
@@ -104,4 +106,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state.
 
 ---
-*Last updated: 2026-06-16 after Phase 9 claim-gated manuscript refresh*
+*Last updated: 2026-06-16 after Phase 10 final reproducibility verification*
