@@ -105,48 +105,48 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PLAN-01 | TBD | Pending |
-| PLAN-02 | TBD | Pending |
-| PLAN-03 | TBD | Pending |
-| PLAN-04 | TBD | Pending |
-| POSE-01 | TBD | Pending |
-| POSE-02 | TBD | Pending |
-| POSE-03 | TBD | Pending |
-| POSE-04 | TBD | Pending |
-| CLAI-01 | TBD | Pending |
-| CLAI-02 | TBD | Pending |
-| CLAI-03 | TBD | Pending |
-| CLAI-04 | TBD | Pending |
-| CLAI-05 | TBD | Pending |
-| CLAI-06 | TBD | Pending |
-| CLAI-07 | TBD | Pending |
-| CLAI-08 | TBD | Pending |
-| MANU-01 | TBD | Pending |
-| MANU-02 | TBD | Pending |
-| MANU-03 | TBD | Pending |
-| MANU-04 | TBD | Pending |
-| MANU-05 | TBD | Pending |
-| MANU-06 | TBD | Pending |
-| MANU-07 | TBD | Pending |
-| MANU-08 | TBD | Pending |
-| TFIG-01 | TBD | Pending |
-| TFIG-02 | TBD | Pending |
-| TFIG-03 | TBD | Pending |
-| TFIG-04 | TBD | Pending |
-| TFIG-05 | TBD | Pending |
-| TFIG-06 | TBD | Pending |
-| VERI-01 | TBD | Pending |
-| VERI-02 | TBD | Pending |
-| VERI-03 | TBD | Pending |
-| VERI-04 | TBD | Pending |
-| VERI-05 | TBD | Pending |
-| VERI-06 | TBD | Pending |
+| PLAN-01 | Phase 1 | Pending |
+| PLAN-02 | Phase 1 | Pending |
+| PLAN-03 | Phase 1 | Pending |
+| PLAN-04 | Phase 2 | Pending |
+| POSE-01 | Phase 3 | Pending |
+| POSE-02 | Phase 3 | Pending |
+| POSE-03 | Phase 3 | Pending |
+| POSE-04 | Phase 3 | Pending |
+| CLAI-01 | Phase 2 | Pending |
+| CLAI-02 | Phase 2 | Pending |
+| CLAI-03 | Phase 2 | Pending |
+| CLAI-04 | Phase 2 | Pending |
+| CLAI-05 | Phase 3 | Pending |
+| CLAI-06 | Phase 3 | Pending |
+| CLAI-07 | Phase 3 | Pending |
+| CLAI-08 | Phase 3 | Pending |
+| MANU-01 | Phase 3 | Pending |
+| MANU-02 | Phase 3 | Pending |
+| MANU-03 | Phase 3 | Pending |
+| MANU-04 | Phase 3 | Pending |
+| MANU-05 | Phase 3 | Pending |
+| MANU-06 | Phase 3 | Pending |
+| MANU-07 | Phase 3 | Pending |
+| MANU-08 | Phase 3 | Pending |
+| TFIG-01 | Phase 4 | Pending |
+| TFIG-02 | Phase 4 | Pending |
+| TFIG-03 | Phase 4 | Pending |
+| TFIG-04 | Phase 4 | Pending |
+| TFIG-05 | Phase 4 | Pending |
+| TFIG-06 | Phase 4 | Pending |
+| VERI-01 | Phase 1 | Pending |
+| VERI-02 | Phase 5 | Pending |
+| VERI-03 | Phase 5 | Pending |
+| VERI-04 | Phase 5 | Pending |
+| VERI-05 | Phase 5 | Pending |
+| VERI-06 | Phase 5 | Pending |
 
 **Coverage:**
 - v1 requirements: 36 total
-- Mapped to phases: 0
-- Unmapped: 36
+- Mapped to phases: 36
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-06-16*
-*Last updated: 2026-06-16 after initial definition*
+*Last updated: 2026-06-16 after roadmap creation*
