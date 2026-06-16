@@ -24,52 +24,74 @@ Risks to remove or quarantine:
 
 ## Revised Introduction Flow
 
-1. **Evidence problem first.** Open with the reviewer-facing fair-evidence
+- **Evidence problem first.** Open with the reviewer-facing fair-evidence
    problem: passenger response, coverage, baseline inconsistency, and
    diagnostic/result mixing can make meeting-point DRT look stronger or weaker
    than the evidence supports.
-2. **Operational setting.** Explain why demand-responsive transit with walking
+- **Operational setting.** Explain why demand-responsive transit with walking
    access/egress creates a service-design problem for operators rather than a
    simple routing-only problem.
-3. **Framework response.** Introduce the choice-aware dynamic service-design
+- **Framework response.** Introduce the choice-aware dynamic service-design
    framework as an integrated simulation and evidence-chain tool, not as a
    broad first/only novelty claim.
-4. **Claim discipline.** State that comparisons require shared passenger
+- **Claim discipline.** State that comparisons require shared passenger
    response, explicit denominators, paired seeds, coverage controls, and a
    claim-evidence gate.
-5. **Research questions and contributions.** Present the three approved
+- **Research questions and contributions.** Present the three approved
    research questions and order contributions around evidence discipline,
    model/framework, experimental findings, and managerial implications.
-6. **Paper organization.** Close with the TR-E evidence-chain structure.
+- **Paper organization.** Close with the TR-E evidence-chain structure.
 
 ## Paragraph-Level Outline
 
-1. **Opening evidence-confounding paragraph.** Meeting-point DRT can reduce
+- **Opening evidence-confounding paragraph.** Meeting-point DRT can reduce
    vehicle detours, but passenger response, coverage, baseline inconsistency,
    and diagnostic/result mixing can confound conclusions. The paragraph should
    make the fair-comparison problem the reason for the paper.
-2. **DRT service-design paragraph.** Describe the operating challenge:
+- **DRT service-design paragraph.** Describe the operating challenge:
    bidirectional pickup/dropoff meeting points can support route consolidation,
    but only if passengers accept the offered walk, wait, fare, and in-vehicle
    travel trade-off.
-3. **Literature gap paragraph.** Position prior DARP, meeting-point, walking
+- **Literature gap paragraph.** Position prior DARP, meeting-point, walking
    ridepooling, passenger-choice, and rolling-horizon work as partially
    overlapping literatures. Avoid saying no prior work considers dropoff
    walking.
-4. **Framework paragraph.** Introduce the integrated choice-aware dynamic
+- **Framework paragraph.** Introduce the integrated choice-aware dynamic
    service-design simulation framework, including shared passenger response,
    route-then-sample operation, rolling-horizon dispatch, and diagnostic
    solvers as support tools.
-5. **Evidence-chain paragraph.** Explain the paper's evidence discipline:
+- **Evidence-chain paragraph.** Explain the paper's evidence discipline:
    Phase 2 metric denominators, behavioral main comparisons, matched-coverage
    controls, fixed accepted-set diagnostics, paired seeds, and Phase 8 claim
    gating.
-6. **Research questions and contribution paragraph.** Use the exact three
+- **Research questions and contribution paragraph.** Use the exact three
    research questions and contribution order defined below.
-7. **Organization paragraph.** State that the manuscript proceeds through
+- **Organization paragraph.** State that the manuscript proceeds through
    `Literature and Positioning`, `Framework and Solution Approach`,
    `Experimental Design and Evidence Families`, `Formal Main Evidence`,
    `Robustness, Equity, and Diagnostic Evidence`,
    `Limitations and Boundary Conditions`,
    `Managerial Insights and Boundary Conditions`, and `Conclusion`.
 
+## Research Questions
+
+1. Under fair comparison, whether and when bidirectional meeting-point design improves operating efficiency relative to door-to-door and single-sided variants under shared passenger-response assumptions?
+2. How do passenger response and coverage change the interpretation of efficiency results from bidirectional meeting-point service design?
+3. What equity and managerial boundary conditions follow from the evidence?
+
+Algorithm diagnostics are not a standalone research question. They are
+methodological support for routing credibility, runtime interpretation, and
+diagnostic scope.
+
+## Contribution Order
+
+The introduction should present contributions in this exact order:
+
+1. **evidence discipline** - fair comparison families, metric-denominator
+   control, paired evidence, and claim gating.
+2. **model/framework** - integrated choice-aware dynamic service-design
+   simulation with bidirectional pickup/dropoff meeting points.
+3. **experimental findings** - Phase 8-supported results only, with coverage
+   and rejection context.
+4. **managerial implications** - conditional insights after limitations and
+   boundary conditions.
