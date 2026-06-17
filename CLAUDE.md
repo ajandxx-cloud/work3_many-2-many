@@ -3,16 +3,16 @@
 
 **Work 3: Many-to-Many DRT Bidirectional Meeting Point Paper**
 
-A full academic paper targeting Transportation Research Part A: Policy and Practice, studying the online co-optimization of bidirectional meeting-point assignment and dynamic routing for many-to-many demand-responsive transit (DRT) with passenger choice. The paper extends Work 1 (many-to-one, dynamic pricing) and Work 2 (service menu design) to the many-to-many scenario, with policy framing around DRT service design for low-density urban areas in China.
+A full academic paper targeting Transportation Research Part E: Logistics and Transportation Review, studying passenger-response-aware bidirectional meeting-point DRT service design for many-to-many demand-responsive transit (DRT). The paper extends Work 1 (many-to-one, dynamic pricing) and Work 2 (service menu design) to the many-to-many scenario, with logistics and operations framing around conditional service-design trade-offs.
 
-**Core Value:** Demonstrate that jointly optimizing pickup AND dropoff meeting points — while explicitly modeling passenger choice — significantly improves DRT operational efficiency and service equity compared to door-to-door or single-sided meeting point approaches, with actionable policy implications for DRT operators and urban planners.
+**Core Value:** Produce defensible operational service-design evidence that bidirectional pickup and dropoff meeting points, binary-logit passenger response, and rolling-horizon routing can reduce routing intensity per served trip under tested conditions while creating coverage and passenger-type trade-offs.
 
 ### Constraints
 
 - **Timeline**: Work 3 planned 2026.09–2027.04 per dissertation schedule
 - **Method**: Must include both exact (small-scale) and heuristic (large-scale) algorithms
 - **Passenger choice**: Must retain MNL passenger choice model — core dissertation thread
-- **Policy framing**: TR Part A requires policy implications beyond pure optimization
+- **Framing**: TR-E positioning requires logistics and operations implications beyond pure optimization
 - **Language**: English (academic paper)
 <!-- GSD:project-end -->
 

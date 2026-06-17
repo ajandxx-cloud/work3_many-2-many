@@ -1,12 +1,13 @@
 # Work 3 — Bidirectional Meeting Point Assignment & Dynamic Routing for Many-to-Many DRT
 
-**Target journal:** *Transportation Research Part A: Policy and Practice*
+**Target journal:** *Transportation Research Part E: Logistics and Transportation Review*
 
-This project studies the online co-optimization of **bidirectional meeting-point assignment**
-(pickup **and** dropoff) and dynamic routing for many-to-many demand-responsive transit (DRT),
-with an explicit MNL model of passenger choice. It extends Work 1 (many-to-one, dynamic
-pricing) and Work 2 (service menu design) to the many-to-many setting, with policy framing
-around DRT service design for low-density urban areas in China.
+This project studies **bidirectional meeting-point DRT service design** for many-to-many
+demand-responsive transit (DRT), with pickup and dropoff consolidation evaluated through
+passenger-response-aware simulation and rolling-horizon routing. It extends Work 1
+(many-to-one, dynamic pricing) and Work 2 (service menu design) to the many-to-many
+setting, with logistics and operations framing around conditional service-design
+trade-offs rather than policy validation.
 
 ---
 
@@ -106,7 +107,7 @@ Run them from inside `manuscript/` (they use relative paths).
 2. **`.planning/` has duplicate `_v2` files** — `REQUIREMENTS.md`/`REQUIREMENTS_v2.md` and
    `ROADMAP.md`/`ROADMAP_v2.md`. Reconcile when convenient.
 3. **`.planning/research/LITERATURE_GAPS.md` targets *Transportation Research Part D***,
-   which conflicts with the *Part A* target in `CLAUDE.md` and `manuscript/main.tex`. This
+   which conflicts with the *Transportation Research Part E* target in `CLAUDE.md` and `manuscript/main.tex`. This
    research note likely belongs to a different project — review and remove or re-scope.
 4. **~19 MB of stale agent worktrees** live under `.claude/worktrees/` (11 "prunable"
    worktrees from earlier parallel GSD runs). Safe to remove with `git worktree prune`
