@@ -24,8 +24,8 @@ Requirements for the current initialization roadmap. Each requirement must map t
 ### Claims And Evidence
 
 - [x] **CLAI-01**: Project has `02_TR_E_POSITIONING_LOCK.md` stating the allowed paper framing, prohibited framing, core contribution, and journal-fit rationale.
-- [ ] **CLAI-02**: Project has `03_CLAIM_LEDGER.md` mapping each manuscript claim with mandatory columns: `source_path`, `script_path`, `generation_command`, `metric_formula`, `numerator`, `denominator`, `evidence_role`, `allowed_sentence`, and `prohibited_sentence`, plus manuscript location, comparison, metric, and reported number where applicable.
-- [ ] **CLAI-03**: Every numerical claim in abstract, introduction, experiments, managerial/operational implications, and conclusion appears in the claim ledger.
+- [x] **CLAI-02**: Project has `03_CLAIM_LEDGER.md` mapping each manuscript claim with mandatory columns: `source_path`, `script_path`, `generation_command`, `metric_formula`, `numerator`, `denominator`, `evidence_role`, `allowed_sentence`, and `prohibited_sentence`, plus manuscript location, comparison, metric, and reported number where applicable.
+- [x] **CLAI-03**: Every numerical claim in abstract, introduction, experiments, managerial/operational implications, and conclusion appears in the claim ledger.
 - [x] **CLAI-04**: Claims distinguish primary behavioral evidence, matched-coverage diagnostic evidence, fixed-accepted-set diagnostic evidence, robustness/sensitivity evidence, equity/type heterogeneity evidence, algorithm diagnostics, and limitations.
 - [ ] **CLAI-05**: Manuscript does not state or imply that FullModel universally dominates DoorToDoor or all baselines.
 - [ ] **CLAI-06**: Manuscript describes Gamma only as post-hoc welfare accounting unless endogenous Gamma behavior is implemented and tested in a separate future milestone.
@@ -114,8 +114,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | POSE-03 | Phase 3 | Pending |
 | POSE-04 | Phase 3 | Pending |
 | CLAI-01 | Phase 2 | Complete |
-| CLAI-02 | Phase 2 | Pending |
-| CLAI-03 | Phase 2 | Pending |
+| CLAI-02 | Phase 2 | Complete |
+| CLAI-03 | Phase 2 | Complete |
 | CLAI-04 | Phase 2 | Complete |
 | CLAI-05 | Phase 3 | Pending |
 | CLAI-06 | Phase 3 | Pending |

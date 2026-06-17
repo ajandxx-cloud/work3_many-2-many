@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-01-PLAN.md
-last_updated: "2026-06-17T10:15:54.389Z"
+stopped_at: Completed 02-02-PLAN.md
+last_updated: "2026-06-17T10:39:18.386Z"
 last_activity: 2026-06-17
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 6
-  completed_plans: 4
-  percent: 67
+  completed_plans: 5
+  percent: 20
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-06-16)
 ## Current Position
 
 Phase: 02 (tr-e-positioning-lock-and-claim-ledger) - EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-06-17
 
-Progress: [███████░░░] 67%
+Progress: [████████░░] 83%
 
 ## Performance Metrics
 
@@ -52,6 +52,8 @@ Progress: [███████░░░] 67%
 - Last 5 plans: 02-01 (4 min)
 - Trend: N/A
 
+| Phase 02 P02-02 | not_tracked_from_start | 3 tasks | 1 files |
+
 ## Accumulated Context
 
 ### Decisions
@@ -70,6 +72,9 @@ Recent decisions affecting current work:
 - Phase 02 Plan 02-01: `passenger-response-aware simulation framework` is the strongest allowed mechanism label.
 - Phase 02 Plan 02-01: Diagnostic matched-coverage, fixed-accepted-set, Gamma/Pareto, and MILP evidence require explicit diagnostic qualifiers.
 - Phase 02 Plan 02-01: `TR-E submission-ready` is reserved for Phase 5 after hard readiness gates pass.
+- [Phase 02]: 02-02 ledger rows are occurrence-level and may share claim_family_id values for cross-section grouping. — Supports section-level edits without losing manuscript-location traceability.
+- [Phase 02]: 02-02 matched coverage and fixed accepted-set evidence are diagnostic, not primary headline evidence. — Preserves the evidence-role boundary required for TR-E claim posture.
+- [Phase 02]: 02-02 formal numerical claims stay as Phase 4 placeholders until source, denominator, and wording are verified. — Prevents Phase 2 from injecting final values before provenance verification.
 
 ### Pending Todos
 
@@ -90,6 +95,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-17T10:15:54.150Z
-Stopped at: Completed 02-01-PLAN.md
+Last session: 2026-06-17T10:38:48.167Z
+Stopped at: Completed 02-02-PLAN.md
 Resume file: None
