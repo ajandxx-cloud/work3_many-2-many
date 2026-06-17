@@ -97,9 +97,20 @@ Plans:
 
 Plans:
 
+**Wave 1**
+
 - [ ] 03-01: Revise metadata, title, abstract, introduction, and contributions without final numerical injection.
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 03-02: Revise literature review, model, and algorithm sections for TR-E positioning and scope clarity.
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 03-03: Revise experiments narrative to separate evidence roles and denominators.
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 03-04: Revise managerial implications and conclusion with conditional non-overclaiming structure while deferring final numerical values.
 
 ### Phase 4: Tables, Figures, and Numerical Provenance
