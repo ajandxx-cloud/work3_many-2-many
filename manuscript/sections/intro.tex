@@ -1,102 +1,68 @@
 \section{Introduction}
 \label{sec:intro}
 
-Demand-responsive transit (DRT) has emerged as a promising solution for providing
-flexible, on-demand mobility in low-density urban areas where fixed-route bus services
-are economically unviable.
-In China, rapid suburbanisation has created large residential zones with sparse transit
-coverage, making DRT an increasingly important policy instrument for urban planners
-and transport authorities.
-However, the dominant door-to-door DRT model — in which vehicles travel directly
-between each passenger's origin and destination — is operationally costly: vehicles
-accumulate large detour distances serving spatially dispersed requests, and fleet
-utilization remains low.
-Meeting-point-based DRT addresses this inefficiency by requiring passengers to walk
-to and from pre-defined consolidation points (e.g., bus stops, commercial landmarks),
-enabling vehicles to serve multiple passengers along shared route segments.
-The trade-off is clear: meeting points reduce vehicle-kilometres but impose a walking
-burden on passengers, and passengers who find the required walk unacceptable will
-reject the service offer and use an alternative mode.
-Designing meeting-point assignments and vehicle routes while representing
-heterogeneous passenger acceptance is therefore a central operational challenge for
-next-generation DRT systems.
+Demand-responsive transit (DRT) provides flexible passenger service in areas where
+fixed-route operations are difficult to sustain, but many-to-many door-to-door service
+can create long vehicle tours, low vehicle utilization, and fragile schedules under
+dynamic demand. Meeting-point service designs address this operational problem by asking
+passengers to walk to designated pickup or dropoff locations so that vehicles can
+consolidate routes. The same design choice also creates a passenger-response problem:
+offers that reduce vehicle travel may be rejected when walking, waiting, in-vehicle
+time, or fare burdens are too high. For logistics and operations management, the key
+question is therefore not whether meeting points are always preferable, but how
+bidirectional pickup and dropoff consolidation changes routing intensity, served share,
+and rejection patterns under tested service-design conditions.
 
-Existing literature on meeting-point DRT has made important progress but leaves a
-critical gap.
-The Dial-a-Ride Problem (DARP) literature provides a rich foundation for vehicle
-routing with time windows and capacity constraints
-\citep{cordeau2007,ho2018}.
-Recent extensions have introduced meeting points into the DARP framework.
-\citet{cortenbach2024} proposed the DARPmp, the first formulation of DARP with
-meeting points, using a Tabu Search heuristic to solve instances with single-sided
-meeting point assignment: pickup locations are flexible (passengers walk to a nearby
-stop), but dropoff locations remain fixed at the passenger's destination.
-This single-sided approach captures part of the efficiency gain but leaves the dropoff
-leg unoptimised.
-Crucially, \citet{cortenbach2024} do not model passenger choice: all offered meeting
-points are assumed to be accepted, ignoring the reality that passengers with low
-walking tolerance will reject inconvenient offers.
-On the dynamic side, \citet{wu2025} proposed a rolling horizon framework for
-online DRT re-optimization, demonstrating that periodic re-assignment of requests
-to vehicles significantly reduces operational cost under dynamic demand.
-However, \citet{wu2025} do not incorporate meeting points: their model retains
-door-to-door service.
-No existing work combines: (a)~bidirectional meeting point sets ($M_r^P$ for pickup,
-$M_r^D$ for dropoff), (b)~explicit binary logit passenger choice with
-heterogeneous passenger types and an outside option, and (c)~rolling horizon
-re-optimization in a many-to-many DRT setting.
-This is the gap the present paper fills.
+This paper studies a many-to-many DRT setting with bidirectional meeting-point sets.
+For each request $r$, the operator constructs candidate pickup meeting points
+$M_r^P$ near the origin and candidate dropoff meeting points $M_r^D$ near the
+destination. The system then evaluates feasible service bundles, selects a routing-feasible
+offer, presents a single offer to the passenger, and samples acceptance through a
+binary-logit response model. Accepted requests enter a rolling-horizon dispatch process
+that periodically reoptimizes active vehicle routes. This passenger-response-aware
+simulation framework treats passenger response as an evaluation mechanism for generated
+offers, not as an empirically calibrated behavioral validation or an endogenous routing
+control.
 
-We propose a many-to-many DRT model with bidirectional meeting point sets.
-For each request $r$, the system constructs a candidate pickup set
-$M_r^P \subseteq \mathcal{M}$ (meeting points within walking radius $\rho^P$ of the
-passenger's origin) and a candidate dropoff set
-$M_r^D \subseteq \mathcal{M}$ (within $\rho^D$ of the destination).
-The system selects pickup meeting point $m_r^P \in M_r^P$
-and dropoff meeting point $m_r^D \in M_r^D$ for each offered request, together with
-vehicle routing and scheduling; realized passenger acceptance is then simulated.
-Passenger response is modeled via a two-alternative binary logit model with three
-passenger types — price-sensitive, time-sensitive, and walk-sensitive — each with
-distinct utility coefficients over walking time, waiting time, in-vehicle travel time,
-and fare.
-An outside option allows passengers to reject all offered bundles and use an
-alternative mode.
-The full model is formulated as a coupled three-layer system:
-(1)~service offer generation, which enumerates feasible bundles
-$\mathcal{B}_r = M_r^P \times M_r^D$ and selects a routing-feasible offer;
-(2)~passenger response, which determines the accepted bundle based on the binary logit acceptance rule;
-and (3)~dynamic dispatch, which routes vehicles using a rolling horizon ALNS
-heuristic with re-optimization at fixed time intervals.
-For small realized accepted sets, we use a Mixed-Integer Linear Program (MILP)
-implemented in Gurobi as an ex-post routing diagnostic; large-scale simulations use the rolling horizon ALNS heuristic.
-Numerical experiments on stylized scenarios inspired by Chinese suburban conditions
-quantify the efficiency and equity implications of bidirectional
-meeting point assignment.
+The study is motivated by a gap between meeting-point DARP research and online DRT
+operations. Prior meeting-point formulations have demonstrated the operational value of
+walking flexibility, but they often focus on pickup-side consolidation or assume that
+assigned meeting points are accepted. Dynamic DRT and rolling-horizon routing studies,
+meanwhile, represent online fleet operations but generally retain door-to-door service or
+deterministic request acceptance. Combining bidirectional meeting points, single-offer
+binary-logit response, and rolling-horizon routing allows the paper to examine both sides
+of the service-design trade-off: route consolidation among served trips and demand loss
+through choice rejection or feasibility rejection.
 
-The contributions of this paper are as follows:
+The first contribution is a service-design formulation for many-to-many DRT with
+bidirectional pickup and dropoff meeting points. The formulation separates candidate
+meeting-point generation, feasible offer construction, passenger response, and dynamic
+dispatch so that each design layer can be inspected against operational metrics. This
+structure supports denominator-aware comparisons such as vehicle-km per served trip,
+vehicle-km per original request, served share, choice rejection, and feasibility
+rejection.
 
-\begin{enumerate}
-  \item A three-layer many-to-many DRT simulation framework with bidirectional meeting point sets
-        ($M_r^P$, $M_r^D$), rolling horizon routing, and binary logit passenger acceptance.
-  \item A rolling horizon ALNS implementation and ex-post MILP routing diagnostic for
-        studying bidirectional DARP instances with simulated passenger response.
-  \item Empirical demonstration of a 29.1\% per-trip vehicle-km gain under the
-        unconstrained comparison (FullModel 15.1 vs.\ DoorToDoor 21.3\,vkm/trip),
-        with a separate exploratory matched-coverage diagnostic indicating a 35.0\%
-        gain after coverage differences are reduced.
-  \item Equity analysis across three passenger types (Gini coefficient = 0.1216) and
-        five scenario-specific policy insights for Chinese city DRT operators.
-\end{enumerate}
+The second contribution is a passenger-response-aware simulation mechanism for
+evaluating bidirectional meeting-point offers. The binary-logit layer represents
+heterogeneous simulated passenger types and an outside option under a single-offer
+mechanism. It does not claim empirical population calibration; instead, it makes explicit
+how walking, waiting, in-vehicle time, and fare enter the acceptance evaluation and how
+accepted requests become the realized input to rolling-horizon operations.
 
-The remainder of this paper is organized as follows.
-Section~\ref{sec:literature} reviews related work on DARP, meeting-point DRT, and
-passenger response modelling.
-Section~\ref{sec:model} presents the problem formulation, including the three-layer
-coupled model and the binary logit choice structure.
-Section~\ref{sec:algorithm} describes the solution methodology: the ex-post MILP routing
-diagnostic and the rolling horizon ALNS heuristic.
-Section~\ref{sec:experiments} reports numerical experiments, including ablation
-studies and sensitivity analysis across demand density, walking tolerance, and fleet
-size.
-Section~\ref{sec:policy} discusses policy implications for Chinese city DRT operators.
-Section~\ref{sec:conclusion} concludes and outlines directions for future research.
+The third contribution is an evidence-bounded operational trade-offs narrative for
+meeting-point DRT. Formal Phase 6 evidence is used to assess whether bidirectional
+meeting-point consolidation can reduce routing intensity among served trips under tested
+synthetic service-design conditions, while tracking coverage loss, passenger-response
+trade-offs, and rejection decomposition. Matched-coverage controls,
+fixed-accepted-set decompositions, robustness packages, passenger-type heterogeneity,
+post-hoc welfare accounting, and algorithm diagnostics are treated as diagnostic or
+supporting evidence rather than headline claims.
+
+The remainder of this paper is organized as follows. Section~\ref{sec:literature}
+positions the study within DARP, meeting-point DRT, passenger choice, and dynamic DRT
+operations. Section~\ref{sec:model} defines the service-design model and binary-logit
+response mechanism. Section~\ref{sec:algorithm} describes the rolling-horizon heuristic
+and the simplified ex-post routing diagnostic. Section~\ref{sec:experiments} reports the
+evidence layers and denominator-aware experimental narrative. Section~\ref{sec:policy}
+discusses managerial and operational implications, and Section~\ref{sec:conclusion}
+summarizes conditional findings, limitations, and future work.
