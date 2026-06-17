@@ -75,16 +75,16 @@ and $t_r^{\text{req}}$ is the time request $r$ was submitted.
 The weights $\alpha_1, \ldots, \alpha_4 \geq 0$ allow the operator to balance
 vehicle efficiency against service quality.
 
-For post-hoc policy evaluation, we define a social welfare metric that includes a
+For post-hoc welfare accounting, we define a social welfare metric that includes a
 rejection penalty $\Gamma > 0$:
 \begin{equation}\label{eq:welfare}
   W = \sum_{r \in \mathcal{R}} \bigl[ z_r \cdot U_{rb^*} - (1 - z_r) \cdot \Gamma \bigr].
 \end{equation}
 $\Gamma$ enters only the ex-post welfare accounting (Section~\ref{sec:pareto}); it does
-\emph{not} influence the routing objective (Equation~\ref{eq:objective}), the bundle
-selection, or the binary logit acceptance probability. The separation ensures that
-operational decisions are consistent across different policy preferences encoded
-through $\Gamma$.
+\emph{not} affect routing, offer generation, or acceptance. In particular, it does not
+enter the routing objective (Equation~\ref{eq:objective}), the bundle selection rule, or
+the binary-logit acceptance probability. The separation keeps operational decisions
+fixed while sensitivity accounting varies $\Gamma$ after the simulation.
 
 \subsection{Operational Feasibility Conditions}
 
@@ -252,9 +252,12 @@ two-alternative setting.
 
 \subsection{Passenger Heterogeneity}
 
-We distinguish three passenger types $\mathcal{K} = \{\text{price}, \text{time}, \text{walk}\}$
-with different sensitivity profiles. Table~\ref{tab:passenger-types} summarizes the
-qualitative ordering of coefficients.
+We distinguish three simulation-range passenger types
+$\mathcal{K} = \{\text{price}, \text{time}, \text{walk}\}$ with different sensitivity
+profiles. Table~\ref{tab:passenger-types} summarizes the qualitative ordering of
+coefficients. These types are simulation constructs for monitoring service-design
+heterogeneity; they are not empirical demographic groups or real population equity
+validation.
 
 \begin{table}[h]
 \centering
@@ -289,10 +292,9 @@ Baseline parameter values for simulation:
 \end{align}
 
 Units: $\beta_1$ in utility/meter, $\beta_2$ and $\beta_3$ in utility/minute, $\beta_4$ in
-utility/CNY. The heterogeneous type structure allows the model to capture the distributional
-equity effects of meeting-point assignment: walk-sensitive passengers (e.g., elderly,
-mobility-impaired) are disproportionately affected by distant meeting points, a key
-policy consideration for DRT design in low-density urban areas.%
+utility/CNY. The heterogeneous type structure allows the simulation to monitor how
+service-design burdens differ across sensitivity profiles. It should not be read as a
+validated demographic equity model.%
 \footnote{%
   \textbf{Parameter plausibility.}
   The implied value of time (VOT) for the walk-sensitive type ---
@@ -302,20 +304,28 @@ policy consideration for DRT design in low-density urban areas.%
   VOT$_{\text{wait}} = |\beta_2^{\text{walk}}| / |\beta_4^{\text{walk}}| = 0.04/0.05 = 0.80$\,CNY/min,
   and VOT$_{\text{IVT}} = 0.02/0.05 = 0.40$\,CNY/min (walking speed $v_w = 80$\,m/min assumed).
   The wait and IVT VOT values (0.80 and 0.40\,CNY/min) fall within the Chinese urban
-  benchmark range of 0.8--1.2\,CNY/min (waiting) and 0.2--0.4\,CNY/min (IVT) reported
-  by \citet{shao2017} for Beijing commuters and \citet{li2020drt} for DRT users.
+  reference range of 0.8--1.2\,CNY/min (waiting) and 0.2--0.4\,CNY/min (IVT) reported
+  by \citet{shao2017} for commuters and \citet{li2020drt} for DRT users.
   The walk VOT (32.0\,CNY/min) exceeds the literature range (0.4--0.6\,CNY/min);
   this reflects the strong walking disutility assumed for the walk-sensitive type
   ($|\beta_1^{\text{walk}}| = 0.020$\,utils/meter) combined with low price sensitivity
   ($|\beta_4^{\text{walk}}| = 0.05$\,utils/CNY). The resulting ratio
   (0.020/0.05 $\times$ 80 = 32.0\,CNY/min) is an upper bound; calibration against
-  revealed-preference data from Chinese DRT users would likely yield lower walking
+  revealed-preference data from DRT users would likely yield lower walking
   disutility coefficients. This limitation is discussed in
   Section~\ref{sec:policy} (VOT interpretation) and Section~\ref{sec:conclusion}.
   type's defining characteristic.
-  Full VOT mapping across all three passenger types is reported in
-  Table~\ref{tab:vot-mapping} (Section~\ref{sec:policy}).
+  Further VOT interpretation is treated as calibration-dependent in the implications
+  section.
 }
+
+\subsection{Scenario Semantics}
+
+The scenario labels used later in the manuscript are simulation labels. The baseline
+synthetic grid is a controlled service-design setting, and the Beijing-inspired synthetic
+grid is a semi-realistic synthetic grid used for robustness-oriented sensitivity. Neither
+scenario constitutes field validation in Beijing, public-data ingestion, or empirical
+calibration.
 
 \paragraph{Worked utility example.}
 Consider a walk-sensitive passenger ($k = \text{walk}$) with
