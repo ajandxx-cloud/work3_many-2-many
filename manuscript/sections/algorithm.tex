@@ -8,16 +8,16 @@
 
 The problem defined in Section~\ref{sec:model} is NP-hard (see
 Section~\ref{subsec:complexity}). We develop two complementary solution approaches: an
-ex-post MILP routing diagnostic solved by Gurobi for small instances, and a rolling horizon
+MILP-based simplified ex-post diagnostic solved by Gurobi for small instances, and a rolling horizon
 Adaptive Large Neighborhood Search (ALNS) heuristic for real-time operation at scale.
 
 % ------------------------------------------------------------
-\subsection{Ex-Post Routing Diagnostic: MILP Formulation}\label{subsec:milp}
+\subsection{Simplified Ex-Post Diagnostic: MILP Formulation}\label{subsec:milp}
 % ------------------------------------------------------------
 
 For small instances, we formulate the static batch routing problem as a
 Mixed-Integer Linear Program (MILP) to compute the optimal routing cost for a
-given accepted set. The MILP serves as an \emph{ex-post routing diagnostic},
+given accepted set. The MILP serves as a \emph{simplified ex-post diagnostic over fixed accepted sets},
 not a validation tool for the complete simulation framework, which includes
 offer generation, routing, and stochastic passenger response.
 
@@ -44,11 +44,12 @@ constraints~(\ref{con:walk-pickup})--(\ref{con:walk-dropoff}) are enforced impli
 restricting the domain of $x_{r,m^P,m^D,v}$ to feasible meeting point pairs.
 
 \paragraph{Solver and Scope.}
-The MILP is solved using Gurobi~10 with a 300-second time limit; Gurobi reports
-the optimality gap for instances where the time limit binds.
+The MILP is solved using Gurobi~10 with a 300-second time limit. Any reported solver
+gap is interpreted only within this simplified fixed-accepted-set diagnostic.
 
-\textbf{Ex-post diagnostic role.}
-The MILP serves as an \emph{ex-post} routing diagnostic, not a real-time solver.
+\textbf{Simplified ex-post diagnostic role.}
+The MILP serves as a \emph{simplified ex-post diagnostic over fixed accepted sets},
+not a real-time solver or a complete dynamic routing comparison.
 Given the realized accepted set $\mathcal{R}^{\text{acc}}$ produced by a
 completed ALNS run --- i.e., the set of requests for which the sampled
 acceptance indicator $z_r = 1$ --- the MILP solves the optimal vehicle routing
@@ -59,11 +60,10 @@ assignment variables $x_{r,m^P,m^D,v}$ and schedule variables $s_{v,i}$.
 It does \emph{not} re-optimize the acceptance decisions: the stochastic
 passenger responses are realized outcomes of the ALNS run, not MILP decision
 variables.
-The resulting MILP objective value is therefore a lower bound on the routing
-cost achievable for the same accepted set, and the diagnostic gap
+The resulting MILP objective value is therefore a fixed-set diagnostic comparator, and the diagnostic gap
 $\delta = (C^{\text{ALNS}} - C^{\text{MILP}}) / C^{\text{MILP}} \times 100\%$
-measures how close the ALNS heuristic comes to the ex-post routing optimum on
-this fixed, realized set only.
+describes the difference between the heuristic route and the simplified fixed-set
+diagnostic solution only.
 Instances with up to 30--50 passengers and 5--8 vehicles are tractable within
 the time limit.
 
@@ -122,7 +122,7 @@ which is a post-hoc evaluation tool. $\Gamma$ does \emph{not} enter the bundle
 selection, the routing objective, or the binary logit acceptance probability.
 The acceptance probability $P_{\text{accept}}(b^*)$ is invariant to $\Gamma$.
 This separation ensures that the operational decisions are consistent across
-different policy preferences encoded through $\Gamma$.
+different post-hoc welfare-accounting settings encoded through $\Gamma$.
 
 \subsubsection{Candidate Generation}
 
@@ -278,9 +278,8 @@ requests grows.
 \paragraph{Practical Performance.}
 On the 200-request, 15-vehicle simulation instances, the average decision time per
 request is below 1 second, satisfying the real-time requirement of online DRT operation.
-The MILP ex-post routing diagnostic (Section~\ref{subsec:milp}) evaluates how close the
-ALNS routing comes to the optimal offline routing for a fixed accepted set
+The simplified ex-post diagnostic over fixed accepted sets (Section~\ref{subsec:milp})
+compares ALNS routing with the diagnostic MILP solution for a fixed accepted set
 on small instances (gaps of 99--170\% for $n = 20$--30; see Table~\ref{tab:milp-gap}).
-These gaps reflect the inherent difficulty of online insertion with fixed meeting
-points relative to optimal ex-post routing, not an assessment of overall solution
-quality, since the MILP does not model stochastic passenger response.
+These gaps reflect the limited fixed-set diagnostic setup, not an assessment of overall
+solution quality, since the MILP does not model stochastic passenger response.
