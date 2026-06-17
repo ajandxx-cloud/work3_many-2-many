@@ -1,6 +1,6 @@
 # Phase 2: TR-E Positioning Lock and Claim Ledger - Context
 
-**Gathered:** 2026-06-17T16:19:34.8091735+08:00
+**Gathered:** 2026-06-17T17:01:05.3846057+08:00
 **Status:** Ready for planning
 
 <domain>
@@ -58,6 +58,30 @@ This phase does not rewrite manuscript prose, inject final numerical values, ref
 - **D-32:** `05_BLOCKERS_AND_SAFE_CLAIMS.md` should classify safe claims, safe-with-qualifier claims, downgrade-required claims, blockers, old numbers, prohibited wording, and diagnostic evidence boundaries.
 - **D-33:** Phase 2 may scan manuscript and package-facing text to build the ledger and blocker table, but it must not edit `manuscript/`, `README.md`, `CLAUDE.md`, result files, or code.
 
+### Layered Ledger Scope For Package-Facing Materials
+- **D-34:** Phase 2 should use layered coverage. Main manuscript claims in `manuscript/main.tex` and `manuscript/sections/*.tex` enter the full `03_CLAIM_LEDGER.md`; package-facing risks in `README.md`, `CLAUDE.md`, `manuscript/cover_letter.tex`, `manuscript/response_to_reviewers.tex`, and figure-script comments enter `05_BLOCKERS_AND_SAFE_CLAIMS.md` as package-consistency or provenance-risk items unless they are submitted or reused.
+- **D-35:** `manuscript/cover_letter.tex` and `manuscript/response_to_reviewers.tex` should be treated as package-consistency risks for now, not as main manuscript ledger scope. Phase 5 decides whether they are final submission-package files and therefore need cleanup or rewrite.
+- **D-36:** Figure-script comments, legacy input paths, TR Part A format notes, and Pareto/Gamma naming risks should be recorded as blocker, package-consistency, or provenance-risk items. Claims that appear in figure titles, captions, labels, or manuscript references should be verified through Phase 4 provenance.
+- **D-37:** A non-manuscript file should be upgraded to full claim-ledger rows only when it enters the final submission package or when its wording is reused in the manuscript, cover letter, response file, or other submitted material.
+
+### Non-Numeric Claim Provenance
+- **D-38:** Every ledger row should preserve the full mandatory schema. For non-numeric positioning, mechanism-scope, or limitation claims, `metric_formula`, `numerator`, and `denominator` should be filled with `not_applicable`, not omitted.
+- **D-39:** Non-numeric claim rows should use a two-source pattern: `source_path` points to the claim occurrence, while `supporting_source_path` or notes point to the planning artifact, validation report, or evidence-role source that makes the wording safe.
+- **D-40:** `script_path` and `generation_command` should distinguish source type. Manual positioning, scope, or limitation wording uses `not_applicable_manual_text`; claims supported by formal tables, figures, or reports use the actual script and command; blocker rows found by scanning record the relevant scan command.
+- **D-41:** `evidence_role` should use a fixed enum, including at minimum `positioning`, `mechanism_scope`, `primary_behavioral`, `diagnostic_matched_coverage`, `diagnostic_fixed_accepted_set`, `robustness_sensitivity`, `equity_type_heterogeneity`, `algorithm_diagnostic`, `limitation`, and `package_consistency`.
+
+### Allowed And Prohibited Sentence Precision
+- **D-42:** `allowed_sentence` should be a complete safe sentence that Phase 3 can directly use or lightly polish. Phase 3 may improve academic style, but it must not change the evidence boundary encoded by Phase 2.
+- **D-43:** For numerical claims that require Phase 4 provenance, `allowed_sentence` should use structured placeholders such as `[PHASE4_VERIFIED_VALUE]`, `[PHASE4_VERIFIED_CI]`, and `[PHASE4_VERIFIED_TABLE]`. The sentence may be structurally complete, but it must not lock final numbers.
+- **D-44:** Unsafe claims such as co-optimization, real-world Beijing validation, policy decision-tool framing, or ALNS near-optimality should receive both a safe replacement sentence and an `action` such as `replace_non_numeric`, `downgrade_to_diagnostic`, or `delete`.
+- **D-45:** `prohibited_sentence` should record either the exact current sentence when a concrete hit exists or a prohibited pattern when the risk is generic. This supports later prohibited-wording scans.
+
+### Blocker Table Granularity And Routing
+- **D-46:** `05_BLOCKERS_AND_SAFE_CLAIMS.md` should include both category-level rules and a concrete hit list. The rule layer should cover risk families such as old numbers, Part A/TR-A framing, policy-first wording, Gamma/Pareto, Beijing validation, MILP/exactness, dominance/outperform language, legacy result paths, and premature readiness wording.
+- **D-47:** Each blocker hit should include `issue_id`, `location`, `matched_text_or_pattern`, `risk_family`, `status`, `evidence_role`, `owner_phase`, `required_action`, `allowed_replacement`, and `verification_check`.
+- **D-48:** Blocker `status` should use `safe`, `safe_with_qualifier`, `downgrade_required`, and `blocker`. `owner_phase` should route by gate: wording issues to Phase 3, numerical provenance to Phase 4, package consistency and readiness checks to Phase 5, and out-of-scope model/evidence gaps to future/v2.
+- **D-49:** Phase 2 scans should cover fixed risk families at minimum: Part A/TR-A, policy-first wording, old values, dominance/outperform language, Gamma/Pareto, Beijing validation, MILP/exact/near-optimal wording, legacy result paths, and `TR-E submission-ready` or equivalent readiness wording.
+
 ### Agent Discretion
 - No user decisions were delegated to agent discretion. Downstream agents should follow the decisions above.
 
@@ -82,6 +106,7 @@ This phase does not rewrite manuscript prose, inject final numerical values, ref
 
 ### Codebase Maps And Risks
 - `.planning/codebase/STRUCTURE.md` - Repository locations for manuscript, results, source, experiments, archive, and planning artifacts.
+- `.planning/codebase/CONVENTIONS.md` - Repository naming, style, import, logging, and artifact conventions.
 - `.planning/codebase/CONCERNS.md` - Known risks around pytest, dependency metadata, route-stop bookkeeping, Gamma semantics, Beijing wording, and MILP diagnostic scope.
 
 ### Manuscript And Package Sources To Scan
@@ -171,6 +196,10 @@ This phase does not rewrite manuscript prose, inject final numerical values, ref
 - Use `operational service-design evidence` as the primary TR-E positioning anchor.
 - Require explicit diagnostic qualifiers on each diagnostic-evidence claim, not only in table notes or paragraph introductions.
 - Rename or reframe `Policy Implications` toward managerial and operational implications in Phase 3.
+- Use layered claim control: full ledger for manuscript claims, blocker/package-consistency tracking for non-submitted package-facing risks.
+- Keep non-numeric claims in the full schema with explicit `not_applicable` fields rather than dropping provenance columns.
+- Use complete `allowed_sentence` replacements with Phase 4 placeholders for unverified numerical values.
+- Make `05_BLOCKERS_AND_SAFE_CLAIMS.md` both rule-oriented and executable through concrete hit rows with owner-phase routing.
 
 </specifics>
 
@@ -184,4 +213,4 @@ None. Discussion stayed within Phase 2 scope.
 ---
 
 *Phase: 2-TR-E Positioning Lock and Claim Ledger*
-*Context gathered: 2026-06-17T16:19:34.8091735+08:00*
+*Context gathered: 2026-06-17T17:01:05.3846057+08:00*

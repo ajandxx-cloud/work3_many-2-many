@@ -3,9 +3,9 @@
 > **Audit trail only.** Do not use as input to planning, research, or execution agents.
 > Decisions are captured in CONTEXT.md - this log preserves the alternatives considered.
 
-**Date:** 2026-06-17T16:19:34.8091735+08:00
+**Date:** 2026-06-17T17:01:05.3846057+08:00
 **Phase:** 2-TR-E Positioning Lock and Claim Ledger
-**Areas discussed:** Ledger line granularity and coverage, TR-E positioning lock core narrative, Evidence-role and blocker classification, Phase 3 prohibited wording and replacement rules
+**Areas discussed:** Ledger line granularity and coverage, TR-E positioning lock core narrative, Evidence-role and blocker classification, Phase 3 prohibited wording and replacement rules, Ledger coverage scope, Non-numeric claim provenance, Allowed sentence precision, Blocker table granularity
 
 ---
 
@@ -182,6 +182,166 @@
 
 **User's choice:** Use qualifier templates for Beijing and MILP; ban near-optimal/exact dynamic/real-world validation.
 **Notes:** Use `Beijing-inspired synthetic grid` and `simplified ex-post diagnostic over fixed accepted sets`.
+
+---
+
+## Ledger Coverage Scope
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Layered coverage | Main manuscript claims enter the full ledger; README, CLAUDE, cover/response, and figure-script risks enter blocker/package-consistency tracking unless submitted or reused. | yes |
+| Put everything in the ledger | Every manuscript and package-facing risk sentence enters one claim ledger. | |
+| Main manuscript first | Only `manuscript/main.tex` and `manuscript/sections/` are mandatory ledger scope. | |
+
+**User's choice:** Layered coverage.
+**Notes:** This keeps the main ledger executable while still tracking package-facing risk.
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Treat as package-consistency risks | `cover_letter.tex` and `response_to_reviewers.tex` are not full ledger scope now; Phase 5 decides whether to rewrite or clean them. | yes |
+| Treat as final submission-package files | Add stricter package-facing ledger rows now. | |
+| Treat as historical files | Mark them historical and outside required Phase 2/3 handling. | |
+
+**User's choice:** Treat as package-consistency risks.
+**Notes:** They remain scan targets, but not main manuscript claim-ledger rows unless they are submitted or reused.
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Script risks into blockers; figure claims to Phase 4 provenance | Comments, legacy input paths, TR Part A notes, and Pareto/Gamma naming risks are blocker/provenance risks; figure titles/captions/references are verified in Phase 4. | yes |
+| Put all figure-script text in the ledger | Treat code comments and script labels like manuscript claims. | |
+| Defer figure scripts | Wait until Phase 4 figure refresh. | |
+
+**User's choice:** Script risks into blockers; figure claims to Phase 4 provenance.
+**Notes:** This separates code/comment hygiene from formal figure and caption provenance.
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Submission or reuse trigger | Non-manuscript files upgrade to full ledger rows only when submitted or reused in submitted material. | yes |
+| Numerical trigger | Any old number or evidence claim outside the manuscript gets a full ledger row. | |
+| Never upgrade | Non-manuscript files always stay in blocker/package-consistency tracking. | |
+
+**User's choice:** Submission or reuse trigger.
+**Notes:** Package-facing material is controlled without overloading the manuscript claim ledger.
+
+---
+
+## Non-Numeric Claim Provenance
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Full schema with explicit N/A | Keep mandatory columns for all claim rows; use `not_applicable` for non-numeric formula, numerator, and denominator fields. | yes |
+| Full schema only for numerical claims | Non-numeric claims may omit numerator/denominator columns. | |
+| Split into two tables | Numerical claims and wording claims use separate ledgers. | |
+
+**User's choice:** Full schema with explicit N/A.
+**Notes:** Uniform schema supports downstream filtering and coverage checks.
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Two-source pattern | `source_path` points to the claim occurrence; `supporting_source_path` or notes point to the planning/evidence source that makes the wording safe. | yes |
+| Occurrence path only | `source_path` is only the file containing the sentence. | |
+| Supporting source only | `source_path` points only to the planning/evidence source. | |
+
+**User's choice:** Two-source pattern.
+**Notes:** This preserves both traceability to the sentence and justification for safe wording.
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Distinguish manual text, generated evidence, and scans | Manual wording uses `not_applicable_manual_text`; generated claims use actual script/command; blockers record scan command. | yes |
+| All non-numeric claims use not_applicable | Simpler but loses scan/generation provenance. | |
+| All non-numeric claims use scan command | Uniform scan provenance even when a formal script supports the claim. | |
+
+**User's choice:** Distinguish manual text, generated evidence, and scans.
+**Notes:** `script_path` and `generation_command` should describe how the row was found or supported.
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Fixed enum | Use a controlled `evidence_role` vocabulary such as positioning, mechanism_scope, primary_behavioral, diagnostic families, limitation, and package_consistency. | yes |
+| Free text | Planner writes roles as needed. | |
+| Coarse categories | Only primary, diagnostic, limitation, and package. | |
+
+**User's choice:** Fixed enum.
+**Notes:** A fixed enum makes Phase 3/4/5 scans and filters much less brittle.
+
+---
+
+## Allowed Sentence Precision
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Directly usable sentence with Phase 3 polish allowed | Phase 2 writes complete safe sentences; Phase 3 may polish style without changing evidence boundaries. | yes |
+| Safe wording template only | Phase 2 records components and lets Phase 3 draft. | |
+| Boundary rule only | Phase 2 says what is allowed/prohibited without replacement prose. | |
+
+**User's choice:** Directly usable sentence with Phase 3 polish allowed.
+**Notes:** This makes the ledger an execution handoff, not just a risk catalog.
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Structured Phase 4 placeholders | Use placeholders such as `[PHASE4_VERIFIED_VALUE]`, `[PHASE4_VERIFIED_CI]`, and `[PHASE4_VERIFIED_TABLE]`. | yes |
+| Fully non-numeric wording | Use only directional wording before Phase 4. | |
+| Keep old numbers with blocker status | Preserve current numerical sentences and rely on status fields. | |
+
+**User's choice:** Structured Phase 4 placeholders.
+**Notes:** The sentence can be complete without locking unverified final values.
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Safe replacement plus action | Unsafe claims get a replacement sentence plus `replace_non_numeric`, `downgrade_to_diagnostic`, `delete`, or similar action. | yes |
+| Prohibited sentence only | Do not provide a safe replacement. | |
+| Leave blank and mark blocker | Let Phase 3 draft replacements. | |
+
+**User's choice:** Safe replacement plus action.
+**Notes:** Unsafe claims should be immediately actionable for Phase 3.
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Exact sentence or prohibited pattern | Store exact current sentence for concrete hits or a prohibited pattern for generic risks. | yes |
+| Keywords only | Store short scan terms. | |
+| Explanation only | Describe the problem without a sentence or pattern. | |
+
+**User's choice:** Exact sentence or prohibited pattern.
+**Notes:** This supports later prohibited-wording scans.
+
+---
+
+## Blocker Table Granularity
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Category rules plus hit list | Include category-level rules and concrete hit rows with location, risk, status, owner phase, and action. | yes |
+| Category rules only | Clear principles but less executable. | |
+| Hit list only | Strong execution list but weaker reusable rules. | |
+
+**User's choice:** Category rules plus hit list.
+**Notes:** The blocker file should work both as a rulebook and as an execution queue.
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Full execution fields | Include `issue_id`, `location`, `matched_text_or_pattern`, `risk_family`, `status`, `evidence_role`, `owner_phase`, `required_action`, `allowed_replacement`, and `verification_check`. | yes |
+| Minimal fields | Include only `location`, `risk`, and `action`. | |
+| Planner decides by risk class | Field set varies by risk family. | |
+
+**User's choice:** Full execution fields.
+**Notes:** The table should support routing, verification, and readiness closeout.
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Gate-based routing | Use the four status values and route owner phase to Phase 3, 4, 5, or future/v2 by gate. | yes |
+| Everything goes to Phase 3 | Let later phases re-route. | |
+| No owner phase | Record the issue only. | |
+
+**User's choice:** Gate-based routing.
+**Notes:** Wording goes to Phase 3, numerical provenance to Phase 4, package/readiness checks to Phase 5, future evidence/model gaps to v2.
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Fixed risk-family scan | Scan Part A/TR-A, policy-first, old values, dominance/outperform, Gamma/Pareto, Beijing validation, MILP/exact/near-optimal, legacy paths, and readiness wording. | yes |
+| Only old values and obvious Part A/policy | Faster but less complete. | |
+| Planner chooses scan terms | Flexible but less enforceable. | |
+
+**User's choice:** Fixed risk-family scan.
+**Notes:** Phase 2 should require a minimum scan family list so later plans do not miss semantic blockers.
 
 ## Agent Discretion
 
