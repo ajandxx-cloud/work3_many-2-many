@@ -19,7 +19,7 @@ Requirements for the current initialization roadmap. Each requirement must map t
 - [x] **POSE-01**: README, manuscript metadata, and project-facing documentation touched by this milestone consistently target Transportation Research Part E: Logistics and Transportation Review.
 - [x] **POSE-02**: Manuscript title, abstract, introduction, and contribution framing present the work as a logistics/operations contribution rather than a TR Part A policy-first contribution.
 - [x] **POSE-03**: Literature review connects the paper to DARP, meeting-point DRT, dynamic DRT routing, on-demand mobility logistics, service consolidation, passenger choice, and rolling-horizon operations.
-- [ ] **POSE-04**: The policy section is reframed as managerial and operational implications for service design, fleet deployment, consolidation, coverage-efficiency trade-offs, and passenger-segment monitoring.
+- [x] **POSE-04**: The policy section is reframed as managerial and operational implications for service design, fleet deployment, consolidation, coverage-efficiency trade-offs, and passenger-segment monitoring.
 
 ### Claims And Evidence
 
@@ -39,8 +39,8 @@ Requirements for the current initialization roadmap. Each requirement must map t
 - [x] **MANU-03**: Introduction contribution list is rewritten as concise, defensible, evidence-consistent TR-E contributions, with final numerical claims deferred until Phase 4 provenance checks.
 - [x] **MANU-04**: Model and algorithm sections are revised only as needed to keep offer generation, passenger response, rolling horizon routing, Gamma semantics, and MILP scope clear and claim-consistent.
 - [x] **MANU-05**: Experiments section separates main formal evidence, diagnostics, robustness/sensitivity, equity/type heterogeneity, and algorithm diagnostics.
-- [ ] **MANU-06**: Managerial and operational implications replace policy-first framing while retaining clearly labeled public-service implications where supported.
-- [ ] **MANU-07**: Conclusion states conditional contributions, formal evidence boundaries, limitations, and future work without overclaiming, with final concrete numerical claims deferred until Phase 4 provenance checks.
+- [x] **MANU-06**: Managerial and operational implications replace policy-first framing while retaining clearly labeled public-service implications where supported.
+- [x] **MANU-07**: Conclusion states conditional contributions, formal evidence boundaries, limitations, and future work without overclaiming, with final concrete numerical claims deferred until Phase 4 provenance checks.
 - [x] **MANU-08**: Elsevier-style prose is polished, and bullet-style contribution lists are converted to acceptable academic prose or concise list form when needed.
 
 ### Tables Figures And Provenance
@@ -112,7 +112,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | POSE-01 | Phase 3 | Complete |
 | POSE-02 | Phase 3 | Complete |
 | POSE-03 | Phase 3 | Complete |
-| POSE-04 | Phase 3 | Pending |
+| POSE-04 | Phase 3 | Complete |
 | CLAI-01 | Phase 2 | Complete |
 | CLAI-02 | Phase 2 | Complete |
 | CLAI-03 | Phase 2 | Complete |
@@ -126,8 +126,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | MANU-03 | Phase 3 | Complete |
 | MANU-04 | Phase 3 | Complete |
 | MANU-05 | Phase 3 | Complete |
-| MANU-06 | Phase 3 | Pending |
-| MANU-07 | Phase 3 | Pending |
+| MANU-06 | Phase 3 | Complete |
+| MANU-07 | Phase 3 | Complete |
 | MANU-08 | Phase 3 | Complete |
 | TFIG-01 | Phase 4 | Pending |
 | TFIG-02 | Phase 4 | Pending |
