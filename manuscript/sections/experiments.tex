@@ -1,473 +1,102 @@
 \section{Numerical Experiments}\label{sec:experiments}
 
-This section evaluates the proposed bidirectional meeting point model through
-controlled numerical experiments. We compare six model variants across two
-scenarios, conduct sensitivity analyses on the key deployment parameters, and
-examine service equity across passenger types.
+This section describes the evidence structure used to evaluate the bidirectional
+meeting-point DRT service design. Phase 3 reports evidence roles, denominator concepts,
+and interpretation boundaries only. Final percentages, uncertainty intervals,
+significance language, and final table or figure references are deferred to Phase 4,
+where every numerical claim will be verified against the formal Phase 6 evidence package
+under `results/formal/phase06/`.
 
-% -----------------------------------------------------------------------
-\subsection{Experimental Setup}
-% -----------------------------------------------------------------------
+\subsection{Evidence Roles and Denominators}
 
-\paragraph{Scenarios.}
-We use two complementary scenarios. The \emph{synthetic scenario} places
-requests uniformly at random on a $20\,\text{km} \times 20\,\text{km}$ grid.
-Demand ranges from 100 to 500 requests per horizon; fleet size ranges from 10
-to 30 vehicles. Vehicle capacity is 8 passengers and the maximum ride time is
-45 minutes. This scenario allows controlled parameter sweeps with full
-reproducibility (seeds 42, 43, 44). Results are averaged over three random seeds (42, 43, 44), consistent with standard practice in DRT simulation \citep{wu2025}; standard deviations
-are reported in Table~\ref{tab:main-results}.
+The primary behavioral evidence comes from the formal Phase 6 main behavioral package.
+It compares service designs under the same experimental framework and supports
+conditional claims about routing intensity, served share, and rejection decomposition.
+The primary metrics are:
+\begin{itemize}
+  \item vehicle-km per served trip, with vehicle kilometres divided by served trips;
+  \item vehicle-km per original request, with vehicle kilometres divided by all requests;
+  \item served share, with served requests divided by all requests;
+  \item choice rejection, which records passengers who reject a feasible offer;
+  \item feasibility rejection, which records requests for which no feasible offer is found.
+\end{itemize}
+These denominator labels are part of the claim boundary. Vehicle-km per served trip
+speaks to routing intensity among realized served trips, while vehicle-km per original
+request keeps coverage loss visible. Served share, choice rejection, and feasibility
+rejection are therefore reported with efficiency claims rather than treated as secondary
+details.
 
-The \emph{Beijing-inspired synthetic grid scenario} is calibrated to a Beijing suburban
-district: a $15\,\text{km} \times 15\,\text{km}$ service zone with 81 meeting
-points arranged on a complete $9 \times 9$ grid at 1875\,m spacing, 200 requests
-during the morning peak (7--9\,am), and 15 vehicles. This Beijing-inspired
-synthetic grid scenario tests
-whether the efficiency gains observed in the synthetic setting extend to a
-denser meeting point configuration.
+The formal Phase 6 package also contains evidence that is useful but not headline
+evidence. Matched-coverage outputs are a diagnostic coverage-confounding control.
+Fixed-accepted-set outputs are a diagnostic decomposition over fixed accepted sets.
+Robustness packages test sensitivity to service-design settings. Equity/type outputs
+support limited passenger-type monitoring implications. Gamma outputs are post-hoc
+welfare or sensitivity accounting. Algorithm outputs are an algorithm diagnostic,
+including a simplified ex-post diagnostic over fixed accepted sets. These roles are
+kept separate from the primary behavioral evidence.
 
-\paragraph{Choice model parameters.}
-The binary logit choice model (Section~\ref{sec:choice}) uses the type-specific
-four-attribute utility coefficients defined in Equations~\ref{eq:beta-price}--\ref{eq:beta-walk}.
-The outside option utility is normalized to zero ($U_{r0}^k = 0$,
-Equation~\ref{eq:utility-outside}). Three passenger types are defined --- price-sensitive,
-time-sensitive, and walk-sensitive --- each comprising approximately
-one-third of the demand. The per-type beta values and the route-then-sample
-implementation are documented in Sections~\ref{sec:choice} and~\ref{sec:algorithm}.
+\subsection{Experimental Design}
 
-\paragraph{Model variants.}
-Six variants are evaluated, differing across three dimensions: meeting point
-configuration (none / single-sided / bidirectional), response mechanism (none /
-binary logit sampling / deterministic diagnostic), and re-optimization (rolling horizon ALNS / static
-greedy). Table~\ref{tab:variants} summarizes the design of each variant.
+The experiments compare door-to-door service, single-sided meeting-point service,
+bidirectional service without passenger choice, the full passenger-response-aware
+bidirectional design, and targeted ablations. The scenario set includes a controlled
+synthetic grid and a Beijing-inspired synthetic grid. The Beijing-inspired synthetic
+grid is used as a robustness-oriented synthetic service-design setting, not as field
+validation or public-data evidence.
 
-\begin{table}[h]
-\centering
-\caption{Model variant definitions across three design dimensions}
-\label{tab:variants}
-\begin{tabular}{lccc}
-\toprule
-Variant & Meeting Points & Choice Mechanism & Re-optimization \\
-\midrule
-DoorToDoor               & None (O-D direct) & All feasible accepted & Rolling horizon ALNS \\
-SingleSidedPickup        & Pickup only        & All feasible accepted & Rolling horizon ALNS \\
-BidirectionalNoChoice    & Bidirectional      & All feasible accepted & Rolling horizon ALNS \\
-FullModel                & Bidirectional      & Binary logit sampling & Rolling horizon ALNS \\
-AblationNoChoice         & Bidirectional      & Deterministic insertion diagnostic & Rolling horizon ALNS \\
-AblationNoRollingHorizon & Bidirectional      & Binary logit sampling & Static greedy \\
-\bottomrule
-\end{tabular}
-\end{table}
+Passenger response is represented through the binary-logit single-offer mechanism
+defined in Section~\ref{sec:choice}. For variants without passenger choice, inserted or
+served request counts are interpreted according to that variant's mechanism rather than
+as behavioral acceptance. The rolling-horizon routing layer is interpreted as the
+operational heuristic used to update active routes as requests arrive.
 
-\textbf{DoorToDoor} serves requests directly, without meeting points or binary
-logit acceptance. \textbf{SingleSidedPickup} assigns pickup meeting points only.
-\textbf{BidirectionalNoChoice} assigns bidirectional meeting points deterministically
-(all feasible requests accepted). \textbf{FullModel} is the proposed simulation with
-bidirectional meeting points and binary logit passenger acceptance (route-then-sample
-mechanism, Section~\ref{sec:algorithm}).
-\textbf{AblationNoChoice} is a diagnostic variant that removes the stochastic
-passenger-response layer and uses deterministic greedy insertion only; its reported
-served share is therefore the share inserted by that deterministic heuristic, not a
-behavioral acceptance rate. \textbf{AblationNoRollingHorizon} disables the rolling
-horizon, using static greedy insertion instead.
+\subsection{Primary Behavioral Evidence}
 
-\paragraph{Performance metrics.}
-Nine metrics are recorded: acceptance rate, vehicle-km (vkm), average and
-95th-percentile waiting time, average walking distance, average in-vehicle
-time (IVT), detour ratio, fairness index (Gini coefficient of per-type
-acceptance rates), and CPU time per horizon. We additionally report \emph{social welfare}
-$W = \sum_{r} \bigl[z_r \cdot U_{rb^*} - (1 - z_r) \cdot \Gamma\bigr]$,
-where $z_r \in \{0,1\}$ is the acceptance indicator, $U_{rb^*}$ is the
-accepted passenger's utility under the best offer, and $\Gamma \geq 0$ is
-a rejection penalty that governs the coverage--efficiency tradeoff (see
-Section~\ref{sec:pareto}). All results are averaged across three seeds.
+The main narrative focuses on whether passenger-response-aware bidirectional
+meeting-point consolidation can lower routing intensity for served trips under tested
+synthetic service-design conditions. This claim is conditional. It must travel with
+served share, vehicle-km per original request, choice rejection, feasibility rejection,
+and passenger-type monitoring because meeting-point consolidation can make some offers
+less acceptable or infeasible.
 
-% -----------------------------------------------------------------------
-\subsection{Main Results: Baseline Comparison}
-% -----------------------------------------------------------------------
+Phase 4 will populate the final manuscript table and prose values from formal Phase 6
+processed outputs only. At this stage, the approved interpretation is qualitative:
+bidirectional pickup and dropoff consolidation can create lower vehicle-km per served
+trip for the requests that accept feasible offers, while reducing coverage relative to
+some door-to-door or deterministic variants. The result is therefore an operational
+trade-off, not a universal dominance claim.
 
-Table~\ref{tab:main-results} reports mean performance across the six variants
-for the synthetic scenario with 200 requests and 15 vehicles.
-Vkm/trip values use accepted trip count as the denominator ($n \cdot \hat{\alpha}$).
-\textbf{Note:} the binary logit acceptance model (Section~\ref{sec:choice}) applies
-only to FullModel and AblationNoRollingHorizon. DoorToDoor, SingleSidedPickup,
-and BidirectionalNoChoice accept all feasible requests; DoorToDoor's acceptance
-(61.0\%) reflects infeasibility rejections, not binary logit sampling. The
-primary efficiency claim uses the unconstrained baseline comparison in
-Table~\ref{tab:main-results}. The matched-coverage comparison in
-Table~\ref{tab:matched-coverage} is reported as a separate exploratory diagnostic
-for coverage confounding, not as the primary headline estimate. The $\Gamma$ and
-weight-sensitivity tables are separate diagnostic runs and are not used to compute
-the 29.1\% unconstrained figure.
+\subsection{Diagnostic and Robustness Roadmap}
 
-\begin{table}[h]
-\centering
-\caption{Performance comparison across model variants (synthetic scenario, 200 requests, 15 vehicles, mean $\pm$ std)}
-\label{tab:main-results}
-\begin{tabular}{lccccccc}
-\toprule
-Variant & Serv./Ins. & vkm & vkm/trip & Avg Wait (s) & Avg Walk (m) & Detour & CPU (s) \\
-\midrule
-DoorToDoor               & $0.610 \pm 0.118$ & $2603.7 \pm 1666.4$ & $21.3$ & 5003.5 & 0.0    & 3.63 & 12.5 \\
-SingleSidedPickup        & $0.440 \pm 0.275$ & $1199.4 \pm 970.6$  & $13.6$ & 3847.1 & 1025.3 & 2.42 & 19.6 \\
-BidirectionalNoChoice    & $0.533 \pm 0.193$ & $1721.6 \pm 1149.0$ & $16.1$ & 4626.7 & 1652.6 & 3.60 & 26.1 \\
-FullModel                & $0.183 \pm 0.018$ & $552.0 \pm 343.3$   & $15.1$ & 454.2  & 109.0  & 1.00 & 10.5 \\
-AblationNoChoice         & $0.135 \pm 0.245$ & $159.3 \pm 290.1$   & $5.9$  & 118.1  & 25.7   & 1.00 & 5.9  \\
-AblationNoRollingHorizon & $0.206 \pm 0.062$ & $668.5 \pm 373.9$   & $16.2$ & 3114.5 & 1803.8 & 6.14 & 3.5  \\
-\bottomrule
-\end{tabular}
-\footnotesize
-\emph{Note:} ``Serv./Ins.'' denotes served share for behavioral variants and
-inserted share for the deterministic insertion diagnostic AblationNoChoice; the
-latter is not a behavioral acceptance rate.
-\end{table}
+The diagnostic evidence is reported as a roadmap rather than as the main estimate.
+The diagnostic coverage-confounding control asks whether lower vehicle-km per served
+trip remains visible when served share is brought closer across compared designs. The
+diagnostic decomposition over fixed accepted sets isolates routing and meeting-point
+effects after the accepted request set is fixed. Robustness checks examine how the
+patterns change under service-design settings such as walking tolerance, fleet stress,
+and utility sensitivity. Passenger-type outcomes are used only as limited
+passenger-segment monitoring evidence, not as empirical population-equity validation.
 
-% -----------------------------------------------------------------------
-\subsection{MILP vs.\ ALNS Optimality Gap}\label{subsec:milp-gap}
-% -----------------------------------------------------------------------
+Gamma sensitivity remains post-hoc welfare or sensitivity accounting: Gamma changes the
+accounting of unserved requests after simulation and does not alter routing, offer
+generation, or acceptance. The Beijing-inspired synthetic grid remains a synthetic
+robustness setting. The algorithm diagnostic, including the simplified ex-post
+diagnostic over fixed accepted sets, is used to describe method scope and limitations,
+not to establish a complete dynamic routing benchmark.
 
-To diagnose routing sub-optimality, we compare ALNS against the MILP ex-post
-routing diagnostic on small instances where the MILP is tractable.
-For each instance, ALNS is run first to obtain the realized accepted set
-$\mathcal{R}^{\text{acc}}$; the MILP then solves the optimal vehicle routing
-for that \emph{fixed} accepted set (see Section~\ref{subsec:milp}).
-The optimality gap is $\delta = (C^{\text{ALNS}} - C^{\text{MILP}}) /
-C^{\text{MILP}} \times 100\%$.
+\subsection{Phase 4 Numerical Handoff}
 
-\begin{table}[h]
-\centering
-\caption{MILP vs.\ ALNS optimality gap on small instances (mean $\pm$ std across 3 seeds)}
-\label{tab:milp-gap}
-\begin{tabular}{lccccc}
-\toprule
-$n$ & ALNS vkm & MILP vkm & Gap (\%) & MILP status & Solve time (s) \\
-\midrule
-20 & 54.1 & 21.7 & $169.6 \pm 46.8$ & optimal & $<0.001$ \\
-30 & 65.6 & 33.3 & $98.8 \pm 40.3$ & optimal & $<0.001$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The ALNS heuristic solutions are 170\% above the MILP ex-post
-optimum on $n = 20$ instances and 99\% above on $n = 30$ instances.
-These large gaps reflect the very small accepted-set sizes (4--7 passengers
-per instance, MILP solve time $<$0.001\,s); the MILP solves an over-simplified
-routing problem on a known fixed set, not a meaningful validation of ALNS
-performance. We retain this comparison only as a minimal sanity check that
-the ALNS solution is feasible; it does not validate heuristic quality at
-operational scales.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=\textwidth]{../figures/fig04_baseline_comparison}
-\caption{Baseline comparison: acceptance rate and vehicle-km across model variants.}
-\label{fig:baseline-comparison}
-\end{figure}
-
-\paragraph{Efficiency and coverage confounding.}
-A natural concern is whether FullModel's lower vehicle-km is endogenous:
-fewer served trips mechanically reduce total driving distance. The primary
-comparison in Table~\ref{tab:main-results} is therefore the unconstrained
-per-served-trip comparison: FullModel serves 18.3\% of requests at
-15.1\,vkm/trip, while DoorToDoor serves 61.0\% at 21.3\,vkm/trip, a
-29.1\% lower vkm/trip for FullModel.
-
-To probe coverage confounding, we also implement a separate
-\emph{DoorToDoor\,(capped)} diagnostic that enforces an endogenous acceptance
-cap: once the served share reaches FullModel's mean of 18.3\%, all subsequent
-requests are rejected without route insertion, and the ALNS continues
-re-optimising routes for already-accepted passengers. This ensures DoorToDoor
-is re-routed at approximately the same coverage level, not merely post-hoc
-subsampled. In this diagnostic run (Table~\ref{tab:matched-coverage}),
-FullModel achieves 11.1\,vkm/trip compared to 17.1\,vkm/trip for
-DoorToDoor\,(capped), a 35.0\% difference. Because this matched-coverage value
-comes from a separate diagnostic run rather than the same realization as
-Table~\ref{tab:main-results}, we treat it as exploratory evidence that the
-efficiency pattern is not solely driven by coverage differences, while retaining
-the 29.1\% unconstrained comparison as the primary headline result.
-
-\begin{table}[h]
-\centering
-\caption{Exploratory matched-coverage diagnostic: FullModel vs.\ DoorToDoor\,(capped)
-         at approximately equal served share, mean across 3 seeds.
-         DoorToDoor\,(capped) achieves a share close to FullModel's, with minor overshoot due to discrete
-         request granularity.}
-\label{tab:matched-coverage}
-\begin{tabular}{lcc}
-\toprule
-Variant & Served share & vkm/trip \\
-\midrule
-FullModel              & $\sim$18\% & 11.1 \\
-DoorToDoor\,(capped)   & $\sim$18\% & 17.1 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[h]
-\centering
-\caption{Provenance of the main efficiency numbers.}
-\label{tab:result-provenance}
-\footnotesize
-\begin{tabular}{p{2.7cm}p{4.0cm}p{3.8cm}p{2.7cm}}
-\toprule
-Result source & Role in paper & Served share & Reported vkm/trip \\
-\midrule
-Table~\ref{tab:main-results} & Primary unconstrained comparison
-  & FullModel 18.3\%, DoorToDoor 61.0\% & 15.1 vs.\ 21.3 \\
-Table~\ref{tab:matched-coverage} & Exploratory matched-coverage diagnostic
-  & Both approximately 18\% & 11.1 vs.\ 17.1 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph{Role of passenger choice.}
-Comparing FullModel to AblationNoChoice provides a diagnostic view of the binary logit
-response layer. AblationNoChoice has a lower inserted share (13.5\%) and vehicle-km
-(159.3) than FullModel because it uses a deterministic greedy insertion routine rather
-than the route-then-sample simulation. This variant should therefore be interpreted as
-an algorithmic diagnostic, not as a behavioral acceptance variant.
-The FullModel's selective acceptance concentrates service on spatially compatible
-requests, improving per-trip routing efficiency.
-
-\paragraph{Role of rolling horizon.}
-AblationNoRollingHorizon reveals the cost of static assignment: average
-waiting time rises to 3114.5\,s (versus 454.2\,s for FullModel) — a 6.9-fold
-increase — and the
-detour ratio reaches 6.14. Without periodic re-optimization, early-assigned
-vehicles accumulate detours that cannot be corrected, leading to cascading
-delays. The 21.1\% increase in vehicle-km (668.5 vs.\ 552.0) further confirms that rolling
-horizon re-optimization is essential for operational efficiency.
-
-\paragraph{Single-sided vs.\ bidirectional.}
-SingleSidedPickup reduces vehicle-km by 53.9\% relative to DoorToDoor
-(1199.4 vs.\ 2603.7) but imposes a 1025.3\,m average walk at dropoff.
-BidirectionalNoChoice achieves a higher acceptance rate (53.3\%) but at
-higher vehicle-km (1721.6) and longer waits (4626.7\,s) than FullModel,
-because without the choice model the optimizer cannot anticipate which
-meeting point assignments passengers will accept.
-
-% -----------------------------------------------------------------------
-\subsection{Beijing-Inspired Synthetic Grid Scenario Results}\label{subsec:beijing}
-% -----------------------------------------------------------------------
-
-Table~\ref{tab:beijing-results} reports results for the Beijing-inspired synthetic grid
-scenario (15\,km $\times$ 15\,km, 9$\times$9 meeting point grid at 1875\,m spacing,
-200 requests during morning peak 7--9\,am, 15 vehicles). The pattern of results
-is consistent with the synthetic scenario: FullModel achieves substantially lower
-vehicle-km (261.7) than DoorToDoor (1353.9) at lower acceptance (31.3\% vs.\
-77.5\%), with the efficiency gain arising from spatial consolidation of accepted
-requests. The Beijing grid's denser meeting point spacing (1875\,m vs.\ 2000\,m)
-yields higher absolute acceptance rates for all variants and lower per-trip
-vehicle-km (FullModel 4.2 vs.\ 15.1\,vkm/trip in the synthetic baseline),
-consistent with the walking tolerance sensitivity findings in
-Section~\ref{sec:experiments}.
-
-\begin{table}[h]
-\centering
-\caption{Beijing-inspired synthetic grid scenario results (200 requests, 15 vehicles, 9$\times$9 MP grid,
-         1875\,m spacing, morning peak 7--9\,am, mean across up to 3 seeds)}
-\label{tab:beijing-results}
-\begin{tabular}{lcccccc}
-\toprule
-Variant & Serv./Ins. & vkm & vkm/trip & Avg Wait (s) & Avg Walk (m) & CPU (s) \\
-\midrule
-DoorToDoor               & 0.775 & 1353.9 & 8.7 & 7225.2 & 0.0    & 10.0 \\
-DoorToDoor\,(capped)     & 0.235 & 480.3  & 10.2& 6172.5 & 0.0    & 0.4  \\
-SingleSidedPickup        & 0.780 & 1227.6 & 7.9 & 7691.8 & 1252.0 & 82.2 \\
-BidirectionalNoChoice    & 0.813 & 1221.1 & 7.5 & 8081.7 & 1700.2 & 52.8 \\
-FullModel                & 0.313 & 261.7  & 4.2 & 350.0  & 40.0   & 4.8  \\
-AblationNoChoice         & 0.765 & 554.5  & 3.6 & 291.1  & 79.7   & 119.7 \\
-AblationNoRollingHorizon & 0.360 & 506.8  & 7.0 & 6089.0 & 1639.1 & 4.1  \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-% -----------------------------------------------------------------------
-\subsection{Sensitivity Analysis}
-% -----------------------------------------------------------------------
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=\textwidth]{../figures/fig05_sensitivity}
-\caption{Sensitivity analysis: (a) acceptance rate vs.\ walking tolerance $\rho$; (b) acceptance rate vs.\ fleet size.}
-\label{fig:sensitivity}
-\end{figure}
-
-\paragraph{Walking tolerance $\rho$.}
-We sweep $\rho \in \{200, 400, 600, 800, 1000\}$\,m with all other parameters
-fixed at baseline (200 requests, 15 vehicles). FullModel acceptance rate is
-\textbf{0.0\%} at $\rho \leq 400$\,m: the binary logit utility function penalizes
-walking so heavily that no meeting-point offer is accepted when the required
-walk exceeds 400\,m (under the current parameterization). Acceptance rises
-monotonically, reaching \textbf{9.0\%}
-at $\rho = 1000$\,m. DoorToDoor holds steady at approximately 58\% regardless
-of $\rho$, since it imposes no walking requirement and does not use the
-binary logit acceptance model.
-
-In our simulation setting, acceptance becomes non-zero only at $\rho \geq 1000$\,m.
-Below this threshold, the system degenerates to near-zero acceptance under the
-current utility parameters. This is a joint consequence of the meeting point
-spacing (2\,km grid), the binary logit parameters, and the $U_0=0$ normalization;
-operators should re-evaluate this threshold using locally calibrated parameters.
-
-\paragraph{Fleet size.}
-We sweep $n_{\text{vehicles}} \in \{5, 10, 15, 20, 25, 30\}$ with
-$n_{\text{requests}} = 200$ fixed. FullModel acceptance peaks at
-\textbf{24.0\%} with $n_{\text{vehicles}} = 30$ (15 vehicles per 100
-requests). The marginal gain in acceptance rate diminishes beyond 20
-vehicles: adding vehicles 21--30 yields only 2.1 percentage points of
-additional acceptance, compared to 8.3 pp for vehicles 11--20. This
-diminishing returns pattern indicates that vehicle scarcity is the binding
-constraint at low fleet sizes, while at higher fleet sizes the binary logit outside
-option becomes the binding constraint.
-
-At $n_{\text{vehicles}} = 15$ (baseline), DoorToDoor acceptance exceeds
-FullModel by 43 percentage points (61.0\% vs.\ 18.3\%), confirming that
-door-to-door service is more robust under vehicle scarcity because it does
-not impose walking penalties. Operators should therefore ensure adequate
-fleet supply before deploying bidirectional meeting points.
-
-% -----------------------------------------------------------------------
-\subsection{Equity Analysis}
-% -----------------------------------------------------------------------
-
-Table~\ref{tab:main-results} reports aggregate acceptance rates, but these
-mask heterogeneity across passenger types. We disaggregate FullModel
-acceptance by type using the equity analysis described in Section~\ref{sec:experiments}.
-
-\paragraph{Per-type acceptance rates.}
-Price-sensitive passengers achieve the highest acceptance rate at
-\textbf{25.4\%}, followed by walk-sensitive passengers at \textbf{20.2\%},
-and time-sensitive passengers at \textbf{14.4\%}. The 11 percentage point
-gap between price-sensitive and time-sensitive passengers reflects a
-systematic disadvantage: time-sensitive passengers face longer in-vehicle
-travel times (avg IVT 1109.6\,s) and higher waiting times (avg 603.2\,s)
-relative to other types, making meeting-point offers less attractive under
-their utility function.
-
-\paragraph{Gini coefficient.}
-The Gini coefficient of per-type acceptance rates is \textbf{0.1216},
-indicating moderate inequality. Approximately 12\% of the total acceptance
-rate variation is attributable to passenger type rather than random demand
-variation. While this level of inequality is lower than that observed in
-DoorToDoor (Gini = 0.5385) and BidirectionalNoChoice (Gini = 0.4587), it
-remains a policy concern: time-sensitive passengers --- who may include
-commuters with rigid schedules or passengers with medical appointments ---
-are systematically less well served by the bidirectional meeting point system.
-
-\paragraph{Implications.}
-The equity analysis motivates Recommendation R3 in Section~\ref{sec:policy}:
-operators should monitor per-type acceptance rates and consider targeted
-interventions (fare subsidies, door-to-door fallback) for disadvantaged
-passenger segments. The Gini coefficient provides a single scalar metric
-for regulatory reporting.
-
-% -----------------------------------------------------------------------
-\subsection{Coverage--Efficiency Analysis and Social Welfare}
-\label{sec:pareto}
-% -----------------------------------------------------------------------
-
-To isolate the efficiency contribution of bidirectional meeting point assignment
-from coverage effects, we sweep the rejection penalty $\Gamma \in
-\{0, 5, 10, 20, 50, 100\}$ and record the resulting (served share, vkm per
-served trip, social welfare $W$) triple for FullModel at scale 200 (3 seeds).
-$\Gamma$ is a post-hoc parameter in the social welfare metric $W$ only; it does
-\emph{not} enter the binary logit acceptance probability or the routing
-objective. Consequently, the routing decisions and acceptance outcomes are
-identical across all $\Gamma$ values.
-
-Table~\ref{tab:pareto} and Figure~\ref{fig:pareto} present the results.
-
-\begin{table}[h]
-\centering
-\caption{Social welfare sensitivity to rejection penalty $\Gamma$
-(FullModel diagnostic run, scale 200, mean over seeds 42--44).}
-\label{tab:pareto}
-\begin{tabular}{rccr}
-\toprule
-$\Gamma$ & Served share & vkm / served trip & $W$ (mean) \\
-\midrule
-0   & 0.183 & 9.893 & $-$2783.5 \\
-5   & 0.183 & 9.893 & $-$3600.1 \\
-10  & 0.183 & 9.893 & $-$4416.8 \\
-20  & 0.183 & 9.893 & $-$6050.1 \\
-50  & 0.183 & 9.893 & $-$10950.1 \\
-100 & 0.183 & 9.893 & $-$19116.8 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.6\textwidth]{../figures/fig07_pareto}
-\caption{Social welfare $W$ as a function of rejection penalty $\Gamma$ for
-FullModel. Served share and vkm per served trip are constant across all
-$\Gamma$ values in this diagnostic run (0.183 and 9.893 respectively), confirming that $\Gamma$ is
-a post-hoc welfare parameter that does not affect routing or acceptance.
-The downward slope of $W$ reflects the increasing penalty applied to the
-fixed number of unserved passengers as $\Gamma$ rises.}
-\label{fig:pareto}
-\end{figure}
-
-\paragraph{Interpretation.}
-The key finding is that served share and vkm per served trip are \emph{invariant}
-to $\Gamma$ (Table~\ref{tab:pareto}): both metrics hold constant at 0.183 and
-9.893 across the full sweep. This confirms only that $\Gamma$ is a post-hoc
-welfare accounting parameter in this implementation; it is not used as evidence for
-the primary efficiency claim or the exploratory matched-coverage diagnostic.
-The social welfare metric $W$ decreases linearly as $\Gamma$ rises, reflecting
-the fixed number of unserved passengers (81.7\% of demand) being penalised more
-heavily. Operators can use $\Gamma$ to express their service mandate in the
-objective function without altering the underlying routing behavior: a
-coverage-focused operator selects high $\Gamma$ to make rejections costly in
-the welfare accounting; an efficiency-focused operator selects $\Gamma = 0$.
-
-% -----------------------------------------------------------------------
-\subsection{Weight Sensitivity Analysis}\label{subsec:weight-sensitivity}
-% -----------------------------------------------------------------------
-
-A natural concern is whether the efficiency advantage of FullModel over
-DoorToDoor depends on the specific objective weight configuration.
-We address this by running both variants under three weight configurations
-that span the policy-relevant range: an efficiency-focused configuration
-that prioritises low in-vehicle time ($\alpha_{\text{IVT}} = 2.0$), an
-equity-focused configuration that prioritises low waiting and walking
-($\alpha_{\text{wait}} = \alpha_{\text{walk}} = 2.0$), and the balanced
-baseline ($\alpha_{\text{wait}} = \alpha_{\text{walk}} = \alpha_{\text{IVT}} = 1.0$).
-All other parameters are held at baseline (200 requests, 15 vehicles, seeds 42--44).
-
-The key metric is vehicle-km per accepted trip (vkm/trip), which normalises
-for coverage differences across configurations and isolates routing efficiency.
-
-\begin{table}[h]
-\centering
-\caption{Weight sensitivity: vkm/trip for FullModel vs.\ DoorToDoor across three
-         objective weight configurations (mean $\pm$ std, 3 seeds, $n=200$, 15 vehicles).}
-\label{tab:weight-sensitivity}
-\begin{tabular}{lcccc}
-\toprule
-Weight config & $\alpha_{\text{wait}}, \alpha_{\text{walk}}, \alpha_{\text{IVT}}$ &
-FullModel vkm/trip & DoorToDoor vkm/trip & Reduction (\%) \\
-\midrule
-Efficiency-focused & 0.5,\ 0.5,\ 2.0 & $10.8 \pm 1.9$ & $15.5 \pm 0.6$ & 30.8 \\
-Equity-focused     & 2.0,\ 2.0,\ 0.5 & $10.7 \pm 2.6$ & $15.5 \pm 0.8$ & 31.4 \\
-Balanced (sensitivity run)& 1.0,\ 1.0,\ 1.0 & $10.6 \pm 2.1$ & $15.2 \pm 0.8$ & 30.5 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Across all three weight configurations, FullModel achieves lower vkm/trip than
-DoorToDoor, with reductions ranging from 30.5\% (balanced) to 31.4\%
-(equity-focused). This sensitivity run suggests that the efficiency advantage of
-bidirectional meeting point assignment is not driven only by the baseline objective
-weights.
-
-The equity-focused configuration yields the largest reduction because high
-$\alpha_{\text{walk}}$ penalises distant meeting points, constraining the
-system's ability to consolidate trips spatially; yet FullModel still benefits
-from bidirectional assignment. The efficiency-focused configuration yields a
-comparable reduction because high $\alpha_{\text{IVT}}$ incentivises tight
-routing, amplifying the benefit of meeting point consolidation.
-These patterns are consistent with the policy insights in
-Section~\ref{sec:policy}: operators in equity-sensitive contexts should expect
-similar efficiency gains from bidirectional meeting point deployment.
+Phase 4 will decide which final tables, figures, and numerical sentences remain in the
+main manuscript. The handoff is:
+\begin{itemize}
+  \item primary behavioral claims must trace to formal Phase 6 main behavioral outputs;
+  \item diagnostic coverage-confounding control claims must stay diagnostic;
+  \item fixed-accepted-set decomposition claims must name the fixed accepted-set scope;
+  \item robustness and passenger-type claims must stay conditional and limited;
+  \item Gamma claims must stay post-hoc;
+  \item algorithm diagnostic claims must stay scoped to simplified fixed-set diagnostics.
+\end{itemize}
+Any final value inserted in Phase 4 must use the claim ledger provenance fields:
+source path, script path, generation command, metric formula, numerator, denominator,
+evidence role, allowed sentence, and prohibited sentence. Until then, this section uses
+non-numeric wording and records the evidence families that require Phase 4 verification.
