@@ -130,8 +130,16 @@ Plans:
 
 Plans:
 
+**Wave 1**
+
 - [ ] 04-01: Refresh tables and figures from validated formal Phase 6 outputs.
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 04-02: Reconcile all reported numerical claims against the claim ledger and inject verified final values into manuscript sections.
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 04-03: Verify denominators, weight sensitivity, Gamma invariance, and source provenance.
 
 ### Phase 5: Verification and Readiness Closeout
