@@ -76,9 +76,9 @@ Recent decisions affecting current work:
 - [Phase 02]: 02-02 ledger rows are occurrence-level and may share claim_family_id values for cross-section grouping. — Supports section-level edits without losing manuscript-location traceability.
 - [Phase 02]: 02-02 matched coverage and fixed accepted-set evidence are diagnostic, not primary headline evidence. — Preserves the evidence-role boundary required for TR-E claim posture.
 - [Phase 02]: 02-02 formal numerical claims stay as Phase 4 placeholders until source, denominator, and wording are verified. — Prevents Phase 2 from injecting final values before provenance verification.
-- [Phase 02]: ﻿Claim statuses are limited to safe, safe_with_qualifier, downgrade_required, and blocker. — ﻿Plan 02-03 requires a closed status enum so later manuscript, provenance, and package phases route claims consistently.
-- [Phase 02]: ﻿Old values 18.3%, 29.1%, 35.0%, and 0.1216 are blockers until Phase 4 verifies provenance. — ﻿Project constraints prohibit final numerical injection before Phase 4 verifies formal evidence, denominators, formulas, and allowed wording.
-- [Phase 02]: ﻿Package-facing risks remain package_consistency or provenance-risk rows unless reused in submitted manuscript text. — ﻿Plan 02-03 keeps README, CLAUDE, cover, response, and figure-script comments separate from manuscript claim rows unless the text is reused for submission.
+- [Phase 02]: Claim statuses are limited to safe, safe_with_qualifier, downgrade_required, and blocker. - Plan 02-03 requires a closed status enum so later manuscript, provenance, and package phases route claims consistently.
+- [Phase 02]: Old values 18.3%, 29.1%, 35.0%, and 0.1216 are blockers until Phase 4 verifies provenance. - Project constraints prohibit final numerical injection before Phase 4 verifies formal evidence, denominators, formulas, and allowed wording.
+- [Phase 02]: Package-facing risks remain package_consistency or provenance-risk rows unless reused in submitted manuscript text. - Plan 02-03 keeps README, CLAUDE, cover, response, and figure-script comments separate from manuscript claim rows unless the text is reused for submission.
 
 ### Pending Todos
 
