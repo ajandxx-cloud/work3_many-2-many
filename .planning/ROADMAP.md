@@ -107,7 +107,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 03-03: Revise experiments narrative to separate evidence roles and denominators.
+- [x] 03-03: Revise experiments narrative to separate evidence roles and denominators.
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
@@ -164,6 +164,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 |-------|----------------|--------|-----------|
 | 1. Evidence Foundation and Milestone Setup | 3/3 | Complete | 2026-06-16 |
 | 2. TR-E Positioning Lock and Claim Ledger | 3/3 | Complete   | 2026-06-17 |
-| 3. TR-E Manuscript Repositioning | 2/4 | In Progress|  |
+| 3. TR-E Manuscript Repositioning | 3/4 | In Progress|  |
 | 4. Tables, Figures, and Numerical Provenance | 0/3 | Not started | - |
 | 5. Verification and Readiness Closeout | 0/3 | Not started | - |

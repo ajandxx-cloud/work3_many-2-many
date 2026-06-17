@@ -38,7 +38,7 @@ Requirements for the current initialization roadmap. Each requirement must map t
 - [x] **MANU-02**: Abstract is rewritten to emphasize logistics, service consolidation, dynamic routing, operational efficiency, passenger-response-aware offer design, evidence provenance, and conditional findings, but final concrete percentages, uplift values, confidence intervals, and table/figure references are not injected until Phase 4 verifies provenance.
 - [x] **MANU-03**: Introduction contribution list is rewritten as concise, defensible, evidence-consistent TR-E contributions, with final numerical claims deferred until Phase 4 provenance checks.
 - [x] **MANU-04**: Model and algorithm sections are revised only as needed to keep offer generation, passenger response, rolling horizon routing, Gamma semantics, and MILP scope clear and claim-consistent.
-- [ ] **MANU-05**: Experiments section separates main formal evidence, diagnostics, robustness/sensitivity, equity/type heterogeneity, and algorithm diagnostics.
+- [x] **MANU-05**: Experiments section separates main formal evidence, diagnostics, robustness/sensitivity, equity/type heterogeneity, and algorithm diagnostics.
 - [ ] **MANU-06**: Managerial and operational implications replace policy-first framing while retaining clearly labeled public-service implications where supported.
 - [ ] **MANU-07**: Conclusion states conditional contributions, formal evidence boundaries, limitations, and future work without overclaiming, with final concrete numerical claims deferred until Phase 4 provenance checks.
 - [x] **MANU-08**: Elsevier-style prose is polished, and bullet-style contribution lists are converted to acceptable academic prose or concise list form when needed.
@@ -125,7 +125,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | MANU-02 | Phase 3 | Complete |
 | MANU-03 | Phase 3 | Complete |
 | MANU-04 | Phase 3 | Complete |
-| MANU-05 | Phase 3 | Pending |
+| MANU-05 | Phase 3 | Complete |
 | MANU-06 | Phase 3 | Pending |
 | MANU-07 | Phase 3 | Pending |
 | MANU-08 | Phase 3 | Complete |
