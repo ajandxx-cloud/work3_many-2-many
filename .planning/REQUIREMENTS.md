@@ -12,7 +12,7 @@ Requirements for the current initialization roadmap. Each requirement must map t
 - [x] **PLAN-01**: Project has a milestone folder at `.planning/milestones/tr_e_claim_ready/` containing the required milestone artifacts.
 - [x] **PLAN-02**: Project has `00_MILESTONE_PLAN.md` defining execution order, evidence boundaries, manuscript touchpoints, and verification gates.
 - [x] **PLAN-03**: Project has `01_REPO_AND_EVIDENCE_AUDIT.md` documenting canonical source files, canonical evidence packages, non-canonical archives/smoke outputs, and current repository risks.
-- [ ] **PLAN-04**: Project has `05_BLOCKERS_AND_SAFE_CLAIMS.md` identifying claim-critical blockers, safe claims, downgraded claims, and prohibited wording.
+- [x] **PLAN-04**: Project has `05_BLOCKERS_AND_SAFE_CLAIMS.md` identifying claim-critical blockers, safe claims, downgraded claims, and prohibited wording.
 
 ### TR-E Positioning
 
@@ -108,7 +108,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PLAN-01 | Phase 1 | Complete |
 | PLAN-02 | Phase 1 | Complete |
 | PLAN-03 | Phase 1 | Complete |
-| PLAN-04 | Phase 2 | Pending |
+| PLAN-04 | Phase 2 | Complete |
 | POSE-01 | Phase 3 | Pending |
 | POSE-02 | Phase 3 | Pending |
 | POSE-03 | Phase 3 | Pending |
