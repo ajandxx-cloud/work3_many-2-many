@@ -1,31 +1,37 @@
 \begin{abstract}
-Demand-responsive transit (DRT) offers flexible mobility in low-density urban areas,
-but door-to-door service is operationally costly and difficult to scale.
-Meeting-point-based DRT reduces vehicle detours by consolidating pickups and dropoffs
-at pre-defined locations, yet existing work assigns meeting points only on the pickup
-side and ignores passenger heterogeneity in mode choice.
-We address this gap by proposing a many-to-many DRT framework with bidirectional meeting
-point sets ($M_r^P$ for pickup, $M_r^D$ for dropoff) and simulated passenger response
-via single-offer binary logit acceptance with three passenger types and an outside option.
-The model is formulated as a coupled three-layer system --- service offer generation,
-passenger response, and dynamic dispatch --- and solved with an ex-post MILP routing
-diagnostic for small instances and a rolling horizon Adaptive
-Large Neighborhood Search (ALNS) heuristic for large-scale deployment.
-Numerical experiments on stylized scenarios inspired by Chinese suburban conditions
-show that, under the unconstrained comparison (FullModel 18.3\%
-vs.\ DoorToDoor 61.0\% served share), FullModel achieves 15.1\,vkm/trip versus
-21.3\,vkm/trip (29.1\% improvement).
-A separate matched-coverage diagnostic suggests that the efficiency advantage
-persists after coverage differences are reduced, but this diagnostic is treated
-as exploratory rather than as the primary headline estimate.
-Equity analysis across passenger types reveals a Gini coefficient of 0.1216 in
-acceptance rates: time-sensitive passengers are systematically disadvantaged
-(14.4\% acceptance) relative to price-sensitive (25.4\%) and walk-sensitive (20.2\%)
-passengers.
-Based on these findings, we derive five scenario-specific policy implications for
-DRT deployment in low-density Chinese urban areas.
+Many-to-many demand-responsive transit (DRT) systems must balance route consolidation,
+passenger convenience, and fleet responsiveness under uncertain request arrivals.
+Meeting-point service designs can reduce routing intensity by consolidating passenger
+pickups and dropoffs, but they also expose operators to acceptance losses when walking,
+waiting, or in-vehicle burdens make an offer unattractive. This paper studies
+bidirectional meeting-point DRT service design in which both pickup and dropoff
+locations are selected from candidate meeting-point sets, passenger response is
+represented through single-offer binary-logit acceptance, and vehicle routes are updated
+through rolling-horizon operations.
+
+We develop a passenger-response-aware simulation framework that links service offer
+generation, binary-logit passenger response, and rolling-horizon dispatch. The framework
+is used to compare door-to-door service, single-sided meeting-point service,
+bidirectional service without choice, and the full passenger-response-aware design under
+tested synthetic service-design conditions. The formal evidence is interpreted as
+conditional operational evidence: bidirectional pickup and dropoff consolidation can
+lower vehicle-kilometres per served trip when accepted requests are spatially compatible,
+while also reducing served share and shifting rejection between passenger-choice and
+routing-feasibility channels. Diagnostic coverage controls, fixed-accepted-set routing
+decompositions, robustness checks, passenger-type heterogeneity analyses, post-hoc
+welfare accounting, and algorithm diagnostics are treated separately from the primary
+behavioral comparison.
+
+The results support a logistics and operations reading of meeting-point DRT as a
+service-design trade-off rather than a universal improvement. Under the tested
+conditions, passenger-response-aware bidirectional meeting-point consolidation can
+reduce routing intensity per served trip, but operators must monitor coverage loss,
+choice rejection, feasibility rejection, and simulated passenger-type heterogeneity.
+The study therefore contributes operational service-design evidence for many-to-many DRT
+systems and clarifies the evidence boundaries for future empirical calibration and
+public-data validation.
 \end{abstract}
 
 \begin{keyword}
-demand-responsive transit \sep meeting points \sep passenger choice \sep ALNS \sep rolling horizon \sep equity
+demand-responsive transit \sep meeting points \sep passenger choice \sep rolling horizon \sep service design \sep logistics
 \end{keyword}
