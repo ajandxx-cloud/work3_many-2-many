@@ -16,8 +16,8 @@ Requirements for the current initialization roadmap. Each requirement must map t
 
 ### TR-E Positioning
 
-- [ ] **POSE-01**: README, manuscript metadata, and project-facing documentation touched by this milestone consistently target Transportation Research Part E: Logistics and Transportation Review.
-- [ ] **POSE-02**: Manuscript title, abstract, introduction, and contribution framing present the work as a logistics/operations contribution rather than a TR Part A policy-first contribution.
+- [x] **POSE-01**: README, manuscript metadata, and project-facing documentation touched by this milestone consistently target Transportation Research Part E: Logistics and Transportation Review.
+- [x] **POSE-02**: Manuscript title, abstract, introduction, and contribution framing present the work as a logistics/operations contribution rather than a TR Part A policy-first contribution.
 - [ ] **POSE-03**: Literature review connects the paper to DARP, meeting-point DRT, dynamic DRT routing, on-demand mobility logistics, service consolidation, passenger choice, and rolling-horizon operations.
 - [ ] **POSE-04**: The policy section is reframed as managerial and operational implications for service design, fleet deployment, consolidation, coverage-efficiency trade-offs, and passenger-segment monitoring.
 
@@ -27,21 +27,21 @@ Requirements for the current initialization roadmap. Each requirement must map t
 - [x] **CLAI-02**: Project has `03_CLAIM_LEDGER.md` mapping each manuscript claim with mandatory columns: `source_path`, `script_path`, `generation_command`, `metric_formula`, `numerator`, `denominator`, `evidence_role`, `allowed_sentence`, and `prohibited_sentence`, plus manuscript location, comparison, metric, and reported number where applicable.
 - [x] **CLAI-03**: Every numerical claim in abstract, introduction, experiments, managerial/operational implications, and conclusion appears in the claim ledger.
 - [x] **CLAI-04**: Claims distinguish primary behavioral evidence, matched-coverage diagnostic evidence, fixed-accepted-set diagnostic evidence, robustness/sensitivity evidence, equity/type heterogeneity evidence, algorithm diagnostics, and limitations.
-- [ ] **CLAI-05**: Manuscript does not state or imply that FullModel universally dominates DoorToDoor or all baselines.
+- [x] **CLAI-05**: Manuscript does not state or imply that FullModel universally dominates DoorToDoor or all baselines.
 - [ ] **CLAI-06**: Manuscript describes Gamma only as post-hoc welfare accounting unless endogenous Gamma behavior is implemented and tested in a separate future milestone.
 - [ ] **CLAI-07**: Manuscript describes the Beijing scenario as Beijing-inspired or semi-realistic synthetic grid unless real public data ingestion is implemented.
 - [ ] **CLAI-08**: Manuscript describes the MILP only as a simplified ex-post routing diagnostic for fixed accepted sets, not a full exact dynamic routing benchmark or ALNS near-optimality proof.
 
 ### Manuscript Revision
 
-- [ ] **MANU-01**: `manuscript/main.tex` journal field is updated from Transportation Research Part A to Transportation Research Part E: Logistics and Transportation Review.
-- [ ] **MANU-02**: Abstract is rewritten to emphasize logistics, service consolidation, dynamic routing, operational efficiency, passenger-response-aware offer design, evidence provenance, and conditional findings, but final concrete percentages, uplift values, confidence intervals, and table/figure references are not injected until Phase 4 verifies provenance.
-- [ ] **MANU-03**: Introduction contribution list is rewritten as concise, defensible, evidence-consistent TR-E contributions, with final numerical claims deferred until Phase 4 provenance checks.
+- [x] **MANU-01**: `manuscript/main.tex` journal field is updated from Transportation Research Part A to Transportation Research Part E: Logistics and Transportation Review.
+- [x] **MANU-02**: Abstract is rewritten to emphasize logistics, service consolidation, dynamic routing, operational efficiency, passenger-response-aware offer design, evidence provenance, and conditional findings, but final concrete percentages, uplift values, confidence intervals, and table/figure references are not injected until Phase 4 verifies provenance.
+- [x] **MANU-03**: Introduction contribution list is rewritten as concise, defensible, evidence-consistent TR-E contributions, with final numerical claims deferred until Phase 4 provenance checks.
 - [ ] **MANU-04**: Model and algorithm sections are revised only as needed to keep offer generation, passenger response, rolling horizon routing, Gamma semantics, and MILP scope clear and claim-consistent.
 - [ ] **MANU-05**: Experiments section separates main formal evidence, diagnostics, robustness/sensitivity, equity/type heterogeneity, and algorithm diagnostics.
 - [ ] **MANU-06**: Managerial and operational implications replace policy-first framing while retaining clearly labeled public-service implications where supported.
 - [ ] **MANU-07**: Conclusion states conditional contributions, formal evidence boundaries, limitations, and future work without overclaiming, with final concrete numerical claims deferred until Phase 4 provenance checks.
-- [ ] **MANU-08**: Elsevier-style prose is polished, and bullet-style contribution lists are converted to acceptable academic prose or concise list form when needed.
+- [x] **MANU-08**: Elsevier-style prose is polished, and bullet-style contribution lists are converted to acceptable academic prose or concise list form when needed.
 
 ### Tables Figures And Provenance
 
@@ -109,26 +109,26 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PLAN-02 | Phase 1 | Complete |
 | PLAN-03 | Phase 1 | Complete |
 | PLAN-04 | Phase 2 | Complete |
-| POSE-01 | Phase 3 | Pending |
-| POSE-02 | Phase 3 | Pending |
+| POSE-01 | Phase 3 | Complete |
+| POSE-02 | Phase 3 | Complete |
 | POSE-03 | Phase 3 | Pending |
 | POSE-04 | Phase 3 | Pending |
 | CLAI-01 | Phase 2 | Complete |
 | CLAI-02 | Phase 2 | Complete |
 | CLAI-03 | Phase 2 | Complete |
 | CLAI-04 | Phase 2 | Complete |
-| CLAI-05 | Phase 3 | Pending |
+| CLAI-05 | Phase 3 | Complete |
 | CLAI-06 | Phase 3 | Pending |
 | CLAI-07 | Phase 3 | Pending |
 | CLAI-08 | Phase 3 | Pending |
-| MANU-01 | Phase 3 | Pending |
-| MANU-02 | Phase 3 | Pending |
-| MANU-03 | Phase 3 | Pending |
+| MANU-01 | Phase 3 | Complete |
+| MANU-02 | Phase 3 | Complete |
+| MANU-03 | Phase 3 | Complete |
 | MANU-04 | Phase 3 | Pending |
 | MANU-05 | Phase 3 | Pending |
 | MANU-06 | Phase 3 | Pending |
 | MANU-07 | Phase 3 | Pending |
-| MANU-08 | Phase 3 | Pending |
+| MANU-08 | Phase 3 | Complete |
 | TFIG-01 | Phase 4 | Pending |
 | TFIG-02 | Phase 4 | Pending |
 | TFIG-03 | Phase 4 | Pending |
