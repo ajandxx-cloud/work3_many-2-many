@@ -404,17 +404,17 @@ $env:PYTHONPATH='src'; python -m experiments.phase06_robustness --validate --pac
 | A1 | A Markdown table is sufficient for the claim ledger even though CSV would be easier to machine-validate. [ASSUMED] | Standard Stack | If planner requires stronger automation, it may need an auxiliary validator script or a CSV-export companion. |
 | A2 | ASVS applicability is limited because Phase 2 writes planning docs and does not add a service, auth, session, database, or network boundary. [ASSUMED] | Security Domain | If hidden automation is added, security controls must be expanded. |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Should `03_CLAIM_LEDGER.md` include an auxiliary machine-readable appendix?**
    - What we know: The user locked a Markdown artifact path and mandatory columns. [CITED: .planning/phases/02-tr-e-positioning-lock-and-claim-ledger/02-CONTEXT.md]
-   - What's unclear: Whether downstream Phase 4 would benefit from a parallel CSV copy. [ASSUMED]
-   - Recommendation: Keep Phase 2 deliverable as Markdown; planner may add a validation snippet but should not create extra artifacts unless needed. [ASSUMED]
+   - Resolution: No auxiliary CSV or machine-readable appendix is required for Phase 2. The Phase 2 deliverable remains `03_CLAIM_LEDGER.md`; CSV export is deferred/not required unless a later phase explicitly adds it as a new requirement. [RESOLVED]
+   - Planning rule: Use Markdown schema and coverage validation snippets inside the plan rather than creating extra artifacts in Phase 2. [RESOLVED]
 
 2. **How many current manuscript claims should be included as full rows?**
    - What we know: One row per manuscript claim occurrence is locked. [CITED: .planning/phases/02-tr-e-positioning-lock-and-claim-ledger/02-CONTEXT.md]
-   - What's unclear: Exact line-by-line claim boundary requires manual judgment because LaTeX sentences can span lines and clauses. [VERIFIED: manuscript scan 2026-06-17]
-   - Recommendation: Treat each claim-bearing sentence or bullet as one occurrence; split multi-metric sentences into separate rows when different evidence roles or denominators apply. [ASSUMED]
+   - Resolution: Phase 2 execution must cover every current and planned manuscript claim in `manuscript/main.tex` and all `manuscript/sections/*.tex`, not only regex-detected numerical hits. Each claim-bearing sentence, bullet, caption-like manuscript reference, or claim-bearing clause gets an occurrence-level `claim_id`; multi-metric sentences are split when evidence roles, denominators, or actions differ. [RESOLVED]
+   - Planning rule: `03_CLAIM_LEDGER.md` must include a coverage inventory with reviewed line ranges for every target manuscript file and either mapped claim IDs or an explicit no-claim note. [RESOLVED]
 
 ## Environment Availability
 
