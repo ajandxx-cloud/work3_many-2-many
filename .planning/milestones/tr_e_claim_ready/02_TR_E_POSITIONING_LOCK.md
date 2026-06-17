@@ -107,3 +107,85 @@ logistics/operations journal-fit rationale.
   near-optimality proof.
 - Do not use the `TR-E submission-ready` label before Phase 5 hard readiness
   gates pass.
+
+## Evidence Role Boundaries
+
+| Evidence role | How Phase 3 may use it | Prohibited use |
+|---------------|------------------------|----------------|
+| `primary_behavioral` | Main conditional operational-efficiency, served-share, coverage, acceptance, rejection, and denominator claims after Phase 4 verifies provenance from `results/formal/phase06/main_behavioral/` and `results/formal/phase06/tables/`. | Universal dominance, equal-coverage dominance, real-world validation, or final numerical wording before Phase 4. |
+| `diagnostic_matched_coverage` | Use only as a diagnostic explanation of coverage confounding and sensitivity to served-share matching. Each sentence must carry a diagnostic qualifier. | Primary headline estimate, equal-service proof, or replacement for the main behavioral comparison. |
+| `diagnostic_fixed_accepted_set` | Use only to explain routing and meeting-point decomposition over fixed accepted sets. Each sentence must identify the accepted-set constraint. | Complete online behavioral benchmark, dynamic routing optimum, or evidence of passenger-response-aware routing control. |
+| `robustness_sensitivity` | Use for conditional service-design boundaries, sensitivity patterns, and robustness qualifications after Phase 4 checks any reported values. | Unbounded generalization, causal service-design proof, or final numerical wording before Phase 4. |
+| `equity_type_heterogeneity` | Use for limited passenger-type heterogeneity and monitoring implications, with burden and fairness wording qualified by Phase 4 verification. | Real population equity conclusions, welfare dominance, or unsupported passenger-burden precision. |
+| `algorithm_diagnostic` | Use for simplified ex-post method diagnostics, algorithm-scope explanation, and limitations. | ALNS near-optimality proof, complete exact dynamic benchmark, or claim that MILP validates the full online routing process. |
+| `limitation` | Use to state explicit evidence and model boundaries, including synthetic scenario scope, post-hoc Gamma, fixed accepted-set diagnostics, and future work. | Converting known gaps into manuscript claims or implying that deferred v2 work already exists. |
+
+Qualifier locks:
+
+| Boundary item | Required qualifier | Prohibited promotion |
+|---------------|--------------------|----------------------|
+| Matched coverage | `diagnostic coverage-confounding control` | Primary equal-service headline claim. |
+| Fixed accepted set | `diagnostic decomposition over fixed accepted sets` | Complete dynamic benchmark or behavioral-routing optimum. |
+| MILP | `simplified ex-post diagnostic over fixed accepted sets` | Full exact dynamic benchmark, complete benchmark, or ALNS near-optimality proof. |
+| Gamma/Pareto | `post-hoc welfare or sensitivity accounting` | Endogenous behavior, routing control, offer-generation control, acceptance control, policy control, or behaviorally endogenous Pareto optimization. |
+
+## Safe Sentences Phase 3 May Use
+
+- This study provides operational service-design evidence for many-to-many DRT
+  meeting-point consolidation under tested synthetic service-design
+  conditions.
+- We develop a passenger-response-aware simulation framework that evaluates
+  bidirectional meeting-point offers, binary-logit passenger response, and
+  rolling-horizon routing as an integrated service-design experiment.
+- Passenger-response-aware bidirectional meeting-point consolidation can reduce routing intensity per served trip under tested synthetic service-design conditions, while creating measurable coverage and passenger-type trade-offs.
+- Matched-coverage results may be discussed only as a diagnostic
+  coverage-confounding control, not as the primary estimate.
+- Fixed-accepted-set results may be discussed only as a diagnostic
+  decomposition over fixed accepted sets, not as a complete dynamic benchmark.
+- Gamma/Pareto outputs may be discussed only as post-hoc welfare or
+  sensitivity accounting, not as behavioral policy control.
+- MILP outputs may be discussed only as a simplified ex-post diagnostic over
+  fixed accepted sets, not as evidence of a full exact dynamic benchmark or
+  ALNS near-optimality.
+- Beijing scenario language must say Beijing-inspired synthetic grid or
+  semi-realistic synthetic grid unless future/v2 work implements real public
+  data ingestion.
+
+## Downstream Routing
+
+| Issue or claim family | Owner | Required handling |
+|-----------------------|-------|-------------------|
+| Non-numeric TR-E positioning, contribution framing, section framing, mechanism-scope wording, public-service implication framing, Beijing wording, Gamma scope wording, and MILP scope wording | Phase 3 | Rewrite or qualify prose using this lock, without final percentages, confidence intervals, significance wording, table numbers, or figure numbers. |
+| Final percentages, improvement values, confidence intervals, significance language, table/figure references, denominator-dependent claims, table outputs, figure outputs, and numerical claim provenance | Phase 4 | Verify source path, script path, generation command, metric formula, numerator, denominator, evidence role, allowed sentence, and prohibited sentence before final injection. |
+| Package/readiness verification, final prohibited-wording scans, targeted tests, formal validation status, manuscript compilation, table/figure provenance completeness, and final readiness classification | Phase 5 | Record exact commands, outputs, source paths, pass/fail status, manuscript impact, and readiness classification. |
+| Real Beijing public-data ingestion, empirically calibrated passenger behavior, endogenous Gamma behavior, behaviorally endogenous Pareto optimization, and full exact dynamic benchmark | future/v2 | Defer as future model or evidence work; do not imply these capabilities exist in the current manuscript package. |
+
+Failure routing:
+
+| Failure | Route |
+|---------|-------|
+| Unsafe framing without a numerical dependency | Route to Phase 3 for non-numeric wording correction. |
+| Unsafe or unverified final number | Route to Phase 4 for provenance reconciliation or removal. |
+| Diagnostic evidence appears as primary evidence | Route to Phase 2 claim ledger/blocker table if unmapped, then Phase 3 wording correction. |
+| Readiness label appears before all gates pass | Route to Phase 5 readiness closeout and downgrade the label. |
+| Required evidence or model capability does not exist | Route to future/v2 and state the gap as a limitation. |
+
+## Readiness Label Boundary
+
+`TR-E submission-ready` is not allowed before Phase 5 hard gates pass.
+
+The label may appear only in the Phase 5 final readiness report after all of
+the following are true or documented with no submission impact:
+
+- manuscript compilation passes;
+- formal validation passes;
+- targeted tests pass;
+- numerical claim-ledger coverage is complete;
+- all manuscript tables and figures trace to `results/formal/phase06/`;
+- prohibited wording scans are clean.
+
+If any hard gate fails or remains incomplete, the readiness label must be one
+of:
+
+- `TR-E near-ready with minor blockers`;
+- `not ready due to specific blockers`.
