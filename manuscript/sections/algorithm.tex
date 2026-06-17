@@ -117,7 +117,7 @@ objective in a welfare-consistent manner remains a direction for future work.
 
 \paragraph{Rejection penalty (post-hoc only).}
 The rejection penalty $\Gamma$ enters only the social welfare metric
-$W = \sum_r [z_r U_{rb^*} - (1-z_r)\Gamma]$ (Section~\ref{sec:pareto}),
+$W = \sum_r [z_r U_{rb^*} - (1-z_r)\Gamma]$ (Section~\ref{sec:experiments}),
 which is a post-hoc evaluation tool. $\Gamma$ does \emph{not} enter the bundle
 selection, the routing objective, or the binary logit acceptance probability.
 The acceptance probability $P_{\text{accept}}(b^*)$ is invariant to $\Gamma$.
@@ -279,7 +279,7 @@ requests grows.
 On the 200-request, 15-vehicle simulation instances, the average decision time per
 request is below 1 second, satisfying the real-time requirement of online DRT operation.
 The simplified ex-post diagnostic over fixed accepted sets (Section~\ref{subsec:milp})
-compares ALNS routing with the diagnostic MILP solution for a fixed accepted set
-on small instances (gaps of 99--170\% for $n = 20$--30; see Table~\ref{tab:milp-gap}).
-These gaps reflect the limited fixed-set diagnostic setup, not an assessment of overall
-solution quality, since the MILP does not model stochastic passenger response.
+compares ALNS routing with the diagnostic MILP solution for a fixed accepted set on small
+instances. These diagnostic differences reflect the limited fixed-set setup, not an
+assessment of overall solution quality, since the MILP does not model stochastic
+passenger response.
