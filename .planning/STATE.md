@@ -88,9 +88,9 @@ None yet.
 
 ### Blockers/Concerns
 
-- README and manuscript metadata still contain TR Part A framing and must be revised during Phase 3.
-- Existing codebase concerns note default `pytest` collection and dependency metadata risks that may affect verification.
-- Phase 3 must not lock final numerical values before Phase 4 table/figure provenance checks.
+- Phase 4 must verify every concrete numerical claim against canonical `results/formal/phase06/` evidence before injection.
+- Package-facing files such as the cover letter, response template, and figure-script comments still need later consistency review before submission packaging.
+- Default `pytest` collection may require the documented `PYTHONPATH=src` or editable-install workflow.
 
 ## Deferred Items
 
@@ -101,6 +101,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-17T13:16:03.783Z
-Stopped at: Completed 03-04-PLAN.md
+Last session: 2026-06-17T13:21:48.765Z
+Stopped at: Phase 03 complete (4/4) - ready to discuss Phase 4
 Resume file: None
