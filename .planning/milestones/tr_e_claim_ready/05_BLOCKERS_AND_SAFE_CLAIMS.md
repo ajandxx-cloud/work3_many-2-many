@@ -1,0 +1,97 @@
+# Blockers And Safe Claims
+
+## Purpose
+
+This artifact routes unsafe wording, unverified values, diagnostic promotions,
+package-facing consistency risks, and future-evidence gaps to the downstream
+phase that owns them.
+
+It is a Phase 2 planning and claim-control artifact. It does not rewrite
+manuscript prose, change package-facing files, edit result files, rerun
+experiments, or authorize final numerical wording before Phase 4.
+
+Use this file with:
+
+- `.planning/milestones/tr_e_claim_ready/02_TR_E_POSITIONING_LOCK.md`
+- `.planning/milestones/tr_e_claim_ready/03_CLAIM_LEDGER.md`
+- `.planning/milestones/tr_e_claim_ready/04_MANUSCRIPT_ACTION_PLAN.md`
+
+## Claim Status Enum
+
+Only these four claim statuses are allowed in this artifact.
+
+| status | Meaning | Allowed handling | Prohibited handling |
+|--------|---------|------------------|---------------------|
+| `safe` | The claim family is already evidence-bounded and does not require a diagnostic or provenance qualifier beyond ordinary citation. | Phase 3 may retain or lightly polish non-numeric wording; Phase 4 verifies any final values if values are present elsewhere. | Do not promote this status to a readiness label or use it to skip Phase 4 numerical checks. |
+| `safe_with_qualifier` | The claim family is usable only with an explicit qualifier such as diagnostic, synthetic, post-hoc, limited, or tested-setting wording. | Phase 3 may use qualified wording; Phase 4 verifies final values and denominators if mentioned. | Do not use as a primary headline, universal conclusion, real-world validation, or exactness claim. |
+| `downgrade_required` | The current wording or placement overstates the evidence and must be recast as diagnostic, limitation, package risk, or non-numeric conditional wording. | Phase 3 rewrites wording or moves it to a lower-evidence role; Phase 4 checks any values; Phase 5 scans that the downgrade remains. | Do not retain in current form or treat as `primary_behavioral`. |
+| `blocker` | The current wording, value, path, or readiness label cannot survive until the owning phase resolves it. | Block until the owner phase verifies, removes, downgrades, or explicitly defers the issue. | Do not retain in final manuscript/package text without the owner-phase action and verification check. |
+
+Old values `18.3%`, `29.1%`, `35.0%`, and `0.1216` are `blocker` rows with the
+blocking condition `blocker until Phase 4 verified`. Phase 3 may not retain
+those values or replace them with other final values.
+
+## Risk Family Rules
+
+| risk_family | Trigger | Default status | evidence_role | Owner phase | Required action | Allowed replacement pattern | Verification check |
+|-------------|---------|----------------|---------------|-------------|-----------------|-----------------------------|--------------------|
+| `old_numbers` | Current text contains `18.3%`, `29.1%`, `35.0%`, `0.1216`, or related old headline values. | `blocker` | `primary_behavioral`, `robustness_sensitivity`, or `equity_type_heterogeneity` depending on location | Phase 4 | Treat as `blocker until Phase 4 verified`; remove final values during Phase 3 or replace with placeholders only. | Use `[PHASE4_VERIFIED_VALUE]`, `[PHASE4_VERIFIED_CI]`, `[PHASE4_VERIFIED_TABLE]`, or non-numeric conditional wording. | `rg -n "18\.3|29\.1|35\.0|0\.1216" manuscript README.md CLAUDE.md` plus Phase 4 provenance check against `03_CLAIM_LEDGER.md`. |
+| `part_a_tr_a` | Text targets Transportation Research Part A, TR Part A, TR-A, or Part A framing. | `blocker` for manuscript metadata; `downgrade_required` for package-facing notes | `positioning` or `package_consistency` | Phase 3 for manuscript wording; Phase 5 for package-facing consistency | Reframe target and journal fit to TR-E logistics and operations. | `Transportation Research Part E: Logistics and Transportation Review`; `operational service-design evidence`. | `rg -n "Transportation Research Part A|TR Part A|TR-A|Part A" manuscript README.md CLAUDE.md` and package scan in Phase 5. |
+| `policy_first` | Policy-first contribution, `Policy Implications` as primary framing, decision-tool wording, or recommendations stated as policy prescriptions. | `downgrade_required` | `positioning` or `package_consistency` | Phase 3 | Recast as managerial and operational implications or bounded public-service implications. | `managerial and operational implications`; `service-design implications`; `bounded public-service implications`. | `rg -n "policy|Policy Implications|decision tool|recommendation" manuscript README.md CLAUDE.md`. |
+| `dominance_outperform` | Generic dominance, superiority, improvement, gain, or outperformance language without metric and trade-off qualifiers. | `downgrade_required` | `primary_behavioral` or `robustness_sensitivity` | Phase 3 and Phase 4 | Replace with metric-specific conditional wording and pair lower routing intensity with served-share and passenger-type trade-offs. | `conditional lower routing intensity with coverage and passenger-type trade-offs`. | `rg -n "dominates|dominance|outperform|outperforms|superior|improvement|gain" manuscript README.md CLAUDE.md`. |
+| `gamma_pareto` | Gamma, Pareto, welfare, or frontier wording implies routing control, offer control, acceptance control, policy control, or endogenous behavior. | `safe_with_qualifier` if post-hoc; otherwise `downgrade_required` or `blocker` | `robustness_sensitivity` or `limitation` | Phase 3 and Phase 4; future/v2 for endogenous behavior | Label as post-hoc accounting or move endogenous claims to future work. | `post-hoc welfare or sensitivity accounting`. | `rg -n "Gamma|gamma|Pareto|welfare" manuscript README.md CLAUDE.md manuscript/figures/scripts`. |
+| `beijing_validation` | Beijing wording implies real-world validation, empirical case-study evidence, public-data ingestion, or external validity beyond the synthetic scenario. | `blocker` for real-world validation; `safe_with_qualifier` for synthetic scenario wording | `robustness_sensitivity` or `limitation` | Phase 3; future/v2 for real public data | Use synthetic-scenario qualifier or defer empirical validation to future/v2. | `Beijing-inspired synthetic grid`; `semi-realistic synthetic grid`; `real Beijing validation remains future work`. | `rg -n "Beijing|real-world|validation|semi-realistic" manuscript README.md CLAUDE.md`. |
+| `milp_exactness` | MILP, exact, optimality gap, benchmark, or near-optimal wording implies a full dynamic benchmark or ALNS proof. | `safe_with_qualifier` for diagnostic scope; `blocker` for exactness proof | `algorithm_diagnostic` or `limitation` | Phase 3 and Phase 4; future/v2 for full exact dynamic benchmark | Label as a simplified ex-post diagnostic over fixed accepted sets. | `simplified ex-post diagnostic over fixed accepted sets`. | `rg -n "MILP|exact|near-optimal|optimality gap|benchmark" manuscript README.md CLAUDE.md`. |
+| `legacy_result_paths` | Text, scripts, or package docs rely on root legacy paths such as `results/synthetic_results.csv`, `results/beijing_results.csv`, `results/metrics_table.csv`, or `results/pareto_gamma_sweep.csv`. | `blocker` if used for formal claims; `package_consistency` risk otherwise | `package_consistency`, `robustness_sensitivity`, or `limitation` | Phase 4 for provenance; Phase 5 for package consistency | Replace with formal Phase 6 paths or label as non-canonical historical/diagnostic material. | `results/formal/phase06/` formal evidence paths only for formal claims. | `rg -n "results/synthetic_results\.csv|results/beijing_results\.csv|results/metrics_table\.csv|results/pareto_gamma_sweep\.csv" manuscript README.md CLAUDE.md manuscript/figures/scripts`. |
+| `premature_readiness` | `TR-E submission-ready`, `submission-ready`, or equivalent readiness claims appear before Phase 5 gates. | `blocker` | `limitation` or `package_consistency` | Phase 5 | Remove or downgrade until final readiness closeout proves all gates. | `TR-E near-ready with minor blockers` or `not ready due to specific blockers` unless Phase 5 hard gates pass. | `rg -n "TR-E submission-ready|submission-ready" manuscript README.md CLAUDE.md .planning/milestones/tr_e_claim_ready`. |
+| `diagnostic_promotion` | Matched coverage, fixed accepted set, robustness, equity/type, Gamma/Pareto, MILP, or ALNS diagnostics are written as headline primary evidence. | `downgrade_required` | `diagnostic_matched_coverage`, `diagnostic_fixed_accepted_set`, `robustness_sensitivity`, `equity_type_heterogeneity`, or `algorithm_diagnostic` | Phase 3 and Phase 4 | Add explicit diagnostic qualifier and keep separate from primary behavioral evidence. | `diagnostic coverage-confounding control`; `diagnostic decomposition over fixed accepted sets`; `formal diagnostics, not headline evidence`. | Cross-check `03_CLAIM_LEDGER.md` evidence_role values and run targeted wording scans above. |
+| `package_consistency` | README, CLAUDE, cover letter, response file, or figure-script comments conflict with current TR-E/evidence boundaries but are not full manuscript claim rows unless reused. | `downgrade_required` or `blocker` depending on submission reuse | `package_consistency` | Phase 5; Phase 3 if wording is reused in manuscript | Track as package-facing risk unless final submission use requires full claim-ledger treatment. | `package-facing consistency risk`; `provenance-risk row`; safe manuscript wording only if reused. | Scan `README.md`, `CLAUDE.md`, `manuscript/cover_letter.tex`, `manuscript/response_to_reviewers.tex`, and `manuscript/figures/scripts`. |
+
+## Safe Claim Families
+
+| claim_family_id | Status | evidence_role | Safe claim rule | Required qualifier | Downstream owner |
+|-----------------|--------|---------------|-----------------|--------------------|------------------|
+| `F-routing-intensity` | `safe_with_qualifier` | `primary_behavioral` | FullModel may be described as having lower routing intensity per served trip only under tested synthetic service-design conditions and only with coverage and passenger-response trade-offs. | Conditional tested-setting wording; Phase 4-verified denominator and value if numerical. | Phase 3 wording; Phase 4 values. |
+| `F-coverage-tradeoff` | `safe_with_qualifier` | `primary_behavioral` or `robustness_sensitivity` | Served share, coverage, acceptance, and rejection claims must travel with denominator and evidence-role labels. | Phase 4-verified denominators; no universal service-quality claims. | Phase 3 wording; Phase 4 values. |
+| `F-mechanism-scope` | `safe` | `mechanism_scope` | The framework may be described as a passenger-response-aware simulation framework. | Do not imply endogenous routing over acceptance probability. | Phase 3. |
+| `F-policy-framing` | `downgrade_required` | `positioning` | Policy-first wording must become managerial and operational implications or bounded public-service implications. | Logistics and operations framing; no deployable decision-tool claim. | Phase 3. |
+| `F-gamma` | `safe_with_qualifier` | `robustness_sensitivity` or `limitation` | Gamma may be described only as post-hoc welfare or sensitivity accounting. | No routing, offer-generation, acceptance, policy-control, or endogenous Pareto wording. | Phase 3 and Phase 4; future/v2 for endogenous behavior. |
+| `F-beijing` | `safe_with_qualifier` | `robustness_sensitivity` or `limitation` | Beijing evidence must be described as Beijing-inspired synthetic grid or semi-realistic synthetic grid. | Real public-data validation remains future/v2 unless implemented. | Phase 3; future/v2. |
+| `F-milp` | `safe_with_qualifier` | `algorithm_diagnostic` or `limitation` | MILP may be described only as a simplified ex-post diagnostic over fixed accepted sets. | No complete dynamic benchmark or ALNS near-optimality proof. | Phase 3 and Phase 4; future/v2 for full exact benchmark. |
+| `F-diagnostic-evidence` | `safe_with_qualifier` | diagnostic roles only | Matched coverage, fixed accepted set, robustness, equity/type, Gamma/Pareto, and algorithm diagnostics remain separate from primary evidence. | Every diagnostic sentence needs an explicit diagnostic qualifier. | Phase 3 and Phase 4. |
+| `F-equity-type` | `safe_with_qualifier` | `equity_type_heterogeneity` | Passenger-type findings may support limited monitoring or heterogeneity implications. | No real population equity conclusion; Phase 4 verifies values and burden metrics. | Phase 3 and Phase 4. |
+| `F-limitations` | `safe` | `limitation` | Future work may state real data ingestion, endogenous Gamma behavior, and stronger exact benchmark gaps. | Do not imply deferred capabilities exist now. | Phase 3 and future/v2. |
+
+## Downgrade And Blocker Routing
+
+| Issue type | Status rule | Owner phase | Required downstream action |
+|------------|-------------|-------------|----------------------------|
+| Wording-only TR-E positioning, mechanism scope, policy-first, Beijing wording, Gamma semantics, MILP scope, and dominance/outperform wording | `downgrade_required` unless already `safe_with_qualifier` | Phase 3 | Rewrite non-numeric wording without final evidence-dependent values. |
+| Final percentages, improvement values, confidence intervals, significance statements, table numbers, figure numbers, and denominator-dependent values | `blocker` until proven | Phase 4 | Verify `source_path`, `script_path`, `generation_command`, `metric_formula`, `numerator`, `denominator`, `evidence_role`, and allowed/prohibited wording against `03_CLAIM_LEDGER.md`. |
+| Package-facing README, CLAUDE, cover letter, response file, and figure-script comments | `package_consistency` risk using one of the four statuses above | Phase 5 unless reused in manuscript | Scan and clean package-facing files; promote to full claim-ledger treatment only if reused in submitted material. |
+| Readiness labels and final readiness classification | `blocker` unless Phase 5 gates pass | Phase 5 | Run formal validation, targeted tests, manuscript compilation, claim-ledger coverage checks, table/figure provenance checks, and prohibited wording scans. |
+| Real Beijing public-data validation, empirically calibrated choice behavior, endogenous Gamma behavior, behaviorally endogenous Pareto optimization, or full exact dynamic benchmark | `blocker` if claimed now; otherwise `safe` as limitation | future/v2 | Defer as future model/evidence work and state as limitation. |
+
+## Concrete Hit List
+
+Task 2 populates this table from fixed scan commands. Rows must use these
+columns and stable IDs such as `B-001`.
+
+| issue_id | location | matched_text_or_pattern | risk_family | status | evidence_role | owner_phase | required_action | allowed_replacement | verification_check |
+|----------|----------|-------------------------|-------------|--------|---------------|-------------|-----------------|---------------------|--------------------|
+| `B-TBD` | `pending Task 2 scan` | `pending Task 2 scan` | `diagnostic_promotion` | `downgrade_required` | `limitation` | Phase 3 | Populate concrete scan-backed rows before Phase 2 closeout. | Use the safe replacement patterns in this artifact. | Run the fixed scan commands listed in the plan and replace this row. |
+
+## Phase 5 Verification Checklist
+
+| Check | Owner | Pass condition | Command or source |
+|-------|-------|----------------|-------------------|
+| Status enum check | Phase 5 | Only `safe`, `safe_with_qualifier`, `downgrade_required`, and `blocker` appear as statuses. | Inspect this artifact and rerun schema checks from `02-03-PLAN.md`. |
+| Old-number scan | Phase 4 then Phase 5 | Old values are absent from final text or explicitly Phase 4-verified with provenance. | `rg -n "18\.3|29\.1|35\.0|0\.1216" manuscript README.md CLAUDE.md`. |
+| TR-E framing scan | Phase 3 then Phase 5 | Part A/TR-A target wording is absent from final manuscript and package-facing material unless historical and explicitly labeled. | `rg -n "Transportation Research Part A|TR Part A|TR-A|Part A" manuscript README.md CLAUDE.md`. |
+| Policy-first scan | Phase 3 then Phase 5 | Policy-first and decision-tool wording is reframed as managerial and operational implications or bounded public-service implications. | `rg -n "policy|Policy Implications|decision tool|recommendation" manuscript README.md CLAUDE.md`. |
+| Diagnostic promotion scan | Phase 3 then Phase 5 | Diagnostics are explicitly labeled and do not become primary behavioral evidence. | Cross-check `03_CLAIM_LEDGER.md` evidence roles plus risk-family scans. |
+| Formal evidence provenance | Phase 4 then Phase 5 | All manuscript tables, figures, and values trace to `results/formal/phase06/` and required generation commands. | `$env:PYTHONPATH='src'; python -m experiments.formal_statistics --validate --results-dir results/formal/phase06`. |
+| Coverage controls validation | Phase 4 then Phase 5 | Matched-coverage and fixed-accepted-set diagnostics remain diagnostic and validation status is documented. | `$env:PYTHONPATH='src'; python -m experiments.phase06_coverage_controls --validate --package all`. |
+| Robustness and algorithm diagnostics validation | Phase 4 then Phase 5 | Robustness, equity/type, Gamma/Pareto, MILP, and algorithm diagnostics remain formal diagnostics with isolated provenance. | `$env:PYTHONPATH='src'; python -m experiments.phase06_robustness --validate --package all`. |
+| Readiness label gate | Phase 5 | `TR-E submission-ready` appears only in the final readiness report after all hard gates pass. | `rg -n "TR-E submission-ready|submission-ready" manuscript README.md CLAUDE.md .planning/milestones/tr_e_claim_ready`. |
+
