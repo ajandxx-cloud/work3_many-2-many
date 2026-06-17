@@ -1,74 +1,43 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
-This paper addressed the problem of online optimization of bidirectional meeting point
-assignment and dynamic routing for many-to-many demand-responsive transit (DRT) with
-simulated passenger response via binary logit acceptance.
-We formulated the problem as a coupled three-layer model --- service offer generation,
-binary logit passenger response, and dynamic vehicle dispatch --- and solved it
-with an ex-post MILP routing diagnostic for small instances and a
-rolling horizon Adaptive Large Neighborhood Search (ALNS) heuristic for large-scale
-deployment.
-Numerical experiments on stylized scenarios inspired by Chinese suburban conditions
-demonstrated that, under the unconstrained comparison (FullModel 18.3\% vs.\ DoorToDoor 61.0\%), FullModel achieves
-15.1\,vkm/trip versus 21.3\,vkm/trip for DoorToDoor (29.1\% improvement).
-A separate matched-coverage diagnostic suggests that this efficiency advantage
-persists when served shares are brought closer together, but we treat that estimate
-as exploratory because it is produced by a separate diagnostic run.
-This result suggests that selecting both pickup meeting points ($M_r^P$) and
-dropoff meeting points ($M_r^D$), while simulating heterogeneous passenger acceptance,
-can yield operational efficiency gains over conventional door-to-door and single-sided
-meeting point approaches.
+This paper studied passenger-response-aware bidirectional meeting-point DRT service
+design for many-to-many operations. The framework links candidate pickup and dropoff
+meeting-point generation, single-offer binary-logit passenger response, and
+rolling-horizon dispatch. It is designed to evaluate operational trade-offs: whether
+meeting-point consolidation can reduce routing intensity for served trips under tested
+synthetic service-design conditions, and what happens to coverage, choice rejection,
+feasibility rejection, and simulated passenger-type heterogeneity when that
+consolidation is introduced.
 
-The paper made four contributions to the DRT literature.
-First, we proposed a simulation framework combining bidirectional meeting
-point sets, binary logit passenger acceptance with heterogeneous types, and
-rolling horizon re-optimisation for many-to-many DRT, extending prior work
-that considered only single-sided meeting points \citep{cortenbach2024} or omitted
-passenger choice \citep{wu2025}.
-Second, we used an ex-post MILP routing diagnostic and a rolling horizon ALNS
-heuristic as the computational vehicle for studying the bidirectional dial-a-ride
-problem with simulated endogenous demand.
-Third, we empirically demonstrated a 29.1\% gain in per-trip vehicle utilization
-under the unconstrained comparison, reported a separate exploratory matched-coverage
-diagnostic, and conducted
-ablation experiments that isolated the contributions of bidirectional meeting points,
-rolling horizon scheduling, and passenger-response modeling.
-Fourth, we performed an equity analysis across three passenger types, revealing a Gini
-coefficient of 0.1216 in acceptance rates: time-sensitive passengers are systematically
-disadvantaged (14.4\% acceptance) relative to price-sensitive (25.4\%) and walk-sensitive
-(20.2\%) passengers, a finding with direct implications for service equity in Chinese
-low-density urban areas.
+The contribution is conditional. Under the tested simulation settings,
+bidirectional meeting-point consolidation can produce lower routing intensity among
+served trips, but this signal must be interpreted with the accompanying coverage and
+passenger-type trade-offs. The full passenger-response-aware design is therefore not a
+universal substitute for door-to-door service. It is an operational design option whose
+usefulness depends on demand density, fleet deployment, walking tolerance, and the
+quality of offers presented to passengers.
 
-The policy implications of these findings are organized into five scenario-specific
-insights for Chinese city DRT operators.
-In our simulation setting, bidirectional meeting point deployment yields meaningful
-efficiency gains at walking radius $\rho = 1000$~m in the tested grid, and lower
-fleet ratios reduce service quality due to vehicle scarcity. These scenario-specific
-findings, together with the illustrative three-tier deployment
-framework, provide simulation-based guidance for DRT operators and urban
-planners designing or scaling DRT services in low-density Chinese urban areas.
+The paper also clarifies evidence boundaries for future manuscript and package work.
+Primary behavioral claims should be based on formal Phase 6 evidence and should report
+the relevant denominators. Matched-coverage, fixed-accepted-set, robustness,
+passenger-type, Gamma, Beijing-inspired, and algorithm materials are diagnostic,
+robustness, monitoring, or limitation evidence unless Phase 4 verifies stronger
+source-specific wording. Gamma remains post-hoc welfare or sensitivity accounting. The
+Beijing-related evidence remains synthetic. The MILP remains a simplified ex-post
+diagnostic over fixed accepted sets.
 
-Several limitations of this study should be acknowledged.
-The binary logit utility parameters ($\beta$ coefficients for fare, waiting time, and walking
-distance) were calibrated from simulation rather than from real passenger survey data;
-future work should validate these parameters against stated or revealed preference surveys
-from Chinese DRT users.
-The numerical experiments rely on stylized synthetic scenarios; validation
-against real GPS trajectories and smart card data from operational Chinese DRT systems
-remains an important direction for future research.
-Additionally, the set of candidate meeting point locations $M$ is treated as a given
-input; the joint optimization of meeting point placement and vehicle routing is outside
-the scope of this paper and represents a natural extension.
+Several limitations remain. The passenger-response parameters are simulation inputs, not
+empirical calibration from real users. The scenarios are synthetic or Beijing-inspired
+rather than public-data validations. Passenger types represent service-sensitivity
+ranges, not real demographic groups. The routing diagnostic is simplified and fixed-set,
+not a complete dynamic exact model. These limitations are important because they define
+what the current evidence can and cannot support.
 
-Building on these limitations, we identify four directions for future research.
-First, real-data validation using GPS and smart card data from Chinese city DRT pilots
-would strengthen the empirical grounding of the model.
-Second, anticipatory and lookahead extensions to the rolling horizon framework — such as
-scenario-based stochastic optimization \citep{bent2004} — could improve performance
-under high demand uncertainty.
-Third, incorporating time-dependent travel times would make the model more realistic for
-peak-hour DRT operations in congested urban networks.
-Fourth, the joint design of meeting point placement and dynamic routing represents
-a promising research frontier that would unify the location and scheduling decisions
-currently treated separately in the literature.
+Future work should address these boundaries directly. Real public-data ingestion and
+field calibration would support empirical passenger-response estimates. Endogenous
+Gamma behavior would require a model in which welfare accounting affects offer or
+routing decisions by design. Stronger exact methods would be needed to compare the full
+online behavioral process rather than a fixed accepted set. More detailed passenger data
+would also allow passenger-type monitoring to be replaced by empirically grounded
+equity and burden analysis.

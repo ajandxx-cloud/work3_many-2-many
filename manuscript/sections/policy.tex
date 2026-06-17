@@ -1,293 +1,64 @@
-% Section 6: Policy Implications
-% Word target: ~1000 words
+\section{Managerial and Operational Implications}\label{sec:policy}
 
-\section{Policy Implications}\label{sec:policy}
+The evidence in Section~\ref{sec:experiments} is best read as tested simulation evidence
+for DRT service design. It does not provide deployment rules or a production planning
+tool. The implications below translate the model into bounded design considerations for
+operators who are deciding whether and how to test bidirectional meeting-point service.
 
-The numerical experiments in Section~\ref{sec:experiments} provide
-simulation-based guidance for DRT deployment decisions in Chinese cities.
-Bidirectional meeting point systems offer substantial vehicle efficiency
-gains, but their viability depends critically on walking tolerance, fleet
-supply, and demand density. This section translates the experimental
-findings into five scenario-specific insights for DRT operators and urban
-planners, framed for the low-density suburban contexts where DRT is most
-commonly deployed in China.
+\subsection{Walking Tolerance as a Design Consideration}
 
-% -----------------------------------------------------------------------
-\subsection{R1: Walking Radius Threshold is Scenario-Specific}
-% -----------------------------------------------------------------------
+Walking tolerance is the first constraint on bidirectional meeting-point consolidation.
+When candidate pickup and dropoff points require too much walking, the binary-logit
+response layer shifts otherwise feasible offers into choice rejection. Operators should
+therefore treat walking-radius settings as local calibration parameters rather than
+fixed rules. A practical pilot should observe pedestrian network quality, stop spacing,
+weather exposure, safety conditions, and user willingness to walk before expanding the
+service design.
 
-\paragraph{Evidence.}
-The sensitivity analysis (Section~\ref{sec:experiments}) shows that
-FullModel acceptance rate is \textbf{0.0\%} at $\rho \leq 400$\,m and
-rises to \textbf{9.0\%} at $\rho = 1000$\,m. Below this threshold in the tested setup,
-the binary logit utility penalty for walking is so large that no meeting-point offer
-clears the outside option, and the bidirectional system delivers no
-efficiency benefit over door-to-door service. At $\rho = 1000$\,m, FullModel vehicle-km is 219.7 versus 1693.8 for
-DoorToDoor in the standard density tier. This reduction in total vehicle-km
-partly reflects the lower served share (9.0\% vs.\ 58\%) and should not be
-interpreted as an equal-coverage efficiency gain.
+\subsection{Fleet Deployment and Coverage Risk}
 
-\paragraph{Policy implication.}
-DRT operators in Chinese cities should treat this as a local calibration question and conduct walking tolerance surveys
-before deploying bidirectional meeting points. Districts where residents
-routinely walk more than 1000\,m to transit stops --- common in suburban
-areas with sparse bus networks --- are prime candidates. Districts with
-elderly-dominant populations or poor pedestrian infrastructure (inadequate
-lighting, missing footpaths) should retain door-to-door service. Operators
-should pilot bidirectional meeting points with opt-in enrollment, allowing
-passengers to self-select based on their own walking tolerance before
-system-wide rollout. The 1000\,m value should be treated as a simulation
-threshold under our parameterization, not as a universal minimum radius.
+Fleet deployment affects whether meeting-point consolidation can translate into useful
+service. Additional vehicles can reduce infeasibility and waiting burdens, but the
+passenger-response layer can still constrain served share when walking or delay burdens
+remain high. Operators should therefore evaluate vehicle-km per served trip together
+with vehicle-km per original request, served share, choice rejection, and feasibility
+rejection. A lower routing intensity signal is operationally meaningful only when the
+coverage and rejection consequences are visible.
 
-\paragraph{Generalizability caveat (placed before recommendation).}
-The 1000\,m threshold is specific to our synthetic scenario: a $20 \times 20$\,km
-service area with a $10 \times 10$ meeting point grid at 2\,km spacing, uniform spatial
-demand, and binary logit utility parameters as specified in
-Equations~\ref{eq:beta-price}--\ref{eq:beta-walk} (see also
-Table~\ref{tab:passenger-types} and Section~\ref{subsec:vot-mapping}).
-The 1000\,m value emerges from the interaction of three experimental factors:
-(a) the meeting point spacing of 2\,km (nearest MP $\leq$ 1414\,m), (b) the specific
-$\beta_1$ values, and (c) the $U_0 = 0$ outside option normalization. Changing any
-of these factors would shift the threshold.
-Real-world walking tolerance depends critically on pedestrian infrastructure
-(lighting, footpath continuity, crossing safety), user demographics (age, mobility),
-and local land use (weather exposure, shade, gradient).
-In contexts with superior pedestrian infrastructure or a younger, more active user
-base, a lower threshold may suffice; in contexts with adverse infrastructure or
-elderly-dominant populations, even 500\,m may be excessive.
-Operators should conduct local walking tolerance surveys --- or re-calibrate the
-$\beta_1$ parameter against observed acceptance data --- before applying this
-threshold to a specific deployment.
-This finding should be treated as a scenario-specific managerial insight,
-not a universal prescription.
+\subsection{Consolidation Trade-Off}
 
-% -----------------------------------------------------------------------
-\subsection{R2: Fleet Ratio Insight from the Synthetic Peak-Period Scenario}
-% -----------------------------------------------------------------------
+Bidirectional pickup and dropoff consolidation is not a universal replacement for
+door-to-door service. It is a service-design option for conditions in which accepted
+requests are spatially compatible and passenger burdens remain acceptable. Door-to-door,
+single-sided pickup, and bidirectional service can coexist as operating modes. The
+managerial question is which mode fits a demand density, fleet supply, walking tolerance,
+and reliability target, not whether one mode is globally dominant.
 
-\paragraph{Evidence.}
-Fleet size sensitivity analysis shows that FullModel acceptance peaks at
-\textbf{24.0\%} with $n_{\text{vehicles}} = 30$ for 200 requests (15.0
-vehicles per 100 requests). Diminishing returns set in beyond 20 vehicles:
-the marginal acceptance gain per additional vehicle drops sharply after this
-point. At $n_{\text{vehicles}} = 15$ (baseline), DoorToDoor acceptance
-exceeds FullModel by \textbf{43 percentage points} (61.0\% vs.\ 18.3\%), confirming that
-door-to-door service is more robust under vehicle scarcity because it does
-not impose walking penalties on passengers.
+\subsection{Passenger-Segment Monitoring}
 
-\paragraph{Policy implication.}
-In the tested 200-request synthetic horizon, the high-fleet endpoint of
-15 vehicles per 100 requests gives the highest FullModel acceptance. This
-should be interpreted as a stress-test insight rather than a budgeting rule.
-A system with too few
-vehicles will achieve lower acceptance than a simple door-to-door service,
-while still imposing walking burdens on passengers. Operators can phase in
-vehicles incrementally, using the sensitivity curve (Figure~\ref{fig:sensitivity})
-to project service quality at each fleet size under locally observed demand.
-Bidirectional meeting points deliver their greatest advantage when fleet supply
-is sufficient to offset the acceptance penalty from walking.
+The passenger-type results should be used as monitoring evidence for simulated
+heterogeneity. They suggest that operators should inspect acceptance and burden patterns
+by passenger segment when piloting meeting-point service. This monitoring can support
+fallback design, opt-in rules, fare experiments, or differentiated service offers, but it
+does not establish field equity effects. Passenger-segment monitoring should be
+paired with empirical calibration before it is used for external reporting.
 
-\paragraph{Generalizability caveat (placed before recommendation).}
-The 15-vehicles-per-100-requests ratio is derived from a synthetic
-scenario with 200 requests over a 4-hour planning horizon, uniform
-spatial demand on a $20 \times 20$\,km grid, and 8-passenger vehicles.
-It should be treated as an order-of-magnitude guideline, not a universal planning norm.
-With 200 requests served by 30 vehicles over a 4-hour horizon, the average
-load is approximately 6.7 requests per vehicle (200/30), or 1.7 requests per
-vehicle per hour on average. For full-day planning, operators should scale
-based on hourly demand patterns rather than applying the ratio directly to daily totals.
-Actual fleet requirements depend on demand clustering (concentrated demand can be
-served with fewer vehicles than dispersed demand at the same total request count),
-temporal patterns (peak-hour concentration vs.\ uniform arrivals), vehicle
-capacity, and local walking tolerance.
-In high-density corridors with spatially concentrated demand, the effective ratio
-may be lower; in dispersed suburban scenarios with low demand density, it may be
-substantially higher.
-Operators should use the fleet size sensitivity curve (Figure~\ref{fig:sensitivity})
-as a calibration tool with locally observed demand patterns rather than applying
-the 15-per-100 figure directly.
+\subsection{Validation Limits and Diagnostic Evidence}
 
-% -----------------------------------------------------------------------
-\subsection{R3: Monitor Time-Sensitive Passengers for Service Equity}
-% -----------------------------------------------------------------------
+Several evidence layers support interpretation without becoming headline evidence.
+Matched coverage is a diagnostic coverage-confounding control. Fixed accepted sets are a
+diagnostic decomposition over fixed accepted sets. Gamma outputs are post-hoc welfare or
+sensitivity accounting and do not alter routing, offer generation, or acceptance. The
+Beijing-inspired synthetic grid is a tested simulation setting, not field validation. The
+MILP comparison is a simplified ex-post diagnostic over fixed accepted sets, not a
+complete dynamic routing standard. These validation limit statements should remain with
+any operational interpretation of the findings.
 
-\paragraph{Evidence.}
-Equity analysis across three passenger types shows that time-sensitive
-passengers have the lowest acceptance rate (\textbf{14.4\%}), compared to
-price-sensitive (\textbf{25.4\%}) and walk-sensitive (\textbf{20.2\%})
-passengers. Time-sensitive passengers face longer in-vehicle travel times
-(avg IVT 1109.6\,s) and higher waiting times (avg 603.2\,s) relative to
-other types, making meeting-point offers less attractive under their utility
-function. The Gini coefficient of per-type acceptance rates is
-\textbf{0.1216}, indicating moderate but policy-relevant inequality.
+\subsection{Calibration-Dependent VOT Interpretation}\label{subsec:vot-mapping}
 
-\paragraph{Policy implication.}
-DRT operators should track per-type acceptance rates in real deployments.
-If time-sensitive passengers are disproportionately rejected, operators
-should consider: (a) adjusting utility weights to reduce the penalty
-for this type; (b) offering a door-to-door fallback option for passengers
-who opt out of meeting-point service; or (c) subsidizing the disadvantaged
-type through reduced fares or priority dispatch. Regulatory bodies in
-Chinese cities should require DRT operators to report disaggregated
-acceptance rates by passenger segment as a condition of operating licenses.
-This aligns with TR Part A's equity mandate for public transit policy and
-provides a measurable accountability mechanism for service providers.
-
-% -----------------------------------------------------------------------
-\subsection{R4: Match Service Mode to City Density Tier}
-% -----------------------------------------------------------------------
-
-\paragraph{Evidence.}
-The standard scenario (200 requests, 15 vehicles) shows FullModel
-vehicle-km = 552.0 versus DoorToDoor = 2603.7, a \textbf{78.8\%} reduction
-in total vehicle-km. This total-distance comparison is coverage-confounded
-because FullModel serves fewer trips; the equal-coverage comparison in
-Section~\ref{sec:experiments} should be used for efficiency claims. The
-pattern is also density-dependent: at low demand levels
-(100 requests per 4-hour horizon in a $20\,\text{km} \times 20\,\text{km}$
-service zone), FullModel acceptance approaches 0\% at $\rho = 500$\,m,
-while DoorToDoor remains viable. The three-tier framework below should be
-read as an illustrative deployment heuristic for the tested simulation setup.
-
-\paragraph{Policy implication.}
-An illustrative three-tier deployment framework for the tested setting is:
-\begin{itemize}
-  \item \textbf{Tier 1} ($>$300 requests per 4-hour horizon in the service zone): Bidirectional
-        meeting points with binary logit choice model. Demand density is
-        sufficient to generate spatially compatible request clusters, and
-        the vehicle-km reductions may justify
-        the system complexity and passenger walking burden.
-  \item \textbf{Tier 2} (100--300 requests per 4-hour horizon): Single-sided pickup meeting
-        points with door-to-door dropoff. This hybrid mode captures
-        approximately half the vehicle-km savings of full bidirectional
-        assignment while reducing the walking burden to pickup only.
-  \item \textbf{Tier 3} ($<$100 requests per 4-hour horizon): Door-to-door service.
-        Meeting point overhead exceeds efficiency gains at low demand
-        levels; the system cannot generate enough spatially compatible
-        clusters to justify passenger walking.
-\end{itemize}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=\columnwidth]{../figures/fig06_policy_map}
-\caption{Illustrative deployment map: service mode by demand density and walking tolerance in the tested simulation setting.}
-\label{fig:policy-map}
-\end{figure}
-
-% -----------------------------------------------------------------------
-\subsection{R5: Deploy Rolling Horizon Re-optimization for Dynamic Demand}
-% -----------------------------------------------------------------------
-
-\paragraph{Evidence.}
-The AblationNoRollingHorizon experiment shows a \textbf{16.6\%} increase in
-vehicle-km when rolling horizon re-optimization is disabled (668.5 vs.\
-552.0\,vkm). More critically, average waiting time rises from 454.2\,s
-(FullModel) to \textbf{3114.5\,s} without rolling horizon --- a 6.9-fold
-increase. Static greedy assignment cannot correct early routing decisions
-as new requests arrive, leading to cascading delays and inefficient vehicle
-positioning.
-
-\paragraph{Policy implication.}
-DRT operators should implement rolling horizon re-optimization with a
-planning window $H \geq 30$ minutes and a re-optimization time step
-$\Delta = 5$ minutes. The computational overhead is acceptable: average
-decision time per request remains below 1 second on instances with 200
-requests and 15 vehicles, making real-time deployment feasible on standard
-server hardware. Chinese city operators should plan for cloud-based dispatch
-systems rather than on-vehicle computation, enabling centralized
-re-optimization across the full fleet. Static assignment (greedy insertion
-without re-optimization) performed poorly in our dynamic-demand simulation and
-should be treated cautiously in production deployments of bidirectional DRT.
-
-\paragraph{Deployment summary.}
-Operators should assess three factors before choosing a service mode:
-(1) walking tolerance of the target population; (2) fleet supply relative
-to peak-period demand; and (3) demand density in requests per horizon and
-per service area. In our simulation, non-zero bidirectional acceptance emerged
-at $\rho = 1000$\,m and improved with larger fleets, but these values require
-local recalibration before deployment. The three-tier framework in R4 and the deployment map in
-Figure~\ref{fig:policy-map} provide a practical decision tool for Chinese
-city DRT planners navigating these trade-offs.
-
-% -----------------------------------------------------------------------
-\subsection{Objective Weight Interpretation via Value of Time}\label{subsec:vot-mapping}
-% -----------------------------------------------------------------------
-
-The objective weights $\alpha_1, \ldots, \alpha_4$ in Equation~(\ref{eq:objective})
-are dimensionless scaling parameters. The rejection penalty $\Gamma$ in the social
-welfare metric (Equation~\ref{eq:welfare}) is a separate post-hoc policy parameter.
-To support policy interpretation, we map the routing weights to monetary equivalents
-using the \emph{value of time} (VOT) framework standard in transport economics.
-The VOT for each service attribute is the marginal willingness to pay (in CNY per
-minute) to reduce that attribute by one unit, holding utility constant.
-
-For the binary logit utility function (Equation~\ref{eq:utility}), the implied VOT for
-passenger type $k$ is:
-\begin{equation}\label{eq:vot-formula}
-  \text{VOT}_{\text{wait}}^k = \frac{|\beta_2^k|}{|\beta_4^k|}, \quad
-  \text{VOT}_{\text{IVT}}^k  = \frac{|\beta_3^k|}{|\beta_4^k|}, \quad
-  \text{VOT}_{\text{walk}}^k = \frac{|\beta_1^k|}{|\beta_4^k|} \cdot v_w,
-\end{equation}
-where $v_w = 80$\,m/min is the assumed walking speed and
-$\text{VOT}_{\text{walk}}^k$ converts from CNY/meter (the natural ratio
-of $\beta_1$ in utility/meter and $\beta_4$ in utility/CNY) to CNY/min.
-
-Table~\ref{tab:vot-mapping} reports the implied VOT for each passenger type
-alongside the Chinese urban VOT benchmarks from \citet{shao2017} and
-\citet{li2020drt}.
-
-\begin{table}[h]
-\centering
-\caption{Implied VOT from binary logit parameters vs.\ Chinese urban VOT literature (CNY/min)}
-\label{tab:vot-mapping}
-\begin{tabular}{lcccccc}
-\toprule
- & \multicolumn{3}{c}{Implied VOT (this paper)} & \multicolumn{3}{c}{Literature range} \\
-\cmidrule(lr){2-4}\cmidrule(lr){5-7}
-Passenger type & Walk & Wait & IVT & Walk & Wait & IVT \\
-\midrule
-Price-sensitive  & 2.667 & 0.267 & 0.133 & \multirow{3}{*}{0.4--0.6} & \multirow{3}{*}{0.8--1.2} & \multirow{3}{*}{0.2--0.4} \\
-Time-sensitive   & 13.333 & 3.333 & 2.667 & & & \\
-Walk-sensitive   & 32.000 & 0.800 & 0.400 & & & \\
-\midrule
-\multicolumn{4}{l}{\textit{Literature benchmark (Shao et al.\ 2017; Li et al.\ 2020)}} & 0.5 & 1.0 & 0.3 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph{Interpretation.}
-The walk-sensitive type's implied wait VOT (0.80\,CNY/min) and IVT VOT
-(0.40\,CNY/min) fall within the Chinese urban benchmark ranges of 0.8--1.2
-and 0.2--0.4\,CNY/min respectively, confirming that the parameter calibration
-is behaviorally plausible for the target population \citep{shao2017,li2020drt}.
-The time-sensitive type's high wait VOT (3.33\,CNY/min) reflects the extreme
-schedule rigidity of commuters with fixed appointments; this is consistent with
-peak-hour commuter surveys in Chinese cities \citep{shao2017}.
-The price-sensitive type's low wait and IVT VOT reflects passengers who
-prioritise fare savings over time, consistent with the low-income suburban
-DRT user profile documented in \citet{li2020drt}.
-
-The walk VOT values for all three types (2.67, 13.33, and 32.00\,CNY/min)
-exceed the literature walking VOT range of 0.4--0.6\,CNY/min. These high values
-reflect the strong walking disutility assumed in the calibration: particularly
-for the walk-sensitive type ($\beta_1^{\text{walk}} = -0.020$\,utils/meter),
-the coefficient implies an extremely high walking time valuation once converted
-through walking speed (80\,m/min). This is a calibration limitation: the
-$\beta_1$ values were chosen to represent qualitative ordering among passenger
-types rather than calibrated against revealed-preference data.
-For types with low price sensitivity (low $|\beta_4|$), the implied walk VOT
-is further inflated. The wait and IVT VOT values (0.27--3.33 and 0.13--2.67\,CNY/min
-respectively) are the primary policy-relevant benchmarks; the walk VOT should
-be treated as an upper bound pending empirical calibration. Accordingly, the
-walking-radius threshold, equity gap, and type-specific acceptance rates reported
-above should be read as calibration-dependent numerical illustrations rather than
-transferable behavioral estimates. This limitation is discussed further in
-Section~\ref{sec:conclusion}.
-
-The objective weights $\alpha_2$ (waiting) and $\alpha_3$ (walking) in the
-baseline configuration ($\alpha_2 = \alpha_3 = 1.0$) implicitly weight these
-attributes equally in vehicle-km equivalent units. Operators who wish to
-prioritise service equity for walk-sensitive passengers should increase
-$\alpha_3$ relative to $\alpha_1$; the weight sensitivity analysis in
-Section~\ref{subsec:weight-sensitivity} shows that qualitative conclusions
-are robust across a range of weight configurations.
+The value-of-time interpretation of the utility coefficients is calibration-dependent.
+The coefficients define the simulated passenger-type sensitivities used in this study;
+they should not be interpreted as validated values for a particular population. Operators
+who want to use the framework for local planning should estimate or stress-test walking,
+waiting, in-vehicle time, and fare sensitivities from local stated-preference,
+revealed-preference, or pilot acceptance data before drawing operational conclusions.
