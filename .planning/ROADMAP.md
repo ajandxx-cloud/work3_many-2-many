@@ -67,9 +67,17 @@ Plans:
 
 Plans:
 
-- [ ] 02-01: Write TR-E positioning lock and journal-fit rationale.
-- [ ] 02-02: Build claim ledger from manuscript claims and Phase 6 formal evidence with hard provenance and denominator columns.
-- [ ] 02-03: Create blockers and safe-claims table with prohibited wording.
+**Wave 1**
+
+- [ ] 02-01-PLAN.md - Write TR-E positioning lock and journal-fit rationale.
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 02-02-PLAN.md - Build claim ledger from manuscript claims and Phase 6 formal evidence with hard provenance and denominator columns.
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 02-03-PLAN.md - Create blockers and safe-claims table with prohibited wording.
 
 ### Phase 3: TR-E Manuscript Repositioning
 
