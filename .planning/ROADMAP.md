@@ -103,7 +103,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 03-02: Revise literature review, model, and algorithm sections for TR-E positioning and scope clarity.
+- [x] 03-02: Revise literature review, model, and algorithm sections for TR-E positioning and scope clarity.
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -164,6 +164,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 |-------|----------------|--------|-----------|
 | 1. Evidence Foundation and Milestone Setup | 3/3 | Complete | 2026-06-16 |
 | 2. TR-E Positioning Lock and Claim Ledger | 3/3 | Complete   | 2026-06-17 |
-| 3. TR-E Manuscript Repositioning | 1/4 | In Progress|  |
+| 3. TR-E Manuscript Repositioning | 2/4 | In Progress|  |
 | 4. Tables, Figures, and Numerical Provenance | 0/3 | Not started | - |
 | 5. Verification and Readiness Closeout | 0/3 | Not started | - |
