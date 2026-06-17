@@ -69,7 +69,7 @@ Plans:
 
 **Wave 1**
 
-- [ ] 02-01-PLAN.md - Write TR-E positioning lock and journal-fit rationale.
+- [x] 02-01-PLAN.md - Write TR-E positioning lock and journal-fit rationale.
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -152,7 +152,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Evidence Foundation and Milestone Setup | 3/3 | Complete | 2026-06-16 |
-| 2. TR-E Positioning Lock and Claim Ledger | 0/3 | Not started | - |
+| 2. TR-E Positioning Lock and Claim Ledger | 1/3 | In Progress|  |
 | 3. TR-E Manuscript Repositioning | 0/4 | Not started | - |
 | 4. Tables, Figures, and Numerical Provenance | 0/3 | Not started | - |
 | 5. Verification and Readiness Closeout | 0/3 | Not started | - |
