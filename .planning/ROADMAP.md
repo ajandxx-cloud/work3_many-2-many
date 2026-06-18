@@ -14,7 +14,7 @@ This roadmap converts the current Work 3 experimental repository into a TR Part 
 - [x] **Phase 1: Evidence Foundation and Milestone Setup** - Create the milestone scaffold, repo/evidence audit, and manuscript action plan. *(Completed 2026-06-16)*
 - [x] **Phase 2: TR-E Positioning Lock and Claim Ledger** - Lock the allowed framing and map claims to evidence before manuscript edits. (completed 2026-06-17)
 - [x] **Phase 3: TR-E Manuscript Repositioning** - Rewrite the manuscript structure and TR-E framing while deferring final numerical injection. (completed 2026-06-17)
-- [ ] **Phase 4: Tables, Figures, and Numerical Provenance** - Refresh formal-evidence tables/figures, reconcile all reported numbers, and inject verified final numerical claims.
+- [x] **Phase 4: Tables, Figures, and Numerical Provenance** - Refresh formal-evidence tables/figures, reconcile all reported numbers, and inject verified final numerical claims. (completed 2026-06-18)
 - [ ] **Phase 5: Verification and Readiness Closeout** - Run targeted verification, compile the manuscript, and classify readiness.
 
 ## Phase Details
@@ -140,7 +140,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 04-03: Verify denominators, weight sensitivity, Gamma invariance, and source provenance.
+- [x] 04-03: Verify denominators, weight sensitivity, Gamma invariance, and source provenance.
 
 ### Phase 5: Verification and Readiness Closeout
 
@@ -173,5 +173,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 1. Evidence Foundation and Milestone Setup | 3/3 | Complete | 2026-06-16 |
 | 2. TR-E Positioning Lock and Claim Ledger | 3/3 | Complete   | 2026-06-17 |
 | 3. TR-E Manuscript Repositioning | 4/4 | Complete   | 2026-06-17 |
-| 4. Tables, Figures, and Numerical Provenance | 2/3 | In Progress|  |
+| 4. Tables, Figures, and Numerical Provenance | 3/3 | Complete   | 2026-06-18 |
 | 5. Verification and Readiness Closeout | 0/3 | Not started | - |
