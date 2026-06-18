@@ -136,7 +136,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 04-02: Reconcile all reported numerical claims against the claim ledger and inject verified final values into manuscript sections.
+- [x] 04-02: Reconcile all reported numerical claims against the claim ledger and inject verified final values into manuscript sections.
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -173,5 +173,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 1. Evidence Foundation and Milestone Setup | 3/3 | Complete | 2026-06-16 |
 | 2. TR-E Positioning Lock and Claim Ledger | 3/3 | Complete   | 2026-06-17 |
 | 3. TR-E Manuscript Repositioning | 4/4 | Complete   | 2026-06-17 |
-| 4. Tables, Figures, and Numerical Provenance | 1/3 | In Progress|  |
+| 4. Tables, Figures, and Numerical Provenance | 2/3 | In Progress|  |
 | 5. Verification and Readiness Closeout | 0/3 | Not started | - |
