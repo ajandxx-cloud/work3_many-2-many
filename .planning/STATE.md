@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 04-03-PLAN.md
-last_updated: "2026-06-18T03:27:42.165Z"
+status: ready_to_plan
+stopped_at: Phase 04 complete (3/3) — ready to discuss Phase 5
+last_updated: 2026-06-18T03:29:22.276Z
 last_activity: 2026-06-18
 progress:
   total_phases: 5
@@ -21,22 +21,22 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-16)
 
 **Core value:** Produce a defensible TR Part E manuscript package in which every claim, table, figure, and positioning statement is traceable to the formal Phase 6 evidence or is clearly labeled as diagnostic, exploratory, or a limitation.
-**Current focus:** Phase 04 — tables-figures-and-numerical-provenance
+**Current focus:** Phase 5 — verification and readiness closeout
 
 ## Current Position
 
-Phase: 04 (tables-figures-and-numerical-provenance) — VERIFYING
-Plan: 3 of 3
-Status: Phase complete — ready for verification
+Phase: 5
+Plan: Not started
+Status: Ready to plan
 Last activity: 2026-06-18
 
-Progress: [██████████] 100%
+Progress: [████████░░] 80%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 11
+- Total plans completed: 13
 - Average duration: N/A
 - Total execution time: 0.0 hours
 
@@ -48,6 +48,7 @@ Progress: [██████████] 100%
 | 2 | 1/3 | 4 min | 4 min |
 | 02 | 3 | - | - |
 | 03 | 4 | - | - |
+| 04 | 3 | - | - |
 
 **Recent Trend:**
 
@@ -90,8 +91,8 @@ None yet.
 
 ### Blockers/Concerns
 
-- Phase 4 must verify every concrete numerical claim against canonical `results/formal/phase06/` evidence before injection.
-- Package-facing files such as the cover letter, response template, and figure-script comments still need later consistency review before submission packaging.
+- Phase 5 must run final validation, targeted tests, manuscript compilation, and readiness classification before any submission-ready label.
+- Package-facing files such as the cover letter, response template, README, CLAUDE, and figure-script comments still need consistency review before submission packaging.
 - Default `pytest` collection may require the documented `PYTHONPATH=src` or editable-install workflow.
 
 ## Deferred Items
