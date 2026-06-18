@@ -371,6 +371,7 @@ def write_manuscript_main_behavioral_table(
         "\\caption{Formal Phase 6 main behavioral evidence for routing intensity and coverage}",
         "\\label{tab:phase06-main-behavioral}",
         "\\scriptsize",
+        "\\resizebox{\\textwidth}{!}{%",
         "\\begin{tabular}{lrrrrr}",
         "\\toprule",
         "Method & Served share & Choice rejection & Feasibility rejection & Vehicle-km / served trip & Vehicle-km / original request \\\\",
@@ -409,10 +410,11 @@ def write_manuscript_main_behavioral_table(
         [
             "\\bottomrule",
             "\\end{tabular}",
+            "}%",
             "\\begin{minipage}{0.94\\linewidth}",
-            "\\footnotesize Notes: Generated from formal Phase 6 sources under results/formal/phase06. "
-            "Panel means use results/formal/phase06/tables/main_behavioral_table.csv; paired differences use "
-            "results/formal/phase06/tables/paired_bootstrap_ci.csv. Served share equals served requests divided "
+            "\\footnotesize Notes: Generated from formal Phase 6 sources under \\texttt{results/formal/phase06}. "
+            "Panel means use the formal main behavioral table; paired differences use the formal paired bootstrap table. "
+            "Served share equals served requests divided "
             "by original requests; vehicle-km per served trip divides vehicle-km by served trips; vehicle-km per "
             "original request divides vehicle-km by all original requests. Choice and feasibility rejection rates "
             f"use original requests as the denominator. Paired differences use {paired_count} seed-scale pairs and "

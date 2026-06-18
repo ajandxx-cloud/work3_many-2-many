@@ -12,7 +12,7 @@ Phase 6 Plan 06-05: formal synthetic experiment closeout and Phase 6 verificatio
 
 ## 3. Git Commit Before Run
 
-`398403f`
+`9a90fc9`
 
 ## 4. Artifacts Read
 
