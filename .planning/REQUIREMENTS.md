@@ -45,9 +45,9 @@ Requirements for the current initialization roadmap. Each requirement must map t
 
 ### Tables Figures And Provenance
 
-- [ ] **TFIG-01**: Manuscript-ready tables are generated or refreshed from formal Phase 6 processed outputs only.
-- [ ] **TFIG-02**: Manuscript-ready figures are generated or refreshed from validated formal Phase 6 processed outputs only.
-- [ ] **TFIG-03**: Any old manuscript table using 3-seed results is replaced with formal Phase 6 evidence or clearly removed from the main paper.
+- [x] **TFIG-01**: Manuscript-ready tables are generated or refreshed from formal Phase 6 processed outputs only.
+- [x] **TFIG-02**: Manuscript-ready figures are generated or refreshed from validated formal Phase 6 processed outputs only.
+- [x] **TFIG-03**: Any old manuscript table using 3-seed results is replaced with formal Phase 6 evidence or clearly removed from the main paper.
 - [ ] **TFIG-04**: Existing old values such as 18.3%, 29.1%, 35.0%, and 0.1216 are checked against current formal evidence and either updated, retained with provenance, or removed; only after this check may verified final numbers be injected into abstract, introduction, experiments, managerial/operational implications, and conclusion.
 - [ ] **TFIG-05**: Denominators are consistent and labeled for vkm per served trip, vkm per original request, served share, behavioral acceptance rate, choice rejection rate, and feasibility rejection rate.
 - [ ] **TFIG-06**: Weight sensitivity calculations use the shared metric helper and are not inflated by acceptance-rate-only denominators.
@@ -129,9 +129,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | MANU-06 | Phase 3 | Complete |
 | MANU-07 | Phase 3 | Complete |
 | MANU-08 | Phase 3 | Complete |
-| TFIG-01 | Phase 4 | Pending |
-| TFIG-02 | Phase 4 | Pending |
-| TFIG-03 | Phase 4 | Pending |
+| TFIG-01 | Phase 4 | Complete |
+| TFIG-02 | Phase 4 | Complete |
+| TFIG-03 | Phase 4 | Complete |
 | TFIG-04 | Phase 4 | Pending |
 | TFIG-05 | Phase 4 | Pending |
 | TFIG-06 | Phase 4 | Pending |
