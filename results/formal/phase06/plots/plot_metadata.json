@@ -1,5 +1,12 @@
 {
-  "generated_at_utc": "2026-06-16T09:53:00.265324+00:00",
+  "generated_at_utc": "2026-06-18T03:12:43.340407+00:00",
+  "manuscript_copies": [
+    {
+      "evidence_role": "formal Phase 6 primary behavioral evidence",
+      "source": "results\\formal\\phase06\\plots\\phase06_main_efficiency_coverage.png",
+      "target": "manuscript\\figures\\fig04_phase06_main_efficiency_coverage.png"
+    }
+  ],
   "plots": [
     "results\\formal\\phase06\\plots\\phase06_main_efficiency_coverage.png",
     "results\\formal\\phase06\\plots\\phase06_failure_ledger_status.png"

@@ -77,8 +77,8 @@
     }
   ],
   "exp05_satisfied": true,
-  "generated_at_utc": "2026-06-16T09:53:00.476787+00:00",
-  "git_commit": "8e6c618",
+  "generated_at_utc": "2026-06-18T03:12:43.560431+00:00",
+  "git_commit": "398403f",
   "known_durable_failure_rows": 15,
   "next_allowed_step": "Phase 7 ready",
   "passed": true,
