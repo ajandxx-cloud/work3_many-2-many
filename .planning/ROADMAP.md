@@ -165,7 +165,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 05-02: Compile manuscript with pdflatex/bibtex/pdflatex/pdflatex.
+- [x] 05-02: Compile manuscript with pdflatex/bibtex/pdflatex/pdflatex.
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -182,4 +182,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 2. TR-E Positioning Lock and Claim Ledger | 3/3 | Complete   | 2026-06-17 |
 | 3. TR-E Manuscript Repositioning | 4/4 | Complete   | 2026-06-17 |
 | 4. Tables, Figures, and Numerical Provenance | 3/3 | Complete   | 2026-06-18 |
-| 5. Verification and Readiness Closeout | 1/3 | In Progress|  |
+| 5. Verification and Readiness Closeout | 2/3 | In Progress|  |

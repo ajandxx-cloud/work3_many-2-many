@@ -57,7 +57,7 @@ Requirements for the current initialization roadmap. Each requirement must map t
 - [x] **VERI-01**: Project has `04_MANUSCRIPT_ACTION_PLAN.md` sequencing manuscript edits, evidence checks, table/figure refresh, and verification tasks.
 - [x] **VERI-02**: Formal statistics validation command is run when available, or its unavailability is documented with manuscript impact.
 - [x] **VERI-03**: Targeted pytest checks run for metrics, variants, runner, scenarios, coverage controls, robustness, and formal statistics, or any failures are documented with exact reason and manuscript impact.
-- [ ] **VERI-04**: Manuscript compilation is run from `manuscript/` using a pdflatex/bibtex/pdflatex/pdflatex sequence, or any failure is documented with exact reason and manuscript impact.
+- [x] **VERI-04**: Manuscript compilation is run from `manuscript/` using a pdflatex/bibtex/pdflatex/pdflatex sequence, or any failure is documented with exact reason and manuscript impact.
 - [ ] **VERI-05**: Project has `99_MILESTONE_VERIFICATION.md` recording verification commands, outputs, pass/fail status, remaining blockers, and readiness classification.
 - [ ] **VERI-06**: Final readiness status is one of: TR-E submission-ready, TR-E near-ready with minor blockers, or not ready due to specific blockers; `TR-E submission-ready` is allowed only when manuscript compilation passes, formal statistics validation passes or documented failures have no submission impact, targeted pytest checks pass or documented failures have no manuscript impact, claim ledger covers 100% of numerical claims, all manuscript tables/figures trace to `results/formal/phase06/`, and prohibited wording is absent.
 
@@ -138,7 +138,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | VERI-01 | Phase 1 | Complete |
 | VERI-02 | Phase 5 | Complete |
 | VERI-03 | Phase 5 | Complete |
-| VERI-04 | Phase 5 | Pending |
+| VERI-04 | Phase 5 | Complete |
 | VERI-05 | Phase 5 | Pending |
 | VERI-06 | Phase 5 | Pending |
 
