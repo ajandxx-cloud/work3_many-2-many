@@ -161,7 +161,7 @@ Plans:
 
 **Wave 1**
 
-- [ ] 05-01: Run formal statistics validation and targeted pytest checks.
+- [x] 05-01: Run formal statistics validation and targeted pytest checks.
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -182,4 +182,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 2. TR-E Positioning Lock and Claim Ledger | 3/3 | Complete   | 2026-06-17 |
 | 3. TR-E Manuscript Repositioning | 4/4 | Complete   | 2026-06-17 |
 | 4. Tables, Figures, and Numerical Provenance | 3/3 | Complete   | 2026-06-18 |
-| 5. Verification and Readiness Closeout | 0/3 | Not started | - |
+| 5. Verification and Readiness Closeout | 1/3 | In Progress|  |
