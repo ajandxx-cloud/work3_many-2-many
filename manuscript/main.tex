@@ -1,37 +1,44 @@
 %% Work 3: Many-to-Many DRT Bidirectional Meeting Point Paper
 %% Target: Transportation Research Part E: Logistics and Transportation Review
-%% Compiled: pdflatex main.tex (requires elsarticle.cls)
+%% Compiled: pdflatex main.tex (requires CAS bundle in b-els-cas-templates-模版)
 
-\documentclass[review,12pt]{elsarticle}
+\documentclass[a4paper,fleqn]{b-els-cas-templates-模版/cas-dc}
 
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{booktabs}
+\usepackage[numbers]{natbib}
 \usepackage{longtable}
-\usepackage{array}
-\usepackage{multirow}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
-\usepackage[hidelinks]{hyperref}
-\usepackage{graphicx}
-\usepackage{xcolor}
-
-\journal{Transportation Research Part E: Logistics and Transportation Review}
 
 \begin{document}
+\let\WriteBookmarks\relax
+\def\floatpagepagefraction{1}
+\def\textpagefraction{.001}
 
-\begin{frontmatter}
+\shorttitle{Passenger-Response-Aware Bidirectional Meeting-Point DRT}
+\shortauthors{Jin and Liu}
 
-\title{Passenger-Response-Aware Bidirectional Meeting-Point DRT Service Design for Many-to-Many Operations}
+\title[mode=title]{Passenger-Response-Aware Bidirectional Meeting-Point DRT Service Design for Many-to-Many Operations}
 
-\author[buaa]{An Jin}
-\author[buaa]{Tianliang Liu\corref{cor1}}
-\cortext[cor1]{Corresponding author}
-\address[buaa]{School of Transportation Science and Engineering, Beihang University, Beijing 100191, China}
+\author[1]{An Jin}
+\author[1]{Tianliang Liu}
+\cormark[1]
+
+\affiliation[1]{organization={School of Transportation Science and Engineering, Beihang University},
+                city={Beijing},
+                postcode={100191},
+                country={China}}
+
+\cortext[1]{Corresponding author}
 
 \input{sections/abstract}
 
-\end{frontmatter}
+\begin{highlights}
+\item Bidirectional pickup and dropoff meeting points are evaluated for many-to-many DRT operations.
+\item Binary-logit passenger response is coupled with rolling-horizon routing in a simulation framework.
+\item Formal claims are scoped to conditional logistics and operations evidence from Phase 6 results.
+\end{highlights}
+
+\maketitle
 
 \input{sections/intro}
 \input{sections/literature}
@@ -41,7 +48,7 @@
 \input{sections/policy}
 \input{sections/conclusion}
 
-\bibliographystyle{elsarticle-num-names}
+\bibliographystyle{b-els-cas-templates-模版/cas-model2-names}
 \bibliography{references}
 
 \appendix
@@ -49,11 +56,12 @@
 \section{Notation and Units Reference}
 \label{sec:appendix-notation}
 
-\begin{table}[h]
+\begin{table*}[width=\textwidth,pos=t]
 \centering
 \caption{Notation and units reference}
 \label{tab:notation}
-\begin{tabular}{lll}
+\small
+\begin{tabular}{p{0.14\textwidth}p{0.66\textwidth}p{0.12\textwidth}}
 \toprule
 Symbol & Description & Unit \\
 \midrule
@@ -84,6 +92,6 @@ $\mathcal{R}^{\text{act}}(t)$ & Active request set at time $t$ & --- \\
 $\sigma_v$ & Route sequence for vehicle $v$ & --- \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
 \end{document}

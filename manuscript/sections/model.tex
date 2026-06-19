@@ -146,7 +146,7 @@ they are not presented as a complete arc-flow mixed-integer programming formulat
 
 Table~\ref{tab:constraints} summarizes the operational feasibility conditions.
 
-\begin{table}[h]
+\begin{table*}[width=\textwidth,pos=t]
 \centering
 \caption{Summary of operational constraints}
 \label{tab:constraints}
@@ -169,7 +169,7 @@ Table~\ref{tab:constraints} summarizes the operational feasibility conditions.
 \ref{con:domain-md}        & Domain (dropoff point)      & $m_r^D$, $M_r^D$ \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
 \subsection{Online Offer and Response Variables}
 
@@ -258,7 +258,7 @@ profiles. Table~\ref{tab:passenger-types} summarizes the qualitative ordering of
 coefficients. These types are simulation constructs for monitoring service-design
 heterogeneity; they are not empirical demographic groups or field equity validation.
 
-\begin{table}[h]
+\begin{table*}[width=\textwidth,pos=t]
 \centering
 \caption{Passenger type coefficient profiles (qualitative ordering)}
 \label{tab:passenger-types}
@@ -271,7 +271,7 @@ Time-sensitive   & moderate & high (most negative) & high (most negative) & low 
 Walk-sensitive   & high (most negative) & moderate & moderate & moderate \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
 Formally, the ordering constraints are:
 \begin{align}
@@ -360,7 +360,7 @@ illustrating the sensitivity of demand to meeting point placement.
 \section{Three-Layer Coupled Model}\label{sec:three-layer}
 % ============================================================
 
-\begin{figure}[h]
+\begin{figure}[pos=h]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig01_system_overview}
 \caption{System overview: many-to-many DRT with bidirectional meeting points. Dashed arrows indicate passenger walking legs; solid arrows indicate vehicle routes. $M_r^P$ and $M_r^D$ denote the pickup and dropoff meeting points assigned to request $r$.}
@@ -373,7 +373,7 @@ re-optimized via a rolling horizon mechanism. Figure~\ref{fig:three-layer} illus
 the architecture. The three layers are: (1) service offer generation, (2) passenger
 response, and (3) dynamic dispatch and re-optimization.
 
-\begin{figure}[h]
+\begin{figure}[pos=h]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig02_three_layer}
 \caption{Three-layer coupled model architecture for many-to-many DRT with bidirectional meeting points.}
@@ -460,7 +460,7 @@ in the sensitivity analysis (Section~\ref{sec:experiments}).
 
 Table~\ref{tab:layer-coupling} summarizes the information flows between layers.
 
-\begin{table}[h]
+\begin{table*}[width=\textwidth,pos=t]
 \centering
 \caption{Three-layer model coupling structure}
 \label{tab:layer-coupling}
@@ -473,9 +473,9 @@ Layer & Input & Output & Coupling \\
 3: Rolling Horizon & Active set $\mathcal{R}^{\text{act}}$ & Updated routes $\{\sigma_v\}$ & Feeds back to Layer~1 \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
-\begin{table}[h]
+\begin{table*}[width=\textwidth,pos=t]
 \centering
 \caption{Timing and decision sequence in the rolling horizon three-layer model.
          Each row represents one event within a single planning cycle.
@@ -483,7 +483,7 @@ Layer & Input & Output & Coupling \\
          (Equation~\ref{eq:rh-trigger}).}
 \label{tab:timing-diagram}
 \footnotesize
-\begin{tabular}{p{3.0cm}lp{3.5cm}p{3.5cm}l}
+\begin{tabular}{p{0.22\textwidth}lp{0.23\textwidth}p{0.25\textwidth}l}
 \toprule
 \textbf{Event} & \textbf{Layer} & \textbf{Variables / outcomes} & \textbf{Information Flow} & \textbf{Bernoulli?} \\
 \midrule
@@ -514,7 +514,7 @@ Updated routes fed back for next request &
   No \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
 Table~\ref{tab:timing-diagram} details the event sequence and information
 flows within a single planning cycle; in particular, it shows that Bernoulli
