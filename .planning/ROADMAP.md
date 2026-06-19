@@ -159,8 +159,16 @@ Plans:
 
 Plans:
 
+**Wave 1**
+
 - [ ] 05-01: Run formal statistics validation and targeted pytest checks.
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 05-02: Compile manuscript with pdflatex/bibtex/pdflatex/pdflatex.
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 05-03: Write final verification report and readiness classification.
 
 ## Progress
